@@ -1,0 +1,215 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model cargo {
+  id Int @id @default(autoincrement())
+  cargo String @db.VarChar(30)
+  relacao_pessoa_cargo relac_pessoa_cargo[]
+}
+
+model relac_pessoa_cargo {
+  id Int @id @default(autoincrement())
+  id_cargo Int @db.SmallInt
+  cargo cargo @relation(fields: [id_cargo], references: [id])
+  pessoa pessoa @relation(fields: [id_pessoa], references: [id])
+  id_pessoa Int
+  data_cargo DateTime
+  ano Int @db.SmallInt
+}
+
+model pessoa {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(60)
+  id_pais Int @db.SmallInt
+  id_titulo_nobreza Int @db.SmallInt
+  relacao_pessoa_cargo relac_pessoa_cargo[]
+  pais pais @relation(fields: [id_pais], references: [id])
+  titulo_nobreza titulo_nobreza @relation(fields: [id_titulo_nobreza], references: [id])
+  relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
+  mestre viagem[] @relation("mestre")
+  capitao viagem[] @relation("capitao")
+  comandante viagem[] @relation("comandante")
+  armador viagem[] @relation("armador")
+  relac_mercadoria_viagem relac_mercadoria_viagem[]
+  
+}
+
+model embarcacao {
+  id Int @id @default(autoincrement())
+  id_tipo_embarcacao Int @db.SmallInt
+  nome String @db.VarChar(30)
+  observacao String
+  tipo_embarcacao tipo_embarcacao @relation(fields: [id_tipo_embarcacao], references: [id])
+  relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
+  viagem viagem[]
+}
+
+model tipo_embarcacao {
+  id Int @id @default(autoincrement())
+  texto_descritivo String
+  tipo String @db.VarChar(20)
+  embarcacao embarcacao[]
+  imagem_embarcacao imagem_embarcacao[]
+}
+
+model imagem_embarcacao {
+  id Int @id @default(autoincrement())
+  imagem String @db.VarChar(150)
+  id_tipo_embarcacao Int @db.SmallInt
+  tipo_embarcacao tipo_embarcacao @relation(fields: [id_tipo_embarcacao], references: [id])
+}
+
+model porto {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(30)
+  id_pais Int @db.SmallInt
+  pais pais @relation(fields: [id_pais], references: [id])
+  viagem viagem[]
+  escala escala[]
+}
+
+model pais {
+  id Int @id @default(autoincrement())
+  pais String @db.VarChar(30)
+  gentilico String @db.VarChar(40)
+  porto porto[]
+  pessoa pessoa[]
+  relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
+}
+
+
+model titulo_nobreza {
+  id Int @id @default(autoincrement())
+  titulo String @db.VarChar(20)
+  pessoa pessoa[]
+}
+
+model relac_embarcacao_proprietario {
+  id Int @id @default(autoincrement())
+  id_embarcacao Int 
+  id_proprietario Int
+  data_inicio DateTime
+  data_fim DateTime
+  id_pais Int @db.SmallInt
+  embarcacao embarcacao @relation(fields: [id_embarcacao], references: [id])
+  pais pais @relation(fields: [id_pais], references: [id])
+  pessoa pessoa @relation(fields: [id_proprietario], references: [id])
+}
+
+model viagem {
+  id Int @id @default(autoincrement())
+  id_embarcacao Int
+  id_porto_origem Int @db.SmallInt
+  id_porto_destino Int @db.SmallInt
+  data_viagem DateTime
+  dias_porto_destino  Int @db.SmallInt
+  dias_porto_origem Int @db.SmallInt
+  mestre_id Int
+  capitao_id Int
+  comandante_id Int
+  armador_id Int
+  tripulacao Int @db.SmallInt
+  total_passageiros Int @db.SmallInt
+  relac_viagem_referencia_doc relac_viagem_referencia_doc[]
+  noticia noticia[]
+  relac_mercadoria_viagem relac_mercadoria_viagem[]
+  escala escala[]
+  embarcacao embarcacao @relation(fields: [id_embarcacao], references: [id])
+  porto porto @relation(fields: [id_porto_origem], references: [id])
+  mestre pessoa @relation("mestre", fields: [mestre_id], references: [id])
+  capitao pessoa @relation("capitao", fields: [capitao_id], references: [id])
+  comandante pessoa @relation("comandante", fields: [comandante_id], references: [id])
+  armador pessoa @relation("armador", fields: [armador_id], references: [id])
+}
+
+model escala {
+  id Int @id @default(autoincrement())
+  id_viagem Int @db.SmallInt
+  id_porto Int @db.SmallInt
+  data_escala DateTime
+  ano Int @db.SmallInt
+  dias_porto Int @db.SmallInt
+  entrada_de_passageiros Int @db.SmallInt
+  saida_de_passageiros Int @db.SmallInt
+  porto porto @relation(fields: [id_porto], references: [id])
+  viagem viagem @relation(fields: [id_viagem], references: [id])
+  relac_mercadoria_escala relac_mercadoria_escala[]
+}
+
+model mercadoria {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(40)
+  relac_mercadoria_viagem relac_mercadoria_viagem[]
+  relac_mercadoria_escala relac_mercadoria_escala[]
+}
+
+model unidade_de_medida {
+  id Int @id @default(autoincrement())
+  unidade_medida String @db.VarChar(15)
+  relac_mercadoria_viagem relac_mercadoria_viagem[]
+  relac_mercadoria_escala relac_mercadoria_escala[]
+}
+
+model noticia {
+  id Int @id @default(autoincrement())
+  id_viagem Int @db.SmallInt
+  assunto String
+  viagem viagem @relation(fields: [id_viagem], references: [id])
+
+}
+
+model relac_viagem_referencia_doc {
+  id Int @id @default(autoincrement())
+  id_referencia_documental Int
+  id_viagem Int @db.SmallInt
+  data_publicacao DateTime
+  referencia_documental referencia_documental @relation(fields: [id_referencia_documental], references: [id])
+  viagem viagem @relation(fields: [id_viagem], references: [id])
+}
+
+model referencia_documental {
+  id Int @id @default(autoincrement())
+  nome_periodico String @db.VarChar(50)
+  relacao_viagem_referencia_doc relac_viagem_referencia_doc[]
+}
+
+model relac_mercadoria_escala {
+  id Int @id @default(autoincrement())
+  id_escala Int @db.SmallInt
+  id_mercadoria Int
+  quantidade Int 
+  movimento String
+  cosignatario Int
+  valor_frete Int
+  id_unidade_medida Int @db.SmallInt
+  unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
+  mercadoria mercadoria @relation(fields: [id_mercadoria], references: [id])
+  escala escala @relation(fields: [id_escala], references: [id])
+
+}
+
+model relac_mercadoria_viagem {
+  id Int @id @default(autoincrement())
+  id_viagem Int @db.SmallInt
+  id_mercadoria Int @db.SmallInt
+  quantidade_origem Int
+  valor_frete Int
+  cosignatario Int @db.SmallInt
+  id_unidade_medida Int @db.SmallInt
+  viagem viagem[]
+  mercadoria mercadoria @relation(fields: [id_mercadoria], references: [id])
+  unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
+  pessoa pessoa @relation(fields: [cosignatario], references: [id])
+}
