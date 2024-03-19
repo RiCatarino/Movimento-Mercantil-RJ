@@ -59,7 +59,7 @@ model embarcacao {
 model tipo_embarcacao {
   id Int @id @default(autoincrement())
   texto_descritivo String
-  tipo String @db.VarChar(20)
+  tipo String @db.VarChar()
   embarcacao embarcacao[]
   imagem_embarcacao imagem_embarcacao[]
 }
@@ -119,6 +119,10 @@ model viagem {
   mestre_id Int
   capitao_id Int
   comandante_id Int
+  entrada_sahida String @db.VarChar(7)
+  dias_viagem Int
+  data_chegada DateTime
+  data_rio DateTime
   armador_id Int
   tripulacao Int @db.SmallInt
   total_passageiros Int @db.SmallInt
