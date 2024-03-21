@@ -32,18 +32,18 @@ model relac_pessoa_cargo {
 model pessoa {
   id Int @id @default(autoincrement())
   nome String @db.VarChar(60)
-  id_pais Int @db.SmallInt
-  id_titulo_nobreza Int @db.SmallInt
+  id_pais Int? @db.SmallInt
+  id_titulo_nobreza Int? @db.SmallInt
   relacao_pessoa_cargo relac_pessoa_cargo[]
-  pais pais @relation(fields: [id_pais], references: [id])
-  titulo_nobreza titulo_nobreza @relation(fields: [id_titulo_nobreza], references: [id])
+  pais pais? @relation(fields: [id_pais], references: [id])
+  titulo_nobreza titulo_nobreza? @relation(fields: [id_titulo_nobreza], references: [id])
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
   mestre viagem[] @relation("mestre")
   capitao viagem[] @relation("capitao")
   comandante viagem[] @relation("comandante")
   armador viagem[] @relation("armador")
   relac_mercadoria_viagem relac_mercadoria_viagem[]
-  
+
 }
 
 model embarcacao {
