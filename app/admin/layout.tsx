@@ -173,7 +173,8 @@ export default function DashboardLayout({
         </div>
       </aside>
 
-      <div className='p-4 sm:ml-64'>{children}</div>
+      {/* This is to  set all the styles in the admin page to be this one */}
+      <div className='p-4 sm:ml-64'>{children}</div> 
     </>
   );
 }
