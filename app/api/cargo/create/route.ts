@@ -7,4 +7,5 @@ export async function POST (req: Request){
             cargo: cargo,
         }
     })
+    return result
 }
