@@ -60,7 +60,8 @@ interface Porto {
   nome: string;
   id_pais: number;
   pais: Pais;
-  viagem: Viagem[];
+  viagem_origem: Viagem[];
+  viagem_destino: Viagem[];
   escala: Escala[];
 }
 
@@ -114,7 +115,8 @@ interface Viagem {
   relac_mercadoria_viagem: RelacMercadoriaViagem[];
   escala: Escala[];
   embarcacao: Embarcacao;
-  porto: Porto;
+  porto_origem: Porto;
+  porto_destino: Porto;
   mestre: Pessoa;
   capitao: Pessoa;
   comandante: Pessoa;
