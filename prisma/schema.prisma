@@ -76,7 +76,8 @@ model porto {
   nome String @db.VarChar(30)
   id_pais Int @db.SmallInt
   pais pais @relation(fields: [id_pais], references: [id])
-  viagem viagem[]
+  viagem_origem viagem[] @relation("porto_origem")
+  viagem_destino viagem[] @relation("porto_destino")
   escala escala[]
 }
 
@@ -131,7 +132,8 @@ model viagem {
   relac_mercadoria_viagem relac_mercadoria_viagem[]
   escala escala[]
   embarcacao embarcacao @relation(fields: [id_embarcacao], references: [id])
-  porto porto @relation(fields: [id_porto_origem], references: [id])
+  porto_origem porto @relation("porto_origem", fields: [id_porto_origem], references: [id])
+  porto_destino porto @relation("porto_destino", fields: [id_porto_destino], references: [id])
   mestre pessoa @relation("mestre", fields: [mestre_id], references: [id])
   capitao pessoa @relation("capitao", fields: [capitao_id], references: [id])
   comandante pessoa @relation("comandante", fields: [comandante_id], references: [id])
