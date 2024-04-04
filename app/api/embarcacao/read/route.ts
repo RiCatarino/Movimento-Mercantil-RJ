@@ -6,7 +6,10 @@ export async function GET() {
             id: 1
         },
         select: {
-            nome: true
+            nome: true,
+            observacao: true,
+            tipo_embarcacao: {  select: { texto_descritivo: true, tipo: true } },
+
         }
     })
     return Response.json(result)
