@@ -6,7 +6,12 @@ export async function GET() {
       id: true,
       nome: true,
       observacao: true,
-      tipo_embarcacao: { select: { texto_descritivo: true, tipo: true } },
+      tipo_embarcacao: {
+        select: {
+          texto_descritivo: true,
+          tipo: true,
+        },
+      },
     },
   });
   return Response.json(result);
