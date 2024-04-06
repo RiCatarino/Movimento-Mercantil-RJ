@@ -1,8 +1,8 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const id = url.searchParams.get('id');
+  const id = url.searchParams.get("id");
   console.log(id);
   const result = await prisma.embarcacao.findUnique({
     where: {
@@ -13,7 +13,6 @@ export async function GET(req: Request) {
         },
       },
     },
-
     select: {
       nome: true,
       tipo_embarcacao: true,
