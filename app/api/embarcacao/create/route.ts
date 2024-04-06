@@ -9,7 +9,8 @@ export async function POST (req: Request){
             observacao: observacao,
             tipo_embarcacao: {
                 connect: {
-                    id: id_tipo_embarcacao
+                    id: Number(id_tipo_embarcacao)
+
                 }
             }
         }

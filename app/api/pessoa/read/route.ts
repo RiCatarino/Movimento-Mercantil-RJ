@@ -4,6 +4,7 @@ export async function GET() {
   const result = await prisma.pessoa.findMany({
 
     select: {
+      id: true,
       nome: true,
       relacao_embarcacao_proprietario: {
         select: {
