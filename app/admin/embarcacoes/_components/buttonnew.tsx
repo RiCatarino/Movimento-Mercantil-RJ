@@ -21,12 +21,28 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: 'Nome muito curto' }),
   tipo: z.string(),
   observacao: z.string(),
-  proprietario: z.number() || z.undefined(),
+  proprietario: z.string(),
 });
 
 export default function NewVessel() {
@@ -34,11 +50,18 @@ export default function NewVessel() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: '',
-      tipo: '',
+      tipo: undefined,
       observacao: '',
       proprietario: undefined,
     },
   });
+
+  const { data: tiposEmbarcacao, isLoading } = useSWR<TipoEmbarcacao[]>(
+    '/api/embarcacao/read/tipos',
+    fetcher
+  );
+
+  console.table(form.getValues());
 
   function handleSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -84,7 +107,36 @@ export default function NewVessel() {
                     <FormItem>
                       <FormLabel>Tipo</FormLabel>
                       <FormControl>
-                        <Input placeholder='shadcn' {...field} />
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field?.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder='Selecione um tipo' />
+                          </SelectTrigger>
+                          <SelectContent className=' overflow-visible'>
+                            {tiposEmbarcacao?.map((tipo) => (
+                              <SelectItem
+                                key={tipo.id}
+                                value={tipo.id.toString()}
+                              >
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
+                                    <TooltipContent
+                                      side='right'
+                                      className=' max-w-96 p-2  rounded-lg ml-10 max-h-96 overflow-y-auto'
+                                    >
+                                      <p className='font-bold'>Descrição: </p>
+                                      <br />
+                                      <p>{tipo.texto_descritivo}</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
