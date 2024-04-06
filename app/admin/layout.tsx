@@ -192,7 +192,7 @@ export default function DashboardLayout({
 
         {/* This is to  set all the styles in the admin page to be this one */}
       </nav>
-      <div className='p-8'>
+      <div className='p-4 lg:p-8'>
         <>
           {children} <Toaster />{' '}
         </>

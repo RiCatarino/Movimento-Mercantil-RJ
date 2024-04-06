@@ -1,9 +1,9 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
-  const result = await prisma.embarcacao.findMany({
+  const id = searchParams.get('id');
+  const result = await prisma.embarcacao.findFirst({
     where: {
       id: Number(id),
     },
