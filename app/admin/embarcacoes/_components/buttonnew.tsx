@@ -36,23 +36,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { toast } from 'sonner';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: 'Nome muito curto' }),
-  tipo: z.string(),
-  observacao: z.string(),
-  proprietario: z.string(),
+  tipo: z.string().min(1, { message: 'Selecione um tipo' }),
+  observacao: z
+    .string()
+    .min(1, { message: 'Tem de adicionar uma observação.' }),
 });
 
-export default function NewVessel() {
+export default function NewVessel(props: { mutate: () => void }) {
+  const { mutate } = props;
+  const [open, setOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nome: '',
-      tipo: undefined,
+      tipo: '',
       observacao: '',
-      proprietario: undefined,
     },
   });
 
@@ -61,14 +67,26 @@ export default function NewVessel() {
     fetcher
   );
 
-  console.table(form.getValues());
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
+    setSubmitting(true);
+    const result = await fetch('/api/embarcacao/create', {
+      method: 'POST',
+      body: JSON.stringify(values),
+    });
 
-  function handleSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    if (result.ok) {
+      setOpen(false);
+      form.reset();
+      mutate();
+      toast.success('Embarcação criada com sucesso');
+    } else {
+      toast.error('Erro ao criar embarcação');
+    }
+    setSubmitting(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           className=' w-fit self-end rounded-full p-2 mb-2 bg-blue-200'
@@ -86,7 +104,10 @@ export default function NewVessel() {
           <DialogTitle>Criar Embarcação</DialogTitle>
           <DialogDescription asChild>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(handleSubmit)}>
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className='flex flex-col gap-2'
+              >
                 <FormField
                   control={form.control}
                   name='nome'
@@ -94,7 +115,7 @@ export default function NewVessel() {
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder='shadcn' {...field} />
+                        <Input placeholder='Ex: Nau do Brazil' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -158,21 +179,20 @@ export default function NewVessel() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name='proprietario'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Proprietário</FormLabel>
-                      <FormControl>
-                        <Input placeholder='shadcn' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
+
+                <Button
+                  type='submit'
+                  className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+                  disabled={submitting}
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                      Criando...
+                    </>
+                  ) : (
+                    'Criar'
                   )}
-                />
-                <Button type='submit' className='mt-2'>
-                  Criar
                 </Button>
               </form>
             </Form>
