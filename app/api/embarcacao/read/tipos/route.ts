@@ -7,4 +7,6 @@ export async function GET() {
       texto_descritivo: true,
       tipo: true,
     },
-  })};
+  })
+  return Response.json(result);
+};
