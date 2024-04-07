@@ -12,7 +12,7 @@ import {
 import useSWR from "swr";
 import fetcher from "@/lib/fetch";
 import { useState } from "react";
-import { z } from "zod";
+import { date, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -22,13 +22,12 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Input } from "postcss";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, LucideCalendar } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -38,11 +37,17 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import dayjs from "dayjs";
+
+var customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 const formSchema = z.object({
   pessoa: z.string().min(1, { message: "Selecione uma pessoa" }),
-  data_inicio: z.date({ required_error: "Selecione uma data de início" }),
-  data_fim: z.date({ required_error: "Selecione uma data de fim" }),
+  data_inicio: z.string({ required_error: "Selecione uma data de início" }),
+  data_fim: z.string({ required_error: "Selecione uma data de fim" }),
   pais: z.string().min(1, { message: "Selecione um país" }),
 });
 
@@ -54,12 +59,6 @@ export default function AddOwner(props: { mutate: () => void }) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      pessoa: "",
-      data_inicio: new Date(),
-      data_fim: new Date(),
-      pais: "",
-    },
   });
 
   const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
@@ -172,6 +171,100 @@ export default function AddOwner(props: { mutate: () => void }) {
                           </Command>
                         </PopoverContent>
                       </Popover>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="data_inicio"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Data Início</FormLabel>
+                      <div className="flex w-full gap-2">
+                        <Input
+                          placeholder="DD-MM-YYYY"
+                          value={field.value}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button size="icon">
+                              <LucideCalendar className="h-4 w-4" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            <Calendar
+                              defaultMonth={
+                                dayjs(field.value, "DD-MM-YYYY").isValid()
+                                  ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                                  : undefined
+                              }
+                              selected={
+                                dayjs(field.value, "DD-MM-YYYY").isValid()
+                                  ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                                  : undefined
+                              }
+                              onSelect={(date) => {
+                                form.setValue(
+                                  "data_inicio",
+                                  dayjs(date).format("DD-MM-YYYY")
+                                );
+                              }}
+                              mode="single"
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="data_fim"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Data Fim</FormLabel>
+                      <div className="flex w-full gap-2">
+                        <Input
+                          placeholder="DD-MM-YYYY"
+                          value={field.value}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button size="icon">
+                              <LucideCalendar className="h-4 w-4" />
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent>
+                            <Calendar
+                              defaultMonth={
+                                dayjs(field.value, "DD-MM-YYYY").isValid()
+                                  ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                                  : undefined
+                              }
+                              selected={
+                                dayjs(field.value, "DD-MM-YYYY").isValid()
+                                  ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                                  : undefined
+                              }
+                              onSelect={(date) => {
+                                form.setValue(
+                                  "data_fim",
+                                  dayjs(date).format("DD-MM-YYYY")
+                                );
+                              }}
+                              mode="single"
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
                     </FormItem>
                   )}
                 />
