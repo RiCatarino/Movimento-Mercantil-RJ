@@ -35,13 +35,13 @@ export default function VesselDetails(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='min-w-[1000px]'>
+      <DialogContent className='w-11/12 p-6 rounded-lg'>
         <DialogHeader>
           <DialogTitle>Embarcação #{embarcacao_id}</DialogTitle>
           <DialogDescription asChild></DialogDescription>
         </DialogHeader>
         <div className='flex flex-wrap gap-2'>
-          <div className='flex flex-col gap-1 rounded-xl border '>
+          <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
             <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
               Nome
             </div>
@@ -61,36 +61,40 @@ export default function VesselDetails(props: {
             </div>
             <div className='p-2 text-xs'>{embarcacao?.observacao}</div>
           </div>
-          <Table>
-            <TableHeader className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
-              <TableRow>
-                <TableHead className=''>Pessoa</TableHead>
-                <TableHead>Início</TableHead>
-                <TableHead>Fim</TableHead>
-                <TableHead>País</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {embarcacao?.relacao_embarcacao_proprietario.map((relacao) => (
+          <div className=' max-w-xs md:max-w-full flex-1 '>
+            <Table>
+              <TableHeader className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-xs '>
                 <TableRow>
-                  <TableCell className='font-medium'>
-                    {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
-                  </TableCell>
-                  <TableCell>
-                    {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
-                  </TableCell>
-                  <TableCell>
-                    {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
-                  </TableCell>
-
-                  <TableCell>{relacao.pais.pais}</TableCell>
+                  <TableHead>Pessoa</TableHead>
+                  <TableHead>Início</TableHead>
+                  <TableHead>Fim</TableHead>
+                  <TableHead>País</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-            {embarcacao?.relacao_embarcacao_proprietario.length === 0 && (
-              <TableCaption>Nenhum proprietário encontrado</TableCaption>
-            )}
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {embarcacao?.relacao_embarcacao_proprietario.map((relacao) => (
+                  <TableRow>
+                    <TableCell className='font-medium text-xs'>
+                      {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
+                    </TableCell>
+                    <TableCell className='text-xs'>
+                      {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell className='text-xs'>
+                      {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
+                    </TableCell>
+
+                    <TableCell className='text-xs'>
+                      {relacao.pais.pais}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              {embarcacao?.relacao_embarcacao_proprietario.length === 0 && (
+                <TableCaption>Nenhum proprietário encontrado</TableCaption>
+              )}
+            </Table>
+          </div>
         </div>
         <AddOwner mutate={mutate} />
       </DialogContent>
