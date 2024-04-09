@@ -33,6 +33,7 @@ interface Pessoa {
 interface Embarcacao {
   id: number;
   id_tipo_embarcacao: number;
+  id_pais: string;
   nome: string;
   observacao: string;
   tipo_embarcacao: TipoEmbarcacao;
@@ -72,6 +73,7 @@ interface Pais {
   porto: Porto[];
   pessoa: Pessoa[];
   relacao_embarcacao_proprietario: RelacEmbarcacaoProprietario[];
+  embarcacao: Embarcacao[];
 }
 
 interface TituloNobreza {

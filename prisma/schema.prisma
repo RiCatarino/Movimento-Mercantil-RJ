@@ -23,10 +23,10 @@ model relac_pessoa_cargo {
   id Int @id @default(autoincrement())
   id_cargo Int @db.SmallInt
   cargo cargo @relation(fields: [id_cargo], references: [id])
-  pessoa pessoa @relation(fields: [id_pessoa], references: [id])
+  pessoa pessoa @relation(fields: [id_pessoa], references: [id], onDelete: Cascade)
   id_pessoa Int
-  data_cargo DateTime
-  ano Int @db.SmallInt
+  data_cargo DateTime?
+  ano Int? @db.SmallInt
 }
 
 model pessoa {
@@ -49,9 +49,11 @@ model pessoa {
 model embarcacao {
   id Int @id @default(autoincrement())
   id_tipo_embarcacao Int @db.SmallInt
-  nome String @db.VarChar(30)
-  observacao String
+  nome String @db.VarChar(100)
+  id_pais Int?
+  observacao String?
   tipo_embarcacao tipo_embarcacao @relation(fields: [id_tipo_embarcacao], references: [id])
+  pais pais? @relation(fields: [id_pais], references: [id])
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
   viagem viagem[]
 }
@@ -68,14 +70,14 @@ model imagem_embarcacao {
   id Int @id @default(autoincrement())
   imagem String @db.VarChar(150)
   id_tipo_embarcacao Int @db.SmallInt
-  tipo_embarcacao tipo_embarcacao @relation(fields: [id_tipo_embarcacao], references: [id])
+  tipo_embarcacao tipo_embarcacao @relation(fields: [id_tipo_embarcacao], references: [id], onDelete: Cascade)
 }
 
 model porto {
   id Int @id @default(autoincrement())
-  nome String @db.VarChar(30)
-  id_pais Int @db.SmallInt
-  pais pais @relation(fields: [id_pais], references: [id])
+  nome String @db.VarChar(70)
+  id_pais Int? @db.SmallInt
+  pais pais? @relation(fields: [id_pais], references: [id])
   viagem_origem viagem[] @relation("porto_origem")
   viagem_destino viagem[] @relation("porto_destino")
   escala escala[]
@@ -83,11 +85,12 @@ model porto {
 
 model pais {
   id Int @id @default(autoincrement())
-  pais String @db.VarChar(30)
-  gentilico String @db.VarChar(40)
+  pais String @db.VarChar(70)
+  gentilico String @db.VarChar(70)
   porto porto[]
   pessoa pessoa[]
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
+  embarcacao embarcacao[]
 }
 
 
@@ -104,7 +107,7 @@ model relac_embarcacao_proprietario {
   data_inicio DateTime
   data_fim DateTime
   id_pais Int @db.SmallInt
-  embarcacao embarcacao @relation(fields: [id_embarcacao], references: [id])
+  embarcacao embarcacao @relation(fields: [id_embarcacao], references: [id], onDelete: Cascade)
   pais pais @relation(fields: [id_pais], references: [id])
   pessoa pessoa @relation(fields: [id_proprietario], references: [id])
 }
