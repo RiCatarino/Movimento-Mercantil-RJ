@@ -55,6 +55,7 @@ export default function AddOwner(props: { mutate: () => void }) {
   const { mutate } = props;
   const [open, setOpen] = useState(false);
   const [selectPessoa, setSelectPessoa] = useState(false);
+  const [selectPais, setSelectPais] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,8 +66,13 @@ export default function AddOwner(props: { mutate: () => void }) {
     "/api/pessoa/read",
     fetcher
   );
-  console.table(form.getValues());
 
+  const { data: pais, isLoading: isLoadingPais } = useSWR<Pais[]>(
+    "/api/pais/read",
+    fetcher
+  );
+
+  console.table(form.getValues());
   // async function handleSubmit(values: z.infer<typeof formSchema>) {
   //   setSubmitting(true);
   //   const result = await fetch("/api/pessoa/create", {
@@ -265,6 +271,59 @@ export default function AddOwner(props: { mutate: () => void }) {
                           </PopoverContent>
                         </Popover>
                       </div>
+                    </FormItem>
+                  )}
+                />
+                {/* Selecionar País */}
+                <FormField
+                  control={form.control}
+                  name="pais"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>País</FormLabel>
+                      <Popover open={selectPais} onOpenChange={setSelectPais}>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? pais?.find(
+                                    (pais) => pais.id.toString() === field.value
+                                  )?.pais
+                                : "Seleccionar País"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+                          <Command>
+                            <CommandInput placeholder="Procurar país..." />
+                            <CommandEmpty>País não encontrado</CommandEmpty>
+                            <CommandGroup>
+                              <CommandList>
+                                {pais?.map((pais) => (
+                                  <CommandItem
+                                    value={pais.pais}
+                                    key={pais.id}
+                                    onSelect={() => {
+                                      form.setValue("pais", pais.id.toString());
+                                      setSelectPais(false);
+                                    }}
+                                  >
+                                    {pais.pais}
+                                  </CommandItem>
+                                ))}
+                              </CommandList>
+                            </CommandGroup>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </FormItem>
                   )}
                 />
