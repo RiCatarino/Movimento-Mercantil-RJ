@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "porto" ALTER COLUMN "nome" SET DATA TYPE VARCHAR(70);

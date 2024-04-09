@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "embarcacao" ALTER COLUMN "nome" SET DATA TYPE VARCHAR(100);
