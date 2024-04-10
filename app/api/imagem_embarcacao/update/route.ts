@@ -1,16 +1,16 @@
 import prisma from "@/lib/prisma";
 
 export async function UPDATE(req: Request) {
-  const { cargo, id, id_pessoa } = await req.json();
-  const result = await prisma.cargo.update({
+  const { id, imagem, id_tipo_embarcacao } = await req.json();
+  const result = await prisma.imagem_embarcacao.update({
     where: {
       id: Number(id),
     },
     data: {
-      cargo: cargo,
-      relacao_pessoa_cargo: {
+      imagem: imagem,
+      tipo_embarcacao: {
         connect: {
-          id: Number(id_pessoa),
+          id: id_tipo_embarcacao,
         },
       },
     },

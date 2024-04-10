@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-export async function POST(req: Request) {
+export async function UPDATE(req: Request) {
   const {
     id,
     id_viagem,
@@ -11,9 +11,11 @@ export async function POST(req: Request) {
     entrada_de_passageiros,
     saida_de_passageiros,
   } = await req.json();
-  const result = await prisma.escala.create({
+  const result = await prisma.escala.update({
+    where: {
+      id: Number(id),
+    },
     data: {
-      id: id,
       viagem: {
         connect: {
           id: id_viagem,
@@ -31,5 +33,5 @@ export async function POST(req: Request) {
       saida_de_passageiros: saida_de_passageiros,
     },
   });
-  return result;
+  return Response.json(result);
 }
