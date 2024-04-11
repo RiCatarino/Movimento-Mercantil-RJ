@@ -63,7 +63,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   const [selectPessoa, setSelectPessoa] = useState(false);
   const [selectPais, setSelectPais] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
+  const [searchName, setSearchName] = useState("");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,7 +75,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   });
 
   const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
-    "/api/pessoa/read",
+    "/api/pessoa/read/byname?nome=" + searchName,
     fetcher
   );
 
@@ -91,9 +91,6 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
       embarcacao: embarcacaoId,
       ...values,
     };
-
-    console.log("The data is: ");
-    console.log(data);
 
     const result = await fetch("/api/embarcacao/create/addowner", {
       method: "POST",
@@ -159,7 +156,12 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                         </PopoverTrigger>
                         <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                           <Command>
-                            <CommandInput placeholder="Procurar pessoa..." />
+                            <CommandInput
+                              onValueChange={(value) => {
+                                setSearchName(value);
+                              }}
+                              placeholder="Procurar pessoa..."
+                            />
                             <CommandEmpty>Pessoa não encontrada</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
@@ -241,15 +243,34 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                       <FormLabel>Data Fim</FormLabel>
                       <div className="flex w-full gap-2">
                         <Input
+                          disabled={!form.getValues("data_inicio")}
                           placeholder="DD-MM-YYYY"
                           value={field.value}
                           onChange={(e) => {
+                            //if date is after data_inicio
+                            if (
+                              dayjs(e.target.value, "DD-MM-YYYY").isBefore(
+                                dayjs(
+                                  form.getValues("data_inicio"),
+                                  "DD-MM-YYYY"
+                                )
+                              )
+                            ) {
+                              form.setValue("data_fim", e.target.value);
+                            } else {
+                              toast.error(
+                                "Data de fim deve ser após a data de início"
+                              );
+                            }
                             field.onChange(e.target.value);
                           }}
                         />
                         <Popover>
                           <PopoverTrigger asChild>
-                            <Button size="icon">
+                            <Button
+                              size="icon"
+                              disabled={!form.watch("data_inicio")}
+                            >
                               <LucideCalendar className="h-4 w-4" />
                             </Button>
                           </PopoverTrigger>
@@ -266,10 +287,23 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                                   : undefined
                               }
                               onSelect={(date) => {
-                                form.setValue(
-                                  "data_fim",
-                                  dayjs(date).format("DD-MM-YYYY")
-                                );
+                                if (
+                                  dayjs(date).isAfter(
+                                    dayjs(
+                                      form.watch("data_inicio"),
+                                      "DD-MM-YYYY"
+                                    )
+                                  )
+                                ) {
+                                  form.setValue(
+                                    "data_fim",
+                                    dayjs(date).format("DD-MM-YYYY")
+                                  );
+                                } else {
+                                  toast.error(
+                                    "Data de fim deve ser após a data de início"
+                                  );
+                                }
                               }}
                               mode="single"
                               initialFocus
