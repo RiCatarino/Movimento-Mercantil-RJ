@@ -66,6 +66,12 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      pessoa: "",
+      data_inicio: "",
+      data_fim: "",
+      pais: "",
+    },
   });
 
   const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
@@ -77,9 +83,6 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
     "/api/pais/read",
     fetcher
   );
-
-  // console.table(form.getValues());
-  // console.log("This is");
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
