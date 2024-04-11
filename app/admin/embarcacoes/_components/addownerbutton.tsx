@@ -27,7 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown, LucideCalendar } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, LucideCalendar } from "lucide-react";
 import {
   Command,
   CommandEmpty,
@@ -40,6 +40,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import dayjs from "dayjs";
+import { toast } from "sonner";
 
 var customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
@@ -51,8 +52,13 @@ const formSchema = z.object({
   pais: z.string().min(1, { message: "Selecione um país" }),
 });
 
-export default function AddOwner(props: { mutate: () => void }) {
-  const { mutate } = props;
+type AddOwnerProps = {
+  mutate: () => void;
+  embarcacaoId: number | undefined;
+};
+
+export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
+  // const { mutate, embarcacaoId } = props;
   const [open, setOpen] = useState(false);
   const [selectPessoa, setSelectPessoa] = useState(false);
   const [selectPais, setSelectPais] = useState(false);
@@ -72,41 +78,35 @@ export default function AddOwner(props: { mutate: () => void }) {
     fetcher
   );
 
-  console.table(form.getValues());
-  // async function handleSubmit(values: z.infer<typeof formSchema>) {
-  //   setSubmitting(true);
-  //   const result = await fetch("/api/pessoa/create", {
-  //     method: "POST",
-  //     body: JSON.stringify(values),
-  //   });
+  // console.table(form.getValues());
+  // console.log("This is");
 
-  //   if (result.ok) {
-  //     setOpen(false);
-  //     form.reset();
-  //     mutate();
-  //     toast.success("Pessoa criada com sucesso");
-  //   } else {
-  //     toast.error("Erro ao criar pessoa");
-  //   }
-  // }
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
+    setSubmitting(true);
 
-  //   async function handleSubmit(values: z.infer<typeof formSchema>) {
-  //     setSubmitting(true);
-  //     const result = await fetch('/api/embarcacao/create', {
-  //       method: 'POST',
-  //       body: JSON.stringify(values),
-  //     });
+    const data = {
+      embarcacao: embarcacaoId,
+      ...values,
+    };
 
-  //     if (result.ok) {
-  //       setOpen(false);
-  //       form.reset();
-  //       mutate();
-  //       toast.success('Embarcação criada com sucesso');
-  //     } else {
-  //       toast.error('Erro ao criar embarcação');
-  //     }
-  //     setSubmitting(false);
-  //   }
+    console.log("The data is: ");
+    console.log(data);
+
+    const result = await fetch("/api/embarcacao/create/addowner", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    if (result.ok) {
+      setOpen(false);
+      form.reset();
+      mutate();
+      toast.success("Proprietário adicionado com sucesso");
+    } else {
+      toast.error("Erro ao adicionar proprietário");
+    }
+    setSubmitting(false);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -120,7 +120,10 @@ export default function AddOwner(props: { mutate: () => void }) {
           <DialogTitle>Adicionar Proprietário</DialogTitle>
           <DialogDescription asChild>
             <Form {...form}>
-              <form className="flex flex-col gap-2">
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="flex flex-col gap-2"
+              >
                 <FormField
                   control={form.control}
                   name="pessoa"
@@ -327,6 +330,21 @@ export default function AddOwner(props: { mutate: () => void }) {
                     </FormItem>
                   )}
                 />
+
+                <Button
+                  type="submit"
+                  className="mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit"
+                  disabled={submitting}
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Criando...
+                    </>
+                  ) : (
+                    "Adicionar Proprietário"
+                  )}
+                </Button>
               </form>
             </Form>
           </DialogDescription>
