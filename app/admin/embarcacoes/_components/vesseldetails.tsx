@@ -19,6 +19,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import dayjs from "dayjs";
+import { IconX } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 
 export default function VesselDetails(props: {
   open: boolean;
@@ -86,6 +88,18 @@ export default function VesselDetails(props: {
 
                     <TableCell className="text-xs">
                       {relacao.pais.pais}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        size="icon"
+                        variant="link"
+                        className="text-xs text-blue-500"
+                        onClick={() => {
+                          console.log("edit");
+                        }}
+                      >
+                        <IconX className="w-4 text-red-700" />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

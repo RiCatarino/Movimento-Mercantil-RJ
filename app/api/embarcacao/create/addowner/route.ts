@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
 import dayjs from "dayjs";
+var customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
 
 export async function POST(req: Request) {
   const { pessoa, data_inicio, data_fim, pais, embarcacao } = await req.json();
+
   const result = await prisma.relac_embarcacao_proprietario.create({
     data: {
       embarcacao: {

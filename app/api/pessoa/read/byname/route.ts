@@ -8,6 +8,7 @@ export async function GET(req: Request) {
     where: {
       nome: {
         startsWith: nome?.toString(),
+        mode: "insensitive",
       },
     },
     select: {
@@ -24,6 +25,7 @@ export async function GET(req: Request) {
         },
       },
     },
+    take: 10,
   });
 
   return Response.json(result);
