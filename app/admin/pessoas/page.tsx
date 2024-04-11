@@ -1,35 +1,50 @@
-"use client";
-import fetcher from "@/lib/fetch";
-import useSWR from "swr";
+'use client';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import fetcher from '@/lib/fetch';
+import useSWR from 'swr';
 
 export default function PessoasPage() {
-  const { data, isLoading } = useSWR<Pessoa[]>("/api/pessoa/read", fetcher);
-  console.log(data);
+  const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
+    '/api/pessoa/read',
+    fetcher
+  );
 
   return (
-    <main className="flex p-4 border-gray-300 border-solid border-2 rounded-3xl mx-10 md:mx-24 mt-5 shadow-lg ">
-      <table className="table-auto w-full text-left rounded-xl p-10 border border-separate border-spacing-y-2 ">
-        <thead className="bg-blue-200 rounded-xl p-1 uppercase text-xs">
-          <tr>
-            <th className="p-2 rounded-l-lg">Nome</th>
-            {/* <th>Nome</th>
-            <th>Observação</th> */}
-            <th className="p-2 rounded-r-lg">Relação</th>
-          </tr>
-        </thead>
-        <tbody className="">
-          {data?.map((pessoa) => (
-            <tr className="text-xs  hover:bg-blue-200 hover:bg-opacity-30 cursor-pointer">
-              <td className="p-2 rounded-l-lg ">{pessoa?.nome}</td>
-              <td>
-                {pessoa?.relacao_embarcacao_proprietario[0].embarcacao.nome}
-              </td>
-
-              <td className="p-2 rounded-r-lg"></td>
-            </tr>
+    <main className='flex p-4 border-gray-300 border-solid border-2 rounded-3xl mx-10 md:mx-24 mt-5 shadow-lg '>
+      <Table>
+        <TableHeader className='bg-blue-200 p-2  text-xs '>
+          <TableRow className='rounded-ss-xl'>
+            <TableHead>Nome</TableHead>
+            <TableHead>Título Nobreza</TableHead>
+            <TableHead>País</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {pessoas?.map((pessoa) => (
+            <TableRow key={pessoa.id}>
+              <TableCell className='font-medium text-xs'>
+                {pessoa.nome}
+              </TableCell>
+              <TableCell className='text-xs'>
+                {pessoa?.titulo_nobreza?.titulo}
+              </TableCell>
+              <TableCell className='text-xs'>{pessoa?.pais?.pais}</TableCell>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+        {pessoas?.length === 0 && (
+          <TableCaption>Nenhum proprietário encontrado</TableCaption>
+        )}
+      </Table>
     </main>
   );
 }

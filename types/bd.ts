@@ -35,7 +35,7 @@ interface Embarcacao {
   id_tipo_embarcacao: number;
   id_pais: string;
   nome: string;
-  observacao: string;
+  observacao: string | null;
   tipo_embarcacao: TipoEmbarcacao;
   relacao_embarcacao_proprietario: RelacEmbarcacaoProprietario[];
   viagem: Viagem[];
