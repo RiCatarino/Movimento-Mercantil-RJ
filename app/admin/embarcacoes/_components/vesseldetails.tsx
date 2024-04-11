@@ -73,7 +73,7 @@ export default function VesselDetails(props: {
               </TableHeader>
               <TableBody>
                 {embarcacao?.relacao_embarcacao_proprietario.map((relacao) => (
-                  <TableRow>
+                  <TableRow key={relacao.id}>
                     <TableCell className="font-medium text-xs">
                       {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
                     </TableCell>
