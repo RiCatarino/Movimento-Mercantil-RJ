@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function GET() {
   const result = await prisma.pessoa.findMany({
@@ -6,6 +6,11 @@ export async function GET() {
       id: true,
       nome: true,
       pais: true,
+      titulo_nobreza: {
+        select: {
+          titulo: true,
+        },
+      },
       relacao_embarcacao_proprietario: {
         select: {
           embarcacao: {

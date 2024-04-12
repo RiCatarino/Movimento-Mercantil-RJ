@@ -62,8 +62,9 @@ const formSchema = z.object({
   pais: z.string().min(1, { message: "Selecione um país" }),
 });
 
-export default function NewSomething(props: { mutate: () => void }) {
+export default function NewPerson(props: { mutate: () => void }) {
   const [selectPais, setSelectPais] = useState(false);
+  const [selectNobreza, setSelectNobreza] = useState(false);
   const { mutate } = props;
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -77,8 +78,12 @@ export default function NewSomething(props: { mutate: () => void }) {
     },
   });
 
-  const { data: pais, isLoading } = useSWR<[]>("/api/pais/read", fetcher);
+  const { data: pais, isLoading } = useSWR<Pais[]>("/api/pais/read", fetcher);
+  const { data: titulo_nobreza, isLoading: isLoadingNobreza } = useSWR<
+    TituloNobreza[]
+  >("/api/titulo_nobreza/read", fetcher);
 
+  console.log(titulo_nobreza);
   //   async function handleSubmit(values: z.infer<typeof formSchema>) {
   //     setSubmitting(true);
   //     const result = await fetch("/api/embarcacao/create", {
@@ -136,17 +141,61 @@ export default function NewSomething(props: { mutate: () => void }) {
 
                 <FormField
                   control={form.control}
-                  name="observacao"
+                  name="titulo_nobreza"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col">
                       <FormLabel>Título de Nobreza</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Selecione Titulo de Nobreza"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
+                      <Popover
+                        open={selectNobreza}
+                        onOpenChange={setSelectNobreza}
+                      >
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? titulo_nobreza?.find(
+                                    (titulo_nobreza) =>
+                                      titulo_nobreza.id.toString() ===
+                                      field.value
+                                  )?.titulo
+                                : "Seleccionar Título de Nobreza"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+                          <Command>
+                            <CommandInput placeholder="Procurar..." />
+                            <CommandEmpty>País não encontrado</CommandEmpty>
+                            <CommandGroup>
+                              <CommandList>
+                                {titulo_nobreza?.map((titulo_nobreza) => (
+                                  <CommandItem
+                                    value={titulo_nobreza.titulo}
+                                    key={titulo_nobreza.id}
+                                    onSelect={() => {
+                                      form.setValue(
+                                        "titulo_nobreza",
+                                        titulo_nobreza.id.toString()
+                                      );
+                                      setSelectPais(false);
+                                    }}
+                                  >
+                                    {titulo_nobreza.titulo}
+                                  </CommandItem>
+                                ))}
+                              </CommandList>
+                            </CommandGroup>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </FormItem>
                   )}
                 />
