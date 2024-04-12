@@ -83,24 +83,23 @@ export default function NewPerson(props: { mutate: () => void }) {
     TituloNobreza[]
   >("/api/titulo_nobreza/read", fetcher);
 
-  console.log(titulo_nobreza);
-  //   async function handleSubmit(values: z.infer<typeof formSchema>) {
-  //     setSubmitting(true);
-  //     const result = await fetch("/api/embarcacao/create", {
-  //       method: "POST",
-  //       body: JSON.stringify(values),
-  //     });
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
+    setSubmitting(true);
+    const result = await fetch("/api/pessoa/create", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
 
-  //     if (result.ok) {
-  //       setOpen(false);
-  //       form.reset();
-  //       mutate();
-  //       toast.success("Embarcação criada com sucesso");
-  //     } else {
-  //       toast.error("Erro ao criar embarcação");
-  //     }
-  //     setSubmitting(false);
-  //   }
+    if (result.ok) {
+      setOpen(false);
+      form.reset();
+      mutate();
+      toast.success("Pessoa adicionada com sucesso");
+    } else {
+      toast.error("Erro ao adicionar pessoa");
+    }
+    setSubmitting(false);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -122,7 +121,7 @@ export default function NewPerson(props: { mutate: () => void }) {
           <DialogDescription asChild>
             <Form {...form}>
               <form
-                // onSubmit={form.handleSubmit(handleSubmit)}
+                onSubmit={form.handleSubmit(handleSubmit)}
                 className="flex flex-col gap-2"
               >
                 <FormField
@@ -173,7 +172,7 @@ export default function NewPerson(props: { mutate: () => void }) {
                         <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                           <Command>
                             <CommandInput placeholder="Procurar..." />
-                            <CommandEmpty>País não encontrado</CommandEmpty>
+                            <CommandEmpty>Sem resultados</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
                                 {titulo_nobreza?.map((titulo_nobreza) => (
@@ -185,7 +184,7 @@ export default function NewPerson(props: { mutate: () => void }) {
                                         "titulo_nobreza",
                                         titulo_nobreza.id.toString()
                                       );
-                                      setSelectPais(false);
+                                      setSelectNobreza(false);
                                     }}
                                   >
                                     {titulo_nobreza.titulo}
@@ -199,6 +198,7 @@ export default function NewPerson(props: { mutate: () => void }) {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="pais"
