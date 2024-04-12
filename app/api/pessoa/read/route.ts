@@ -22,6 +22,10 @@ export async function GET() {
       },
     },
     take: 10,
+
+    orderBy: {
+      id: "desc",
+    },
   });
 
   return Response.json(result);
