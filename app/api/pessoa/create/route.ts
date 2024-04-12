@@ -11,8 +11,8 @@ export async function POST(req: Request) {
         },
       },
       titulo_nobreza: {
-        create: {
-          titulo: titulo,
+        connect: {
+          id: titulo,
         },
       },
     },
