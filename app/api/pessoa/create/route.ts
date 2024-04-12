@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
-  const { nome, id_pais } = await req.json();
+  const { nome, id_pais, titulo } = await req.json();
   const result = await prisma.pessoa.create({
     data: {
       nome: nome,
@@ -10,6 +10,12 @@ export async function POST(req: Request) {
           id: id_pais,
         },
       },
+      titulo_nobreza: {
+        create: {
+          titulo: titulo,
+        },
+      },
     },
   });
+  return result;
 }
