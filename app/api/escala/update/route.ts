@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-export async function UPDATE(req: Request) {
+export async function PUT(req: Request) {
   const {
     id,
     id_viagem,
