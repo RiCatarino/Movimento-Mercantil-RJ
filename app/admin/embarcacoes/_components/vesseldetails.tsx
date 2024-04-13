@@ -125,14 +125,11 @@ export default function VesselDetails(props: {
                     </TableCell>
                     <TableCell>
                       <AlertDialog>
-                        <AlertDialogTrigger>
+                        <AlertDialogTrigger asChild>
                           <Button
                             size='icon'
                             variant='link'
                             className='text-xs text-blue-500'
-                            onClick={() => {
-                              console.log('edit');
-                            }}
                           >
                             <IconX className='w-4 text-red-700' />
                           </Button>

@@ -1,12 +1,4 @@
-"use client";
-
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-
+'use client';
 import {
   Table,
   TableBody,
@@ -14,97 +6,74 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 // import VesselDetails from './vesseldetails';
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import PersonDetails from './persondetails';
+import fetcher from '@/lib/fetch';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
+import useSWR from 'swr';
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  isLoading,
-  mutate,
-}: DataTableProps<TData, TValue> & { isLoading: boolean; mutate: () => void }) {
+export function PeopleTable() {
   const [open, setOpen] = useState(false);
-  const [embarcacao_id, setEmbarcacaoId] = useState<number | undefined>();
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const [pessoa_id, setPessoaId] = useState<number | undefined>();
+  const {
+    data: pessoas,
+    isLoading,
+    mutate,
+  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher);
 
   return (
-    <div className="rounded-md border">
+    <div className='rounded-md'>
       {isLoading ? (
-        <div className="flex justify-center items-center h-24">
-          <Loader2 className=" h-24 w-24 animate-spin text-blue-200" />
+        <div className='flex justify-center items-center h-24'>
+          <Loader2 className=' h-24 w-24 animate-spin text-blue-200' />
         </div>
       ) : (
         <Table>
-          <TableHeader className="bg-blue-200">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
+          <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
+            <TableRow className='rounded-ss-xl'>
+              <TableHead>ID</TableHead>
+              <TableHead>Nome</TableHead>
+              <TableHead>Título Nobreza</TableHead>
+              <TableHead>País</TableHead>
+            </TableRow>
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  className="cursor-pointer hover:bg-blue-100"
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  onClick={() => {
-                    setEmbarcacaoId(Number(row.getValue("id")));
-                    setOpen(true);
-                  }}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
+            {pessoas?.map((pessoa) => (
+              <TableRow
+                className='cursor-pointer hover:bg-blue-100'
+                key={pessoa.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPessoaId(pessoa.id);
+                  setOpen(true);
+                }}
+              >
+                <TableCell className='font-medium text-xs'>
+                  {pessoa.id}
+                </TableCell>
+                <TableCell className='font-medium text-xs'>
+                  {pessoa.nome}
+                </TableCell>
+                <TableCell className='font-medium text-xs'>
+                  {pessoa?.titulo_nobreza?.titulo}
+                </TableCell>
+                <TableCell className='font-medium text-xs'>
+                  {pessoa.pais?.pais}
                 </TableCell>
               </TableRow>
-            )}
+            ))}
           </TableBody>
         </Table>
       )}
-      {/* <VesselDetails
+      <PersonDetails
         open={open}
         setOpen={setOpen}
-        embarcacao_id={embarcacao_id}
-      /> */}
+        pessoa_id={pessoa_id}
+        mutate={mutate}
+      />
     </div>
   );
 }

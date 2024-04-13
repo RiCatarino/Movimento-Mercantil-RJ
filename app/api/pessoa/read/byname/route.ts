@@ -1,14 +1,14 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const nome = searchParams.get("nome");
+  const nome = searchParams.get('nome');
 
   const result = await prisma.pessoa.findMany({
     where: {
       nome: {
         startsWith: nome?.toString(),
-        mode: "insensitive",
+        mode: 'insensitive',
       },
     },
     select: {
@@ -25,7 +25,7 @@ export async function GET(req: Request) {
         },
       },
     },
-    take: 10,
+    take: 20,
   });
 
   return Response.json(result);
