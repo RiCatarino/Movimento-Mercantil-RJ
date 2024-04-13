@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 
-export async function UPDATE(req: Request) {
+export async function PUT(req: Request) {
   const { id, nome, tipo, observacao } = await req.json();
   const result = await prisma.embarcacao.update({
     where: {
