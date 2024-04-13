@@ -31,7 +31,7 @@ model relac_pessoa_cargo {
 
 model pessoa {
   id Int @id @default(autoincrement())
-  nome String @db.VarChar(60)
+  nome String @db.VarChar(100)
   id_pais Int? @db.SmallInt
   id_titulo_nobreza Int? @db.SmallInt
   relacao_pessoa_cargo relac_pessoa_cargo[]
