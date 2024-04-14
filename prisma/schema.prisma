@@ -52,10 +52,10 @@ model embarcacao {
   nome                            String                          @db.VarChar(100)
   id_pais                         Int?
   observacao                      String?
-  tipo_embarcacao                 tipo_embarcacao                 @relation(fields: [id_tipo_embarcacao], references: [id])
-  pais                            pais?                           @relation(fields: [id_pais], references: [id])
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
   viagem                          viagem[]
+  tipo_embarcacao                 tipo_embarcacao                 @relation(fields: [id_tipo_embarcacao], references: [id])
+  pais                            pais?                           @relation(fields: [id_pais], references: [id])
 }
 
 model tipo_embarcacao {
@@ -161,6 +161,7 @@ model mercadoria {
   nome                    String                    @db.VarChar(40)
   relac_mercadoria_viagem relac_mercadoria_viagem[]
   relac_mercadoria_escala relac_mercadoria_escala[]
+ 
 }
 
 model unidade_de_medida {

@@ -1,7 +1,8 @@
 import prisma from "@/lib/prisma";
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   const {
+    id,
     id_embarcacao,
     id_porto_origem,
     id_porto_destino,
@@ -19,7 +20,10 @@ export async function POST(req: Request) {
     tripulacao,
     total_passageiros,
   } = await req.json();
-  const result = await prisma.viagem.create({
+  const result = await prisma.viagem.update({
+    where: {
+      id: Number(id),
+    },
     data: {
       id_embarcacao: id_embarcacao,
       id_porto_origem: id_porto_origem,
@@ -70,5 +74,5 @@ export async function POST(req: Request) {
       },
     },
   });
-  return result;
+  return Response.json(result);
 }
