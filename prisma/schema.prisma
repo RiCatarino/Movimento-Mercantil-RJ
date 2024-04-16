@@ -198,7 +198,7 @@ model relac_mercadoria_escala {
   id_escala         Int               @db.SmallInt
   id_mercadoria     Int
   quantidade        Int
-  movimento         String
+  movimento         String            @db.VarChar(1)
   id_cosignatario   Int
   valor_frete       Int
   id_unidade_medida Int               @db.SmallInt
