@@ -44,6 +44,7 @@ model pessoa {
   armador                         viagem[]                        @relation("armador")
   relac_mercadoria_viagem         relac_mercadoria_viagem[]
   // created_at DateTime @default(now())
+  relac_mercadoria_escala         relac_mercadoria_escala[]
 }
 
 model embarcacao {
@@ -52,10 +53,10 @@ model embarcacao {
   nome                            String                          @db.VarChar(100)
   id_pais                         Int?
   observacao                      String?
-  relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
-  viagem                          viagem[]
   tipo_embarcacao                 tipo_embarcacao                 @relation(fields: [id_tipo_embarcacao], references: [id])
   pais                            pais?                           @relation(fields: [id_pais], references: [id])
+  relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
+  viagem                          viagem[]
 }
 
 model tipo_embarcacao {
@@ -161,7 +162,6 @@ model mercadoria {
   nome                    String                    @db.VarChar(40)
   relac_mercadoria_viagem relac_mercadoria_viagem[]
   relac_mercadoria_escala relac_mercadoria_escala[]
- 
 }
 
 model unidade_de_medida {
@@ -199,12 +199,13 @@ model relac_mercadoria_escala {
   id_mercadoria     Int
   quantidade        Int
   movimento         String
-  cosignatario      Int
+  id_cosignatario   Int
   valor_frete       Int
   id_unidade_medida Int               @db.SmallInt
   unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
   mercadoria        mercadoria        @relation(fields: [id_mercadoria], references: [id])
   escala            escala            @relation(fields: [id_escala], references: [id])
+  cosignatario      pessoa            @relation(fields: [id_cosignatario], references: [id])
 }
 
 model relac_mercadoria_viagem {
@@ -213,10 +214,10 @@ model relac_mercadoria_viagem {
   id_mercadoria     Int               @db.SmallInt
   quantidade_origem Int
   valor_frete       Int
-  cosignatario      Int               @db.SmallInt
+  id_cosignatario   Int               @db.SmallInt
   id_unidade_medida Int               @db.SmallInt
-  viagem            viagem[]
+  viagem            viagem            @relation(fields: [id_viagem], references: [id])
   mercadoria        mercadoria        @relation(fields: [id_mercadoria], references: [id])
   unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
-  pessoa            pessoa            @relation(fields: [cosignatario], references: [id])
+  cosignatario      pessoa            @relation(fields: [id_cosignatario], references: [id])
 }

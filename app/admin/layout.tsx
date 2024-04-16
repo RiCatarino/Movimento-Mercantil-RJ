@@ -116,7 +116,7 @@ export default function DashboardLayout({
                     onClick={() => {
                       setSideBar(false);
                     }}
-                    href='/admin'
+                    href='/admin/dashboard'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
                     <IconDashboard />
