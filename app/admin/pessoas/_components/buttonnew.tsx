@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { IconPlus } from '@tabler/icons-react';
+import { Button } from "@/components/ui/button";
+import { IconPlus } from "@tabler/icons-react";
 import {
   Dialog,
   DialogContent,
@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+} from "@/components/ui/dialog";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -18,19 +18,19 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import useSWR, { mutate } from 'swr';
-import fetcher from '@/lib/fetch';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import useSWR, { mutate } from "swr";
+import fetcher from "@/lib/fetch";
 
-import { toast } from 'sonner';
-import { useState } from 'react';
-import { ChevronsUpDown, Loader2 } from 'lucide-react';
+import { toast } from "sonner";
+import { useState } from "react";
+import { ChevronsUpDown, Loader2 } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -38,15 +38,16 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+import Loader from "@/components/loader";
 
 const formSchema = z.object({
-  nome: z.string().min(1, { message: 'Nome muito curto' }),
+  nome: z.string().min(1, { message: "Nome muito curto" }),
   titulo_nobreza: z
     .string()
-    .min(1, { message: 'Selecione um título de Nobreza' }),
-  pais: z.string().min(1, { message: 'Selecione um país' }),
+    .min(1, { message: "Selecione um título de Nobreza" }),
+  pais: z.string().min(1, { message: "Selecione um país" }),
 });
 
 export default function NewPerson() {
@@ -58,31 +59,31 @@ export default function NewPerson() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: '',
-      titulo_nobreza: '',
-      pais: '',
+      nome: "",
+      titulo_nobreza: "",
+      pais: "",
     },
   });
 
-  const { data: pais, isLoading } = useSWR<Pais[]>('/api/pais/read', fetcher);
+  const { data: pais, isLoading } = useSWR<Pais[]>("/api/pais/read", fetcher);
   const { data: titulo_nobreza, isLoading: isLoadingNobreza } = useSWR<
     TituloNobreza[]
-  >('/api/titulo_nobreza/read', fetcher);
+  >("/api/titulo_nobreza/read", fetcher);
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/pessoa/create', {
-      method: 'POST',
+    const result = await fetch("/api/pessoa/create", {
+      method: "POST",
       body: JSON.stringify(values),
     });
 
     if (result.ok) {
       setOpen(false);
       form.reset();
-      mutate('/api/pessoa/read');
-      toast.success('Pessoa adicionada com sucesso');
+      mutate("/api/pessoa/read");
+      toast.success("Pessoa adicionada com sucesso");
     } else {
-      toast.error('Erro ao adicionar pessoa');
+      toast.error("Erro ao adicionar pessoa");
     }
     setSubmitting(false);
   }
@@ -91,10 +92,10 @@ export default function NewPerson() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          className=' w-fit self-end rounded-full p-2 mb-2 bg-blue-200'
-          variant='outline'
+          className=" w-fit self-end rounded-full p-2 mb-2 bg-blue-200"
+          variant="outline"
         >
-          <IconPlus className='text-black' />
+          <IconPlus className="text-black" />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -108,16 +109,16 @@ export default function NewPerson() {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-2'
+                className="flex flex-col gap-2"
               >
                 <FormField
                   control={form.control}
-                  name='nome'
+                  name="nome"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Nome</FormLabel>
                       <FormControl>
-                        <Input placeholder='Ex: António Palma' {...field} />
+                        <Input placeholder="Ex: António Palma" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -126,9 +127,9 @@ export default function NewPerson() {
 
                 <FormField
                   control={form.control}
-                  name='titulo_nobreza'
+                  name="titulo_nobreza"
                   render={({ field }) => (
-                    <FormItem className='flex flex-col'>
+                    <FormItem className="flex flex-col">
                       <FormLabel>Título de Nobreza</FormLabel>
                       <Popover
                         open={selectNobreza}
@@ -137,11 +138,11 @@ export default function NewPerson() {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant='outline'
-                              role='combobox'
+                              variant="outline"
+                              role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground"
                               )}
                             >
                               {field.value
@@ -150,14 +151,14 @@ export default function NewPerson() {
                                       titulo_nobreza.id.toString() ===
                                       field.value
                                   )?.titulo
-                                : 'Seleccionar Título de Nobreza'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                                : "Seleccionar Título de Nobreza"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                           <Command>
-                            <CommandInput placeholder='Procurar...' />
+                            <CommandInput placeholder="Procurar..." />
                             <CommandEmpty>Sem resultados</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
@@ -167,7 +168,7 @@ export default function NewPerson() {
                                     key={titulo_nobreza.id}
                                     onSelect={() => {
                                       form.setValue(
-                                        'titulo_nobreza',
+                                        "titulo_nobreza",
                                         titulo_nobreza.id.toString()
                                       );
                                       setSelectNobreza(false);
@@ -187,33 +188,33 @@ export default function NewPerson() {
 
                 <FormField
                   control={form.control}
-                  name='pais'
+                  name="pais"
                   render={({ field }) => (
-                    <FormItem className='flex flex-col'>
+                    <FormItem className="flex flex-col">
                       <FormLabel>País</FormLabel>
                       <Popover open={selectPais} onOpenChange={setSelectPais}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant='outline'
-                              role='combobox'
+                              variant="outline"
+                              role="combobox"
                               className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground"
                               )}
                             >
                               {field.value
                                 ? pais?.find(
                                     (pais) => pais.id.toString() === field.value
                                   )?.pais
-                                : 'Seleccionar País'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                                : "Seleccionar País"}
+                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                           <Command>
-                            <CommandInput placeholder='Procurar país...' />
+                            <CommandInput placeholder="Procurar país..." />
                             <CommandEmpty>País não encontrado</CommandEmpty>
                             <CommandGroup>
                               <CommandList>
@@ -222,7 +223,7 @@ export default function NewPerson() {
                                     value={pais.pais}
                                     key={pais.id}
                                     onSelect={() => {
-                                      form.setValue('pais', pais.id.toString());
+                                      form.setValue("pais", pais.id.toString());
                                       setSelectPais(false);
                                     }}
                                   >
@@ -237,20 +238,13 @@ export default function NewPerson() {
                     </FormItem>
                   )}
                 />
-
+                {submitting && <Loader />}
                 <Button
-                  type='submit'
-                  className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+                  type="submit"
+                  className="mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit"
                   disabled={submitting}
                 >
-                  {submitting ? (
-                    <>
-                      <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-                      Criando...
-                    </>
-                  ) : (
-                    'Criar'
-                  )}
+                  Criar
                 </Button>
               </form>
             </Form>
