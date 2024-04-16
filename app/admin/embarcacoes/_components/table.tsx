@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -14,10 +14,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import VesselDetails from './vesseldetails';
-import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+} from "@/components/ui/table";
+import VesselDetails from "./vesseldetails";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import Loader from "@/components/loader";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,14 +41,14 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className='rounded-md border'>
+    <div className="rounded-md border">
       {isLoading ? (
-        <div className='flex justify-center items-center h-24'>
-          <Loader2 className=' h-24 w-24 animate-spin text-blue-200' />
+        <div className="flex justify-center items-center h-24">
+          <Loader />
         </div>
       ) : (
         <Table>
-          <TableHeader className='bg-blue-200'>
+          <TableHeader className="bg-blue-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -69,11 +70,11 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  className='cursor-pointer hover:bg-blue-100'
+                  className="cursor-pointer hover:bg-blue-100"
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                   onClick={() => {
-                    setEmbarcacaoId(Number(row.getValue('id')));
+                    setEmbarcacaoId(Number(row.getValue("id")));
                     setOpen(true);
                   }}
                 >
@@ -91,7 +92,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className="h-24 text-center"
                 >
                   No results.
                 </TableCell>

@@ -39,6 +39,7 @@ import {
 import { toast } from "sonner";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import Loader from "@/components/loader";
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: "Nome muito curto" }),
@@ -179,20 +180,13 @@ export default function NewVessel(props: { mutate: () => void }) {
                     </FormItem>
                   )}
                 />
-
+                {submitting && <Loader />}
                 <Button
                   type="submit"
                   className="mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit"
                   disabled={submitting}
                 >
-                  {submitting ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Criando...
-                    </>
-                  ) : (
-                    "Criar"
-                  )}
+                  Criar
                 </Button>
               </form>
             </Form>
