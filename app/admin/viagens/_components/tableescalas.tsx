@@ -1,4 +1,3 @@
-'use client';
 import {
   Table,
   TableBody,
@@ -7,71 +6,67 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import fetcher from '@/lib/fetch';
 import dayjs from 'dayjs';
-import useSWR from 'swr';
-import TripDetails from './tripdetails';
 import { useState } from 'react';
-import Loader from '@/components/loader';
-export default function TripsTable() {
+import { EscalasDrawer } from './mercadoriaescaladrawer';
+
+export default function TableEscalas(props: { escalas: Escala[] | undefined }) {
+  const { escalas } = props;
   const [open, setOpen] = useState(false);
-  const [viagem_id, setViagemId] = useState<number | undefined>();
-  const {
-    data: viagens,
-    isLoading,
-    mutate,
-  } = useSWR<Viagem[]>('/api/viagem/read', fetcher);
+  const [relacmercadoriaescala, setRelacMercadoriaEscala] = useState<
+    RelacMercadoriaEscala[] | undefined
+  >();
 
   return (
     <>
-      {isLoading && <Loader />}
       <Table>
         <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
           <TableRow className='rounded-ss-xl'>
-            <TableHead>ID</TableHead>
-            <TableHead>Data de Partida</TableHead>
-            <TableHead>Data de Chegada</TableHead>
-            <TableHead>Dias de Viagem</TableHead>
-            <TableHead>Tripulação</TableHead>
-            <TableHead>Passageiros</TableHead>
+            <TableHead>Data</TableHead>
+            <TableHead>Ano</TableHead>
+            <TableHead>Dias no Porto</TableHead>
+            <TableHead>Porto</TableHead>
+            <TableHead>Entraram</TableHead>
+            <TableHead>Saíram</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {viagens?.map((viagem) => (
+          {escalas?.map((escala) => (
             <TableRow
               className='cursor-pointer hover:bg-blue-100'
-              key={viagem.id}
+              key={escala.id}
               onClick={(e) => {
                 e.stopPropagation();
-                setViagemId(viagem.id);
+                setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium text-xs'>{viagem.id}</TableCell>
               <TableCell className='font-medium text-xs'>
-                {dayjs(viagem.data_viagem).format('DD-MM-YYYY')}
+                {dayjs(escala.data_escala).format('DD-MM-YYYY')}
               </TableCell>
               <TableCell className='font-medium text-xs'>
-                {dayjs(viagem.data_chegada).format('DD-MM-YYYY')}
+                {escala.ano}
               </TableCell>
               <TableCell className='font-medium text-xs'>
-                {viagem.dias_viagem}
+                {escala.dias_porto}
               </TableCell>
               <TableCell className='font-medium text-xs'>
-                {viagem.tripulacao}
+                {escala.porto.nome}
               </TableCell>
               <TableCell className='font-medium text-xs'>
-                {viagem.total_passageiros}
+                {escala.entrada_de_passageiros}
+              </TableCell>
+              <TableCell className='font-medium text-xs'>
+                {escala.saida_de_passageiros}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <TripDetails
+      <EscalasDrawer
         open={open}
         setOpen={setOpen}
-        viagem_id={viagem_id}
-        mutate={mutate}
+        relac_mercadoria_escala={relacmercadoriaescala}
       />
     </>
   );

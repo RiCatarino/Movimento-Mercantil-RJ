@@ -195,7 +195,7 @@ interface RelacMercadoriaViagem {
   id_mercadoria: number;
   quantidade_origem: number;
   valor_frete: number;
-  cosignatario: number;
+  cosignatario: Pessoa;
   id_unidade_medida: number;
   viagem: Viagem[];
   mercadoria: Mercadoria;

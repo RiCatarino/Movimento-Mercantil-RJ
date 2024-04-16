@@ -1,7 +1,5 @@
 'use client';
 
-import fetcher from '@/lib/fetch';
-import useSWR from 'swr';
 import { PeopleTable } from '../pessoas/_components/table';
 import NewPerson from './_components/buttonnew';
 
