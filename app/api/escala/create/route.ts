@@ -1,11 +1,13 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
+import dayjs from 'dayjs';
+var customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
 
 export async function POST(req: Request) {
   const {
-    id,
-    id_viagem,
-    id_porto,
-    data_escala,
+    viagem_id,
+    porto_id,
+    data,
     ano,
     dias_porto,
     entrada_de_passageiros,
@@ -13,23 +15,22 @@ export async function POST(req: Request) {
   } = await req.json();
   const result = await prisma.escala.create({
     data: {
-      id: id,
       viagem: {
         connect: {
-          id: id_viagem,
+          id: viagem_id,
         },
       },
       porto: {
         connect: {
-          id: id_porto,
+          id: porto_id,
         },
       },
-      data_escala: data_escala,
-      ano: ano,
+      data_escala: dayjs(data, 'DD/MM/YYYY').toDate(),
+      ano: Number(ano),
       dias_porto: dias_porto,
       entrada_de_passageiros: entrada_de_passageiros,
       saida_de_passageiros: saida_de_passageiros,
     },
   });
-  return result;
+  return Response.json(result);
 }
