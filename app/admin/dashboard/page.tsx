@@ -1,12 +1,11 @@
-import { Button } from '@/components/ui/button';
 import StatsCard from './_components/statscard';
-import { Sailboat, Ship, Users } from 'lucide-react';
 import {
-  IconDirectionSign,
-  IconFriends,
-  IconUserScreen,
-  IconUsersGroup,
-} from '@tabler/icons-react';
+  GitCompareArrows,
+  PersonStanding,
+  Sailboat,
+  Ship,
+  Users,
+} from 'lucide-react';
 
 export default function AdminPage() {
   return (
@@ -14,18 +13,14 @@ export default function AdminPage() {
       <StatsCard
         title='Total de viagens'
         value={10}
-        icon={<IconDirectionSign />}
+        icon={<GitCompareArrows />}
       />
       <StatsCard title='Total de Embarcações' value={20} icon={<Ship />} />
-      <StatsCard
-        title='Total de Usuários'
-        value={30}
-        icon={<IconUserScreen />}
-      />
+      <StatsCard title='Total de Usuários' value={30} icon={<Users />} />
       <StatsCard
         title='Total de Pessoas'
         value={40}
-        icon={<IconUsersGroup />}
+        icon={<PersonStanding />}
       />
     </div>
   );

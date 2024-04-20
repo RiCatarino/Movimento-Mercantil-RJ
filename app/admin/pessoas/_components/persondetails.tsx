@@ -4,13 +4,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import fetcher from "@/lib/fetch";
-import { Dispatch, SetStateAction, useState } from "react";
-import useSWR from "swr";
-import PersonRelacaoEmbarcacaoTable from "./personrelacembarcacaotable";
-import { Button } from "@/components/ui/button";
-import { IconTrash } from "@tabler/icons-react";
+} from '@/components/ui/dialog';
+import fetcher from '@/lib/fetch';
+import { Dispatch, SetStateAction, useState } from 'react';
+import useSWR from 'swr';
+import PersonRelacaoEmbarcacaoTable from './personrelacembarcacaotable';
+import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,9 +20,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"; // import AddOwner from './addownerbutton';
-import { toast } from "sonner";
-import Loader from "@/components/loader";
+} from '@/components/ui/alert-dialog'; // import AddOwner from './addownerbutton';
+import { toast } from 'sonner';
+import Loader from '@/components/loader';
+import { TrashIcon } from 'lucide-react';
 
 export default function PersonDetails(props: {
   open: boolean;
@@ -45,48 +45,48 @@ export default function PersonDetails(props: {
   async function handleDeletePerson(id: number) {
     setDeleting(true);
     const result = await fetch(`/api/pessoa/delete`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     if (result.ok) {
       mutate();
-      toast.success("Pessoa removida com sucesso");
+      toast.success('Pessoa removida com sucesso');
       setOpen(false);
     } else {
-      toast.error("Erro ao remover pessoa");
+      toast.error('Erro ao remover pessoa');
     }
     setDeleting(false);
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className=" min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll">
+      <DialogContent className=' min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className={isLoading ? "h-64" : ""}>
-            {isLoading ? <Loader /> : "Pessoa #" + pessoa_id}
+          <DialogTitle className={isLoading ? 'h-64' : ''}>
+            {isLoading ? <Loader /> : 'Pessoa #' + pessoa_id}
           </DialogTitle>
           <DialogDescription asChild></DialogDescription>
         </DialogHeader>
         {!isLoading && (
           <>
-            <div className="flex flex-wrap gap-2">
-              <div className="flex flex-col gap-1 rounded-xl border min-w-[50%]">
-                <div className="bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm">
+            <div className='flex flex-wrap gap-2'>
+              <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
+                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
                   Nome
                 </div>
-                <div className="p-2 text-xs">{pessoa?.nome}</div>
+                <div className='p-2 text-xs'>{pessoa?.nome}</div>
               </div>
-              <div className="flex flex-col gap-1 rounded-xl border grow">
-                <div className="bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm">
+              <div className='flex flex-col gap-1 rounded-xl border grow'>
+                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
                   Título Nobreza
                 </div>
-                <div className="p-2 text-xs">
+                <div className='p-2 text-xs'>
                   {pessoa?.titulo_nobreza?.titulo}
                 </div>
               </div>
 
-              <div className=" max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl mt-4 ">
-                <div className="flex flex-col gap-1 p-2 bg-blue-200 text-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm">
+              <div className=' max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl mt-4 '>
+                <div className='flex flex-col gap-1 p-2 bg-blue-200 text-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
                   Embarcações
                 </div>
                 <PersonRelacaoEmbarcacaoTable
@@ -97,9 +97,9 @@ export default function PersonDetails(props: {
             </div>
 
             <AlertDialog>
-              <AlertDialogTrigger className="w-full" asChild>
-                <Button variant="destructive" className=" w-full">
-                  Remover <IconTrash className="ml-2 w-5 h-5" />
+              <AlertDialogTrigger className='w-full' asChild>
+                <Button variant='destructive' className=' w-full'>
+                  Remover <TrashIcon className='ml-2 w-5 h-5' />
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -113,13 +113,13 @@ export default function PersonDetails(props: {
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    className="bg-red-500 hover:bg-red-600"
+                    className='bg-red-500 hover:bg-red-600'
                     disabled={deleting}
                     onClick={() => {
                       if (pessoa?.id) handleDeletePerson(pessoa?.id);
                     }}
                   >
-                    {deleting ? "Aguarde..." : "Remover"}
+                    {deleting ? 'Aguarde...' : 'Remover'}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>

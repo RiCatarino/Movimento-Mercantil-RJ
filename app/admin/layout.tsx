@@ -1,15 +1,5 @@
 'use client';
 
-import {
-  Icon123,
-  IconDashboard,
-  IconLogout,
-  IconRipple,
-  IconSailboat,
-  IconUser,
-  IconUsers,
-  IconUsersGroup,
-} from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import {
   DropdownMenu,
@@ -22,6 +12,14 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Toaster } from '@/components/ui/sonner';
+import {
+  GitCompareArrows,
+  LayoutDashboard,
+  PersonStanding,
+  Ship,
+  UserCheck,
+  Users,
+} from 'lucide-react';
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -88,7 +86,7 @@ export default function DashboardLayout({
           <DropdownMenuTrigger asChild>
             <Button variant='ghost'>
               <div className='flex flex-row items-center justify-center text-blue-400'>
-                <IconUser />
+                <UserCheck />
                 <span className='ms-3'>Gervasio</span>
               </div>
             </Button>
@@ -119,7 +117,7 @@ export default function DashboardLayout({
                     href='/admin/dashboard'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
-                    <IconDashboard />
+                    <LayoutDashboard />
                     <span className='ms-3'>Dashboard</span>
                   </Link>
                 </li>
@@ -132,7 +130,7 @@ export default function DashboardLayout({
                     href='/admin/embarcacoes'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
-                    <IconSailboat />
+                    <Ship />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Embarcações
                     </span>
@@ -147,7 +145,7 @@ export default function DashboardLayout({
                     href='/admin/viagens'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
-                    <IconRipple />
+                    <GitCompareArrows />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Viagens
                     </span>
@@ -162,7 +160,7 @@ export default function DashboardLayout({
                     href='/admin/pessoas'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
-                    <IconUsersGroup />
+                    <PersonStanding />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Pessoas
                     </span>
@@ -179,7 +177,7 @@ export default function DashboardLayout({
                     href='/admin/usuarios'
                     className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
                   >
-                    <IconUsers />
+                    <Users />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Usuários
                     </span>

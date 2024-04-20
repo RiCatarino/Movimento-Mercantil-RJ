@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/table';
 
 import dayjs from 'dayjs';
-import { IconX } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -25,6 +24,7 @@ import {
 
 import { useState } from 'react';
 import fetcher from '@/lib/fetch';
+import { XIcon } from 'lucide-react';
 
 export default function PersonRelacaoEmbarcacaoTable(props: {
   pessoa: Pessoa | undefined;
@@ -86,7 +86,7 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
                         console.log('edit');
                       }}
                     >
-                      <IconX className='w-4 text-red-700' />
+                      <XIcon className='w-4 text-red-700' />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>

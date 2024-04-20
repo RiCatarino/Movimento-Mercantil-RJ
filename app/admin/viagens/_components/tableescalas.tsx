@@ -19,7 +19,7 @@ export default function TableEscalas(props: { escalas: Escala[] | undefined }) {
 
   return (
     <>
-      <Table>
+      <Table className='border-b'>
         <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>Data</TableHead>

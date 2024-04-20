@@ -9,7 +9,6 @@ import fetcher from '@/lib/fetch';
 import { Dispatch, SetStateAction, useState } from 'react';
 import useSWR from 'swr';
 import { Button } from '@/components/ui/button';
-import { IconTrash } from '@tabler/icons-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,6 +31,8 @@ import {
 import TableEscalas from './tableescalas';
 import TableMercadorias from './tablemercadorias';
 import Loader from '@/components/loader';
+import { Trash } from 'lucide-react';
+import BotaoNovaeEscala from './botaonovaescala';
 
 export default function TripDetails(props: {
   open: boolean;
@@ -216,6 +217,10 @@ export default function TripDetails(props: {
                   <AccordionTrigger>Escalas</AccordionTrigger>
                   <AccordionContent>
                     <TableEscalas escalas={viagem?.escala} />
+                    <BotaoNovaeEscala
+                      mutate={mutateViagem}
+                      viagem_id={viagem_id}
+                    />
                   </AccordionContent>
                 </AccordionItem>
 
@@ -232,7 +237,7 @@ export default function TripDetails(props: {
             <AlertDialog>
               <AlertDialogTrigger className='w-full' asChild>
                 <Button variant='destructive' className=' w-full'>
-                  Remover <IconTrash className='ml-2 w-5 h-5' />
+                  Remover <Trash className='ml-2 w-5 h-5' />
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
