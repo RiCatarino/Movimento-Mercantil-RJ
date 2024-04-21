@@ -66,7 +66,13 @@ export default function VesselDetails(props: {
       <DialogContent className=' min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle className={isLoading ? 'h-64' : ''}>
-            {isLoading ? <Loader /> : 'Embarcação #' + embarcacao_id}
+            {isLoading ? (
+              <div className='flex justify-center items-center'>
+                <Loader classProp='w-24 h-24' />
+              </div>
+            ) : (
+              'Embarcação #' + embarcacao_id
+            )}
           </DialogTitle>
           <DialogDescription asChild></DialogDescription>
         </DialogHeader>

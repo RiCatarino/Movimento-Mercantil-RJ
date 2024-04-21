@@ -72,7 +72,13 @@ export default function TripDetails(props: {
       <DialogContent className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle className={isLoading ? 'h-64' : ''}>
-            {isLoading ? <Loader /> : 'Viagem #' + viagem_id}
+            {isLoading ? (
+              <div className='flex justify-center items-center'>
+                <Loader classProp='w-24 h-24' />
+              </div>
+            ) : (
+              'Viagem #' + viagem_id
+            )}
           </DialogTitle>
         </DialogHeader>
         {!isLoading && (
@@ -216,7 +222,10 @@ export default function TripDetails(props: {
                 <AccordionItem value='Escalas' className='w-full'>
                   <AccordionTrigger>Escalas</AccordionTrigger>
                   <AccordionContent>
-                    <TableEscalas escalas={viagem?.escala} />
+                    <TableEscalas
+                      escalas={viagem?.escala}
+                      mutate={mutateViagem}
+                    />
                     <BotaoNovaeEscala
                       mutate={mutateViagem}
                       viagem_id={viagem_id}

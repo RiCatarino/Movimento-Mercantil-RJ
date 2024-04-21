@@ -237,7 +237,11 @@ export default function NewPerson() {
                     </FormItem>
                   )}
                 />
-                {submitting && <Loader />}
+                {submitting && (
+                  <div className='flex justify-center items-center'>
+                    <Loader classProp='w-24 h-24' />
+                  </div>
+                )}
                 <Button
                   type='submit'
                   className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
