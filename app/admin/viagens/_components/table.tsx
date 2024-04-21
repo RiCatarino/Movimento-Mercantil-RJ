@@ -24,7 +24,9 @@ export default function TripsTable() {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading &&  <div className='flex justify-center items-center'>
+                <Loader classProp='w-24 h-24' />
+              </div>}
       <Table>
         <TableHeader className="bg-blue-200 p-2 text-xs border-t-0 ">
           <TableRow className="rounded-ss-xl">
