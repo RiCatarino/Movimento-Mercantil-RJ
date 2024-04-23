@@ -104,7 +104,7 @@ export default function DashboardLayout({
         {sidebar && (
           <aside
             id='default-sidebar'
-            className='absolute top-2 left-2 z-40 w-60 mt-20 transition-transform -translate-x-full sm:translate-x-0'
+            className='absolute top-2 left-2 z-40 w-60 mt-20 '
             aria-label='Sidebar'
           >
             <div className='h-full px-3 py-4 overflow-y-auto rounded-xl shadow-2xl bg-blue-200 dark:bg-gray-800'>

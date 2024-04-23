@@ -60,16 +60,13 @@ export default function PersonDetails(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className=' min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className='min-w-[50%] max-w-[95%] md:max-w-[50%] p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className={isLoading ? 'h-64' : ''}>
-            {isLoading ?  <div className='flex justify-center items-center'>
-                <Loader classProp='w-24 h-24' />
-              </div> : 'Pessoa #' + pessoa_id}
-          </DialogTitle>
-          <DialogDescription asChild></DialogDescription>
+          <DialogTitle>Pessoa</DialogTitle>
         </DialogHeader>
-        {!isLoading && (
+        {isLoading ? (
+          <Loader classProp='h-24 w-24 self-center' />
+        ) : (
           <>
             <div className='flex flex-wrap gap-2'>
               <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
@@ -78,6 +75,7 @@ export default function PersonDetails(props: {
                 </div>
                 <div className='p-2 text-xs'>{pessoa?.nome}</div>
               </div>
+
               <div className='flex flex-col gap-1 rounded-xl border grow'>
                 <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
                   Título Nobreza
@@ -86,16 +84,16 @@ export default function PersonDetails(props: {
                   {pessoa?.titulo_nobreza?.titulo}
                 </div>
               </div>
+            </div>
 
-              <div className=' max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl mt-4 '>
-                <div className='flex flex-col gap-1 p-2 bg-blue-200 text-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
-                  Embarcações
-                </div>
-                <PersonRelacaoEmbarcacaoTable
-                  pessoa={pessoa}
-                  mutatePessoa={mutatePessoa}
-                />
+            <div className=' flex flex-col items mt-4 '>
+              <div className='flex gap-1 p-2 bg-blue-200 justify-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
+                Embarcações
               </div>
+              <PersonRelacaoEmbarcacaoTable
+                pessoa={pessoa}
+                mutatePessoa={mutatePessoa}
+              />
             </div>
 
             <AlertDialog>

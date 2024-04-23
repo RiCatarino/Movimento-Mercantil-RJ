@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Table,
   TableBody,
@@ -6,14 +6,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 // import VesselDetails from './vesseldetails';
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
-import PersonDetails from "./persondetails";
-import fetcher from "@/lib/fetch";
-import Loader from "@/components/loader";
-import useSWR from "swr";
+import { useState } from 'react';
+import PersonDetails from './persondetails';
+import fetcher from '@/lib/fetch';
+import Loader from '@/components/loader';
+import useSWR from 'swr';
 
 export function PeopleTable() {
   const [open, setOpen] = useState(false);
@@ -22,19 +21,20 @@ export function PeopleTable() {
     data: pessoas,
     isLoading,
     mutate,
-  } = useSWR<Pessoa[]>("/api/pessoa/read", fetcher);
+  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher);
 
+  if (isLoading) return <Loader classProp='w-24 h-24 self-center' />;
   return (
-    <div className="rounded-md">
+    <div className='rounded-md'>
       <>
         {isLoading ? (
-          <div className="flex justify-center items-center">
+          <div className='flex justify-center items-center'>
             <Loader />
           </div>
         ) : (
           <Table>
-            <TableHeader className="bg-blue-200 p-2 text-xs border-t-0 ">
-              <TableRow className="rounded-ss-xl">
+            <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
+              <TableRow className='rounded-ss-xl'>
                 <TableHead>ID</TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>Título Nobreza</TableHead>
@@ -44,7 +44,7 @@ export function PeopleTable() {
             <TableBody>
               {pessoas?.map((pessoa) => (
                 <TableRow
-                  className="cursor-pointer hover:bg-blue-100"
+                  className='cursor-pointer hover:bg-blue-100'
                   key={pessoa.id}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -52,16 +52,16 @@ export function PeopleTable() {
                     setOpen(true);
                   }}
                 >
-                  <TableCell className="font-medium text-xs">
+                  <TableCell className='font-medium text-xs'>
                     {pessoa.id}
                   </TableCell>
-                  <TableCell className="font-medium text-xs">
+                  <TableCell className='font-medium text-xs'>
                     {pessoa.nome}
                   </TableCell>
-                  <TableCell className="font-medium text-xs">
+                  <TableCell className='font-medium text-xs'>
                     {pessoa?.titulo_nobreza?.titulo}
                   </TableCell>
-                  <TableCell className="font-medium text-xs">
+                  <TableCell className='font-medium text-xs'>
                     {pessoa.pais?.pais}
                   </TableCell>
                 </TableRow>
