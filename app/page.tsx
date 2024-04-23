@@ -1,8 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -17,26 +14,26 @@ const World = dynamic(
 
 export function GlobeDemo() {
   const globeConfig = {
-    pointSize: 4,
-    globeColor: '#062056',
-    showAtmosphere: true,
-    atmosphereColor: '#FFFFFF',
+    pointSize: 10,
+    globeColor: '#84CBF9',
+    showAtmosphere: false,
+    atmosphereColor: '#000',
     atmosphereAltitude: 0.1,
     emissive: '#062056',
     emissiveIntensity: 0.1,
     shininess: 0.9,
-    polygonColor: 'rgba(255,255,255,0.7)',
+    polygonColor: '#BF1222',
     ambientLight: '#38bdf8',
-    directionalLeftLight: '#ffffff',
-    directionalTopLight: '#ffffff',
-    pointLight: '#ffffff',
+    directionalLeftLight: '#fff',
+    directionalTopLight: '#fff',
+    pointLight: '#000',
     arcTime: 1000,
     arcLength: 0.9,
     rings: 1,
     maxRings: 3,
     initialPosition: { lat: 22.3193, lng: 114.1694 },
     autoRotate: true,
-    autoRotateSpeed: 0.5,
+    autoRotateSpeed: 0.1,
   };
   const colors = ['#06b6d4', '#3b82f6', '#6366f1'];
   const sampleArcs = [
@@ -407,7 +404,10 @@ export function GlobeDemo() {
     <div className=' lg:max-w-[50%] w-full  relative overflow-hidden  md:h-[40rem]  '>
       <div>
         {/* <div className='relative w-fit bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40' /> */}
-        <div className='lg:absolute w-full -bottom-5 h-72 md:h-full z-10 cursor-pointer drop-shadow-2xl'>
+        <div
+          className='lg:absolute w-full -bottom-5 h-72 md:h-full z-10 cursor-pointer drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
+        '
+        >
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
       </div>
@@ -418,7 +418,7 @@ export function GlobeDemo() {
 export default function Home() {
   return (
     <main className='flex max-h-screen '>
-      <div className='flex w-full mt-10 md:mt-0 flex-wrap-reverse  justify-center items-center md:h-auto dark:bg-black relative z-0'>
+      <div className='flex w-full flex-wrap-reverse  justify-center items-center  dark:bg-black z-10 md:h-screen md:mt-0 mt-52'>
         <GlobeDemo />
         <motion.div
           initial={{
@@ -442,7 +442,7 @@ export default function Home() {
           </p>
           <Image
             src='/logocircuitosoceanicos.png'
-            className='mx-auto mt-4'
+            className='mx-auto mt-4 hover:rotate-12 hover:scale-105 hover:shadow-2xl rounded-full bg-cover transition-all duration-300 ease-in-out'
             width={200}
             height={200}
             alt='logo'
@@ -455,7 +455,7 @@ export default function Home() {
           position: 'absolute',
           width: '100%',
         }}
-        className=' pointer-events-none'
+        className=' pointer-events-none mb-0 z-0'
       >
         <svg
           version='1.1'

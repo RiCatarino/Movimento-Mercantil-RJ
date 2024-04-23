@@ -16,7 +16,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  console.log(pathname);
   if (pathname.startsWith('/admin')) {
     return (
       <html lang='en' suppressHydrationWarning>
@@ -37,14 +36,15 @@ export default function RootLayout({
         <head />
         <body
           className={cn(
-            'min-h-screen bg-background font-sans antialiased',
+            'h-screen bg-background font-sans antialiased',
             fontSans.variable
           )}
+          id='magicpattern'
         >
-          <nav>
-            <div className='flex justify-between items-center p-4 border-gray-300 border-solid border-2 rounded-3xl mx-10 md:mx-24 mt-5 shadow-lg'>
+          <nav className='absolute w-full'>
+            <div className='flex bg-white justify-between items-center p-4 rounded-3xl mx-10 md:mx-24 mt-5 shadow-xl'>
               <h1 className='text-xl font-bold'>Movimento Mercantil RJ</h1>
-              <ul className='flex space-x-4'>
+              <ul className='flex space-x-4 items-center'>
                 <li className='hover:bg-blue-500 rounded-lg p-1 text-blue-500 hover:text-white cursor-pointer'>
                   <a href='#' className=''>
                     <HomeIcon />

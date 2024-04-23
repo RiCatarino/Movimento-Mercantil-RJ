@@ -131,3 +131,12 @@
     transform: rotate(0deg);
   }
 }
+
+#magicpattern {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: repeat;
+  background-image: url('data:image/svg+xml;utf8,%3Csvg width=%222000%22 height=%221000%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3ClinearGradient id=%22a%22 gradientTransform=%22rotate(90)%22%3E%3Cstop offset=%225%25%22 stop-color=%22%23fff%22%2F%3E%3Cstop offset=%2295%25%22 stop-color=%22%23fff%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath fill=%22%2384ccfc%22 d=%22M0 0h2000v1000H0z%22%2F%3E%3Cpath d=%22M0 500c104.634 26.695 209.267 53.39 322 41s233.564-63.867 346-68c112.436-4.133 216.476 39.078 322 34 105.524-5.078 212.532-58.443 316-68 103.468-9.557 203.395 24.696 341 55s312.887 56.658 378 57c65.113.342 20.056-25.33 15-51l-40 500H0Z%22 fill=%22url(%23a)%22%2F%3E%3C%2Fsvg%3E');
+}

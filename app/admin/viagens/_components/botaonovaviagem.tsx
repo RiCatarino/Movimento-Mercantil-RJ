@@ -36,10 +36,11 @@ export default function BotaoNovaViagem() {
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          size='icon'
-          variant='ghost'
-          className=' text-blue-400 rounded-full flex-end'
+          // size='icon'
+          // variant=""
+          className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-lg w-fit self-end'
         >
+          Adicionar Viagem
           <Plus size={24} />
         </Button>
       </SheetTrigger>

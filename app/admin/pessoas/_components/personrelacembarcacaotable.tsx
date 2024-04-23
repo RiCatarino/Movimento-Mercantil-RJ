@@ -44,11 +44,11 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
   }
 
   return (
-    <div className='shadow-xl rounded-xl'>
+    <div className=' max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl'>
       <Table className='shadow-xl'>
         <TableHeader className='bg-blue-200 p-2  text-xs border-t-0 '>
           <TableRow className='rounded-ss-xl'>
-            <TableHead>ID embarcação</TableHead>
+            <TableHead>ID</TableHead>
             <TableHead>Embarcação</TableHead>
             <TableHead>Início</TableHead>
             <TableHead>Fim</TableHead>
