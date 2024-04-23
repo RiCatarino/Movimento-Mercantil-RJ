@@ -49,11 +49,11 @@ model pessoa {
 
 model embarcacao {
   id                              Int                             @id @default(autoincrement())
-  id_tipo_embarcacao              Int                             @db.SmallInt
-  nome                            String                          @db.VarChar(100)
+  id_tipo_embarcacao              Int?                             @db.SmallInt
+  nome                            String?                          @db.VarChar(100)
   id_pais                         Int?
   observacao                      String?
-  tipo_embarcacao                 tipo_embarcacao                 @relation(fields: [id_tipo_embarcacao], references: [id])
+  tipo_embarcacao                 tipo_embarcacao?                 @relation(fields: [id_tipo_embarcacao], references: [id])
   pais                            pais?                           @relation(fields: [id_pais], references: [id])
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
   viagem                          viagem[]
@@ -114,46 +114,47 @@ model relac_embarcacao_proprietario {
 
 model viagem {
   id                          Int                           @id @default(autoincrement())
-  id_embarcacao               Int
-  id_porto_origem             Int                           @db.SmallInt
-  id_porto_destino            Int                           @db.SmallInt
-  data_viagem                 DateTime
-  dias_porto_destino          Int                           @db.SmallInt
-  dias_porto_origem           Int                           @db.SmallInt
-  mestre_id                   Int
-  capitao_id                  Int
-  comandante_id               Int
-  entrada_sahida              String                        @db.VarChar(7)
-  dias_viagem                 Int
-  data_chegada                DateTime
-  data_rio                    DateTime
-  armador_id                  Int
-  tripulacao                  Int                           @db.SmallInt
-  total_passageiros           Int                           @db.SmallInt
+  id_embarcacao               Int?
+  id_porto_origem             Int?                           @db.SmallInt
+  id_porto_destino            Int?                           @db.SmallInt
+  data_viagem                 DateTime?                       @db.Date()
+  dias_porto_destino          Int?                           @db.SmallInt
+  dias_porto_origem           Int?                           @db.SmallInt
+  mestre_id                   Int?
+  capitao_id                  Int?
+  comandante_id               Int?
+  observacoes                String?                        @db.VarChar()
+  entrada_sahida              String?                        @db.VarChar(7)
+  dias_viagem                 Int?
+  data_chegada                DateTime?                     @db.Date()
+  data_rio                    DateTime?                     @db.Date()
+  armador_id                  Int?
+  tripulacao                  Int?                           @db.SmallInt
+  total_passageiros           Int?                           @db.SmallInt
   relac_viagem_referencia_doc relac_viagem_referencia_doc[]
   noticia                     noticia[]
   relac_mercadoria_viagem     relac_mercadoria_viagem[]
   escala                      escala[]
-  embarcacao                  embarcacao                    @relation(fields: [id_embarcacao], references: [id])
-  porto_origem                porto                         @relation("porto_origem", fields: [id_porto_origem], references: [id])
-  porto_destino               porto                         @relation("porto_destino", fields: [id_porto_destino], references: [id])
-  mestre                      pessoa                        @relation("mestre", fields: [mestre_id], references: [id])
-  capitao                     pessoa                        @relation("capitao", fields: [capitao_id], references: [id])
-  comandante                  pessoa                        @relation("comandante", fields: [comandante_id], references: [id])
-  armador                     pessoa                        @relation("armador", fields: [armador_id], references: [id])
+  embarcacao                  embarcacao?                    @relation(fields: [id_embarcacao], references: [id])
+  porto_origem                porto?                         @relation("porto_origem", fields: [id_porto_origem], references: [id])
+  porto_destino               porto?                         @relation("porto_destino", fields: [id_porto_destino], references: [id])
+  mestre                      pessoa?                        @relation("mestre", fields: [mestre_id], references: [id])
+  capitao                     pessoa?                        @relation("capitao", fields: [capitao_id], references: [id])
+  comandante                  pessoa?                        @relation("comandante", fields: [comandante_id], references: [id])
+  armador                     pessoa?                        @relation("armador", fields: [armador_id], references: [id])
 }
 
 model escala {
   id                      Int                       @id @default(autoincrement())
   id_viagem               Int                       @db.SmallInt
   id_porto                Int                       @db.SmallInt
-  data_escala             DateTime
-  ano                     Int                       @db.SmallInt
-  dias_porto              Int                       @db.SmallInt
-  entrada_de_passageiros  Int                       @db.SmallInt
-  saida_de_passageiros    Int                       @db.SmallInt
-  porto                   porto                     @relation(fields: [id_porto], references: [id])
-  viagem                  viagem                    @relation(fields: [id_viagem], references: [id])
+  data_escala             DateTime?
+  ano                     Int?                       @db.SmallInt
+  dias_porto              Int?                       @db.SmallInt
+  entrada_de_passageiros  Int?                      @db.SmallInt
+  saida_de_passageiros    Int?                      @db.SmallInt
+  porto                   porto?                    @relation(fields: [id_porto], references: [id])
+  viagem                  viagem?                    @relation(fields: [id_viagem], references: [id])
   relac_mercadoria_escala relac_mercadoria_escala[]
 }
 
@@ -212,12 +213,12 @@ model relac_mercadoria_viagem {
   id                Int               @id @default(autoincrement())
   id_viagem         Int               @db.SmallInt
   id_mercadoria     Int               @db.SmallInt
-  quantidade_origem Int
-  valor_frete       Int
-  id_cosignatario   Int               @db.SmallInt
-  id_unidade_medida Int               @db.SmallInt
-  viagem            viagem            @relation(fields: [id_viagem], references: [id])
-  mercadoria        mercadoria        @relation(fields: [id_mercadoria], references: [id])
-  unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
-  cosignatario      pessoa            @relation(fields: [id_cosignatario], references: [id])
+  quantidade_origem Int?
+  valor_frete       Int?
+  id_cosignatario   Int?               @db.SmallInt
+  id_unidade_medida Int?               @db.SmallInt
+  viagem            viagem?            @relation(fields: [id_viagem], references: [id])
+  mercadoria        mercadoria?        @relation(fields: [id_mercadoria], references: [id])
+  unidade_de_medida unidade_de_medida? @relation(fields: [id_unidade_medida], references: [id])
+  cosignatario      pessoa?            @relation(fields: [id_cosignatario], references: [id])
 }

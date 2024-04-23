@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "viagem" ALTER COLUMN "data_viagem" SET DATA TYPE DATE,
+ALTER COLUMN "data_chegada" SET DATA TYPE DATE,
+ALTER COLUMN "data_rio" SET DATA TYPE DATE;

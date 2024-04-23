@@ -67,6 +67,7 @@ export async function GET() {
         },
       },
     },
+    take: 10,
   });
   return Response.json(result);
 }
