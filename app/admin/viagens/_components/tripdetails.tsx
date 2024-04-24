@@ -71,7 +71,7 @@ export default function TripDetails(props: {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className={isLoading ? 'h-64' : ''}>
+          <DialogTitle>
             {isLoading ? (
               <div className='flex justify-center items-center'>
                 <Loader classProp='w-24 h-24' />
@@ -133,7 +133,7 @@ export default function TripDetails(props: {
               </div>
             </div>
 
-            <div className=' max-w-xs md:max-w-full flex-1 flex w-full '>
+            <div className=' max-w-xs md:max-w-full flex-1 flex w-full flex-col gap-2 '>
               <Accordion
                 type='single'
                 collapsible
@@ -242,35 +242,41 @@ export default function TripDetails(props: {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </div>
-            <AlertDialog>
-              <AlertDialogTrigger className='w-full' asChild>
-                <Button variant='destructive' className=' w-full'>
-                  Remover <Trash className='ml-2 w-5 h-5' />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Tem a certeza?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Esta ação não pode ser desfeita. Esta ação irá remover a
-                    pessoa!
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    className='bg-red-500 hover:bg-red-600'
-                    disabled={deleting}
-                    onClick={() => {
-                      if (viagem?.id) handleDeletePerson(viagem?.id);
-                    }}
+
+              <AlertDialog>
+                <AlertDialogTrigger className='self-end ' asChild>
+                  <Button
+                    variant='destructive'
+                    className='self-end justify-end'
                   >
-                    {deleting ? 'Aguarde...' : 'Remover'}
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                    Remover <Trash className='ml-2 w-5 h-5' />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className='text-red-500'>
+                      Tem a certeza?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Esta ação não pode ser desfeita. Esta ação irá remover a
+                      pessoa!
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      className='bg-red-500 hover:bg-red-600'
+                      disabled={deleting}
+                      onClick={() => {
+                        if (viagem?.id) handleDeletePerson(viagem?.id);
+                      }}
+                    >
+                      {deleting ? 'Aguarde...' : 'Remover'}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </>
         )}
         {/* <AddOwner mutate={mutateEmbarcacao} embarcacaoId={embarcacao_id} /> */}

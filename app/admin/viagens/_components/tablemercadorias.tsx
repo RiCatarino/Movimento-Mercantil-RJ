@@ -37,10 +37,10 @@ export default function TableMercadorias(props: {
               {mercadoria.quantidade_origem}
             </TableCell>
             <TableCell className='font-medium text-xs'>
-              {mercadoria.mercadoria.nome}
+              {mercadoria.mercadoria?.nome}
             </TableCell>
             <TableCell className='font-medium text-xs'>
-              {mercadoria?.unidade_de_medida.unidade_medida}
+              {mercadoria?.unidade_de_medida?.unidade_medida}
             </TableCell>
             <TableCell className='font-medium text-xs'>
               {/* format value as brazilian real */}

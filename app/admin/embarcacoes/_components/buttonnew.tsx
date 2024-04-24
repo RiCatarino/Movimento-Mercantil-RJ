@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -35,10 +34,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { toast } from 'sonner';
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import Loader from '@/components/loader';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: 'Nome muito curto' }),
@@ -50,6 +49,7 @@ const formSchema = z.object({
 
 export default function NewVessel(props: { mutate: () => void }) {
   const { mutate } = props;
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -78,9 +78,19 @@ export default function NewVessel(props: { mutate: () => void }) {
       setOpen(false);
       form.reset();
       mutate();
-      toast.success('Embarcação criada com sucesso');
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Embarcação adicionada com sucesso',
+      });
     } else {
-      toast.error('Erro ao criar embarcação');
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Erro ao adicionar embarcação',
+      });
     }
     setSubmitting(false);
   }
@@ -88,11 +98,8 @@ export default function NewVessel(props: { mutate: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          className=' w-fit self-end rounded-full p-2 mb-2 bg-blue-200'
-          variant='outline'
-        >
-          <Plus className='text-black' />
+        <Button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit self-end hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+          Adicionar Embarcação <Plus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -101,98 +108,87 @@ export default function NewVessel(props: { mutate: () => void }) {
         }}
       >
         <DialogHeader>
-          <DialogTitle>Criar Embarcação</DialogTitle>
-          <DialogDescription asChild>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-2'
-              >
-                <FormField
-                  control={form.control}
-                  name='nome'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome</FormLabel>
-                      <FormControl>
-                        <Input placeholder='Ex: Nau do Brazil' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='tipo'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tipo</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field?.value}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder='Selecione um tipo' />
-                          </SelectTrigger>
-                          <SelectContent className=' overflow-visible'>
-                            {tiposEmbarcacao?.map((tipo) => (
-                              <SelectItem
-                                key={tipo.id}
-                                value={tipo.id.toString()}
-                              >
-                                <TooltipProvider>
-                                  <Tooltip>
-                                    <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
-                                    <TooltipContent
-                                      side='right'
-                                      className=' max-w-96 p-2  rounded-lg ml-10 max-h-96 overflow-y-auto'
-                                    >
-                                      <p className='font-bold'>Descrição: </p>
-                                      <br />
-                                      <p>{tipo.texto_descritivo}</p>
-                                    </TooltipContent>
-                                  </Tooltip>
-                                </TooltipProvider>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='observacao'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Observação</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder='Escreva aqui as observações'
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {submitting &&  <div className='flex justify-center items-center'>
-                <Loader classProp='w-24 h-24' />
-              </div>}
-                <Button
-                  type='submit'
-                  className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
-                  disabled={submitting}
-                >
-                  Criar
-                </Button>
-              </form>
-            </Form>
-          </DialogDescription>
+          <DialogTitle className='text-blue-500'>Criar Embarcação</DialogTitle>
         </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className='flex flex-col gap-2'
+          >
+            <FormField
+              control={form.control}
+              name='nome'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Ex: Nau do Brazil' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='tipo'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tipo</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field?.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Selecione um tipo' />
+                      </SelectTrigger>
+                      <SelectContent className=' overflow-visible'>
+                        {tiposEmbarcacao?.map((tipo) => (
+                          <SelectItem key={tipo.id} value={tipo.id.toString()}>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
+                                <TooltipContent
+                                  side='right'
+                                  className=' max-w-96 p-2  rounded-lg ml-10 max-h-96 overflow-y-auto'
+                                >
+                                  <p className='font-bold'>Descrição: </p>
+                                  <br />
+                                  <p>{tipo.texto_descritivo}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='observacao'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Observação</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder='Escreva aqui as observações'
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button
+              type='submit'
+              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              disabled={submitting}
+            >
+              Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

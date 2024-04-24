@@ -22,9 +22,8 @@ import { Input } from '@/components/ui/input';
 import useSWR, { mutate } from 'swr';
 import fetcher from '@/lib/fetch';
 
-import { toast } from 'sonner';
 import { useState } from 'react';
-import { ChevronsUpDown, PlusCircleIcon } from 'lucide-react';
+import { ChevronsUpDown, PlusCircleIcon, UserPlus } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
@@ -40,6 +39,7 @@ import {
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 import Loader from '@/components/loader';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: 'Nome muito curto' }),
@@ -50,6 +50,7 @@ const formSchema = z.object({
 });
 
 export default function NewPerson() {
+  const { toast } = useToast();
   const [selectPais, setSelectPais] = useState(false);
   const [selectNobreza, setSelectNobreza] = useState(false);
   const [open, setOpen] = useState(false);
@@ -80,9 +81,19 @@ export default function NewPerson() {
       setOpen(false);
       form.reset();
       mutate('/api/pessoa/read');
-      toast.success('Pessoa adicionada com sucesso');
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Pessoa adicionada com sucesso',
+      });
     } else {
-      toast.error('Erro ao adicionar pessoa');
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Erro ao adicionar pessoa',
+      });
     }
     setSubmitting(false);
   }
@@ -90,11 +101,8 @@ export default function NewPerson() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          className=' w-fit self-end rounded-full p-2 mb-2 bg-blue-200'
-          variant='outline'
-        >
-          <PlusCircleIcon className='text-black' />
+        <Button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit self-end hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+          Adicionar Pessoa <UserPlus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -103,156 +111,146 @@ export default function NewPerson() {
         }}
       >
         <DialogHeader>
-          <DialogTitle>Criar Pessoa</DialogTitle>
-          <DialogDescription asChild>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-2'
-              >
-                <FormField
-                  control={form.control}
-                  name='nome'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome</FormLabel>
-                      <FormControl>
-                        <Input placeholder='Ex: António Palma' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='titulo_nobreza'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Título de Nobreza</FormLabel>
-                      <Popover
-                        open={selectNobreza}
-                        onOpenChange={setSelectNobreza}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant='outline'
-                              role='combobox'
-                              className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
-                              )}
-                            >
-                              {field.value
-                                ? titulo_nobreza?.find(
-                                    (titulo_nobreza) =>
-                                      titulo_nobreza.id.toString() ===
-                                      field.value
-                                  )?.titulo
-                                : 'Seleccionar Título de Nobreza'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
-                          <Command>
-                            <CommandInput placeholder='Procurar...' />
-                            <CommandEmpty>Sem resultados</CommandEmpty>
-                            <CommandGroup>
-                              <CommandList>
-                                {titulo_nobreza?.map((titulo_nobreza) => (
-                                  <CommandItem
-                                    value={titulo_nobreza.titulo}
-                                    key={titulo_nobreza.id}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        'titulo_nobreza',
-                                        titulo_nobreza.id.toString()
-                                      );
-                                      setSelectNobreza(false);
-                                    }}
-                                  >
-                                    {titulo_nobreza.titulo}
-                                  </CommandItem>
-                                ))}
-                              </CommandList>
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='pais'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>País</FormLabel>
-                      <Popover open={selectPais} onOpenChange={setSelectPais}>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant='outline'
-                              role='combobox'
-                              className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
-                              )}
-                            >
-                              {field.value
-                                ? pais?.find(
-                                    (pais) => pais.id.toString() === field.value
-                                  )?.pais
-                                : 'Seleccionar País'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
-                          <Command>
-                            <CommandInput placeholder='Procurar país...' />
-                            <CommandEmpty>País não encontrado</CommandEmpty>
-                            <CommandGroup>
-                              <CommandList>
-                                {pais?.map((pais) => (
-                                  <CommandItem
-                                    value={pais.pais}
-                                    key={pais.id}
-                                    onSelect={() => {
-                                      form.setValue('pais', pais.id.toString());
-                                      setSelectPais(false);
-                                    }}
-                                  >
-                                    {pais.pais}
-                                  </CommandItem>
-                                ))}
-                              </CommandList>
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}
-                />
-                {submitting && (
-                  <div className='flex justify-center items-center'>
-                    <Loader classProp='w-24 h-24' />
-                  </div>
-                )}
-                <Button
-                  type='submit'
-                  className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
-                  disabled={submitting}
-                >
-                  Criar
-                </Button>
-              </form>
-            </Form>
-          </DialogDescription>
+          <DialogTitle className='text-blue-500'>Criar Pessoa</DialogTitle>
         </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className='flex flex-col gap-2'
+          >
+            <FormField
+              control={form.control}
+              name='nome'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Ex: António Palma' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='titulo_nobreza'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Título de Nobreza</FormLabel>
+                  <Popover open={selectNobreza} onOpenChange={setSelectNobreza}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant='outline'
+                          role='combobox'
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? titulo_nobreza?.find(
+                                (titulo_nobreza) =>
+                                  titulo_nobreza.id.toString() === field.value
+                              )?.titulo
+                            : 'Seleccionar Título de Nobreza'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                      <Command>
+                        <CommandInput placeholder='Procurar...' />
+                        <CommandEmpty>Sem resultados</CommandEmpty>
+                        <CommandGroup>
+                          <CommandList>
+                            {titulo_nobreza?.map((titulo_nobreza) => (
+                              <CommandItem
+                                value={titulo_nobreza.titulo}
+                                key={titulo_nobreza.id}
+                                onSelect={() => {
+                                  form.setValue(
+                                    'titulo_nobreza',
+                                    titulo_nobreza.id.toString()
+                                  );
+                                  setSelectNobreza(false);
+                                }}
+                              >
+                                {titulo_nobreza.titulo}
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='pais'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>País</FormLabel>
+                  <Popover open={selectPais} onOpenChange={setSelectPais}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant='outline'
+                          role='combobox'
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? pais?.find(
+                                (pais) => pais.id.toString() === field.value
+                              )?.pais
+                            : 'Seleccionar País'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                      <Command>
+                        <CommandInput placeholder='Procurar país...' />
+                        <CommandEmpty>País não encontrado</CommandEmpty>
+                        <CommandGroup>
+                          <CommandList>
+                            {pais?.map((pais) => (
+                              <CommandItem
+                                value={pais.pais}
+                                key={pais.id}
+                                onSelect={() => {
+                                  form.setValue('pais', pais.id.toString());
+                                  setSelectPais(false);
+                                }}
+                              >
+                                {pais.pais}
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type='submit'
+              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              disabled={submitting}
+            >
+              Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

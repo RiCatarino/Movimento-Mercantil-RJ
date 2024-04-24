@@ -65,7 +65,7 @@ export default function VesselDetails(props: {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className=' min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className={isLoading ? 'h-64' : ''}>
+          <DialogTitle>
             {isLoading ? (
               <div className='flex justify-center items-center'>
                 <Loader classProp='w-24 h-24' />
@@ -74,7 +74,6 @@ export default function VesselDetails(props: {
               'Embarcação #' + embarcacao_id
             )}
           </DialogTitle>
-          <DialogDescription asChild></DialogDescription>
         </DialogHeader>
         {!isLoading && (
           <>
@@ -148,7 +147,7 @@ export default function VesselDetails(props: {
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
-                                  <AlertDialogTitle>
+                                  <AlertDialogTitle className='text-red-500'>
                                     Tem a certeza?
                                   </AlertDialogTitle>
                                   <AlertDialogDescription>
@@ -157,9 +156,12 @@ export default function VesselDetails(props: {
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogCancel>
+                                    Cancelar
+                                  </AlertDialogCancel>
                                   <AlertDialogAction
                                     disabled={deleting}
+                                    className='bg-red-500 hover:bg-red-600'
                                     onClick={() =>
                                       handleDeleteOwner(relacao.id)
                                     }

@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Toaster } from '@/components/ui/sonner';
 import {
   GitCompareArrows,
   LayoutDashboard,
@@ -20,6 +19,7 @@ import {
   UserCheck,
   Users,
 } from 'lucide-react';
+import { Toaster } from '@/components/ui/toaster';
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -87,17 +87,14 @@ export default function DashboardLayout({
             <Button variant='ghost'>
               <div className='flex flex-row items-center justify-center text-blue-400'>
                 <UserCheck />
-                <span className='ms-3'>Gervasio</span>
+                <span className='ms-3'>Utilizador Autónoma</span>
               </div>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>A minha Conta</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>other</DropdownMenuItem>
+            <DropdownMenuItem>Perfil</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -107,7 +104,7 @@ export default function DashboardLayout({
             className='absolute top-2 left-2 z-40 w-60 mt-20 '
             aria-label='Sidebar'
           >
-            <div className='h-full px-3 py-4 overflow-y-auto rounded-xl shadow-2xl bg-blue-200 dark:bg-gray-800'>
+            <div className='h-full px-3 py-4 overflow-y-auto rounded-xl shadow-2xl bg-white border dark:bg-gray-800'>
               <ul className='space-y-3 font-medium'>
                 <li>
                   <Link
@@ -115,9 +112,9 @@ export default function DashboardLayout({
                       setSideBar(false);
                     }}
                     href='/admin/dashboard'
-                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
                   >
-                    <LayoutDashboard />
+                    <LayoutDashboard className='text-blue-500' />
                     <span className='ms-3'>Dashboard</span>
                   </Link>
                 </li>
@@ -128,9 +125,9 @@ export default function DashboardLayout({
                       setSideBar(false);
                     }}
                     href='/admin/embarcacoes'
-                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
                   >
-                    <Ship />
+                    <Ship className='text-blue-500' />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Embarcações
                     </span>
@@ -143,9 +140,9 @@ export default function DashboardLayout({
                       setSideBar(false);
                     }}
                     href='/admin/viagens'
-                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
                   >
-                    <GitCompareArrows />
+                    <GitCompareArrows className='text-blue-500' />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Viagens
                     </span>
@@ -158,9 +155,9 @@ export default function DashboardLayout({
                       setSideBar(false);
                     }}
                     href='/admin/pessoas'
-                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
                   >
-                    <PersonStanding />
+                    <PersonStanding className='text-blue-500' />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Pessoas
                     </span>
@@ -175,9 +172,9 @@ export default function DashboardLayout({
                       setSideBar(false);
                     }}
                     href='/admin/usuarios'
-                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
+                    className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
                   >
-                    <Users />
+                    <Users className='text-blue-500' />
                     <span className='flex-1 ms-3 whitespace-nowrap'>
                       Usuários
                     </span>
@@ -192,7 +189,7 @@ export default function DashboardLayout({
       </nav>
       <div className='p-4 lg:p-8'>
         <>
-          {children} <Toaster />{' '}
+          {children} <Toaster />
         </>
       </div>
     </>

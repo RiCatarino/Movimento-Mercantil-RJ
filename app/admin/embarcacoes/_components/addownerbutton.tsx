@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,7 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { ChevronsUpDown, Loader2, LucideCalendar } from 'lucide-react';
+import { ChevronsUpDown, LucideCalendar } from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -40,8 +39,8 @@ import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Calendar } from '@/components/ui/calendar';
 import dayjs from 'dayjs';
-import { toast } from 'sonner';
 import Loader from '@/components/loader';
+import { useToast } from '@/components/ui/use-toast';
 
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -61,6 +60,8 @@ type AddOwnerProps = {
 export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   // const { mutate, embarcacaoId } = props;
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+
   const [selectPessoa, setSelectPessoa] = useState(false);
   const [selectPais, setSelectPais] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -102,9 +103,19 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
       setOpen(false);
       form.reset();
       mutate();
-      toast.success('Proprietário adicionado com sucesso');
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Proprietário adicionado com sucesso',
+      });
     } else {
-      toast.error('Erro ao adicionar proprietário');
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Erro ao adicionar proprietário',
+      });
     }
     setSubmitting(false);
   }
@@ -118,272 +129,266 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Proprietário</DialogTitle>
-          <DialogDescription asChild>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(handleSubmit)}
-                className='flex flex-col gap-2'
-              >
-                <FormField
-                  control={form.control}
-                  name='pessoa'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Pessoa</FormLabel>
-                      <Popover
-                        open={selectPessoa}
-                        onOpenChange={setSelectPessoa}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant='outline'
-                              role='combobox'
-                              className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
-                              )}
-                            >
-                              {field.value
-                                ? pessoas?.find(
-                                    (pessoa) =>
-                                      pessoa.id.toString() === field.value
-                                  )?.nome
-                                : 'Seleccionar Pessoa'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
-                          <Command>
-                            <CommandInput
-                              onValueChange={(value) => {
-                                setSearchName(value);
-                              }}
-                              placeholder='Procurar pessoa...'
-                            />
-                            <CommandEmpty>Pessoa não encontrada</CommandEmpty>
-                            <CommandGroup>
-                              <CommandList>
-                                {pessoas?.map((pessoa) => (
-                                  <CommandItem
-                                    value={pessoa.nome}
-                                    key={pessoa.id}
-                                    onSelect={() => {
-                                      form.setValue(
-                                        'pessoa',
-                                        pessoa.id.toString()
-                                      );
-                                      setSelectPessoa(false);
-                                    }}
-                                  >
-                                    {pessoa.nome}
-                                  </CommandItem>
-                                ))}
-                              </CommandList>
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='data_inicio'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Data Início</FormLabel>
-                      <div className='flex w-full gap-2'>
-                        <Input
-                          placeholder='DD-MM-YYYY'
-                          value={field.value}
-                          onChange={(e) => {
-                            field.onChange(e.target.value);
+          <DialogTitle className='text-blue-500'>
+            Adicionar Proprietário
+          </DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className='flex flex-col gap-2'
+          >
+            <FormField
+              control={form.control}
+              name='pessoa'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Pessoa</FormLabel>
+                  <Popover open={selectPessoa} onOpenChange={setSelectPessoa}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant='outline'
+                          role='combobox'
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? pessoas?.find(
+                                (pessoa) => pessoa.id.toString() === field.value
+                              )?.nome
+                            : 'Seleccionar Pessoa'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                      <Command>
+                        <CommandInput
+                          onValueChange={(value) => {
+                            setSearchName(value);
                           }}
+                          placeholder='Procurar pessoa...'
                         />
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button size='icon'>
-                              <LucideCalendar className='h-4 w-4' />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent>
-                            <Calendar
-                              defaultMonth={
-                                dayjs(field.value, 'DD-MM-YYYY').isValid()
-                                  ? dayjs(field.value, 'DD-MM-YYYY').toDate()
-                                  : undefined
-                              }
-                              selected={
-                                dayjs(field.value, 'DD-MM-YYYY').isValid()
-                                  ? dayjs(field.value, 'DD-MM-YYYY').toDate()
-                                  : undefined
-                              }
-                              onSelect={(date) => {
-                                form.setValue(
-                                  'data_inicio',
-                                  dayjs(date).format('DD-MM-YYYY')
-                                );
-                              }}
-                              mode='single'
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name='data_fim'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>Data Fim</FormLabel>
-                      <div className='flex w-full gap-2'>
-                        <Input
-                          disabled={!form.getValues('data_inicio')}
-                          placeholder='DD-MM-YYYY'
-                          value={field.value}
-                          onChange={(e) => {
-                            //if date is after data_inicio
+                        <CommandEmpty>Pessoa não encontrada</CommandEmpty>
+                        <CommandGroup>
+                          <CommandList>
+                            {pessoas?.map((pessoa) => (
+                              <CommandItem
+                                value={pessoa.nome}
+                                key={pessoa.id}
+                                onSelect={() => {
+                                  form.setValue('pessoa', pessoa.id.toString());
+                                  setSelectPessoa(false);
+                                }}
+                              >
+                                {pessoa.nome}
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='data_inicio'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Data Início</FormLabel>
+                  <div className='flex w-full gap-2'>
+                    <Input
+                      placeholder='DD-MM-YYYY'
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          size='icon'
+                          className='bg-blue-500 hover:bg-blue-600'
+                        >
+                          <LucideCalendar className='h-4 w-4' />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Calendar
+                          defaultMonth={
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                              : undefined
+                          }
+                          selected={
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                              : undefined
+                          }
+                          onSelect={(date) => {
+                            form.setValue(
+                              'data_inicio',
+                              dayjs(date).format('DD-MM-YYYY')
+                            );
+                          }}
+                          mode='single'
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='data_fim'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Data Fim</FormLabel>
+                  <div className='flex w-full gap-2'>
+                    <Input
+                      disabled={!form.getValues('data_inicio')}
+                      placeholder='DD-MM-YYYY'
+                      value={field.value}
+                      onChange={(e) => {
+                        //if date is after data_inicio
+                        if (
+                          dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
+                            dayjs(form.getValues('data_inicio'), 'DD-MM-YYYY')
+                          )
+                        ) {
+                          form.setValue('data_fim', e.target.value);
+                        } else {
+                          toast({
+                            variant: 'destructive',
+                            title: 'Erro',
+                            description:
+                              'Data de fim deve ser após a data de início',
+                          });
+                        }
+                        field.onChange(e.target.value);
+                      }}
+                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          size='icon'
+                          className='bg-blue-500 hover:bg-blue-600'
+                          disabled={!form.watch('data_inicio')}
+                        >
+                          <LucideCalendar className='h-4 w-4 ' />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Calendar
+                          defaultMonth={
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                              : undefined
+                          }
+                          selected={
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                              : undefined
+                          }
+                          onSelect={(date) => {
                             if (
-                              dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
-                                dayjs(
-                                  form.getValues('data_inicio'),
-                                  'DD-MM-YYYY'
-                                )
+                              dayjs(date).isAfter(
+                                dayjs(form.watch('data_inicio'), 'DD-MM-YYYY')
                               )
                             ) {
-                              form.setValue('data_fim', e.target.value);
-                            } else {
-                              toast.error(
-                                'Data de fim deve ser após a data de início'
+                              form.setValue(
+                                'data_fim',
+                                dayjs(date).format('DD-MM-YYYY')
                               );
+                            } else {
+                              toast({
+                                variant: 'destructive',
+                                title: 'Erro',
+                                description:
+                                  'Data de fim deve ser após a data de início',
+                              });
                             }
-                            field.onChange(e.target.value);
                           }}
+                          mode='single'
+                          initialFocus
                         />
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              size='icon'
-                              disabled={!form.watch('data_inicio')}
-                            >
-                              <LucideCalendar className='h-4 w-4' />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent>
-                            <Calendar
-                              defaultMonth={
-                                dayjs(field.value, 'DD-MM-YYYY').isValid()
-                                  ? dayjs(field.value, 'DD-MM-YYYY').toDate()
-                                  : undefined
-                              }
-                              selected={
-                                dayjs(field.value, 'DD-MM-YYYY').isValid()
-                                  ? dayjs(field.value, 'DD-MM-YYYY').toDate()
-                                  : undefined
-                              }
-                              onSelect={(date) => {
-                                if (
-                                  dayjs(date).isAfter(
-                                    dayjs(
-                                      form.watch('data_inicio'),
-                                      'DD-MM-YYYY'
-                                    )
-                                  )
-                                ) {
-                                  form.setValue(
-                                    'data_fim',
-                                    dayjs(date).format('DD-MM-YYYY')
-                                  );
-                                } else {
-                                  toast.error(
-                                    'Data de fim deve ser após a data de início'
-                                  );
-                                }
-                              }}
-                              mode='single'
-                              initialFocus
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                {/* Selecionar País */}
-                <FormField
-                  control={form.control}
-                  name='pais'
-                  render={({ field }) => (
-                    <FormItem className='flex flex-col'>
-                      <FormLabel>País</FormLabel>
-                      <Popover open={selectPais} onOpenChange={setSelectPais}>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant='outline'
-                              role='combobox'
-                              className={cn(
-                                'w-full justify-between',
-                                !field.value && 'text-muted-foreground'
-                              )}
-                            >
-                              {field.value
-                                ? pais?.find(
-                                    (pais) => pais.id.toString() === field.value
-                                  )?.pais
-                                : 'Seleccionar País'}
-                              <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
-                          <Command>
-                            <CommandInput placeholder='Procurar país...' />
-                            <CommandEmpty>País não encontrado</CommandEmpty>
-                            <CommandGroup>
-                              <CommandList>
-                                {pais?.map((pais) => (
-                                  <CommandItem
-                                    value={pais.pais}
-                                    key={pais.id}
-                                    onSelect={() => {
-                                      form.setValue('pais', pais.id.toString());
-                                      setSelectPais(false);
-                                    }}
-                                  >
-                                    {pais.pais}
-                                  </CommandItem>
-                                ))}
-                              </CommandList>
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    </FormItem>
-                  )}
-                />
-                {submitting && (
-                  <div className='flex justify-center items-center'>
-                    <Loader classProp='w-24 h-24' />
+                      </PopoverContent>
+                    </Popover>
                   </div>
-                )}
-                <Button
-                  type='submit'
-                  className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
-                  disabled={submitting}
-                >
-                  Adicionar Proprietário
-                </Button>
-              </form>
-            </Form>
-          </DialogDescription>
-        </DialogHeader>
+                </FormItem>
+              )}
+            />
+            {/* Selecionar País */}
+            <FormField
+              control={form.control}
+              name='pais'
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>País</FormLabel>
+                  <Popover open={selectPais} onOpenChange={setSelectPais}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant='outline'
+                          role='combobox'
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? pais?.find(
+                                (pais) => pais.id.toString() === field.value
+                              )?.pais
+                            : 'Seleccionar País'}
+                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                      <Command>
+                        <CommandInput placeholder='Procurar país...' />
+                        <CommandEmpty>País não encontrado</CommandEmpty>
+                        <CommandGroup>
+                          <CommandList>
+                            {pais?.map((pais) => (
+                              <CommandItem
+                                value={pais.pais}
+                                key={pais.id}
+                                onSelect={() => {
+                                  form.setValue('pais', pais.id.toString());
+                                  setSelectPais(false);
+                                }}
+                              >
+                                {pais.pais}
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type='submit'
+              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              disabled={submitting}
+            >
+              Adicionar Proprietário{' '}
+              {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

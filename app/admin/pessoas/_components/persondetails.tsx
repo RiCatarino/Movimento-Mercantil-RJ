@@ -21,9 +21,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'; // import AddOwner from './addownerbutton';
-import { toast } from 'sonner';
 import Loader from '@/components/loader';
 import { TrashIcon } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function PersonDetails(props: {
   open: boolean;
@@ -32,6 +32,7 @@ export default function PersonDetails(props: {
   mutate: () => void;
 }) {
   const { open, setOpen, pessoa_id, mutate } = props;
+  const { toast } = useToast();
   const [deleting, setDeleting] = useState(false);
   const {
     data: pessoa,
@@ -50,10 +51,20 @@ export default function PersonDetails(props: {
     });
     if (result.ok) {
       mutate();
-      toast.success('Pessoa removida com sucesso');
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Pessoa removida com sucesso',
+      });
       setOpen(false);
     } else {
-      toast.error('Erro ao remover pessoa');
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Erro ao remover pessoa',
+      });
     }
     setDeleting(false);
   }
@@ -65,7 +76,9 @@ export default function PersonDetails(props: {
           <DialogTitle>Pessoa</DialogTitle>
         </DialogHeader>
         {isLoading ? (
-          <Loader classProp='h-24 w-24 self-center' />
+          <div className='flex justify-center items-center'>
+            <Loader classProp='w-24 h-24' />
+          </div>
         ) : (
           <>
             <div className='flex flex-wrap gap-2'>
