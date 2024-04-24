@@ -53,13 +53,14 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import { toast } from 'sonner';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function BotaoNovaeEscala(props: {
   mutate: () => void;
   viagem_id: number | undefined;
 }) {
   const { viagem_id, mutate } = props;
+  const { toast } = useToast();
   const [selectPorto, setSelectPorto] = useState(false);
   const [searchName, setSearchName] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -93,11 +94,21 @@ export default function BotaoNovaeEscala(props: {
 
     if (result.ok) {
       mutate();
-      toast.success('Escala adicionada com sucesso');
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Escala adicionada com sucesso',
+      });
       form.reset();
       setOpen(false);
     } else {
-      toast.error('Ocorreu um erro ao adicionar a escala');
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Erro ao adicionadr escala',
+      });
     }
     setSubmitting(false);
   }
@@ -111,7 +122,7 @@ export default function BotaoNovaeEscala(props: {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Escala</DialogTitle>
+          <DialogTitle className='text-blue-500'>Adicionar Escala</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -134,7 +145,10 @@ export default function BotaoNovaeEscala(props: {
                     />
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button size='icon'>
+                        <Button
+                          size='icon'
+                          className='bg-blue-500 hover:bg-blue-600'
+                        >
                           <CalendarIcon className='h-4 w-4' />
                         </Button>
                       </PopoverTrigger>
@@ -302,14 +316,17 @@ export default function BotaoNovaeEscala(props: {
               />
             </div>
 
-            <Button disabled={submitting} className='float-end'>
+            <Button
+              disabled={submitting}
+              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+            >
               {submitting ? (
                 <>
                   <Loader className='mr-2 h-4 w-4 animate-spin' /> A
                   adicionar...
                 </>
               ) : (
-                'Adicionar'
+                'Guardar'
               )}
             </Button>
           </form>
