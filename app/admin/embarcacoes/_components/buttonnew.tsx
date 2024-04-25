@@ -98,7 +98,7 @@ export default function NewVessel(props: { mutate: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit self-end hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Embarcação <Plus size={24} />
         </Button>
       </DialogTrigger>
@@ -139,7 +139,7 @@ export default function NewVessel(props: { mutate: () => void }) {
                       <SelectTrigger>
                         <SelectValue placeholder='Selecione um tipo' />
                       </SelectTrigger>
-                      <SelectContent className=' overflow-visible'>
+                      <SelectContent className='overflow-visible '>
                         {tiposEmbarcacao?.map((tipo) => (
                           <SelectItem key={tipo.id} value={tipo.id.toString()}>
                             <TooltipProvider>
@@ -147,7 +147,7 @@ export default function NewVessel(props: { mutate: () => void }) {
                                 <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
                                 <TooltipContent
                                   side='right'
-                                  className=' max-w-96 p-2  rounded-lg ml-10 max-h-96 overflow-y-auto'
+                                  className='p-2 ml-10 overflow-y-auto rounded-lg  max-w-96 max-h-96'
                                 >
                                   <p className='font-bold'>Descrição: </p>
                                   <br />
@@ -182,7 +182,7 @@ export default function NewVessel(props: { mutate: () => void }) {
             />
             <Button
               type='submit'
-              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
               Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}

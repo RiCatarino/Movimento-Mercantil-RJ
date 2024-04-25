@@ -14,9 +14,9 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   return (
-    <main className='flex p-4 border-gray-300 border-solid border-2 rounded-3xl mx-10 md:mx-24 mt-5 shadow-lg '>
-      <table className='table-auto w-full text-left rounded-xl p-10 border border-separate border-spacing-y-2 '>
-        <thead className='bg-blue-200 rounded-xl p-1 uppercase text-xs'>
+    <main className='flex p-4 mx-10 mt-5 border-2 border-gray-300 border-solid shadow-lg rounded-3xl md:mx-24 '>
+      <table className='w-full p-10 text-left border border-separate table-auto rounded-xl border-spacing-y-2 '>
+        <thead className='p-1 text-xs uppercase bg-blue-200 rounded-xl'>
           <tr>
             <th className='p-2 rounded-l-lg'>Embarcação</th>
             <th>Tipo</th>
@@ -26,7 +26,7 @@ export default function Page({ params }: { params: { id: string } }) {
           {/* {personData?.map((row, index) => (
             <tr
               key={index}
-              className='text-xs  hover:bg-blue-200 hover:bg-opacity-30 cursor-pointer'
+              className='text-xs cursor-pointer  hover:bg-blue-200 hover:bg-opacity-30'
               // onClick={() => router.push(`/embarcacao/${row.id}`)}
             >
               <td className='p-2 rounded-l-lg '>{row.nome}</td>

@@ -27,7 +27,7 @@ export function PeopleTable() {
   return (
     <div className='rounded-md'>
       <Table>
-        <TableHeader className='bg-gradient-to-r from-blue-200 to-blue-400 p-2 text-xs border-t-0 '>
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
@@ -46,14 +46,14 @@ export function PeopleTable() {
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium text-xs'>{pessoa.id}</TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>{pessoa.id}</TableCell>
+              <TableCell className='text-xs font-medium'>
                 {pessoa.nome}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {pessoa?.titulo_nobreza?.titulo}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {pessoa.pais?.pais}
               </TableCell>
             </TableRow>

@@ -53,7 +53,7 @@ export default function DashboardLayout({
     <>
       <nav
         ref={sideNavRef}
-        className='border-b-2 flex flex-row justify-between w-full items-center h-20 px-5 shadow'
+        className='flex flex-row items-center justify-between w-full h-20 px-5 border-b-2 shadow'
       >
         <button
           data-drawer-target='default-sidebar'
@@ -61,7 +61,7 @@ export default function DashboardLayout({
           aria-controls='default-sidebar'
           type='button'
           onClick={() => setSideBar(!sidebar)}
-          className='inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+          className='inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
         >
           <span className='sr-only'>Open sidebar</span>
           <svg
@@ -101,11 +101,11 @@ export default function DashboardLayout({
         {sidebar && (
           <aside
             id='default-sidebar'
-            className='absolute top-2 left-2 z-40 w-60 mt-20 '
+            className='absolute z-40 mt-20 top-2 left-2 w-60 '
             aria-label='Sidebar'
           >
-            <div className='h-full px-3 py-4 overflow-y-auto rounded-xl shadow-2xl bg-white border dark:bg-gray-800'>
-              <ul className='space-y-3 font-medium'>
+            <div className='h-full px-3 py-4 overflow-y-auto bg-white border shadow-2xl rounded-xl dark:bg-gray-800'>
+              <ul className='font-medium space-y-3'>
                 <li>
                   <Link
                     onClick={() => {

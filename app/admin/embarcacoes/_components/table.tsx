@@ -26,7 +26,7 @@ export function DataTable(props: {
   return (
     <>
       <Table>
-        <TableHeader className='bg-gradient-to-r from-blue-200 to-blue-400 p-2 text-xs border-t-0 '>
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>

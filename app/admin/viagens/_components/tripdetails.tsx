@@ -73,7 +73,7 @@ export default function TripDetails(props: {
         <DialogHeader>
           <DialogTitle>
             {isLoading ? (
-              <div className='flex justify-center items-center'>
+              <div className='flex items-center justify-center'>
                 <Loader classProp='w-24 h-24' />
               </div>
             ) : (
@@ -84,16 +84,16 @@ export default function TripDetails(props: {
         {!isLoading && (
           <>
             <div className='flex flex-wrap gap-2'>
-              <div className='flex flex-col gap-1 rounded-xl border '>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl '>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Data de Partida
                 </div>
                 <div className='p-2 text-xs'>
                   {dayjs(viagem?.data_viagem).format('DD/MM/YYYY')}
                 </div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Data de Chegada
                 </div>
                 <div className='p-2 text-xs'>
@@ -101,58 +101,58 @@ export default function TripDetails(props: {
                 </div>
               </div>
 
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Dias de Viagem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.dias_viagem}</div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Tripulação
                 </div>
                 <div className='p-2 text-xs'>{viagem?.tripulacao}</div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Passageiros
                 </div>
                 <div className='p-2 text-xs'>{viagem?.total_passageiros}</div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Porto Origem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_origem?.nome}</div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Porto Destino
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_destino?.nome}</div>
               </div>
             </div>
 
-            <div className=' max-w-xs md:max-w-full flex-1 flex w-full flex-col gap-2 '>
+            <div className='flex flex-col flex-1 w-full max-w-xs  md:max-w-full gap-2'>
               <Accordion
                 type='single'
                 collapsible
-                className='flex flex-1 w-full flex-col'
+                className='flex flex-col flex-1 w-full'
               >
                 <AccordionItem value='vessel' className='w-full'>
                   <AccordionTrigger>Embarcação</AccordionTrigger>
                   <AccordionContent>
                     <div className='flex flex-row flex-1 gap-2'>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Nome
                         </div>
                         <div className='p-2 text-xs'>
                           {viagem?.embarcacao?.nome}
                         </div>
                       </div>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Tipo
                         </div>
                         <div className='p-2 text-xs'>
@@ -160,16 +160,16 @@ export default function TripDetails(props: {
                         </div>
                       </div>
                     </div>
-                    <div className='flex flex-col gap-1 rounded-xl border grow mt-2'>
-                      <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                    <div className='flex flex-col mt-2 border gap-1 rounded-xl grow'>
+                      <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                         Descrição
                       </div>
                       <div className='p-2 text-xs'>
                         {viagem?.embarcacao?.tipo_embarcacao?.texto_descritivo}
                       </div>
                     </div>
-                    <div className='flex flex-col gap-1 rounded-xl border w-full mt-2'>
-                      <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                    <div className='flex flex-col w-full mt-2 border gap-1 rounded-xl'>
+                      <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                         Observação
                       </div>
                       <div className='p-2 text-xs'>
@@ -183,32 +183,32 @@ export default function TripDetails(props: {
                   <AccordionTrigger>Tripulação</AccordionTrigger>
                   <AccordionContent>
                     <div className='flex flex-row flex-1 gap-2'>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Comandante
                         </div>
                         <div className='p-2 text-xs'>
                           {viagem?.comandante?.nome}
                         </div>
                       </div>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Capitão
                         </div>
                         <div className='p-2 text-xs'>
                           {viagem?.capitao?.nome}
                         </div>
                       </div>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Armador
                         </div>
                         <div className='p-2 text-xs'>
                           {viagem?.armador?.nome}
                         </div>
                       </div>
-                      <div className='flex flex-col gap-1 rounded-xl border grow'>
-                        <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                      <div className='flex flex-col border gap-1 rounded-xl grow'>
+                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Mestre
                         </div>
                         <div className='p-2 text-xs'>
@@ -249,7 +249,7 @@ export default function TripDetails(props: {
                     variant='destructive'
                     className='self-end justify-end'
                   >
-                    Remover <Trash className='ml-2 w-5 h-5' />
+                    Remover <Trash className='w-5 h-5 ml-2' />
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>

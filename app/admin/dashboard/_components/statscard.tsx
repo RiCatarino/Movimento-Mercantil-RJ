@@ -10,11 +10,11 @@ export default function StatsCard(props: {
 }) {
   const { title, value, icon } = props;
   return (
-    <Card className='  drop-shadow-lg'>
-      <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+    <Card className=' drop-shadow-lg'>
+      <CardHeader className='flex flex-row items-center justify-between pb-2 space-y-0'>
         <CardTitle className='text-sm font-medium'>{title}</CardTitle>
-        {/* <Users className='h-4 w-4 text-muted-foreground' /> */}
-        <div className='text-blue-500 ml-2'>{icon}</div>
+        {/* <Users className='w-4 h-4 text-muted-foreground' /> */}
+        <div className='ml-2 text-blue-500'>{icon}</div>
       </CardHeader>
       <CardContent>
         <div className='text-2xl font-bold text-blue-500'>{value}</div>

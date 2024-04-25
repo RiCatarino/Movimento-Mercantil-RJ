@@ -76,21 +76,21 @@ export default function PersonDetails(props: {
           <DialogTitle>Pessoa</DialogTitle>
         </DialogHeader>
         {isLoading ? (
-          <div className='flex justify-center items-center'>
+          <div className='flex items-center justify-center'>
             <Loader classProp='w-24 h-24' />
           </div>
         ) : (
           <>
             <div className='flex flex-wrap gap-2'>
               <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Nome
                 </div>
                 <div className='p-2 text-xs'>{pessoa?.nome}</div>
               </div>
 
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Título Nobreza
                 </div>
                 <div className='p-2 text-xs'>
@@ -99,7 +99,7 @@ export default function PersonDetails(props: {
               </div>
             </div>
 
-            <div className=' flex flex-col items mt-4 '>
+            <div className='flex flex-col mt-4  items'>
               <div className='flex gap-1 p-2 bg-blue-200 justify-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
                 Embarcações
               </div>
@@ -111,8 +111,8 @@ export default function PersonDetails(props: {
 
             <AlertDialog>
               <AlertDialogTrigger className='w-full' asChild>
-                <Button variant='destructive' className=' w-full'>
-                  Remover <TrashIcon className='ml-2 w-5 h-5' />
+                <Button variant='destructive' className='w-full '>
+                  Remover <TrashIcon className='w-5 h-5 ml-2' />
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>

@@ -44,9 +44,9 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
   }
 
   return (
-    <div className=' max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl'>
+    <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
       <Table className='shadow-xl'>
-        <TableHeader className='bg-blue-200 p-2  text-xs border-t-0 '>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>ID</TableHead>
             <TableHead>Embarcação</TableHead>
@@ -59,23 +59,23 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
         <TableBody>
           {pessoa?.relacao_embarcacao_proprietario?.map((relacao) => (
             <TableRow key={relacao.id}>
-              <TableCell className='font-medium text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs font-medium'>
                 {relacao.embarcacao.id}
               </TableCell>
-              <TableCell className='text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs'>
                 {relacao.embarcacao.nome}
               </TableCell>
-              <TableCell className='text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs'>
                 {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
               </TableCell>
-              <TableCell className='text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs'>
                 {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
               </TableCell>
 
-              <TableCell className='text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs'>
                 {relacao.pais.pais}
               </TableCell>
-              <TableCell className='text-xs px-4 py-0'>
+              <TableCell className='px-4 py-0 text-xs'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button
