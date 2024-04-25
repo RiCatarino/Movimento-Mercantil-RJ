@@ -116,7 +116,7 @@ export default function BotaoNovaeEscala(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className=' bg-blue-400  rounded-lg float-end mb-2 mt-2'>
+        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
           Adicionar Escala <Plus size={24} />
         </Button>
       </DialogTrigger>
@@ -149,7 +149,7 @@ export default function BotaoNovaeEscala(props: {
                           size='icon'
                           className='bg-blue-500 hover:bg-blue-600'
                         >
-                          <CalendarIcon className='h-4 w-4' />
+                          <CalendarIcon className='w-4 h-4' />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
@@ -218,7 +218,7 @@ export default function BotaoNovaeEscala(props: {
                             ? portos?.find((porto) => porto.id === field.value)
                                 ?.nome
                             : 'Seleccionar Porto'}
-                          <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                          <ChevronsUpDownIcon className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -318,11 +318,11 @@ export default function BotaoNovaeEscala(props: {
 
             <Button
               disabled={submitting}
-              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
             >
               {submitting ? (
                 <>
-                  <Loader className='mr-2 h-4 w-4 animate-spin' /> A
+                  <Loader className='w-4 h-4 mr-2 animate-spin' /> A
                   adicionar...
                 </>
               ) : (

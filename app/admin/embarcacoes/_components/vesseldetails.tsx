@@ -67,7 +67,7 @@ export default function VesselDetails(props: {
         <DialogHeader>
           <DialogTitle>
             {isLoading ? (
-              <div className='flex justify-center items-center'>
+              <div className='flex items-center justify-center'>
                 <Loader classProp='w-24 h-24' />
               </div>
             ) : (
@@ -79,36 +79,36 @@ export default function VesselDetails(props: {
           <>
             <div className='flex flex-wrap gap-2'>
               <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Nome
                 </div>
                 <div className='p-2 text-xs'>{embarcacao?.nome}</div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Tipo
                 </div>
                 <div className='p-2 text-xs'>
                   {embarcacao?.tipo_embarcacao.tipo}
                 </div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border grow'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Descrição
                 </div>
                 <div className='p-2 text-xs'>
                   {embarcacao?.tipo_embarcacao.texto_descritivo}
                 </div>
               </div>
-              <div className='flex flex-col gap-1 rounded-xl border w-full'>
-                <div className='bg-blue-200 p-2 rounded-ss-xl rounded-se-xl text-sm'>
+              <div className='flex flex-col w-full border gap-1 rounded-xl'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Observação
                 </div>
                 <div className='p-2 text-xs'>{embarcacao?.observacao}</div>
               </div>
-              <div className=' max-w-xs md:max-w-full flex-1 rounded-ss-xl rounded-se-xl'>
+              <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
                 <Table>
-                  <TableHeader className='bg-blue-200 p-2  text-xs '>
+                  <TableHeader className='p-2 text-xs bg-blue-200 '>
                     <TableRow className='rounded-ss-xl'>
                       <TableHead>Pessoa</TableHead>
                       <TableHead>Início</TableHead>
@@ -121,7 +121,7 @@ export default function VesselDetails(props: {
                     {embarcacao?.relacao_embarcacao_proprietario.map(
                       (relacao) => (
                         <TableRow key={relacao.id}>
-                          <TableCell className='font-medium text-xs'>
+                          <TableCell className='text-xs font-medium'>
                             {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
                           </TableCell>
                           <TableCell className='text-xs'>

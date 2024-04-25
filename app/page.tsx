@@ -400,13 +400,13 @@ export function GlobeDemo() {
   ];
 
   return (
-    // <div className='flex flex-row items-center justify-center py-20 md:h-auto dark:bg-black relative w-fit z-0'>
+    // <div className='relative z-0 flex flex-row items-center justify-center py-20 md:h-auto dark:bg-black w-fit'>
     <div className=' lg:max-w-[50%] w-full  relative overflow-hidden  md:h-[40rem]  '>
       <div>
-        {/* <div className='relative w-fit bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40' /> */}
+        {/* <div className='relative inset-x-0 bottom-0 z-40 h-40 pointer-events-none select-none w-fit bg-gradient-to-b from-transparent dark:to-black to-white' /> */}
         <div
-          className='lg:absolute w-full -bottom-5 h-72 md:h-full z-10 cursor-pointer drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
-        '
+          className='z-10 w-full cursor-pointer lg:absolute -bottom-5 h-72 md:h-full drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
+ '
         >
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
@@ -418,7 +418,7 @@ export function GlobeDemo() {
 export default function Home() {
   return (
     <main className='flex max-h-screen '>
-      <div className='flex w-full flex-wrap-reverse  justify-center items-center  dark:bg-black z-10 md:h-screen md:mt-0 mt-52'>
+      <div className='z-10 flex flex-wrap-reverse items-center justify-center w-full  dark:bg-black md:h-screen md:mt-0 mt-52'>
         <GlobeDemo />
         <motion.div
           initial={{
@@ -434,15 +434,15 @@ export default function Home() {
           }}
           className='div'
         >
-          <h2 className='text-center text-xl md:text-4xl font-bold text-black dark:text-white'>
+          <h2 className='text-xl font-bold text-center text-black md:text-4xl dark:text-white'>
             Viagens pelo globo, a partir do Rio.
           </h2>
-          <p className='text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto'>
+          <p className='max-w-md mx-auto mt-2 text-base font-normal text-center md:text-lg text-neutral-700 dark:text-neutral-200'>
             Universidade Autónoma de Lisboa
           </p>
           <Image
             src='/logocircuitosoceanicos.png'
-            className='mx-auto mt-4 hover:rotate-12 hover:scale-105 hover:shadow-2xl rounded-full bg-cover transition-all duration-300 ease-in-out'
+            className='mx-auto mt-4 bg-cover rounded-full hover:rotate-12 hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out'
             width={200}
             height={200}
             alt='logo'
@@ -455,7 +455,7 @@ export default function Home() {
           position: 'absolute',
           width: '100%',
         }}
-        className=' pointer-events-none mb-0 z-0'
+        className='z-0 mb-0 pointer-events-none '
       >
         <svg
           version='1.1'

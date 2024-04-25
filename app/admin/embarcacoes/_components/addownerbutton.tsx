@@ -123,7 +123,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='rounded-xl bg-blue-500'>
+        <Button className='bg-blue-500 rounded-xl'>
           Adicionar Proprietário
         </Button>
       </DialogTrigger>
@@ -160,7 +160,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                                 (pessoa) => pessoa.id.toString() === field.value
                               )?.nome
                             : 'Seleccionar Pessoa'}
-                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -215,7 +215,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                           size='icon'
                           className='bg-blue-500 hover:bg-blue-600'
                         >
-                          <LucideCalendar className='h-4 w-4' />
+                          <LucideCalendar className='w-4 h-4' />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
@@ -282,7 +282,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                           className='bg-blue-500 hover:bg-blue-600'
                           disabled={!form.watch('data_inicio')}
                         >
-                          <LucideCalendar className='h-4 w-4 ' />
+                          <LucideCalendar className='w-4 h-4 ' />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
@@ -348,7 +348,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                                 (pais) => pais.id.toString() === field.value
                               )?.pais
                             : 'Seleccionar País'}
-                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -381,7 +381,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
 
             <Button
               type='submit'
-              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
               Adicionar Proprietário{' '}

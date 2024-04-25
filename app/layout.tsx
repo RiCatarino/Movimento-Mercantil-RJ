@@ -42,10 +42,10 @@ export default function RootLayout({
           id='magicpattern'
         >
           <nav className='absolute w-full'>
-            <div className='flex bg-white justify-between items-center p-4 rounded-3xl mx-10 md:mx-24 mt-5 shadow-xl'>
+            <div className='flex items-center justify-between p-4 mx-10 mt-5 bg-white shadow-xl rounded-3xl md:mx-24'>
               <h1 className='text-xl font-bold'>Movimento Mercantil RJ</h1>
-              <ul className='flex space-x-4 items-center'>
-                <li className='hover:bg-blue-500 rounded-lg p-1 text-blue-500 hover:text-white cursor-pointer'>
+              <ul className='flex items-center space-x-4'>
+                <li className='p-1 text-blue-500 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white'>
                   <a href='#' className=''>
                     <HomeIcon />
                   </a>

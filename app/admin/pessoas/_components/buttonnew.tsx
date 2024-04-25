@@ -101,7 +101,7 @@ export default function NewPerson() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit self-end hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Pessoa <UserPlus size={24} />
         </Button>
       </DialogTrigger>
@@ -155,7 +155,7 @@ export default function NewPerson() {
                                   titulo_nobreza.id.toString() === field.value
                               )?.titulo
                             : 'Seleccionar Título de Nobreza'}
-                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -211,7 +211,7 @@ export default function NewPerson() {
                                 (pais) => pais.id.toString() === field.value
                               )?.pais
                             : 'Seleccionar País'}
-                          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -244,7 +244,7 @@ export default function NewPerson() {
 
             <Button
               type='submit'
-              className='mt-2 self-end rounded-2xl bg-blue-500 hover:bg-blue-600 w-fit'
+              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
               Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}

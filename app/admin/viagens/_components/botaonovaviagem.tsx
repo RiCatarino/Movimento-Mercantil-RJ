@@ -35,7 +35,7 @@ export default function BotaoNovaViagem() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className='bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit self-end hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Viagem
           <Plus size={24} />
         </Button>

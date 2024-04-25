@@ -18,7 +18,7 @@ export default function TableMercadorias(props: {
 
   return (
     <Table>
-      <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
+      <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
         <TableRow className='rounded-ss-xl'>
           <TableHead>Qt.</TableHead>
           <TableHead>Mercadoria</TableHead>
@@ -33,23 +33,23 @@ export default function TableMercadorias(props: {
             className='cursor-pointer hover:bg-blue-100'
             key={mercadoria.id}
           >
-            <TableCell className='font-medium text-xs'>
+            <TableCell className='text-xs font-medium'>
               {mercadoria.quantidade_origem}
             </TableCell>
-            <TableCell className='font-medium text-xs'>
+            <TableCell className='text-xs font-medium'>
               {mercadoria.mercadoria?.nome}
             </TableCell>
-            <TableCell className='font-medium text-xs'>
+            <TableCell className='text-xs font-medium'>
               {mercadoria?.unidade_de_medida?.unidade_medida}
             </TableCell>
-            <TableCell className='font-medium text-xs'>
+            <TableCell className='text-xs font-medium'>
               {/* format value as brazilian real */}
               {new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
               }).format(mercadoria.valor_frete)}
             </TableCell>
-            <TableCell className='font-medium text-xs'>
+            <TableCell className='text-xs font-medium'>
               {mercadoria.cosignatario.nome}
             </TableCell>
           </TableRow>
@@ -57,7 +57,7 @@ export default function TableMercadorias(props: {
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={1} className='font-bold text-xs'>
+          <TableCell colSpan={1} className='text-xs font-bold'>
             Total:{' '}
             {mercadorias?.reduce(
               (acc, mercadoria) => acc + (mercadoria.quantidade_origem || 0),
@@ -67,7 +67,7 @@ export default function TableMercadorias(props: {
           <TableCell></TableCell>
           <TableCell></TableCell>
 
-          <TableCell colSpan={1} className='font-bold text-xs'>
+          <TableCell colSpan={1} className='text-xs font-bold'>
             Total:{' '}
             {new Intl.NumberFormat('pt-BR', {
               style: 'currency',

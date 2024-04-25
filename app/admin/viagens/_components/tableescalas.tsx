@@ -41,7 +41,7 @@ export default function TableEscalas(props: {
   return (
     <>
       <Table className='border-b'>
-        <TableHeader className='bg-blue-200 p-2 text-xs border-t-0 '>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>Data</TableHead>
             <TableHead>Ano</TableHead>
@@ -62,22 +62,22 @@ export default function TableEscalas(props: {
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {dayjs(escala.data_escala).format('DD-MM-YYYY')}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {escala.ano}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {escala.dias_porto}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {escala.porto.nome}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {escala.entrada_de_passageiros}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {escala.saida_de_passageiros}
               </TableCell>
               <TableCell className='w-4'>

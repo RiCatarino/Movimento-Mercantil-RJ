@@ -26,7 +26,7 @@ export default function TripsTable() {
   return (
     <>
       <Table>
-        <TableHeader className='bg-gradient-to-r from-blue-200 to-blue-400 p-2 text-xs border-t-0 '>
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>ID</TableHead>
             <TableHead>Data Rio</TableHead>
@@ -45,16 +45,16 @@ export default function TripsTable() {
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium text-xs'>{viagem.id}</TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>{viagem.id}</TableCell>
+              <TableCell className='text-xs font-medium'>
                 {viagem.data_rio
                   ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
                   : 'N/A'}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {viagem.entrada_sahida}
               </TableCell>
-              <TableCell className='font-medium text-xs'>
+              <TableCell className='text-xs font-medium'>
                 {viagem.embarcacao.nome}
               </TableCell>
             </TableRow>
