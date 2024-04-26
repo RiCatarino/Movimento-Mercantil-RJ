@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const { nome, id } = await req.json();
@@ -8,5 +8,5 @@ export async function POST(req: Request) {
       nome: nome,
     },
   });
-  return result;
+  return Response.json(result);
 }
