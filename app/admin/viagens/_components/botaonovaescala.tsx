@@ -202,7 +202,7 @@ export default function BotaoNovaeEscala(props: {
               name='porto_id'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Pessoa</FormLabel>
+                  <FormLabel>Porto</FormLabel>
                   <Popover open={selectPorto} onOpenChange={setSelectPorto}>
                     <PopoverTrigger asChild>
                       <FormControl>

@@ -12,7 +12,7 @@ const World = dynamic(
   }
 );
 
-export function GlobeDemo() {
+function Globe() {
   const globeConfig = {
     pointSize: 10,
     globeColor: '#84CBF9',
@@ -419,7 +419,7 @@ export default function Home() {
   return (
     <main className='flex max-h-screen '>
       <div className='z-10 flex flex-wrap-reverse items-center justify-center w-full  dark:bg-black md:h-screen md:mt-0 mt-52'>
-        <GlobeDemo />
+        <Globe />
         <motion.div
           initial={{
             opacity: 0,
