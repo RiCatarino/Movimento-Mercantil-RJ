@@ -39,6 +39,7 @@ interface Embarcacao {
   tipo_embarcacao: TipoEmbarcacao;
   relacao_embarcacao_proprietario: RelacEmbarcacaoProprietario[];
   viagem: Viagem[];
+  pais: Pais;
 }
 
 interface TipoEmbarcacao {

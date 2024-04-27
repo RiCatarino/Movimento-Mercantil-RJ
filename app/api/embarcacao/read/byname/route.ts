@@ -6,7 +6,7 @@ export async function GET(req: Request) {
   const result = await prisma.embarcacao.findMany({
     where: {
       nome: {
-        contains: nome?.toString(),
+        startsWith: nome?.toString(),
         mode: 'insensitive',
       },
     },
@@ -15,6 +15,7 @@ export async function GET(req: Request) {
       nome: true,
       observacao: true,
       tipo_embarcacao: true,
+      pais: true,
     },
   });
 

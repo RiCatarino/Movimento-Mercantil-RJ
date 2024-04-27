@@ -41,42 +41,54 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import fetcher from '@/lib/fetch';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Loader from '@/components/loader';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+var customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+import { ptBR } from 'date-fns/locale';
 
 const formSchema = z.object({
-  data_partida: z.string(),
-  data_chegada: z.string(),
-  dias_viagem: z.number().gte(1, { message: 'Quantos dias durou a viagem?' }),
-  tripulacao: z.number().gte(1, { message: 'Quanta tripulação?' }),
-  passageiros: z
-    .number()
-    .gte(0, { message: 'Tem de ser igual o maior que 0.' }),
-  porto_origem: z.number().min(1, { message: 'Tem de selecionar um porto.' }),
-  porto_destino: z.number().min(1, { message: 'Tem de selecionar um porto.' }),
-  id_embarcacao: z
-    .number()
-    .min(1, { message: 'Tem de selecionar uma embarcação.' }),
-  id_comandante: z
-    .number()
-    .min(1, { message: 'Tem de selecionar um comandante.' }),
-  id_capitao: z.number().min(1, { message: 'Tem de selecionar um capitão.' }),
-  id_armador: z.number().min(1, { message: 'Tem de selecionar um armador.' }),
-  id_mestre: z.number().min(1, { message: 'Tem de selecionar um mestre.' }),
+  data_viagem: z.string().nullable(),
+  data_chegada: z.string().nullable(),
+  data_rio: z.string().nullable(),
+  dias_viagem: z.string(),
+  tripulacao: z.string(),
+  passageiros: z.string(),
+  porto_origem: z.number().nullable(),
+  dias_porto_origem: z.string(),
+  porto_destino: z.number().nullable(),
+  dias_porto_destino: z.string(),
+  id_embarcacao: z.number().nullable(),
+  id_comandante: z.number().nullable(),
+  id_capitao: z.number().nullable(),
+  id_armador: z.number().nullable(),
+  id_mestre: z.number().nullable(),
+  entrada_sahida: z.string().nullable(),
 });
 
 export default function BotaoNovaViagem() {
   const { toast } = useToast();
+  const [open, setOpen] = useState(false);
   const [selectPortoOrigem, setSelectPortoOrigem] = useState(false);
   const [selectPortoDestino, setSelectPortoDestino] = useState(false);
   const [searchPortoName, setSearchPortoName] = useState('');
   const [selectEmbarcacao, setSelectEmbarcacao] = useState(false);
   const [searchEmbarcacaoName, setSearchEmbarcacaoName] = useState('');
-  const [searchPersonName, setSearchPersonName] = useState('');
+  const [searchComandanteName, setSearchComandanteName] = useState('');
+  const [searchCapitaoName, setSearchCapitaoName] = useState('');
+  const [searchArmadorName, setSearchArmadorName] = useState('');
+  const [searchMestreName, setSearchMestreName] = useState('');
   const [selectComandante, setSelectComandante] = useState(false);
   const [selectCapitao, setSelectCapitao] = useState(false);
   const [selectArmador, setSelectArmador] = useState(false);
@@ -86,18 +98,22 @@ export default function BotaoNovaViagem() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      data_partida: '',
+      data_viagem: '',
       data_chegada: '',
-      dias_viagem: 0,
-      tripulacao: 0,
-      passageiros: 0,
-      porto_origem: 0,
-      porto_destino: 0,
-      id_embarcacao: 0,
-      id_comandante: 0,
-      id_capitao: 0,
-      id_armador: 0,
-      id_mestre: 0,
+      data_rio: '',
+      dias_viagem: '',
+      tripulacao: '',
+      passageiros: '',
+      porto_origem: null,
+      dias_porto_origem: '',
+      porto_destino: null,
+      dias_porto_destino: '',
+      id_embarcacao: null,
+      id_comandante: null,
+      id_capitao: null,
+      id_armador: null,
+      id_mestre: null,
+      entrada_sahida: null,
     },
   });
 
@@ -112,36 +128,90 @@ export default function BotaoNovaViagem() {
     fetcher
   );
 
-  const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
-    searchPersonName && '/api/pessoa/read/byname?nome=' + searchPersonName,
+  const { data: comandantes } = useSWR<Pessoa[]>(
+    searchComandanteName &&
+      '/api/pessoa/read/byname?nome=' + searchComandanteName,
     fetcher
   );
 
+  const { data: capitoes } = useSWR<Pessoa[]>(
+    searchCapitaoName && '/api/pessoa/read/byname?nome=' + searchCapitaoName,
+    fetcher
+  );
+
+  const { data: armadores } = useSWR<Pessoa[]>(
+    searchArmadorName && '/api/pessoa/read/byname?nome=' + searchArmadorName,
+    fetcher
+  );
+
+  const { data: mestres } = useSWR<Pessoa[]>(
+    searchMestreName && '/api/pessoa/read/byname?nome=' + searchMestreName,
+    fetcher
+  );
+
+  async function handleSubmit(values: z.infer<typeof formSchema>) {
+    setSubmitting(true);
+    if (values.data_rio || values.id_embarcacao || values.entrada_sahida)
+      try {
+        await fetcher('/api/viagem/create', {
+          method: 'POST',
+          body: JSON.stringify(values),
+        });
+        form.reset();
+        toast({
+          className: 'bg-green-200',
+          title: 'Sucesso',
+          duration: 5000,
+          description: 'Viagem adicionada com sucesso',
+        });
+        mutate('/api/viagem/read');
+        setOpen(false);
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: 'Erro',
+          description: 'Erro ao adicionar viagem',
+        });
+      }
+    else {
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        description:
+          'Por favor preencha pelo menos o campo de data de rio, embarcação e tipo de viagem',
+      });
+    }
+    setSubmitting(false);
+  }
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-full md:w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Viagem
           <Plus size={24} />
         </Button>
       </SheetTrigger>
-      <SheetContent className='flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg sm:max-w-[90%] md:max-w-[75%] lg:max-w-[50%] w-[95%]  '>
+      <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg sm:max-w-[90%] md:max-w-[75%] lg:max-w-[50%] w-[95%]  '>
         <SheetHeader>
           <SheetTitle className='text-blue-500'>Adicionar Viagem</SheetTitle>
         </SheetHeader>
         <ScrollArea className='h-full overflow-y-auto no-scrollbar'>
           <Form {...form}>
-            <form className='flex flex-wrap gap-2 md:gap-4 '>
+            <form
+              className='flex flex-wrap gap-2 p-1 md:gap-4'
+              onSubmit={form.handleSubmit(handleSubmit)}
+            >
               <FormField
                 control={form.control}
-                name='data_partida'
+                name='data_viagem'
                 render={({ field }) => (
                   <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
-                    <FormLabel>Data de partida</FormLabel>
+                    <FormLabel>Data da Viagem</FormLabel>
                     <div className='flex w-full gap-2'>
                       <Input
                         placeholder='DD-MM-YYYY'
-                        value={field.value}
+                        value={field.value || ''}
                         onChange={(e) => {
                           field.onChange(e.target.value);
                         }}
@@ -157,6 +227,7 @@ export default function BotaoNovaViagem() {
                         </PopoverTrigger>
                         <PopoverContent>
                           <Calendar
+                            locale={ptBR}
                             defaultMonth={
                               dayjs(field.value, 'DD-MM-YYYY').isValid()
                                 ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -169,7 +240,7 @@ export default function BotaoNovaViagem() {
                             }
                             onSelect={(date) => {
                               form.setValue(
-                                'data_partida',
+                                'data_viagem',
                                 dayjs(date).format('DD-MM-YYYY')
                               );
                             }}
@@ -190,29 +261,32 @@ export default function BotaoNovaViagem() {
                     <FormLabel>Data de Chegada</FormLabel>
                     <div className='flex w-full gap-2'>
                       <Input
-                        disabled={!form.getValues('data_chegada')}
                         placeholder='DD-MM-YYYY'
-                        value={field.value}
+                        value={field.value || ''}
                         onChange={(e) => {
                           //if date is after data_inicio
-                          if (
-                            dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
-                              dayjs(
-                                form.getValues('data_chegada'),
-                                'DD-MM-YYYY'
+
+                          if (form.watch('data_viagem')) {
+                            if (
+                              dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
+                                dayjs(
+                                  form.getValues('data_viagem'),
+                                  'DD-MM-YYYY'
+                                )
                               )
-                            )
-                          ) {
-                            form.setValue('data_chegada', e.target.value);
+                            ) {
+                              form.setValue('data_chegada', e.target.value);
+                            } else {
+                              toast({
+                                variant: 'destructive',
+                                title: 'Erro',
+                                description:
+                                  'Data de fim deve ser após a data de início',
+                              });
+                            }
                           } else {
-                            toast({
-                              variant: 'destructive',
-                              title: 'Erro',
-                              description:
-                                'Data de fim deve ser após a data de início',
-                            });
+                            field.onChange(e.target.value);
                           }
-                          field.onChange(e.target.value);
                         }}
                       />
                       <Popover>
@@ -220,13 +294,13 @@ export default function BotaoNovaViagem() {
                           <Button
                             size='icon'
                             className='bg-blue-500 hover:bg-blue-600'
-                            disabled={!form.watch('data_partida')}
                           >
                             <LucideCalendar className='w-4 h-4 ' />
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent>
                           <Calendar
+                            locale={ptBR}
                             defaultMonth={
                               dayjs(field.value, 'DD-MM-YYYY').isValid()
                                 ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -238,25 +312,35 @@ export default function BotaoNovaViagem() {
                                 : undefined
                             }
                             onSelect={(date) => {
-                              if (
-                                dayjs(date).isAfter(
-                                  dayjs(
-                                    form.watch('data_partida'),
-                                    'DD-MM-YYYY'
+                              console.log(form.watch('data_viagem'));
+
+                              if (form.watch('data_viagem')) {
+                                console.log(form.watch('data_viagem'));
+                                if (
+                                  dayjs(date).isAfter(
+                                    dayjs(
+                                      form.watch('data_viagem'),
+                                      'DD-MM-YYYY'
+                                    )
                                   )
-                                )
-                              ) {
+                                ) {
+                                  form.setValue(
+                                    'data_chegada',
+                                    dayjs(date).format('DD-MM-YYYY')
+                                  );
+                                } else {
+                                  toast({
+                                    variant: 'destructive',
+                                    title: 'Erro',
+                                    description:
+                                      'Data de fim deve ser após a data de início',
+                                  });
+                                }
+                              } else {
                                 form.setValue(
                                   'data_chegada',
                                   dayjs(date).format('DD-MM-YYYY')
                                 );
-                              } else {
-                                toast({
-                                  variant: 'destructive',
-                                  title: 'Erro',
-                                  description:
-                                    'Data de fim deve ser após a data de início',
-                                });
                               }
                             }}
                             mode='single'
@@ -268,13 +352,93 @@ export default function BotaoNovaViagem() {
                   </FormItem>
                 )}
               />
-              <div className='grid  grid-cols-3 grid-rows-1 grow gap-4 '>
+              {/* DATA RIO */}
+              <FormField
+                control={form.control}
+                name='data_rio'
+                render={({ field }) => (
+                  <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
+                    <FormLabel>Data Rio</FormLabel>
+                    <div className='flex w-full gap-2'>
+                      <Input
+                        placeholder='DD-MM-YYYY'
+                        value={field.value || ''}
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                        }}
+                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            size='icon'
+                            className='bg-blue-500 hover:bg-blue-600'
+                          >
+                            <LucideCalendar className='w-4 h-4' />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <Calendar
+                            locale={ptBR}
+                            defaultMonth={
+                              dayjs(field.value, 'DD-MM-YYYY').isValid()
+                                ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                                : undefined
+                            }
+                            selected={
+                              dayjs(field.value, 'DD-MM-YYYY').isValid()
+                                ? dayjs(field.value, 'DD-MM-YYYY').toDate()
+                                : undefined
+                            }
+                            onSelect={(date) => {
+                              form.setValue(
+                                'data_rio',
+                                dayjs(date).format('DD-MM-YYYY')
+                              );
+                            }}
+                            mode='single'
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='entrada_sahida'
+                render={({ field }) => (
+                  <FormItem className='flex flex-col grow'>
+                    <FormLabel>Tipo</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      // defaultValue={field.value?.toString()}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Entrada ou Saída?' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value='undefined'>
+                          Sem informação
+                        </SelectItem>
+                        <SelectItem value='Entrada'>Entrada</SelectItem>
+                        <SelectItem value='Sahida'>Saída</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <div className='grid grid-cols-3 grid-rows-1 gap-4 grow'>
                 <FormField
                   control={form.control}
                   name='dias_viagem'
                   render={({ field }) => (
                     <FormItem className='col-span-3 md:col-span-1'>
-                      <FormLabel>Dias da Viagem (Qt.)</FormLabel>
+                      <FormLabel>Dias de Viagem (Qt.)</FormLabel>
                       <FormControl>
                         <Input placeholder='123' {...field} />
                       </FormControl>
@@ -311,9 +475,10 @@ export default function BotaoNovaViagem() {
                 control={form.control}
                 name='porto_origem'
                 render={({ field }) => (
-                  <FormItem className='flex flex-col basis-full md:basis-1/2'>
+                  <FormItem className='flex flex-col basis-full md:basis-8/12'>
                     <FormLabel>Porto de Origem</FormLabel>
                     <Popover
+                      modal
                       open={selectPortoOrigem}
                       onOpenChange={setSelectPortoOrigem}
                     >
@@ -344,7 +509,10 @@ export default function BotaoNovaViagem() {
                             }}
                             placeholder='Procurar porto...'
                           />
-                          <CommandEmpty>Porto não encontrado</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Porto não encontrado</CommandEmpty>
+                          ) : null}
+
                           <CommandGroup>
                             <CommandList>
                               {portos?.map((porto) => (
@@ -370,11 +538,24 @@ export default function BotaoNovaViagem() {
               />
               <FormField
                 control={form.control}
-                name='porto_destino'
+                name='dias_porto_origem'
                 render={({ field }) => (
                   <FormItem className='flex flex-col grow'>
+                    <FormLabel>Dias no Porto de Origem</FormLabel>
+                    <FormControl>
+                      <Input placeholder='123' {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='porto_destino'
+                render={({ field }) => (
+                  <FormItem className='flex flex-col basis-full md:basis-8/12'>
                     <FormLabel>Porto de Destino</FormLabel>
                     <Popover
+                      modal
                       open={selectPortoDestino}
                       onOpenChange={setSelectPortoDestino}
                     >
@@ -405,7 +586,9 @@ export default function BotaoNovaViagem() {
                             }}
                             placeholder='Procurar porto...'
                           />
-                          <CommandEmpty>Porto não encontrado</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Porto não encontrado</CommandEmpty>
+                          ) : null}{' '}
                           <CommandGroup>
                             <CommandList>
                               {portos?.map((porto) => (
@@ -413,7 +596,7 @@ export default function BotaoNovaViagem() {
                                   value={porto.nome}
                                   key={porto.id}
                                   onSelect={() => {
-                                    form.setValue('porto_origem', porto.id);
+                                    form.setValue('porto_destino', porto.id);
                                     setSelectPortoDestino(false);
                                   }}
                                 >
@@ -429,14 +612,28 @@ export default function BotaoNovaViagem() {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name='dias_porto_destino'
+                render={({ field }) => (
+                  <FormItem className='flex flex-col grow'>
+                    <FormLabel>Dias no Porto de Destino</FormLabel>
+                    <FormControl>
+                      <Input placeholder='123' {...field} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
               {/* EMBARCAÇÃO */}
               <FormField
                 control={form.control}
                 name='id_embarcacao'
                 render={({ field }) => (
-                  <FormItem className='flex flex-col grow w-full'>
+                  <FormItem className='flex flex-col w-full grow'>
                     <FormLabel>Embarcação</FormLabel>
                     <Popover
+                      modal
                       open={selectEmbarcacao}
                       onOpenChange={setSelectEmbarcacao}
                     >
@@ -467,25 +664,34 @@ export default function BotaoNovaViagem() {
                             }}
                             placeholder='Procurar embarcação...'
                           />
-                          <CommandEmpty>Embarcação não encontrada</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty>
+                              Embarcação não encontrada
+                            </CommandEmpty>
+                          ) : null}
                           <CommandGroup>
                             <CommandList>
-                              {embarcacoes?.map((embarcacao) => (
-                                <CommandItem
-                                  value={embarcacao.nome}
-                                  key={embarcacao.id}
-                                  onSelect={() => {
-                                    form.setValue(
-                                      'id_embarcacao',
-                                      embarcacao.id
-                                    );
-                                    setSelectEmbarcacao(false);
-                                  }}
-                                >
-                                  {embarcacao.nome} |{' '}
-                                  {embarcacao.tipo_embarcacao.tipo}
-                                </CommandItem>
-                              ))}
+                              {embarcacoes?.map((embarcacao) => {
+                                return (
+                                  <CommandItem
+                                    value={embarcacao.nome}
+                                    key={embarcacao.id}
+                                    onSelect={() => {
+                                      form.setValue(
+                                        'id_embarcacao',
+                                        embarcacao.id
+                                      );
+                                      setSelectEmbarcacao(false);
+                                    }}
+                                  >
+                                    {embarcacao.nome} |{' '}
+                                    {embarcacao.tipo_embarcacao?.tipo}{' '}
+                                    {embarcacao.pais
+                                      ? ' | ' + embarcacao.pais?.pais
+                                      : ''}
+                                  </CommandItem>
+                                );
+                              })}
                             </CommandList>
                           </CommandGroup>
                         </Command>
@@ -502,6 +708,7 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col basis-full md:basis-1/2'>
                     <FormLabel>Comandante</FormLabel>
                     <Popover
+                      modal
                       open={selectComandante}
                       onOpenChange={setSelectComandante}
                     >
@@ -516,7 +723,7 @@ export default function BotaoNovaViagem() {
                             )}
                           >
                             {field.value
-                              ? pessoas?.find(
+                              ? comandantes?.find(
                                   (pessoa) => pessoa.id === field.value
                                 )?.nome
                               : 'Seleccionar Comandante'}
@@ -528,14 +735,16 @@ export default function BotaoNovaViagem() {
                         <Command>
                           <CommandInput
                             onValueChange={(value) => {
-                              setSearchPersonName(value);
+                              setSearchComandanteName(value);
                             }}
                             placeholder='Procurar comandante...'
                           />
-                          <CommandEmpty>Pessoa não encontrada</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Pessoa não encontrada</CommandEmpty>
+                          ) : null}{' '}
                           <CommandGroup>
                             <CommandList>
-                              {pessoas?.map((pessoa) => (
+                              {comandantes?.map((pessoa) => (
                                 <CommandItem
                                   value={pessoa.nome}
                                   key={pessoa.id}
@@ -563,6 +772,7 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Capitão</FormLabel>
                     <Popover
+                      modal
                       open={selectCapitao}
                       onOpenChange={setSelectCapitao}
                     >
@@ -577,7 +787,7 @@ export default function BotaoNovaViagem() {
                             )}
                           >
                             {field.value
-                              ? pessoas?.find(
+                              ? capitoes?.find(
                                   (pessoa) => pessoa.id === field.value
                                 )?.nome
                               : 'Seleccionar Capitão'}
@@ -589,14 +799,16 @@ export default function BotaoNovaViagem() {
                         <Command>
                           <CommandInput
                             onValueChange={(value) => {
-                              setSearchPersonName(value);
+                              setSearchCapitaoName(value);
                             }}
                             placeholder='Procurar capitão...'
                           />
-                          <CommandEmpty>Pessoa não encontrada</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Pessoa não encontrada</CommandEmpty>
+                          ) : null}{' '}
                           <CommandGroup>
                             <CommandList>
-                              {pessoas?.map((pessoa) => (
+                              {capitoes?.map((pessoa) => (
                                 <CommandItem
                                   value={pessoa.nome}
                                   key={pessoa.id}
@@ -624,6 +836,7 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col basis-full md:basis-1/2'>
                     <FormLabel>Armador</FormLabel>
                     <Popover
+                      modal
                       open={selectArmador}
                       onOpenChange={setSelectArmador}
                     >
@@ -638,7 +851,7 @@ export default function BotaoNovaViagem() {
                             )}
                           >
                             {field.value
-                              ? pessoas?.find(
+                              ? armadores?.find(
                                   (pessoa) => pessoa.id === field.value
                                 )?.nome
                               : 'Seleccionar Pessoa'}
@@ -650,14 +863,16 @@ export default function BotaoNovaViagem() {
                         <Command>
                           <CommandInput
                             onValueChange={(value) => {
-                              setSearchPersonName(value);
+                              setSearchArmadorName(value);
                             }}
                             placeholder='Procurar armador...'
                           />
-                          <CommandEmpty>Pessoa não encontrada</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Pessoa não encontrada</CommandEmpty>
+                          ) : null}{' '}
                           <CommandGroup>
                             <CommandList>
-                              {pessoas?.map((pessoa) => (
+                              {armadores?.map((pessoa) => (
                                 <CommandItem
                                   value={pessoa.nome}
                                   key={pessoa.id}
@@ -684,7 +899,11 @@ export default function BotaoNovaViagem() {
                 render={({ field }) => (
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Mestre</FormLabel>
-                    <Popover open={selectMestre} onOpenChange={setSelectMestre}>
+                    <Popover
+                      open={selectMestre}
+                      onOpenChange={setSelectMestre}
+                      modal
+                    >
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
@@ -696,7 +915,7 @@ export default function BotaoNovaViagem() {
                             )}
                           >
                             {field.value
-                              ? pessoas?.find(
+                              ? mestres?.find(
                                   (pessoa) => pessoa.id === field.value
                                 )?.nome
                               : 'Seleccionar Pessoa'}
@@ -708,14 +927,16 @@ export default function BotaoNovaViagem() {
                         <Command>
                           <CommandInput
                             onValueChange={(value) => {
-                              setSearchPersonName(value);
+                              setSearchMestreName(value);
                             }}
                             placeholder='Procurar mestre...'
                           />
-                          <CommandEmpty>Pessoa não encontrada</CommandEmpty>
+                          {field.value ? (
+                            <CommandEmpty> Pessoa não encontrada</CommandEmpty>
+                          ) : null}{' '}
                           <CommandGroup>
                             <CommandList>
-                              {pessoas?.map((pessoa) => (
+                              {mestres?.map((pessoa) => (
                                 <CommandItem
                                   value={pessoa.nome}
                                   key={pessoa.id}
@@ -735,10 +956,10 @@ export default function BotaoNovaViagem() {
                   </FormItem>
                 )}
               />
-              <div className='w-full  text-right'>
+              <div className='w-full text-right '>
                 <Button
                   disabled={submitting}
-                  className=' mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-full md:w-fit'
+                  className='w-full mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 md:w-fit'
                 >
                   {submitting ? (
                     <>

@@ -101,11 +101,12 @@ export default function NewPerson() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'>
           Adicionar Pessoa <UserPlus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent
+        className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
