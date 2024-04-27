@@ -78,9 +78,7 @@ export default function DashboardLayout({
             ></path>
           </svg>
         </button>
-        <h1 className='text-xl font-bold text-center'>
-          Movimento Mercantil RJ
-        </h1>
+        <h1 className='text-xl font-bold text-center'>MM RJ</h1>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -105,7 +103,7 @@ export default function DashboardLayout({
             aria-label='Sidebar'
           >
             <div className='h-full px-3 py-4 overflow-y-auto bg-white border shadow-2xl rounded-xl dark:bg-gray-800'>
-              <ul className='font-medium space-y-3'>
+              <ul className='space-y-3 font-medium'>
                 <li>
                   <Link
                     onClick={() => {

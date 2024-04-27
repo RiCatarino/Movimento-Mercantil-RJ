@@ -98,11 +98,12 @@ export default function NewVessel(props: { mutate: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='self-end bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-fit hover:scale-105 transition-all duration-500 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Embarcação <Plus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent
+        className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
@@ -147,7 +148,7 @@ export default function NewVessel(props: { mutate: () => void }) {
                                 <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
                                 <TooltipContent
                                   side='right'
-                                  className='p-2 ml-10 overflow-y-auto rounded-lg  max-w-96 max-h-96'
+                                  className='p-2 ml-10 overflow-y-auto rounded-lg max-w-96 max-h-96'
                                 >
                                   <p className='font-bold'>Descrição: </p>
                                   <br />

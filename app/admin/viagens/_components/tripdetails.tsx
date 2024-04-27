@@ -89,7 +89,9 @@ export default function TripDetails(props: {
                   Data de Partida
                 </div>
                 <div className='p-2 text-xs'>
-                  {dayjs(viagem?.data_viagem).format('DD/MM/YYYY')}
+                  {viagem?.data_viagem
+                    ? dayjs(viagem?.data_viagem).format('DD/MM/YYYY')
+                    : 'N/A'}
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
@@ -97,10 +99,21 @@ export default function TripDetails(props: {
                   Data de Chegada
                 </div>
                 <div className='p-2 text-xs'>
-                  {dayjs(viagem?.data_chegada).format('DD/MM/YYYY')}
+                  {viagem?.data_chegada
+                    ? dayjs(viagem?.data_chegada).format('DD/MM/YYYY')
+                    : 'N/A'}{' '}
                 </div>
               </div>
-
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                  Data Rio
+                </div>
+                <div className='p-2 text-xs'>
+                  {viagem?.data_rio
+                    ? dayjs(viagem?.data_rio).format('DD/MM/YYYY')
+                    : 'N/A'}{' '}
+                </div>
+              </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Dias de Viagem
