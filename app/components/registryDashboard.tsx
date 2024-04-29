@@ -1,6 +1,6 @@
 // import { Users } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -43,7 +43,10 @@ export default function StatsCard(props: {
         className="flex items-center m-0 p-0 rounded-l justify-center"
         // style={{ backgroundColor: "red" }}
       >
-        <Button className="text-black shadow-2xl h-full w-1/2 transition-all duration-500 bg-gradient-to-r from-blue-200 to-blue-400 rounded-m hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600">
+        <Button
+          asChild
+          className="text-black shadow-2xl h-full w-1/2 transition-all duration-500 bg-gradient-to-r from-blue-200 to-blue-400 rounded-m hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600"
+        >
           <Link href={href}> Conheça os registos </Link>
         </Button>
       </div>
