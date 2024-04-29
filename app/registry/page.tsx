@@ -7,10 +7,10 @@ import { GitCompareArrows, PersonStanding, Ship, Users } from "lucide-react";
 
 export default function registryPage() {
   return (
-    <main className="flex max-h-screen bg-blue-100">
+    <main className="flex flex-col p-4 border-2 border-none shadow-lg  gap-2 rounded-3xl md:mx-24">
       <div className="w-full dark:bg-black md:h-screen md:mt-0 mt-52">
         <div className="mt-20">
-          <h2 className="pl-5 pb-2 pt-5 text-xl font-bold text-left text-blue-500 md:text-4xl dark:text-white ">
+          <h2 className="pl-5 pb-2 pt-5 text-xl font-bold text-left text-white md:text-4xl dark:text-white ">
             Informações Gerais
           </h2>
         </div>
@@ -28,7 +28,7 @@ export default function registryPage() {
             value={20}
             icon={<Ship className="w-20 h-20" />}
             description=""
-            href="#"
+            href="/#"
           />
           <StatsCard
             title="Total de Usuários (mudar isto obviously)"

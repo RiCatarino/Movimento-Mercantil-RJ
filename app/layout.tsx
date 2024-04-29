@@ -43,8 +43,8 @@ export default function RootLayout({
         >
           <nav className="absolute w-full">
             <div className="flex items-center justify-between p-4 mx-10 mt-5 bg-white shadow-xl rounded-3xl md:mx-24">
-              <h1 className="text-xl font-bold">Movimento Mercantil RJ</h1>
-              <ul className="flex items-center space-x-4">
+              <h1 className="text-xl font-bold ml-6">Movimento Mercantil RJ</h1>
+              <ul className="flex items-center space-x-4 mr-6">
                 <li className="p-1 text-blue-500 rounded-lg cursor-pointer hover:bg-blue-500 hover:text-white">
                   <a href="#" className="">
                     <HomeIcon />
