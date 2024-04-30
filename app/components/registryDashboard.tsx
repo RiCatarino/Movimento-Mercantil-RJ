@@ -45,7 +45,7 @@ export default function StatsCard(props: {
       >
         <Button
           asChild
-          className="text-black shadow-2xl h-full w-1/2 transition-all duration-500 bg-gradient-to-r from-blue-200 to-blue-400 rounded-m hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600"
+          className="text-white shadow-2xl h-12 w-1/3 transition-all duration-500 bg-blue-400 rounded-m hover:scale-105 hover:bg-blue-600 active:scale-95"
         >
           <Link href={href}> Conheça os registos </Link>
         </Button>
