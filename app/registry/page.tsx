@@ -42,14 +42,14 @@ export default function registryPage() {
               href="/registry/embarcacoes"
             />
             <StatsCard
-              title="Total de Usuários (mudar isto obviously)"
+              title="Pessoas"
               value={30}
               icon={<Users className="w-20 h-20" />}
               description=""
-              href="#"
+              href="/registry/pessoas"
             />
             <StatsCard
-              title="Total de Pessoas"
+              title="Pneumoultramicroscopicossilicovulcanoconiótico"
               value={40}
               icon={<PersonStanding className="w-20 h-20" />}
               description=""
