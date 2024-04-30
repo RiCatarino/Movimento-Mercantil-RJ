@@ -437,7 +437,10 @@ export default function Home() {
           className="div"
         >
           <div className="flex justify-center p-3" style={{}}>
-            <Button className="shadow-2xl text-lg self-end h-14 w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600">
+            <Button
+              asChild
+              className="shadow-2xl text-lg self-end h-14 w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600"
+            >
               <Link href={"/registry/"}> Conheça os registos </Link>
             </Button>
           </div>

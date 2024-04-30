@@ -25,21 +25,21 @@ export default function registryPage() {
 
           <div
             // style={{ backgroundColor: "yellow" }}
-            className="p-3 flex flex-wrap gap-2"
+            className="p-2 flex flex-wrap gap-2"
           >
             <StatsCard
-              title="Total de viagens (mudar isto ?)"
+              title="Viagens"
               value={10}
               description="Deixar aqui uma descrição do que há aqui.   - 10 viagens realizadas."
               icon={<GitCompareArrows className="w-20 h-20" />}
               href="/registry/viagens"
             />
             <StatsCard
-              title="Total de Embarcações"
+              title="Embarcações"
               value={20}
               icon={<Ship className="w-20 h-20" />}
               description=""
-              href="/#"
+              href="/registry/embarcacoes"
             />
             <StatsCard
               title="Total de Usuários (mudar isto obviously)"

@@ -1,0 +1,150 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import fetcher from "@/lib/fetch";
+import { Dispatch, SetStateAction, useState } from "react";
+import useSWR from "swr";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import dayjs from "dayjs";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import Loader from "@/components/loader";
+import { X } from "lucide-react";
+
+export default function VesselDetails(props: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  embarcacao_id: number | undefined;
+}) {
+  const { open, setOpen, embarcacao_id } = props;
+  const [deleting, setDeleting] = useState(false);
+
+  const {
+    data: embarcacao,
+    isLoading,
+    mutate: mutateEmbarcacao,
+  } = useSWR<Embarcacao>(
+    embarcacao_id ? `/api/embarcacao/read/byid?id=${embarcacao_id}` : null,
+    fetcher
+  );
+
+  async function handleDeleteOwner(id: number) {
+    setDeleting(true);
+    await fetcher(`/api/embarcacao/delete/owner`, {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+    mutateEmbarcacao();
+    setDeleting(false);
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className=" min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll">
+        <DialogHeader>
+          <DialogTitle>
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <Loader classProp="w-24 h-24" />
+              </div>
+            ) : (
+              "Embarcação #" + embarcacao_id
+            )}
+          </DialogTitle>
+        </DialogHeader>
+        {!isLoading && (
+          <>
+            <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-1 rounded-xl border min-w-[50%]">
+                <div className="p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl">
+                  Nome
+                </div>
+                <div className="p-2 text-xs">{embarcacao?.nome}</div>
+              </div>
+              <div className="flex flex-col border gap-1 rounded-xl grow">
+                <div className="p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl">
+                  Tipo
+                </div>
+                <div className="p-2 text-xs">
+                  {embarcacao?.tipo_embarcacao.tipo}
+                </div>
+              </div>
+              <div className="flex flex-col border gap-1 rounded-xl grow">
+                <div className="p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl">
+                  Descrição
+                </div>
+                <div className="p-2 text-xs">
+                  {embarcacao?.tipo_embarcacao.texto_descritivo}
+                </div>
+              </div>
+              <div className="flex flex-col w-full border gap-1 rounded-xl">
+                <div className="p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl">
+                  Observação
+                </div>
+                <div className="p-2 text-xs">{embarcacao?.observacao}</div>
+              </div>
+              <div className="flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl">
+                <Table>
+                  <TableHeader className="p-2 text-xs bg-blue-200 ">
+                    <TableRow className="rounded-ss-xl">
+                      <TableHead>Pessoa</TableHead>
+                      <TableHead>Início</TableHead>
+                      <TableHead>Fim</TableHead>
+                      <TableHead>País</TableHead>
+                      <TableHead></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {embarcacao?.relacao_embarcacao_proprietario.map(
+                      (relacao) => (
+                        <TableRow key={relacao.id}>
+                          <TableCell className="text-xs font-medium">
+                            {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {dayjs(relacao.data_inicio).format("DD/MM/YYYY")}
+                          </TableCell>
+                          <TableCell className="text-xs">
+                            {dayjs(relacao.data_fim).format("DD/MM/YYYY")}
+                          </TableCell>
+
+                          <TableCell className="text-xs">
+                            {relacao.pais.pais}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
+                  </TableBody>
+                  {embarcacao?.relacao_embarcacao_proprietario.length === 0 && (
+                    <TableCaption>Nenhum proprietário encontrado</TableCaption>
+                  )}
+                </Table>
+              </div>
+            </div>
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
