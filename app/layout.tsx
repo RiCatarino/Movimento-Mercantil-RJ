@@ -36,7 +36,7 @@ export default function RootLayout({
         <head />
         <body
           className={cn(
-            "h-screen bg-background font-sans antialiased",
+            "min-h-screen bg-background font-sans antialiased",
             fontSans.variable
           )}
           id="magicpattern"
