@@ -1,5 +1,5 @@
 import { PeopleTable } from "../pessoas/_components/table";
-import Search from "../viagens/_components/search";
+import Search from "./_components/search";
 
 export default function PessoasPage() {
   return (
