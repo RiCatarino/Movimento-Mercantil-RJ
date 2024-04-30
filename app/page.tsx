@@ -436,14 +436,6 @@ export default function Home() {
           }}
           className="div"
         >
-          <div className="flex justify-center p-3" style={{}}>
-            <Button
-              asChild
-              className="shadow-2xl text-lg self-end h-14 w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600"
-            >
-              <Link href={"/registry/"}> Conheça os registos </Link>
-            </Button>
-          </div>
           <h2 className="text-xl font-bold text-center text-black md:text-4xl dark:text-white">
             Viagens pelo globo, a partir do Rio.
           </h2>
@@ -457,6 +449,14 @@ export default function Home() {
             height={200}
             alt="logo"
           />
+          <div className="flex justify-center p-3" style={{}}>
+            <Button
+              asChild
+              className="shadow-2xl text-lg self-end h-14 w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600"
+            >
+              <Link href={"/registry/"}> Conheça os registos </Link>
+            </Button>
+          </div>
         </motion.div>
         {/* </div> */}
       </div>
