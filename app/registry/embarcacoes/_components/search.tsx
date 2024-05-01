@@ -16,7 +16,7 @@ export default function Search({
   children,
 }: SearchProps) {
   return (
-    <div className="flex items-center justify-left p-2 pb-3 sm:w-1/2 md:w-1/3">
+    <div className="flex items-center p-2 pb-3 justify-left sm:w-1/2 md:w-1/3">
       <Input
         type="search"
         placeholder="Pesquisa . . ."
@@ -25,7 +25,7 @@ export default function Search({
       />
       <div>
         <Button
-          className="text-white shadow-2xl transition-all duration-300 bg-blue-500 rounded-m hover:scale-105 hover:bg-blue-200 active:scale-95 ml-2"
+          className="ml-2 text-white bg-blue-500 shadow-2xl transition-all duration-300 rounded-m hover:scale-105 hover:bg-blue-200 active:scale-95"
           onClick={onSearch}
         >
           <SearchIcon />

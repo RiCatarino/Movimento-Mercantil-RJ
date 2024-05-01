@@ -21,13 +21,13 @@ export default function InfoCard(props: {
 }) {
   const { title, value, icon, description, href } = props;
   return (
-    <Card className="drop-shadow-lg p-4">
-      <CardHeader className="flex flex-row items-center justify-between pb-0 space-y-0 pt-0">
-        <CardTitle className="text-l font-bold">{title}</CardTitle>
+    <Card className="p-4 drop-shadow-lg">
+      <CardHeader className="flex flex-row items-center justify-between pt-0 pb-0 space-y-0">
+        <CardTitle className="font-bold text-l">{title}</CardTitle>
         {/* <Users className="w-4 h-4 text-muted-foreground" /> */}
         {/* <div
           //style={{ backgroundColor: "red" }}
-          className="h-20 w-20 ml-2 pt-5 text-blue-500"
+          className="w-20 h-20 pt-5 ml-2 text-blue-500"
         >
           {icon}
         </div> */}
@@ -38,12 +38,12 @@ export default function InfoCard(props: {
         </div>
         {/* <p className="text-xs text-muted-foreground">+180.1% from last month</p> */}
         <div
-          className="flex items-center m-0 p-0 rounded-l "
+          className="flex items-center p-0 m-0 rounded-l "
           // style={{ backgroundColor: "red" }}
         >
           <Button
             asChild
-            className="text-white shadow-2xl transition-all duration-300 bg-blue-400 rounded-m hover:scale-105 hover:bg-blue-600 active:scale-95"
+            className="text-white bg-blue-400 shadow-2xl transition-all duration-300 rounded-m hover:scale-105 hover:bg-blue-600 active:scale-95"
           >
             <Link href={href}> Conheça os registos </Link>
           </Button>
