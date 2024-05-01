@@ -12,7 +12,7 @@ export default function EmbarcacoesPage() {
   } = useSWR<Embarcacao[]>('/api/embarcacao/read', fetcher);
 
   return (
-    <main className='flex flex-col gap-2 p-4 mx-0 mt-5 border-2 border-gray-300 border-solid shadow-lg rounded-3xl md:mx-24 '>
+    <main className='flex flex-col p-4 mx-0 mt-5 border-2 border-gray-300 border-solid shadow-lg gap-2 rounded-3xl md:mx-24 '>
       <NewVessel mutate={mutate} />
       <DataTable
         embarcacoes={embarcacoes}

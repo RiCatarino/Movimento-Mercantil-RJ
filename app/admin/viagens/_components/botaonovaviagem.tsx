@@ -199,7 +199,7 @@ export default function BotaoNovaViagem() {
         <ScrollArea className='h-full overflow-y-auto no-scrollbar'>
           <Form {...form}>
             <form
-              className='flex flex-wrap gap-2 p-1 md:gap-4'
+              className='flex flex-wrap p-1 gap-2 md:gap-4'
               onSubmit={form.handleSubmit(handleSubmit)}
             >
               <FormField

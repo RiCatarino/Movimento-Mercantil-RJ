@@ -103,7 +103,7 @@ export default function DashboardLayout({
             aria-label="Sidebar"
           >
             <div className="h-full px-3 py-4 overflow-y-auto bg-white border shadow-2xl rounded-xl dark:bg-gray-800">
-              <ul className="space-y-3 font-medium">
+              <ul className="font-medium space-y-3">
                 <li>
                   <Link
                     onClick={() => {

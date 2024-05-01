@@ -25,6 +25,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@react-three/drei": "^9.105.5",
     "@react-three/fiber": "^8.16.3",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-table": "^8.16.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

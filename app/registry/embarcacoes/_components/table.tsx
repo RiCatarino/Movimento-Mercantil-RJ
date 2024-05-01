@@ -25,10 +25,9 @@ export function DataTable(props: {
 
   return (
     <>
-      <Table>
+      <Table className='bg-white border-b-[1px]'>
         <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow>
-            <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Tipo de Embarcação</TableHead>
           </TableRow>
@@ -44,7 +43,6 @@ export function DataTable(props: {
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium'>{embarcacao.id}</TableCell>
               <TableCell className='font-medium'>{embarcacao.nome}</TableCell>
               <TableCell className='font-medium'>
                 {embarcacao.tipo_embarcacao.tipo}
