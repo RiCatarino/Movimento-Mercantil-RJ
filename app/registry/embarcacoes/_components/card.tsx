@@ -10,7 +10,7 @@ export default function EmbarcacaoCard(props: {
 
   return (
     <>
-      <div className='cursor-pointer hover:scale-105 transition-all duration-300 col-span-1 relative flex max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md h-96'>
+      <div className='cursor-pointer hover:scale-105 transition-all duration-300 col-span-1 relative flex max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl h-96'>
         <div className='relative m-0 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none'>
           <img
             src={
@@ -24,10 +24,10 @@ export default function EmbarcacaoCard(props: {
         </div>
         <div className='p-6'>
           <h4 className='block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased'>
-            {nome} - {tipo}
+            {nome}
           </h4>
           <p className='mt-3 font-sans text-lg font-normal leading-relaxed text-gray-700 antialiased line-clamp-4 '>
-            {descricao}
+            {tipo}
           </p>
         </div>
         {/* <Button className='w-fit bottom-4 right-4 float-end self-center ml-4 mb-4 mr-4 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '> */}
