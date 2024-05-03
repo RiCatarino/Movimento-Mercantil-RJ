@@ -107,7 +107,7 @@ export default function BotaoNovaeEscala(props: {
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao adicionadr escala',
+        description: 'Erro ao adicionar escala',
       });
     }
     setSubmitting(false);

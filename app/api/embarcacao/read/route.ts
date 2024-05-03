@@ -10,6 +10,11 @@ export async function GET() {
         select: {
           texto_descritivo: true,
           tipo: true,
+          imagem_embarcacao: {
+            select: {
+              imagem: true,
+            },
+          },
         },
       },
     },

@@ -23,9 +23,6 @@ export async function POST(req: Request) {
     passageiros,
   } = await req.json();
 
-  console.log(data_rio);
-  console.log(dayjs(data_rio, 'DD-MM-YYYY').isValid());
-
   const result = await prisma.viagem.create({
     data: {
       data_viagem: dayjs(data_viagem, 'DD-MM-YYYY').isValid()

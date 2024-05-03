@@ -23,9 +23,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@react-three/drei": "^9.105.5",
+    "@react-three/drei": "^9.105.6",
     "@react-three/fiber": "^8.16.3",
-    "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-table": "^8.16.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -33,7 +32,7 @@
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
     "framer-motion": "^11.1.7",
-    "lucide-react": "^0.376.0",
+    "lucide-react": "^0.378.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
     "react": "^18",
@@ -47,10 +46,10 @@
     "three": "^0.164.1",
     "three-globe": "^2.31.0",
     "vaul": "^0.9.0",
-    "zod": "^3.23.5"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
-    "@types/node": "20.12.7",
+    "@types/node": "20.12.8",
     "@types/react": "18.3.1",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.19",

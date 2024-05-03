@@ -40,7 +40,23 @@ export async function GET(req: Request) {
           cosignatario: true,
         },
       },
-      relac_viagem_referencia_doc: true,
+      relac_viagem_referencia_doc: {
+        select: {
+          id: true,
+          data_publicacao: true,
+          referencia_documental: {
+            select: {
+              nome_periodico: true,
+            },
+          },
+        },
+      },
+      noticia: {
+        select: {
+          id: true,
+          assunto: true,
+        },
+      },
     },
   });
   return Response.json(result);

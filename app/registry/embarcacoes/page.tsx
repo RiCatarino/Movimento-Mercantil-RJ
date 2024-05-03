@@ -15,15 +15,11 @@ export default function EmbarcacoesPage() {
   );
 
   console.log(embarcacoes);
-
   // const {
   //   data: embarcacoes,
   //   isLoading,
   //   mutate,
   // } = useSWR<Embarcacao[]>("/api/embarcacao/read", fetcher);
-
-  const [searchInput, setSearchInput] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
 
   // const {
   //   data: embarcacaoNome,
@@ -37,17 +33,17 @@ export default function EmbarcacoesPage() {
   // );
 
   return (
-    <main className='flex flex-col pt-24 md:px-24 px-4 '>
-      <div className='w-full min-h-full dark:bg-black md:h-screen md:mt-0'>
-        <Search
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          onSearch={() => {
-            setSearchQuery(searchInput);
-            // mutate();
-          }}
-        ></Search>
-        {/* <div className="flex items-center p-2 pb-3 justify-left sm:w-1/2 md:w-1/3">
+    <main className='md:p-28'>
+      {/* <div className=' dark:bg-black  md:mt-0'> */}
+      {/* <Search
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+        onSearch={() => {
+          setSearchQuery(searchInput);
+          // mutate();
+        }}
+      ></Search> */}
+      {/* <div className="flex items-center p-2 pb-3 justify-left sm:w-1/2 md:w-1/3">
               <FormField
                 control={form.control}
                 name="id_embarcacao"
@@ -123,23 +119,23 @@ export default function EmbarcacoesPage() {
                 )}
               />
             </div> */}
-        {/* <DataTable
+      {/* <DataTable
             embarcacoes={embarcacaoNome}
             isLoading={isLoading}
             mutate={mutate}
           /> */}
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mb-10 lg:mb-0 '>
-          {embarcacoes?.map((embarcacao) => (
-            <EmbarcacaoCard
-              key={embarcacao.id}
-              image={undefined}
-              tipo={embarcacao.tipo_embarcacao.tipo}
-              nome={embarcacao.nome}
-              descricao={embarcacao.tipo_embarcacao.texto_descritivo}
-            />
-          ))}
-        </div>
+      <div className='w-full grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 mb-10  items-center justify-center self-center '>
+        {embarcacoes?.map((embarcacao) => (
+          <EmbarcacaoCard
+            key={embarcacao.id}
+            image={embarcacao.tipo_embarcacao.imagem_embarcacao[0]?.imagem}
+            tipo={embarcacao.tipo_embarcacao.tipo}
+            nome={embarcacao.nome}
+            descricao={embarcacao.tipo_embarcacao.texto_descritivo}
+          />
+        ))}
       </div>
+      {/* </div> */}
     </main>
   );
 }

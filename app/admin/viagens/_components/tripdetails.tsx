@@ -33,6 +33,8 @@ import TableMercadorias from './tablemercadorias';
 import Loader from '@/components/loader';
 import { Trash } from 'lucide-react';
 import BotaoNovaeEscala from './botaonovaescala';
+import TableRefDocumental from './tablerefdoc';
+import TableNews from './tablenews';
 
 export default function TripDetails(props: {
   open: boolean;
@@ -252,6 +254,22 @@ export default function TripDetails(props: {
                     <TableMercadorias
                       mercadorias={viagem?.relac_mercadoria_viagem}
                     />
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value='docref' className='w-full'>
+                  <AccordionTrigger>Referências Documentais</AccordionTrigger>
+                  <AccordionContent>
+                    <TableRefDocumental
+                      viagem_id={viagem?.id}
+                      refdocs={viagem?.relac_viagem_referencia_doc}
+                      mutate={mutateViagem}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value='news' className='w-full'>
+                  <AccordionTrigger>Notícias</AccordionTrigger>
+                  <AccordionContent>
+                    <TableNews news={viagem?.noticia} mutate={mutateViagem} />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
