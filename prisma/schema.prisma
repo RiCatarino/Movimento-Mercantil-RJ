@@ -190,7 +190,9 @@ model relac_viagem_referencia_doc {
 
 model referencia_documental {
   id                            Int                           @id @default(autoincrement())
+  viagem_id                     Int                           @db.SmallInt
   nome_periodico                String                        @db.VarChar(50)
+  data_publicacao               DateTime                       
   relacao_viagem_referencia_doc relac_viagem_referencia_doc[]
 }
 
