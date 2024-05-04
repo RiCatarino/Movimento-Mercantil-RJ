@@ -113,11 +113,11 @@ model relac_embarcacao_proprietario {
 }
 
 model viagem {
-  id                          Int                           @id @default(autoincrement())
+  id                          Int                            @id @default(autoincrement())
   id_embarcacao               Int?
   id_porto_origem             Int?                           @db.SmallInt
   id_porto_destino            Int?                           @db.SmallInt
-  data_viagem                 DateTime?                       @db.Date()
+  data_viagem                 DateTime?                      @db.Date()
   dias_porto_destino          Int?                           @db.SmallInt
   dias_porto_origem           Int?                           @db.SmallInt
   mestre_id                   Int?
