@@ -13,16 +13,41 @@ import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import BotaoNovaUnidade from './buttonnew';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 export function TableUnidadesDeMedida() {
-  const [open, setOpen] = useState(false);
-  const [embarcacao_id, setEmbarcacaoId] = useState<number | undefined>();
-
   const {
     data: unidades,
     isLoading,
     mutate,
   } = useSWR<UnidadeDeMedida[]>('/api/unidade_de_medida/read', fetcher);
+
+  async function handleDeleteUnidade(id: number) {
+    await fetch(`/api/unidade_de_medida/delete`, {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
+    });
+    mutate();
+    toast({
+      className: 'bg-green-200',
+      title: 'Sucesso',
+      duration: 5000,
+      description: 'Unidade removida com sucesso',
+    });
+  }
 
   if (isLoading)
     return (
@@ -42,6 +67,7 @@ export function TableUnidadesDeMedida() {
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Unidade de Medida</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -51,13 +77,45 @@ export function TableUnidadesDeMedida() {
               key={unidade.id}
               onClick={(e) => {
                 e.stopPropagation();
-                setEmbarcacaoId(unidade.id);
-                setOpen(true);
               }}
             >
               <TableCell className='font-medium w-10'>{unidade.id}</TableCell>
               <TableCell className='font-medium'>
                 {unidade.unidade_medida}
+              </TableCell>
+              <TableCell className='w-4'>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
+                    >
+                      <XIcon className='w-4 text-red-700' />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className='text-red-500'>
+                        Tem a certeza?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Esta ação irá remover a
+                        unidade de medida.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        disabled={isLoading}
+                        className='bg-red-500 hover:bg-red-600'
+                        onClick={() => handleDeleteUnidade(unidade.id)}
+                      >
+                        {isLoading ? 'Aguarde...' : 'Remover'}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}
