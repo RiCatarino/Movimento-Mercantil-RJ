@@ -49,7 +49,6 @@ export function TabelaPortos() {
               className='cursor-pointer hover:bg-blue-100'
               key={porto.id}
               onClick={(e) => {
-                e.stopPropagation();
                 setPortoId(porto.id);
                 setOpen(true);
               }}

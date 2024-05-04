@@ -40,7 +40,6 @@ export default function TripsTable() {
               className='cursor-pointer hover:bg-blue-100'
               key={viagem.id}
               onClick={(e) => {
-                e.stopPropagation();
                 setViagemId(viagem.id);
                 setOpen(true);
               }}

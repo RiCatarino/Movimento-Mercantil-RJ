@@ -14,16 +14,46 @@ import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import NewVessel from './buttonnew';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
 export function TableEmbarcacoes() {
   const [open, setOpen] = useState(false);
   const [embarcacao_id, setEmbarcacaoId] = useState<number | undefined>();
-
+  const [deleting, setDeleting] = useState(false);
   const {
     data: embarcacoes,
     isLoading,
     mutate,
   } = useSWR<Embarcacao[]>('/api/embarcacao/read', fetcher);
+
+  async function handleDeleteEmbarcacao(id: number) {
+    setDeleting(true);
+    await fetch(`/api/embarcacao/delete`, {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
+    });
+    mutate();
+    toast({
+      className: 'bg-green-200',
+      title: 'Sucesso',
+      duration: 5000,
+      description: 'Embarcação removida com sucesso',
+    });
+    setDeleting(false);
+  }
 
   if (isLoading)
     return (
@@ -42,6 +72,7 @@ export function TableEmbarcacoes() {
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Tipo de Embarcação</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -50,7 +81,6 @@ export function TableEmbarcacoes() {
               className='cursor-pointer hover:bg-blue-100'
               key={embarcacao.id}
               onClick={(e) => {
-                e.stopPropagation();
                 setEmbarcacaoId(embarcacao.id);
                 setOpen(true);
               }}
@@ -59,6 +89,49 @@ export function TableEmbarcacoes() {
               <TableCell className='font-medium'>{embarcacao.nome}</TableCell>
               <TableCell className='font-medium'>
                 {embarcacao.tipo_embarcacao.tipo}
+              </TableCell>
+              <TableCell className='w-4'>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <XIcon className='w-4 text-red-700' />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className='text-red-500'>
+                        Tem a certeza?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Esta ação irá remover a
+                        unidade de medida.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        disabled={deleting}
+                        className='bg-red-500 hover:bg-red-600'
+                        onClick={(e) => {
+                          handleDeleteEmbarcacao(embarcacao.id);
+                        }}
+                      >
+                        {deleting && <Loader classProp='w-4 h-4' />} Remover
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}

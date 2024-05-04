@@ -75,9 +75,6 @@ export function TableUnidadesDeMedida() {
             <TableRow
               className='cursor-pointer hover:bg-blue-100'
               key={unidade.id}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
             >
               <TableCell className='font-medium w-10'>{unidade.id}</TableCell>
               <TableCell className='font-medium'>
