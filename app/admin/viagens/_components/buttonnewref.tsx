@@ -44,9 +44,11 @@ export default function ButtonNewRef(props: {
     },
   });
 
+  console.log(viagem_id);
+
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/escala/create', {
+    const result = await fetch('/api/referencia_documental/create', {
       method: 'POST',
       body: JSON.stringify({
         ...values,
@@ -84,7 +86,9 @@ export default function ButtonNewRef(props: {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Adicionar Escala</DialogTitle>
+          <DialogTitle className='text-blue-500'>
+            Adicionar Referência Documental
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
