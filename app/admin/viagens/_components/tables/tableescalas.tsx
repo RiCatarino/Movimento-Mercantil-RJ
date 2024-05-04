@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { EscalasDrawer } from '../mercadoriaescaladrawer';
+import { MercadoriaEscalasDrawer } from '../mercadoriaescaladrawer';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
@@ -23,6 +23,7 @@ export default function TableEscalas(props: {
   const [relacmercadoriaescala, setRelacMercadoriaEscala] = useState<
     RelacMercadoriaEscala[] | undefined
   >();
+  const [escala_id, setEscalaId] = useState<number | undefined>();
 
   async function handleDeleteEscala(id: number) {
     setDeleting(true);
@@ -59,6 +60,7 @@ export default function TableEscalas(props: {
               key={escala.id}
               onClick={(e) => {
                 setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
+                setEscalaId(escala.id);
                 setOpen(true);
               }}
             >
@@ -97,10 +99,12 @@ export default function TableEscalas(props: {
           ))}
         </TableBody>
       </Table>
-      <EscalasDrawer
+      <MercadoriaEscalasDrawer
         open={open}
         setOpen={setOpen}
         relac_mercadoria_escala={relacmercadoriaescala}
+        mutate={mutate}
+        escala_id={escala_id}
       />
     </>
   );

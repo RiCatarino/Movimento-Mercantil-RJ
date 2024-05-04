@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Drawer,
   DrawerClose,
@@ -18,23 +17,28 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import BotaoNovaMercadoriaEscala from './buttons/botaonovamercadoriaescala';
 
-export function EscalasDrawer(props: {
+export function MercadoriaEscalasDrawer(props: {
   open: boolean;
   setOpen: (open: boolean) => void;
   relac_mercadoria_escala: RelacMercadoriaEscala[] | undefined;
+  mutate: () => void;
+  escala_id: number | undefined;
 }) {
-  const { open, setOpen, relac_mercadoria_escala } = props;
+  const { open, setOpen, relac_mercadoria_escala, mutate, escala_id } = props;
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent className=' mb-3.5 min-h-[50%]'>
-        <div className='w-full max-w-xl mx-auto '>
+      <DrawerContent className=' mb-3.5 min-h-[50%] w-full'>
+        <div className='w-full max-w-full px-2  '>
           <DrawerHeader>
             <DrawerTitle>Mercadorias</DrawerTitle>
-            <DrawerDescription></DrawerDescription>
+            <DrawerDescription>
+              Aqui pode ver a lista de mercadorias associadas a esta escala.
+            </DrawerDescription>
           </DrawerHeader>
-          <Table className='w-full'>
+          <Table>
             <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
               <TableRow className='rounded-ss-xl'>
                 <TableHead>Qt.</TableHead>
@@ -107,6 +111,9 @@ export function EscalasDrawer(props: {
             </DrawerClose>
           </DrawerFooter> */}
         </div>
+        <DrawerFooter>
+          <BotaoNovaMercadoriaEscala mutate={mutate} escala_id={escala_id} />
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );
