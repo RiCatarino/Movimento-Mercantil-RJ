@@ -31,7 +31,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import Loader from '@/components/loader';
-import { X } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
 export default function VesselDetails(props: {
   open: boolean;
@@ -141,7 +141,7 @@ export default function VesselDetails(props: {
                                   variant='link'
                                   className='text-xs text-blue-500'
                                 >
-                                  <X className='w-4 text-red-700' />
+                                  <XIcon className='w-4 text-red-700' />
                                 </Button>
                               </AlertDialogTrigger>
                               <AlertDialogContent>
