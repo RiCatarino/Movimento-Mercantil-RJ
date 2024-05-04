@@ -24,10 +24,11 @@ import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
-  unidade: z.string().min(1, { message: 'Nome muito curto' }),
+  nome: z.string().min(1, { message: 'Nome muito curto' }),
+  gentilico: z.string().min(1, { message: 'Gentílico muito curto' }),
 });
 
-export default function BotaoNovaUnidade(props: { mutate: () => void }) {
+export default function BotaoNovoPais(props: { mutate: () => void }) {
   const { mutate } = props;
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
@@ -36,13 +37,14 @@ export default function BotaoNovaUnidade(props: { mutate: () => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      unidade: '',
+      nome: '',
+      gentilico: '',
     },
   });
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/unidade_de_medida/create', {
+    const result = await fetch('/api/pais/create', {
       method: 'POST',
       body: JSON.stringify(values),
     });
@@ -79,12 +81,12 @@ export default function BotaoNovaUnidade(props: { mutate: () => void }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
-          Nova Unidade <Plus size={24} />
+          Novo País <Plus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className=' w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Nova Unidade</DialogTitle>
+          <DialogTitle className='text-blue-500'>Novo País</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -93,12 +95,25 @@ export default function BotaoNovaUnidade(props: { mutate: () => void }) {
           >
             <FormField
               control={form.control}
-              name='unidade'
+              name='nome'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Unidade de Medida</FormLabel>
+                  <FormLabel>Nome do País</FormLabel>
                   <FormControl>
-                    <Input placeholder='Escreva aqui a unidade' {...field} />
+                    <Input placeholder='Ex: Brasil' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='gentilico'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gentílico</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Ex: Brasileira' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
