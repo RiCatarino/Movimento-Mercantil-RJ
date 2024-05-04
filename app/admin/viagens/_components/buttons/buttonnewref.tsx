@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { CalendarIcon, Loader, Plus } from 'lucide-react';
+import { CalendarIcon, Plus } from 'lucide-react';
 import { useState } from 'react';
 import {
   Dialog,
@@ -27,6 +27,7 @@ const formSchema = z.object({
 });
 
 import { useToast } from '@/components/ui/use-toast';
+import Loader from '@/components/loader';
 
 export default function ButtonNewRef(props: {
   mutate: () => void;
@@ -164,8 +165,7 @@ export default function ButtonNewRef(props: {
             >
               {submitting ? (
                 <>
-                  <Loader className='w-4 h-4 mr-2 animate-spin' /> A
-                  adicionar...
+                  <Loader classProp='w-4 h-4 mr-2' /> A adicionar...
                 </>
               ) : (
                 'Guardar'

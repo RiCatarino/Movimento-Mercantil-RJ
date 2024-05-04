@@ -7,8 +7,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import dayjs from 'dayjs';
 import ButtonNewMerch from '../buttons/buttonnewmerch';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { XIcon } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import Loader from '@/components/loader';
 
 export default function TableMercadorias(props: {
   mercadorias: RelacMercadoriaViagem[] | undefined;
@@ -16,6 +30,21 @@ export default function TableMercadorias(props: {
   mutate: () => void;
 }) {
   const { mercadorias, viagem_id, mutate } = props;
+  const [deleting, setDeleting] = useState(false);
+
+  async function handleDeleteMercadoria(id: number) {
+    setDeleting(true);
+    await fetch(`/api/viagem/delete/mercadoria`, {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
+    });
+    mutate();
+    setDeleting(false);
+  }
+
+  if (deleting) {
+    return <Loader classProp='w-10 h-10' />;
+  }
 
   return (
     <>
@@ -27,6 +56,7 @@ export default function TableMercadorias(props: {
             <TableHead>Unid. Medida</TableHead>
             <TableHead>Frete</TableHead>
             <TableHead>Cosignatário</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -53,6 +83,40 @@ export default function TableMercadorias(props: {
               </TableCell>
               <TableCell className='text-xs font-medium'>
                 {mercadoria.cosignatario?.nome}
+              </TableCell>
+              <TableCell className='w-4'>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
+                    >
+                      <XIcon className='w-4 text-red-700' />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className='text-red-500'>
+                        Tem a certeza?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Esta ação irá remover a
+                        referência documental.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        disabled={deleting}
+                        className='bg-red-500 hover:bg-red-600'
+                        onClick={() => handleDeleteMercadoria(mercadoria.id)}
+                      >
+                        {deleting ? 'Aguarde...' : 'Remover'}
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}
