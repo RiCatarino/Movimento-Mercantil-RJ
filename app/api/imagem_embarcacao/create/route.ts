@@ -1,14 +1,13 @@
 import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
-  const { id, imagem, id_tipo_embarcacao } = await req.json();
+  const { imagem, tipo_id } = await req.json();
   const result = await prisma.imagem_embarcacao.create({
     data: {
-      id: id,
       imagem: imagem,
       tipo_embarcacao: {
         connect: {
-          id: id_tipo_embarcacao,
+          id: tipo_id,
         },
       },
     },

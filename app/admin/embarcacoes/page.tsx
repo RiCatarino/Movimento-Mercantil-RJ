@@ -1,24 +1,26 @@
-'use client';
-import fetcher from '@/lib/fetch';
-import useSWR from 'swr';
-import NewVessel from './_components/buttonnew';
-import { DataTable } from './_components/table';
+import { TableEmbarcacoes } from './_components/embarcacoes/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TableTipos } from './_components/tipos/table';
 
 export default function EmbarcacoesPage() {
-  const {
-    data: embarcacoes,
-    isLoading,
-    mutate,
-  } = useSWR<Embarcacao[]>('/api/embarcacao/read', fetcher);
-
   return (
-    <main className='flex flex-col p-4 mx-0 mt-5 border-2 border-gray-300 border-solid shadow-lg gap-2 rounded-3xl md:mx-24 '>
-      <NewVessel mutate={mutate} />
-      <DataTable
-        embarcacoes={embarcacoes}
-        isLoading={isLoading}
-        mutate={mutate}
-      />
+    <main className='p-4 md:mx-24 '>
+      <Tabs defaultValue='embarcacoes' className='w-full'>
+        <TabsList className='rounded-3xl bg-blue-200 w-full'>
+          <TabsTrigger value='embarcacoes' className='rounded-3xl w-1/2 '>
+            Embarcações
+          </TabsTrigger>
+          <TabsTrigger value='tipos' className='rounded-3xl w-1/2'>
+            Tipos de Embarcações
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value='embarcacoes'>
+          <TableEmbarcacoes />
+        </TabsContent>
+        <TabsContent value='tipos'>
+          <TableTipos />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 }

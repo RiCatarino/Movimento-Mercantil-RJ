@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Loader, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import {
   Dialog,
@@ -19,6 +19,7 @@ const formSchema = z.object({
 
 import { useToast } from '@/components/ui/use-toast';
 import { Textarea } from '@/components/ui/textarea';
+import Loader from '@/components/loader';
 
 export default function ButtonNewNews(props: {
   mutate: () => void;
@@ -103,8 +104,7 @@ export default function ButtonNewNews(props: {
             >
               {submitting ? (
                 <>
-                  <Loader className='w-4 h-4 mr-2 animate-spin' /> A
-                  adicionar...
+                  <Loader classProp='w-4 h-4 mr-2' /> A adicionar...
                 </>
               ) : (
                 'Guardar'

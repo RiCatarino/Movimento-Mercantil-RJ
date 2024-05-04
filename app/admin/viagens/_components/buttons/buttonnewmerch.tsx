@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ChevronsUpDown, Loader, Plus } from 'lucide-react';
+import { ChevronsUpDown, Plus } from 'lucide-react';
 import { useState } from 'react';
 import {
   Dialog,
@@ -37,8 +37,8 @@ import {
 const formSchema = z.object({
   cosignatario: z.number().nullable(),
   mercadoria: z.number().nullable(),
-  unidade_medida: z.number().nullable(),
-  quantidade_origem: z.string(),
+  unidade_de_medida: z.number().nullable(),
+  quantidade: z.string(),
   valor_frete: z.string(),
 });
 
@@ -46,6 +46,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 import fetcher from '@/lib/fetch';
 import useSWR from 'swr';
+import Loader from '@/components/loader';
 
 export default function ButtonNewMerch(props: {
   mutate: () => void;
@@ -65,8 +66,8 @@ export default function ButtonNewMerch(props: {
     defaultValues: {
       cosignatario: null,
       mercadoria: null,
-      unidade_medida: null,
-      quantidade_origem: '',
+      unidade_de_medida: null,
+      quantidade: '',
       valor_frete: '',
     },
   });
@@ -88,7 +89,7 @@ export default function ButtonNewMerch(props: {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/referencia_documental/create', {
+    const result = await fetch('/api/viagem/create/mercadoria', {
       method: 'POST',
       body: JSON.stringify({
         ...values,
@@ -264,7 +265,7 @@ export default function ButtonNewMerch(props: {
 
             <FormField
               control={form.control}
-              name='unidade_medida'
+              name='unidade_de_medida'
               render={({ field }) => (
                 <FormItem className='flex flex-col basis-full md:basis-1/2'>
                   <FormLabel>Unidade de Medida</FormLabel>
@@ -305,7 +306,10 @@ export default function ButtonNewMerch(props: {
                                 value={unidade.unidade_medida}
                                 key={unidade.id}
                                 onSelect={() => {
-                                  form.setValue('unidade_medida', unidade.id);
+                                  form.setValue(
+                                    'unidade_de_medida',
+                                    unidade.id
+                                  );
                                   setSelectUnidadeMedida(false);
                                 }}
                               >
@@ -325,7 +329,7 @@ export default function ButtonNewMerch(props: {
 
             <FormField
               control={form.control}
-              name='quantidade_origem'
+              name='quantidade'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Quantidade</FormLabel>
@@ -361,8 +365,7 @@ export default function ButtonNewMerch(props: {
             >
               {submitting ? (
                 <>
-                  <Loader className='w-4 h-4 mr-2 animate-spin' /> A
-                  adicionar...
+                  <Loader classProp='w-4 h-4 mr-2' /> A adicionar...
                 </>
               ) : (
                 'Guardar'
