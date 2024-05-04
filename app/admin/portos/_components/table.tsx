@@ -13,6 +13,7 @@ import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import BotaoNovaUnidade from './buttonnew';
+import PortoDetails from './details';
 
 export function TabelaPortos() {
   const [open, setOpen] = useState(false);
@@ -63,11 +64,12 @@ export function TabelaPortos() {
         </TableBody>
       </Table>
 
-      {/* <VesselDetails
+      <PortoDetails
         open={open}
         setOpen={setOpen}
-        embarcacao_id={embarcacao_id}
-      /> */}
+        porto_id={porto_id}
+        mutate={mutate}
+      />
     </>
   );
 }
