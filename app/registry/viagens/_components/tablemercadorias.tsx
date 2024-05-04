@@ -50,7 +50,7 @@ export default function TableMercadorias(props: {
               }).format(mercadoria.valor_frete)}
             </TableCell>
             <TableCell className='text-xs font-medium'>
-              {mercadoria.cosignatario.nome}
+              {mercadoria.cosignatario?.nome}
             </TableCell>
           </TableRow>
         ))}

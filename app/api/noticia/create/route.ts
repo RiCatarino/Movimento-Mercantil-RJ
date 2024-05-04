@@ -1,12 +1,12 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
-  const { id_viagem, assunto } = await req.json();
+  const { viagem_id, assunto } = await req.json();
   const result = await prisma.noticia.create({
     data: {
       viagem: {
         connect: {
-          id: id_viagem,
+          id: viagem_id,
         },
       },
       assunto: assunto,

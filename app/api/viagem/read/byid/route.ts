@@ -46,6 +46,7 @@ export async function GET(req: Request) {
           data_publicacao: true,
           referencia_documental: {
             select: {
+              id: true,
               nome_periodico: true,
             },
           },

@@ -44,8 +44,6 @@ export default function ButtonNewRef(props: {
     },
   });
 
-  console.log(viagem_id);
-
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
     const result = await fetch('/api/referencia_documental/create', {
@@ -81,7 +79,7 @@ export default function ButtonNewRef(props: {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
-          Adicionar Escala <Plus size={24} />
+          Adicionar Referência Documental <Plus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent>

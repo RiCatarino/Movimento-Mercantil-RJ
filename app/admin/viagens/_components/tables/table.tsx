@@ -10,7 +10,7 @@ import {
 import fetcher from '@/lib/fetch';
 import dayjs from 'dayjs';
 import useSWR from 'swr';
-import TripDetails from './tripdetails';
+import TripDetails from '../tripdetails';
 import { useState } from 'react';
 import Loader from '@/components/loader';
 export default function TripsTable() {

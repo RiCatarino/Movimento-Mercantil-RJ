@@ -312,10 +312,7 @@ export default function BotaoNovaViagem() {
                                 : undefined
                             }
                             onSelect={(date) => {
-                              console.log(form.watch('data_viagem'));
-
                               if (form.watch('data_viagem')) {
-                                console.log(form.watch('data_viagem'));
                                 if (
                                   dayjs(date).isAfter(
                                     dayjs(

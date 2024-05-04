@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { EscalasDrawer } from './mercadoriaescaladrawer';
+import { EscalasDrawer } from '../mercadoriaescaladrawer';
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';

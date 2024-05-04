@@ -28,13 +28,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import TableEscalas from './tableescalas';
-import TableMercadorias from './tablemercadorias';
+import TableEscalas from './tables/tableescalas';
+import TableMercadorias from './tables/tablemercadorias';
 import Loader from '@/components/loader';
 import { Trash } from 'lucide-react';
-import BotaoNovaeEscala from './botaonovaescala';
-import TableRefDocumental from './tablerefdoc';
-import TableNews from './tablenews';
+import BotaoNovaeEscala from './buttons/botaonovaescala';
+import TableRefDocumental from './tables/tablerefdoc';
+import TableNews from './tables/tablenews';
 
 export default function TripDetails(props: {
   open: boolean;
@@ -253,6 +253,8 @@ export default function TripDetails(props: {
                   <AccordionContent>
                     <TableMercadorias
                       mercadorias={viagem?.relac_mercadoria_viagem}
+                      viagem_id={viagem?.id}
+                      mutate={mutateViagem}
                     />
                   </AccordionContent>
                 </AccordionItem>
@@ -269,13 +271,17 @@ export default function TripDetails(props: {
                 <AccordionItem value='news' className='w-full'>
                   <AccordionTrigger>Notícias</AccordionTrigger>
                   <AccordionContent>
-                    <TableNews news={viagem?.noticia} mutate={mutateViagem} />
+                    <TableNews
+                      news={viagem?.noticia}
+                      mutate={mutateViagem}
+                      viagem_id={viagem?.id}
+                    />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
 
               <AlertDialog>
-                <AlertDialogTrigger className='self-end ' asChild>
+                <AlertDialogTrigger className='self-end mt-10' asChild>
                   <Button
                     variant='destructive'
                     className='self-end justify-end'
