@@ -7,7 +7,7 @@ export async function GET() {
     },
   });
 
-  const pessoa = await prisma.pessoa.aggregate({
+  const pessoas = await prisma.pessoa.aggregate({
     _count: {
       id: true,
     },
@@ -19,6 +19,31 @@ export async function GET() {
     },
   });
 
-  const result = { embarcacoes, pessoa, viagens };
+  const tipo_embarcacao = await prisma.tipo_embarcacao.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
+  const titulo_nobreza = await prisma.titulo_nobreza.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
+  const unidades_de_medida = await prisma.unidade_de_medida.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
+  const result = {
+    embarcacoes,
+    pessoas,
+    viagens,
+    tipo_embarcacao,
+    titulo_nobreza,
+    unidades_de_medida,
+  };
   return Response.json(result);
 }
