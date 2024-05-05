@@ -26,16 +26,19 @@ import { useState } from 'react';
 import fetcher from '@/lib/fetch';
 import { XIcon } from 'lucide-react';
 
-export default function PersonRelacaoEmbarcacaoTable(props: {
+var customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
+export default function TabelaPessoaCargo(props: {
   pessoa: Pessoa | undefined;
   mutatePessoa: () => void;
 }) {
   const { pessoa, mutatePessoa } = props;
   const [deleting, setDeleting] = useState(false);
 
-  async function handleDeleteOwner(id: number) {
+  async function handleDeleteCargo(id: number) {
     setDeleting(true);
-    await fetcher(`/api/embarcacao/delete/owner`, {
+    await fetcher(`/api/cargo/delete`, {
       method: 'DELETE',
       body: JSON.stringify({ id }),
     });
@@ -48,32 +51,25 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
       <Table className='shadow-xl'>
         <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
           <TableRow className='rounded-ss-xl'>
-            <TableHead>ID</TableHead>
-            <TableHead>Embarcação</TableHead>
-            <TableHead>Início</TableHead>
-            <TableHead>Fim</TableHead>
-            <TableHead>País</TableHead>
+            <TableHead>Cargo</TableHead>
+            <TableHead>Data</TableHead>
+            <TableHead>Ano</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {pessoa?.relacao_embarcacao_proprietario?.map((relacao) => (
+          {pessoa?.relacao_pessoa_cargo?.map((relacao) => (
             <TableRow key={relacao.id}>
               <TableCell className='px-4 py-0 text-xs font-medium'>
-                {relacao.embarcacao.id}
+                {relacao.cargo?.cargo}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
-                {relacao.embarcacao.nome}
+                {relacao.data_cargo
+                  ? dayjs(relacao.data_cargo).format('DD/MM/YYYY')
+                  : 'N/A'}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
-                {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
-              </TableCell>
-              <TableCell className='px-4 py-0 text-xs'>
-                {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
-              </TableCell>
-
-              <TableCell className='px-4 py-0 text-xs'>
-                {relacao.pais.pais}
+                {relacao.ano || 'N/A'}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
                 <AlertDialog>
@@ -94,15 +90,15 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
                       <AlertDialogTitle>Tem a certeza?</AlertDialogTitle>
                       <AlertDialogDescription>
                         Esta ação não pode ser desfeita. Esta ação irá remover o
-                        proprietário da embarcação.
+                        cargo da pessoa.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
                         className='bg-red-500 hover:bg-red-600'
                         disabled={deleting}
-                        onClick={() => handleDeleteOwner(relacao.id)}
+                        onClick={() => handleDeleteCargo(relacao.id)}
                       >
                         {deleting ? 'Aguarde...' : 'Remover'}
                       </AlertDialogAction>
@@ -115,7 +111,7 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
         </TableBody>
         {pessoa?.relacao_embarcacao_proprietario?.length === 0 && (
           <TableCaption className='p-4'>
-            Nenhum proprietário encontrado
+            Nenhum registo de cargo encontrado
           </TableCaption>
         )}
       </Table>

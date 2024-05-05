@@ -148,12 +148,12 @@ export default function PortoDetails(props: {
                             {viagem.id}
                           </TableCell>
                           <TableCell className='text-xs'>
-                            {viagem.embarcacao.nome}
+                            {viagem.embarcacao?.nome}
                           </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
-                    {porto?.viagem_destino.length === 0 && (
+                    {porto?.viagem_destino?.length === 0 && (
                       <TableCaption>
                         Nenhuma viagem de origem encontrada
                       </TableCaption>
