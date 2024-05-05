@@ -16,9 +16,9 @@ export async function POST(req: Request) {
   });
 
   if (existe) {
-    return new Response("Unidade já existe", {
+    return new Response("Porto já existe", {
       status: 409,
-      statusText: "Unidade já existe",
+      statusText: "Porto já existe",
     });
   }
 

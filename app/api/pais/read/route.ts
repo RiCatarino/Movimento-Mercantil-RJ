@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(1, "10 s"),
+  limiter: Ratelimit.slidingWindow(3, "10 s"),
 });
 
 export async function GET(request: Request) {
