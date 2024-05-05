@@ -1,8 +1,8 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get('id');
+  const id = searchParams.get("id");
 
   const result = await prisma.tipo_embarcacao.findFirst({
     where: {
@@ -18,6 +18,9 @@ export async function GET(req: Request) {
         select: {
           id: true,
           nome: true,
+        },
+        orderBy: {
+          nome: "asc",
         },
       },
     },
