@@ -20,6 +20,14 @@ export async function GET(req: Request) {
           pais: true,
         },
       },
+      relacao_pessoa_cargo: {
+        select: {
+          id: true,
+          cargo: true,
+          data_cargo: true,
+          ano: true,
+        },
+      },
     },
   });
 

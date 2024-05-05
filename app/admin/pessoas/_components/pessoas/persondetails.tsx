@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -24,6 +23,7 @@ import {
 import Loader from '@/components/loader';
 import { TrashIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import TabelaPessoaCargo from './tablerelaccargo';
 
 export default function PersonDetails(props: {
   open: boolean;
@@ -101,6 +101,13 @@ export default function PersonDetails(props: {
 
             <div className='flex flex-col mt-4  items'>
               <div className='flex gap-1 p-2 bg-blue-200 justify-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
+                Cargos
+              </div>
+              <TabelaPessoaCargo pessoa={pessoa} mutatePessoa={mutatePessoa} />
+            </div>
+
+            <div className='flex flex-col mt-4  items'>
+              <div className='flex gap-1 p-2 bg-blue-200 justify-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
                 Embarcações
               </div>
               <PersonRelacaoEmbarcacaoTable
@@ -124,7 +131,7 @@ export default function PersonDetails(props: {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogCancel>Cancelar</AlertDialogCancel>
                   <AlertDialogAction
                     className='bg-red-500 hover:bg-red-600'
                     disabled={deleting}

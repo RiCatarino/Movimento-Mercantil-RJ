@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
-async function GET() {
+export async function GET() {
   const result = await prisma.porto.findMany({
     select: {
       id: true,

@@ -11,7 +11,7 @@ export default function registryPage() {
         <Link href='/registry/embarcacoes'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Embarcações</p>
               </div>
 
@@ -37,7 +37,7 @@ export default function registryPage() {
         <Link href='/registry/viagens'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Viagens</p>
               </div>
 
@@ -63,7 +63,7 @@ export default function registryPage() {
         <Link href='/registry/pessoas'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Pessoas</p>
               </div>
 

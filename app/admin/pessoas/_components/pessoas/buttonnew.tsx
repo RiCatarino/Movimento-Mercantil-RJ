@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -19,11 +18,11 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 
 import { useState } from 'react';
-import { ChevronsUpDown, PlusCircleIcon, UserPlus } from 'lucide-react';
+import { ChevronsUpDown, UserPlus } from 'lucide-react';
 import {
   Popover,
   PopoverContent,
@@ -39,7 +38,7 @@ import {
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 import Loader from '@/components/loader';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   nome: z.string().min(1, { message: 'Nome muito curto' }),
@@ -49,8 +48,8 @@ const formSchema = z.object({
   pais: z.string().min(1, { message: 'Selecione um país' }),
 });
 
-export default function NewPerson() {
-  const { toast } = useToast();
+export default function NewPerson(props: { mutate: () => void }) {
+  const { mutate } = props;
   const [selectPais, setSelectPais] = useState(false);
   const [selectNobreza, setSelectNobreza] = useState(false);
   const [open, setOpen] = useState(false);
@@ -80,7 +79,7 @@ export default function NewPerson() {
     if (result.ok) {
       setOpen(false);
       form.reset();
-      mutate('/api/pessoa/read');
+      mutate();
       toast({
         className: 'bg-green-200',
         title: 'Sucesso',
@@ -102,7 +101,7 @@ export default function NewPerson() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'>
-          Adicionar Pessoa <UserPlus size={24} />
+          Adicionar Pessoa <UserPlus size={24} className='ml-2' />
         </Button>
       </DialogTrigger>
       <DialogContent

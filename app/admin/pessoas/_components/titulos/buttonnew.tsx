@@ -18,35 +18,33 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
+
 import Loader from '@/components/loader';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
-  tipo: z.string().min(1, { message: 'Nome muito curto' }),
-  descricao: z.string().min(1, { message: 'Selecione um tipo' }),
+  titulo: z.string().min(1, { message: 'Selecione um título de Nobreza' }),
 });
 
-export default function NovoTipo(props: { mutate: () => void }) {
+export default function NovoTitulo(props: { mutate: () => void }) {
   const { mutate } = props;
-  const { toast } = useToast();
+  const [selectPais, setSelectPais] = useState(false);
+  const [selectNobreza, setSelectNobreza] = useState(false);
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      tipo: '',
-      descricao: '',
+      titulo: '',
     },
   });
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/tipo_embarcacao/create', {
+    const result = await fetch('/api/titulo_nobreza/create', {
       method: 'POST',
       body: JSON.stringify(values),
     });
@@ -59,14 +57,14 @@ export default function NovoTipo(props: { mutate: () => void }) {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Embarcação adicionada com sucesso',
+        description: 'Pessoa adicionada com sucesso',
       });
     } else {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao adicionar embarcação',
+        description: 'Erro ao adicionar pessoa',
       });
     }
     setSubmitting(false);
@@ -75,8 +73,8 @@ export default function NovoTipo(props: { mutate: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
-          Adicionar Tipo <Plus size={24} />
+        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'>
+          Novo Título <UserPlus size={24} className='ml-2' />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -87,7 +85,7 @@ export default function NovoTipo(props: { mutate: () => void }) {
       >
         <DialogHeader>
           <DialogTitle className='text-blue-500'>
-            Criar Tipo de Embarcação
+            Criar novo Título de Nobreza
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -97,34 +95,18 @@ export default function NovoTipo(props: { mutate: () => void }) {
           >
             <FormField
               control={form.control}
-              name='tipo'
+              name='titulo'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo</FormLabel>
+                  <FormLabel>Título de Nobreza</FormLabel>
                   <FormControl>
-                    <Input placeholder='Ex: Galera' {...field} />
+                    <Input placeholder='Ex: Rei' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <FormField
-              control={form.control}
-              name='descricao'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Descrição</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder='Escreva aqui a descrição'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <Button
               type='submit'
               className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'

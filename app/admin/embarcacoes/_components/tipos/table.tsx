@@ -12,7 +12,6 @@ import { useState } from 'react';
 import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
-import NewVessel from './buttonnew';
 import TipoDetails from './details';
 import {
   AlertDialog,
@@ -28,6 +27,7 @@ import {
 import { XIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
+import NovoTipo from './buttonnew';
 
 export function TableTipos() {
   const [open, setOpen] = useState(false);
@@ -65,7 +65,7 @@ export function TableTipos() {
 
   return (
     <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
-      <NewVessel mutate={mutate} />
+      <NovoTipo mutate={mutate} />
 
       <Table>
         <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
