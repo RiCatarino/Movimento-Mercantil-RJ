@@ -9,7 +9,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import VesselDetails from './vesseldetails';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
@@ -30,15 +30,7 @@ import { XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import Paginacao from '@/components/sharedpagination';
 import { Input } from '@/components/ui/input';
-
-function chunk<T>(array: T[], size: number): T[][] {
-  if (!array.length) {
-    return [];
-  }
-  const head = array.slice(0, size);
-  const tail = array.slice(size);
-  return [head, ...chunk(tail, size)];
-}
+import chunk from '@/lib/chunk';
 
 export function TableEmbarcacoes() {
   const [filter, setFilter] = useState(null);
@@ -85,9 +77,9 @@ export function TableEmbarcacoes() {
   //     </main>
   //   );
 
-  const handleSearch = (selectedEmbarcacao: any) => {
-    setFilter(selectedEmbarcacao.nome);
-  };
+  // const handleSearch = (selectedEmbarcacao: any) => {
+  //   setFilter(selectedEmbarcacao.nome);
+  // };
 
   return (
     <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
