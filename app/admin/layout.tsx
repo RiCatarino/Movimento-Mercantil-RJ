@@ -23,6 +23,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Toaster } from '@/components/ui/toaster';
+import { usePathname } from 'next/navigation';
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -30,8 +31,40 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [sidebar, setSideBar] = useState(false);
-
   const sideNavRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const [pageName, setPageName] = useState('');
+
+  useEffect(() => {
+    switch (pathname) {
+      case '/admin/dashboard':
+        setPageName('Dashboard');
+        break;
+      case '/admin/embarcacoes':
+        setPageName('Embarcações');
+        break;
+      case '/admin/viagens':
+        setPageName('Viagens');
+        break;
+      case '/admin/pessoas':
+        setPageName('Pessoas');
+        break;
+      case '/admin/portos':
+        setPageName('Portos');
+        break;
+      case '/admin/paises':
+        setPageName('Países');
+        break;
+      case '/admin/unidades_de_medida':
+        setPageName('Unidades de Medida');
+        break;
+      case '/admin/usuarios':
+        setPageName('Usuários');
+        break;
+      default:
+        setPageName('Dashboard');
+    }
+  }, [pathname]);
 
   useEffect(() => {
     // Add event listener to the document object
@@ -81,7 +114,7 @@ export default function DashboardLayout({
             ></path>
           </svg>
         </button>
-        <h1 className='text-xl font-bold text-center'>MM RJ</h1>
+        <h1 className='text-xl font-bold text-center'>{pageName}</h1>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

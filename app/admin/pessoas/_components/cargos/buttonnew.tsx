@@ -42,7 +42,7 @@ export default function NovoTitulo(props: { mutate: () => void }) {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/titulo_nobreza/create', {
+    const result = await fetch('/api/cargo/create', {
       method: 'POST',
       body: JSON.stringify(values),
     });
@@ -55,14 +55,14 @@ export default function NovoTitulo(props: { mutate: () => void }) {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Título criado com sucesso',
+        description: 'Cargo criado com sucesso',
       });
     } else {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao criar título',
+        description: 'Erro ao criar cargo',
       });
     }
     setSubmitting(false);
@@ -72,7 +72,7 @@ export default function NovoTitulo(props: { mutate: () => void }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'>
-          Novo Título <UserPlus size={24} className='ml-2' />
+          Novo Cargo <UserPlus size={24} className='ml-2' />
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -82,9 +82,7 @@ export default function NovoTitulo(props: { mutate: () => void }) {
         }}
       >
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>
-            Criar novo Título de Nobreza
-          </DialogTitle>
+          <DialogTitle className='text-blue-500'>Criar novo Cargo</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -96,9 +94,9 @@ export default function NovoTitulo(props: { mutate: () => void }) {
               name='titulo'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título de Nobreza</FormLabel>
+                  <FormLabel>Cargo</FormLabel>
                   <FormControl>
-                    <Input placeholder='Ex: Rei' {...field} />
+                    <Input placeholder='Ex: Mestre' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

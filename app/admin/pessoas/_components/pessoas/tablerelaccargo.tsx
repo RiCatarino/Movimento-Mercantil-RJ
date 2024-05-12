@@ -25,6 +25,7 @@ import {
 import { useState } from 'react';
 import fetcher from '@/lib/fetch';
 import { XIcon } from 'lucide-react';
+import BotaoNovoCargo from './buttonnewcargo';
 
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -37,8 +38,9 @@ export default function TabelaPessoaCargo(props: {
   const [deleting, setDeleting] = useState(false);
 
   async function handleDeleteCargo(id: number) {
+    console.log('id', id);
     setDeleting(true);
-    await fetcher(`/api/cargo/delete`, {
+    await fetcher(`/api/pessoa/delete/cargo`, {
       method: 'DELETE',
       body: JSON.stringify({ id }),
     });
@@ -47,7 +49,7 @@ export default function TabelaPessoaCargo(props: {
   }
 
   return (
-    <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
+    <div className='flex flex-col md:max-w-full rounded-ss-xl rounded-se-xl gap-4'>
       <Table className='shadow-xl'>
         <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
           <TableRow className='rounded-ss-xl'>
@@ -71,16 +73,13 @@ export default function TabelaPessoaCargo(props: {
               <TableCell className='px-4 py-0 text-xs'>
                 {relacao.ano || 'N/A'}
               </TableCell>
-              <TableCell className='px-4 py-0 text-xs'>
+              <TableCell className='px-4 py-0 text-xs w-10'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button
                       size='icon'
                       variant='link'
                       className='text-xs text-blue-500'
-                      onClick={() => {
-                        console.log('edit');
-                      }}
                     >
                       <XIcon className='w-4 text-red-700' />
                     </Button>
@@ -109,12 +108,13 @@ export default function TabelaPessoaCargo(props: {
             </TableRow>
           ))}
         </TableBody>
-        {pessoa?.relacao_embarcacao_proprietario?.length === 0 && (
+        {pessoa?.relacao_pessoa_cargo?.length === 0 && (
           <TableCaption className='p-4'>
             Nenhum registo de cargo encontrado
           </TableCaption>
         )}
       </Table>
+      {pessoa && <BotaoNovoCargo pessoa_id={pessoa.id} mutate={mutatePessoa} />}
     </div>
   );
 }

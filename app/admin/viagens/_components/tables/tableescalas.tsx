@@ -102,8 +102,6 @@ export default function TableEscalas(props: {
       <MercadoriaEscalasDrawer
         open={open}
         setOpen={setOpen}
-        relac_mercadoria_escala={relacmercadoriaescala}
-        mutate={mutate}
         escala_id={escala_id}
       />
     </>

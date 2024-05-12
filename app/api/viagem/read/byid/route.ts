@@ -21,15 +21,18 @@ export async function GET(req: Request) {
       comandante: true,
       armador: true,
       escala: {
-        include: {
-          porto: true,
-          relac_mercadoria_escala: {
-            include: {
-              mercadoria: true,
-              unidade_de_medida: true,
-              cosignatario: true,
+        select: {
+          id: true,
+          data_escala: true,
+          dias_porto: true,
+          porto: {
+            select: {
+              id: true,
+              nome: true,
             },
           },
+          entrada_de_passageiros: true,
+          saida_de_passageiros: true,
         },
       },
 

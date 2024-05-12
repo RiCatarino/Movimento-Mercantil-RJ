@@ -182,7 +182,7 @@ interface RelacMercadoriaEscala {
   id_mercadoria: number;
   quantidade: number;
   movimento: string;
-  cosignatario: number;
+  cosignatario: Pessoa;
   valor_frete: number;
   id_unidade_medida: number;
   unidade_de_medida: UnidadeDeMedida;
