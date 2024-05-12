@@ -22,7 +22,7 @@ model cargo {
 model relac_pessoa_cargo {
   id         Int       @id @default(autoincrement())
   id_cargo   Int       @db.SmallInt
-  cargo      cargo     @relation(fields: [id_cargo], references: [id])
+  cargo      cargo     @relation(fields: [id_cargo], references: [id], onDelete: Cascade)
   pessoa     pessoa    @relation(fields: [id_pessoa], references: [id], onDelete: Cascade)
   id_pessoa  Int
   data_cargo DateTime?

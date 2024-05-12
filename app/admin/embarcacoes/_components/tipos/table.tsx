@@ -111,8 +111,8 @@ export function TableTipos() {
                         Tem a certeza?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. Esta ação irá remover a
-                        unidade de medida.
+                        Esta ação não pode ser desfeita. Esta ação irá remover o
+                        tipo de embarcação.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

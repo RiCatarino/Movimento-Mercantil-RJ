@@ -14,16 +14,46 @@ import useSWR from 'swr';
 import NovoTitulo from './buttonnew';
 import { useState } from 'react';
 import TituloDetails from './titulodetails';
-// import NewPerson from './buttonnew';
+import { toast } from '@/components/ui/use-toast';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
 
 export function TabelaTitulos() {
   const [open, setOpen] = useState(false);
   const [titulo_id, setTituloId] = useState<number | undefined>();
+  const [deleting, setDeleting] = useState(false);
   const {
     data: titulos,
     isLoading,
     mutate,
   } = useSWR<TituloNobreza[]>('/api/titulo_nobreza/read', fetcher);
+
+  async function handleDeleteTitulo(id: number) {
+    setDeleting(true);
+    await fetch(`/api/titulo_nobreza/delete`, {
+      method: 'DELETE',
+      body: JSON.stringify({ id }),
+    });
+    mutate();
+    toast({
+      className: 'bg-green-200',
+      title: 'Sucesso',
+      duration: 5000,
+      description: 'Título removido com sucesso',
+    });
+    setDeleting(false);
+  }
 
   if (isLoading)
     return (
@@ -40,6 +70,7 @@ export function TabelaTitulos() {
           <TableRow className='rounded-ss-xl'>
             <TableHead>ID</TableHead>
             <TableHead>Título Nobreza</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -58,6 +89,49 @@ export function TabelaTitulos() {
               </TableCell>
               <TableCell className='text-xs font-medium'>
                 {titulo.titulo}
+              </TableCell>
+              <TableCell className='w-4'>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <XIcon className='w-4 text-red-700' />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <AlertDialogHeader>
+                      <AlertDialogTitle className='text-red-500'>
+                        Tem a certeza?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Esta ação irá remover o
+                        título de nobreza.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        disabled={deleting}
+                        className='bg-red-500 hover:bg-red-600'
+                        onClick={(e) => {
+                          handleDeleteTitulo(titulo.id);
+                        }}
+                      >
+                        {deleting && <Loader classProp='w-4 h-4' />} Remover
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}
