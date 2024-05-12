@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const { nome, pais, titulo_nobreza } = await req.json();
@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     where: {
       nome: {
         equals: nome,
-        mode: "insensitive",
+        mode: 'insensitive',
       },
       pais: {
         id: Number(pais),
@@ -19,9 +19,9 @@ export async function POST(req: Request) {
   });
 
   if (existe) {
-    return new Response("Título de Nobreza já existe", {
+    return new Response('Pessoa já existe', {
       status: 409,
-      statusText: "Título de Nobreza já existe",
+      statusText: 'Pessoa já existe',
     });
   }
 

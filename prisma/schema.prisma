@@ -195,18 +195,18 @@ model referencia_documental {
 }
 
 model relac_mercadoria_escala {
-  id                Int               @id @default(autoincrement())
-  id_escala         Int               @db.SmallInt
-  id_mercadoria     Int
-  quantidade        Int
-  movimento         String            @db.VarChar(1)
-  id_cosignatario   Int
-  valor_frete       Int
-  id_unidade_medida Int               @db.SmallInt
-  unidade_de_medida unidade_de_medida @relation(fields: [id_unidade_medida], references: [id])
-  mercadoria        mercadoria        @relation(fields: [id_mercadoria], references: [id])
-  escala            escala            @relation(fields: [id_escala], references: [id])
-  cosignatario      pessoa            @relation(fields: [id_cosignatario], references: [id])
+  id                Int                @id @default(autoincrement())
+  id_escala         Int                @db.SmallInt
+  id_mercadoria     Int?
+  quantidade        Int?
+  movimento         String?            @db.VarChar(1)
+  id_cosignatario   Int?
+  valor_frete       Int?
+  id_unidade_medida Int?               @db.SmallInt
+  unidade_de_medida unidade_de_medida? @relation(fields: [id_unidade_medida], references: [id])
+  mercadoria        mercadoria?        @relation(fields: [id_mercadoria], references: [id])
+  escala            escala             @relation(fields: [id_escala], references: [id])
+  cosignatario      pessoa?            @relation(fields: [id_cosignatario], references: [id])
 }
 
 model relac_mercadoria_viagem {

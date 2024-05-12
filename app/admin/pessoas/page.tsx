@@ -1,6 +1,7 @@
 import { PeopleTable } from './_components/pessoas/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TabelaTitulos } from './_components/titulos/table';
+import { TabelaCargos } from './_components/cargos/table';
 
 export default function PessoasPage() {
   return (
@@ -17,12 +18,18 @@ export default function PessoasPage() {
           <TabsTrigger value='titulos' className='rounded-3xl w-1/2'>
             Títulos de Nobreza
           </TabsTrigger>
+          <TabsTrigger value='cargos' className='rounded-3xl w-1/2'>
+            Cargos
+          </TabsTrigger>
         </TabsList>
         <TabsContent value='pessoas'>
           <PeopleTable />
         </TabsContent>
         <TabsContent value='titulos'>
           <TabelaTitulos />
+        </TabsContent>
+        <TabsContent value='cargos'>
+          <TabelaCargos />
         </TabsContent>
       </Tabs>
     </main>
