@@ -24,11 +24,15 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
+import { EditIcon, XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
-import BotaoEditarPais from './buttonedit';
+import DialogEditarPais from './dialogedit';
+import { useState } from 'react';
 
 export function TabelaPaises() {
+  const [openEdit, setOpenEdit] = useState(false);
+  const [paisId, setPaisId] = useState<number | undefined>();
+
   const {
     data: paises,
     isLoading,
@@ -82,12 +86,16 @@ export function TabelaPaises() {
               <TableCell className='font-medium'>{pais.gentilico}</TableCell>
               <TableCell className='w-4'>
                 <div className='flex gap-2'>
-                  <BotaoEditarPais
-                    mutate={mutate}
-                    id_pais={pais.id}
-                    nome={pais.pais}
-                    gentilico={pais.gentilico}
-                  />
+                  <Button
+                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPaisId(pais.id);
+                      setOpenEdit(true);
+                    }}
+                  >
+                    <EditIcon size={24} />
+                  </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
@@ -126,6 +134,14 @@ export function TabelaPaises() {
           ))}
         </TableBody>
       </Table>
+      <DialogEditarPais
+        open={openEdit}
+        setOpen={setOpenEdit}
+        id_pais={paisId}
+        nome={paises?.find((pais) => pais.id === paisId)?.pais}
+        gentilico={paises?.find((pais) => pais.id === paisId)?.gentilico}
+        mutate={mutate}
+      />
 
       {/* <VesselDetails
         open={open}

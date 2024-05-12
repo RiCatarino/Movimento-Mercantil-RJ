@@ -114,7 +114,7 @@ export default function PortoDetails(props: {
                             {viagem.id}
                           </TableCell>
                           <TableCell className='text-xs'>
-                            {viagem.embarcacao.nome}
+                            {viagem.embarcacao?.nome}
                           </TableCell>
                         </TableRow>
                       ))}
