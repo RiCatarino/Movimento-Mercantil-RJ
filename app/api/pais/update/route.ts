@@ -21,8 +21,6 @@ export async function PUT(req: Request) {
     },
   });
 
-  console.log(existe);
-
   if (existe) {
     return new Response("País já existe", {
       status: 409,
