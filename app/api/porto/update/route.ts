@@ -1,36 +1,41 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
 export async function PUT(req: Request) {
-  const { id, nome, pais } = await req.json();
+  const { porto_id, nome, id_pais } = await req.json();
 
   const existe = await prisma.porto.findFirst({
     where: {
-      nome: {
-        equals: nome,
-        mode: "insensitive",
-      },
-      pais: {
-        id: Number(pais),
+      AND: {
+        id: {
+          not: Number(porto_id),
+        },
+        nome: {
+          equals: nome,
+          mode: 'insensitive',
+        },
+        pais: {
+          id: Number(id_pais),
+        },
       },
     },
   });
 
   if (existe) {
-    return new Response("Porto já existe", {
+    return new Response('Porto já existe', {
       status: 409,
-      statusText: "Porto já existe",
+      statusText: 'Porto já existe',
     });
   }
 
   const result = await prisma.porto.update({
     where: {
-      id: Number(id),
+      id: Number(porto_id),
     },
     data: {
       nome: nome,
       pais: {
         connect: {
-          id: Number(pais),
+          id: Number(id_pais),
         },
       },
     },
