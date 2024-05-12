@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { EditIcon } from 'lucide-react';
 import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -28,8 +28,13 @@ const formSchema = z.object({
   gentilico: z.string().min(1, { message: 'Gentílico muito curto' }),
 });
 
-export default function BotaoNovoPais(props: { mutate: () => void }) {
-  const { mutate } = props;
+export default function BotaoEditarPais(props: {
+  mutate: () => void;
+  id_pais: number;
+  nome: string;
+  gentilico: string;
+}) {
+  const { mutate, id_pais, nome, gentilico } = props;
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -37,15 +42,15 @@ export default function BotaoNovoPais(props: { mutate: () => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: '',
-      gentilico: '',
+      nome: nome,
+      gentilico: gentilico,
     },
   });
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/pais/create', {
-      method: 'POST',
+    const result = await fetch('/api/pais/edit', {
+      method: 'PUT',
       body: JSON.stringify(values),
     });
 
@@ -57,7 +62,7 @@ export default function BotaoNovoPais(props: { mutate: () => void }) {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Páis criado com sucesso',
+        description: 'País editado com sucesso',
       });
     } else if (result.status === 409) {
       toast({
@@ -71,7 +76,7 @@ export default function BotaoNovoPais(props: { mutate: () => void }) {
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao criar país',
+        description: 'Erro ao editar país',
       });
     }
     setSubmitting(false);
@@ -80,13 +85,13 @@ export default function BotaoNovoPais(props: { mutate: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
-          Novo País <Plus size={24} />
+        <Button className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl '>
+          <EditIcon size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className=' w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Novo País</DialogTitle>
+          <DialogTitle className='text-blue-500'>Editar País</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -124,7 +129,7 @@ export default function BotaoNovoPais(props: { mutate: () => void }) {
               className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
-              Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+              Editar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
             </Button>
           </form>
         </Form>
