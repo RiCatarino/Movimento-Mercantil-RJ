@@ -1,3 +1,44 @@
-///verificar se existe, mas onde não é este ID
+import prisma from "@/lib/prisma";
 
-// quando fazes prisma....update, where NOT id: Number(id), se devolver, devoltes o statustext com o erro que já existe
+export async function PUT(req: Request) {
+  const { id_pais, nome, gentilico } = await req.json();
+
+  const existe = await prisma.pais.findFirst({
+    where: {
+      id: {
+        not: Number(id_pais),
+      },
+      AND: {
+        pais: {
+          equals: nome,
+          mode: "insensitive",
+        },
+        gentilico: {
+          equals: gentilico,
+          mode: "insensitive",
+        },
+      },
+    },
+  });
+
+  console.log(existe);
+
+  if (existe) {
+    return new Response("País já existe", {
+      status: 409,
+      statusText: "País já existe",
+    });
+  }
+
+  const result = await prisma.pais.update({
+    where: {
+      id: Number(id_pais),
+    },
+    data: {
+      pais: nome,
+      gentilico: gentilico,
+    },
+  });
+
+  return Response.json(result);
+}
