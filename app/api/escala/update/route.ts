@@ -11,6 +11,7 @@ export async function PUT(req: Request) {
     entrada_de_passageiros,
     saida_de_passageiros,
   } = await req.json();
+
   const result = await prisma.escala.update({
     where: {
       id: Number(id),

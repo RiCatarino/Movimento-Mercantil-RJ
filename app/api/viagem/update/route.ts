@@ -20,6 +20,7 @@ export async function PUT(req: Request) {
     tripulacao,
     total_passageiros,
   } = await req.json();
+
   const result = await prisma.viagem.update({
     where: {
       id: Number(id),

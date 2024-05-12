@@ -37,6 +37,12 @@ export async function GET() {
     },
   });
 
+  const portos = await prisma.porto.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
   const result = {
     embarcacoes,
     pessoas,
@@ -44,6 +50,7 @@ export async function GET() {
     tipo_embarcacao,
     titulo_nobreza,
     unidades_de_medida,
+    portos,
   };
   return Response.json(result);
 }
