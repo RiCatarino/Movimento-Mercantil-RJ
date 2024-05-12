@@ -26,6 +26,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import BotaoEditarPais from './buttonedit';
 
 export function TabelaPaises() {
   const {
@@ -80,38 +81,46 @@ export function TabelaPaises() {
               <TableCell className='font-medium'>{pais.pais}</TableCell>
               <TableCell className='font-medium'>{pais.gentilico}</TableCell>
               <TableCell className='w-4'>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      size='icon'
-                      variant='link'
-                      className='text-xs text-blue-500'
-                    >
-                      <XIcon className='w-4 text-red-700' />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className='text-red-500'>
-                        Tem a certeza?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. Esta ação irá remover a
-                        unidade de medida.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction
-                        disabled={isLoading}
-                        className='bg-red-500 hover:bg-red-600'
-                        onClick={() => handleDeletePais(pais.id)}
+                <div className='flex gap-2'>
+                  <BotaoEditarPais
+                    mutate={mutate}
+                    id_pais={pais.id}
+                    nome={pais.pais}
+                    gentilico={pais.gentilico}
+                  />
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size='icon'
+                        variant='link'
+                        className='text-xs text-blue-500'
                       >
-                        {isLoading ? 'Aguarde...' : 'Remover'}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                        <XIcon className='w-4 text-red-700' />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className='text-red-500'>
+                          Tem a certeza?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Esta ação não pode ser desfeita. Esta ação irá remover
+                          a unidade de medida.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          disabled={isLoading}
+                          className='bg-red-500 hover:bg-red-600'
+                          onClick={() => handleDeletePais(pais.id)}
+                        >
+                          {isLoading ? 'Aguarde...' : 'Remover'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </TableCell>
             </TableRow>
           ))}
