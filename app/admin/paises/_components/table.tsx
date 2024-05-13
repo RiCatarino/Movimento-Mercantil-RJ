@@ -30,9 +30,9 @@ import BotaoEditarPais from "./buttonedit";
 import Paginacao from "@/components/sharedpagination";
 import chunk from "@/lib/chunk";
 import { useState } from "react";
-
 export function TabelaPaises() {
-  const [activePage, setPage] = useState(1);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [paisId, setPaisId] = useState<number | undefined>();
   const {
     data: paisesdata,
     isLoading,
@@ -84,17 +84,22 @@ export function TabelaPaises() {
               className="cursor-pointer hover:bg-blue-100"
               key={pais.id}
             >
-              <TableCell className="font-medium w-10">{pais.id}</TableCell>
-              <TableCell className="font-medium">{pais.pais}</TableCell>
-              <TableCell className="font-medium">{pais.gentilico}</TableCell>
-              <TableCell className="w-4">
-                <div className="flex gap-2">
-                  <BotaoEditarPais
-                    mutate={mutate}
-                    id_pais={pais.id}
-                    nome={pais.pais}
-                    gentilico={pais.gentilico}
-                  />
+
+              <TableCell className='font-medium w-10'>{pais.id}</TableCell>
+              <TableCell className='font-medium'>{pais.pais}</TableCell>
+              <TableCell className='font-medium'>{pais.gentilico}</TableCell>
+              <TableCell className='w-4'>
+                <div className='flex gap-2'>
+                  <Button
+                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPaisId(pais.id);
+                      setOpenEdit(true);
+                    }}
+                  >
+                    <EditIcon size={24} />
+                  </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
@@ -133,6 +138,14 @@ export function TabelaPaises() {
           ))}
         </TableBody>
       </Table>
+      <DialogEditarPais
+        open={openEdit}
+        setOpen={setOpenEdit}
+        id_pais={paisId}
+        nome={paises?.find((pais) => pais.id === paisId)?.pais}
+        gentilico={paises?.find((pais) => pais.id === paisId)?.gentilico}
+        mutate={mutate}
+      />
 
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
 
