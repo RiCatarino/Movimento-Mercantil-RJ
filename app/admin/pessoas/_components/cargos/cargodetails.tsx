@@ -17,17 +17,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import chunk from "@/lib/chunk";
+import Paginacao from "@/components/sharedpagination";
+import { useState } from "react";
 
 export default function CargoDetails(props: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   cargo_id: number | undefined;
 }) {
+  const [activePage, setPage] = useState(1);
   const { open, setOpen, cargo_id } = props;
   const { data: relacs, isLoading } = useSWR<RelacPessoaCargo[]>(
     cargo_id ? `/api/pessoa/read/bycargo?id=${cargo_id}` : null,
     fetcher
   );
+
+  const chunked = chunk(relacs ?? [], 5);
+  const relacsdata = chunked[activePage - 1];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -40,34 +47,41 @@ export default function CargoDetails(props: {
             <Loader classProp="w-24 h-24" />
           </div>
         ) : (
-          <Table>
-            <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
-              <TableRow className="rounded-ss-xl">
-                <TableHead>Nome</TableHead>
-                <TableHead>País</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {relacs?.map((relac) => (
-                <TableRow
-                  className="cursor-pointer hover:bg-blue-100"
-                  key={relac.id}
-                >
-                  <TableCell className="text-xs font-medium">
-                    {relac.pessoa?.nome}
-                  </TableCell>
-                  <TableCell className="text-xs font-medium">
-                    {relac.pessoa?.pais?.pais}
-                  </TableCell>
+          <>
+            <Table>
+              <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
+                <TableRow className="rounded-ss-xl">
+                  <TableHead>Nome</TableHead>
+                  <TableHead>País</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-            {relacs?.length === 0 && (
-              <TableCaption className="p-4">
-                Nenhuma pessoa com este cargo
-              </TableCaption>
-            )}
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {relacsdata?.map((relac) => (
+                  <TableRow
+                    className="cursor-pointer hover:bg-blue-100"
+                    key={relac.id}
+                  >
+                    <TableCell className="text-xs font-medium">
+                      {relac.pessoa?.nome}
+                    </TableCell>
+                    <TableCell className="text-xs font-medium">
+                      {relac.pessoa?.pais?.pais}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              {relacsdata?.length === 0 && (
+                <TableCaption className="p-4">
+                  Nenhuma pessoa com este cargo
+                </TableCaption>
+              )}
+            </Table>
+            <Paginacao
+              chunked={chunked}
+              activePage={activePage}
+              setPage={setPage}
+            />
+          </>
         )}
       </DialogContent>
     </Dialog>
