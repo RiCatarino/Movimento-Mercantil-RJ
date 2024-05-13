@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Table,
@@ -7,11 +7,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import Loader from '@/components/loader';
-import useSWR from 'swr';
-import fetcher from '@/lib/fetch';
-import BotaoNovoPais from './buttonnew';
+} from "@/components/ui/table";
+import Loader from "@/components/loader";
+import useSWR from "swr";
+import fetcher from "@/lib/fetch";
+import BotaoNovoPais from "./buttonnew";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,37 +22,44 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
-import BotaoEditarPais from './buttonedit';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { XIcon } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
+import BotaoEditarPais from "./buttonedit";
+import Paginacao from "@/components/sharedpagination";
+import chunk from "@/lib/chunk";
+import { useState } from "react";
 
 export function TabelaPaises() {
+  const [activePage, setPage] = useState(1);
   const {
-    data: paises,
+    data: paisesdata,
     isLoading,
     mutate,
-  } = useSWR<Pais[]>('/api/pais/read', fetcher);
+  } = useSWR<Pais[]>("/api/pais/read", fetcher);
+
+  const chunked = chunk(paisesdata ?? [], 10);
+  const paises = chunked[activePage - 1];
 
   async function handleDeletePais(id: number) {
     await fetch(`/api/pais/delete`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: 'bg-green-200',
-      title: 'Sucesso',
+      className: "bg-green-200",
+      title: "Sucesso",
       duration: 5000,
-      description: 'Unidade removida com sucesso',
+      description: "Unidade removida com sucesso",
     });
   }
 
   if (isLoading)
     return (
-      <main className='flex flex-row justify-center p-4'>
-        <Loader classProp='w-24 h-24 self-center flex' />
+      <main className="flex flex-row justify-center p-4">
+        <Loader classProp="w-24 h-24 self-center flex" />
       </main>
     );
 
@@ -63,7 +70,7 @@ export function TabelaPaises() {
       <BotaoNovoPais mutate={mutate} />
 
       <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+        <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
@@ -74,14 +81,14 @@ export function TabelaPaises() {
         <TableBody>
           {paises?.map((pais) => (
             <TableRow
-              className='cursor-pointer hover:bg-blue-100'
+              className="cursor-pointer hover:bg-blue-100"
               key={pais.id}
             >
-              <TableCell className='font-medium w-10'>{pais.id}</TableCell>
-              <TableCell className='font-medium'>{pais.pais}</TableCell>
-              <TableCell className='font-medium'>{pais.gentilico}</TableCell>
-              <TableCell className='w-4'>
-                <div className='flex gap-2'>
+              <TableCell className="font-medium w-10">{pais.id}</TableCell>
+              <TableCell className="font-medium">{pais.pais}</TableCell>
+              <TableCell className="font-medium">{pais.gentilico}</TableCell>
+              <TableCell className="w-4">
+                <div className="flex gap-2">
                   <BotaoEditarPais
                     mutate={mutate}
                     id_pais={pais.id}
@@ -91,16 +98,16 @@ export function TabelaPaises() {
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
+                        size="icon"
+                        variant="link"
+                        className="text-xs text-blue-500"
                       >
-                        <XIcon className='w-4 text-red-700' />
+                        <XIcon className="w-4 text-red-700" />
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle className='text-red-500'>
+                        <AlertDialogTitle className="text-red-500">
                           Tem a certeza?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -112,10 +119,10 @@ export function TabelaPaises() {
                         <AlertDialogCancel>Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                           disabled={isLoading}
-                          className='bg-red-500 hover:bg-red-600'
+                          className="bg-red-500 hover:bg-red-600"
                           onClick={() => handleDeletePais(pais.id)}
                         >
-                          {isLoading ? 'Aguarde...' : 'Remover'}
+                          {isLoading ? "Aguarde..." : "Remover"}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
@@ -126,6 +133,8 @@ export function TabelaPaises() {
           ))}
         </TableBody>
       </Table>
+
+      <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
 
       {/* <VesselDetails
         open={open}

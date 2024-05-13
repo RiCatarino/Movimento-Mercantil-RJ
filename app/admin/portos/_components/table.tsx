@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Table,
@@ -7,28 +7,34 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { useState } from 'react';
-import Loader from '@/components/loader';
-import useSWR from 'swr';
-import fetcher from '@/lib/fetch';
-import BotaoNovaUnidade from './buttonnew';
-import PortoDetails from './details';
+} from "@/components/ui/table";
+import { useState } from "react";
+import Loader from "@/components/loader";
+import useSWR from "swr";
+import fetcher from "@/lib/fetch";
+import BotaoNovaUnidade from "./buttonnew";
+import PortoDetails from "./details";
+import Paginacao from "@/components/sharedpagination";
+import chunk from "@/lib/chunk";
 
 export function TabelaPortos() {
+  const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [porto_id, setPortoId] = useState<number | undefined>();
 
   const {
-    data: portos,
+    data: portosdata,
     isLoading,
     mutate,
-  } = useSWR<Porto[]>('/api/porto/read', fetcher);
+  } = useSWR<Porto[]>("/api/porto/read", fetcher);
+
+  const chunked = chunk(portosdata ?? [], 10);
+  const portos = chunked[activePage - 1];
 
   if (isLoading)
     return (
-      <main className='flex flex-row justify-center p-4'>
-        <Loader classProp='w-24 h-24 self-center flex' />
+      <main className="flex flex-row justify-center p-4">
+        <Loader classProp="w-24 h-24 self-center flex" />
       </main>
     );
 
@@ -36,7 +42,7 @@ export function TabelaPortos() {
     <>
       <BotaoNovaUnidade mutate={mutate} />
       <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+        <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
@@ -46,22 +52,23 @@ export function TabelaPortos() {
         <TableBody>
           {portos?.map((porto) => (
             <TableRow
-              className='cursor-pointer hover:bg-blue-100'
+              className="cursor-pointer hover:bg-blue-100"
               key={porto.id}
               onClick={(e) => {
                 setPortoId(porto.id);
                 setOpen(true);
               }}
             >
-              <TableCell className='font-medium w-10'>{porto.id}</TableCell>
-              <TableCell className='font-medium max-w-32'>
+              <TableCell className="font-medium w-10">{porto.id}</TableCell>
+              <TableCell className="font-medium max-w-32">
                 {porto.nome}
               </TableCell>
-              <TableCell className='font-medium'>{porto.pais?.pais}</TableCell>
+              <TableCell className="font-medium">{porto.pais?.pais}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
 
       <PortoDetails
         open={open}

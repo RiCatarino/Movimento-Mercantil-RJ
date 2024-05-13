@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function GET() {
   const result = await prisma.viagem.findMany({
@@ -67,9 +67,9 @@ export async function GET() {
         },
       },
     },
-    take: 10,
+
     orderBy: {
-      id: 'asc',
+      id: "asc",
     },
   });
   return Response.json(result);

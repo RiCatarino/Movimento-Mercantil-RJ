@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Table,
@@ -7,13 +7,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import VesselDetails from './vesseldetails';
-import { useState } from 'react';
-import Loader from '@/components/loader';
-import useSWR from 'swr';
-import fetcher from '@/lib/fetch';
-import NewVessel from './buttonnew';
+} from "@/components/ui/table";
+import VesselDetails from "./vesseldetails";
+import { useState } from "react";
+import Loader from "@/components/loader";
+import useSWR from "swr";
+import fetcher from "@/lib/fetch";
+import NewVessel from "./buttonnew";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,13 +24,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
-import Paginacao from '@/components/sharedpagination';
-import { Input } from '@/components/ui/input';
-import chunk from '@/lib/chunk';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { XIcon } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
+
+import { Input } from "@/components/ui/input";
+import Paginacao from "@/components/sharedpagination";
+import chunk from "@/lib/chunk";
 
 export function TableEmbarcacoes() {
   const [filter, setFilter] = useState(null);
@@ -38,7 +39,7 @@ export function TableEmbarcacoes() {
   const [embarcacao_id, setEmbarcacaoId] = useState<number | undefined>();
   const [deleting, setDeleting] = useState(false);
   const [activePage, setPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const {
     data: embarcacoesdata,
@@ -46,8 +47,8 @@ export function TableEmbarcacoes() {
     mutate,
   } = useSWR<Embarcacao[]>(
     searchText
-      ? '/api/embarcacao/read/byname?nome=' + searchText
-      : '/api/embarcacao/read',
+      ? "/api/embarcacao/read/byname?nome=" + searchText
+      : "/api/embarcacao/read",
     fetcher
   );
 
@@ -57,15 +58,15 @@ export function TableEmbarcacoes() {
   async function handleDeleteEmbarcacao(id: number) {
     setDeleting(true);
     await fetch(`/api/embarcacao/delete`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: 'bg-green-200',
-      title: 'Sucesso',
+      className: "bg-green-200",
+      title: "Sucesso",
       duration: 5000,
-      description: 'Embarcação removida com sucesso',
+      description: "Embarcação removida com sucesso",
     });
     setDeleting(false);
   }
@@ -82,18 +83,18 @@ export function TableEmbarcacoes() {
   // };
 
   return (
-    <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
-      <div className='flex flex-row justify-between gap-4 '>
+    <div className="flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl">
+      <div className="flex flex-row justify-between gap-4 ">
         <Input
-          className='rounded-xl'
-          placeholder='Pesquisar...'
+          className="rounded-xl"
+          placeholder="Pesquisar..."
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NewVessel mutate={mutate} />
       </div>
 
       <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+        <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
@@ -108,30 +109,30 @@ export function TableEmbarcacoes() {
             )
             .map((embarcacao) => (
               <TableRow
-                className='cursor-pointer hover:bg-blue-100'
+                className="cursor-pointer hover:bg-blue-100"
                 key={embarcacao.id}
                 onClick={(e) => {
                   setEmbarcacaoId(embarcacao.id);
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium'>{embarcacao.id}</TableCell>
-                <TableCell className='font-medium'>{embarcacao.nome}</TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">{embarcacao.id}</TableCell>
+                <TableCell className="font-medium">{embarcacao.nome}</TableCell>
+                <TableCell className="font-medium">
                   {embarcacao.tipo_embarcacao?.tipo}
                 </TableCell>
-                <TableCell className='w-4'>
+                <TableCell className="w-4">
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
+                        size="icon"
+                        variant="link"
+                        className="text-xs text-blue-500"
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
                       >
-                        <XIcon className='w-4 text-red-700' />
+                        <XIcon className="w-4 text-red-700" />
                       </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent
@@ -140,7 +141,7 @@ export function TableEmbarcacoes() {
                       }}
                     >
                       <AlertDialogHeader>
-                        <AlertDialogTitle className='text-red-500'>
+                        <AlertDialogTitle className="text-red-500">
                           Tem a certeza?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
@@ -152,12 +153,12 @@ export function TableEmbarcacoes() {
                         <AlertDialogCancel>Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                           disabled={deleting}
-                          className='bg-red-500 hover:bg-red-600'
+                          className="bg-red-500 hover:bg-red-600"
                           onClick={(e) => {
                             handleDeleteEmbarcacao(embarcacao.id);
                           }}
                         >
-                          {deleting && <Loader classProp='w-4 h-4' />} Remover
+                          {deleting && <Loader classProp="w-4 h-4" />} Remover
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>
