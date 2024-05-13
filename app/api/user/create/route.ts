@@ -1,12 +1,7 @@
-import prisma from "@/lib/prisma";
-import { hash } from "@node-rs/argon2";
-import { cookies } from "next/headers";
-import { lucia } from "@/auth";
-import { redirect } from "next/navigation";
-import { generateIdFromEntropySize } from "lucia";
-import sendEmailNotification from "@/lib/sendemail";
-
-export default async function Page() {}
+import prisma from '@/lib/prisma';
+import { hash } from '@node-rs/argon2';
+import { generateIdFromEntropySize } from 'lucia';
+import sendEmailNotification from '@/lib/sendemail';
 
 export async function POST(req: Request) {
   const { useremail } = await req.json();
@@ -15,9 +10,9 @@ export async function POST(req: Request) {
   var validRegex =
     /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/;
   if (!validRegex.test(email)) {
-    return new Response("Email Inválido", {
+    return new Response('Email Inválido', {
       status: 400,
-      statusText: "Email Inválido",
+      statusText: 'Email Inválido',
     });
   }
 
@@ -25,22 +20,22 @@ export async function POST(req: Request) {
     where: {
       email: {
         equals: email,
-        mode: "insensitive",
+        mode: 'insensitive',
       },
     },
   });
 
   if (existe) {
-    return new Response("Email já existe", {
+    return new Response('Email já existe', {
       status: 409,
-      statusText: "Email já existe",
+      statusText: 'Email já existe',
     });
   }
   /* Function to generate combination of password */
   function generatePass() {
-    let pass = "";
+    let pass = '';
     let str =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789@#$";
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789@#$';
 
     for (let i = 1; i <= 16; i++) {
       let char = Math.floor(Math.random() * str.length + 1);
@@ -72,12 +67,12 @@ export async function POST(req: Request) {
   });
   await sendEmailNotification(
     email,
-    "Sua senha temporária",
+    'Sua senha temporária',
     `Sua senha temporária é: ${password}`
   );
 
-  return new Response("Usuário criado com sucesso.", {
+  return new Response('Usuário criado com sucesso.', {
     status: 201,
-    statusText: "Usuário criado com sucesso",
+    statusText: 'Usuário criado com sucesso',
   });
 }
