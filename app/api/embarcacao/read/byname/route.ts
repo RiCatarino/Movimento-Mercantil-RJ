@@ -1,13 +1,13 @@
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const nome = searchParams.get('nome');
+  const nome = searchParams.get("nome");
   const result = await prisma.embarcacao.findMany({
     where: {
       nome: {
         startsWith: nome?.toString(),
-        mode: 'insensitive',
+        mode: "insensitive",
       },
     },
     select: {
