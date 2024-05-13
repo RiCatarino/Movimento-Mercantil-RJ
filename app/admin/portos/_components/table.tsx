@@ -7,13 +7,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
-import Loader from "@/components/loader";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import BotaoNovaUnidade from "./buttonnew";
-import PortoDetails from "./details";
+} from '@/components/ui/table';
+import { useState } from 'react';
+import Loader from '@/components/loader';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import BotaoNovaUnidade from './buttonnew';
+import PortoDetails from './details';
+import { Button } from '@/components/ui/button';
+import { EditIcon } from 'lucide-react';
+import DialogEditarPorto from './dialogedit';
 import Paginacao from "@/components/sharedpagination";
 import chunk from "@/lib/chunk";
 
@@ -21,6 +24,7 @@ export function TabelaPortos() {
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [porto_id, setPortoId] = useState<number | undefined>();
+  const [openEdit, setOpenEdit] = useState(false);
 
   const {
     data: portosdata,
@@ -47,6 +51,7 @@ export function TabelaPortos() {
             <TableHead>ID</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>País</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -63,7 +68,19 @@ export function TabelaPortos() {
               <TableCell className="font-medium max-w-32">
                 {porto.nome}
               </TableCell>
-              <TableCell className="font-medium">{porto.pais?.pais}</TableCell>
+              <TableCell className='font-medium'>{porto.pais?.pais}</TableCell>
+              <TableCell className='w-4'>
+                <Button
+                  className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPortoId(porto.id);
+                    setOpenEdit(true);
+                  }}
+                >
+                  <EditIcon size={24} />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -75,6 +92,14 @@ export function TabelaPortos() {
         setOpen={setOpen}
         porto_id={porto_id}
         mutate={mutate}
+      />
+      <DialogEditarPorto
+        open={openEdit}
+        setOpen={setOpenEdit}
+        porto_id={porto_id}
+        mutate={mutate}
+        nome={portos?.find((porto) => porto.id === porto_id)?.nome}
+        pais={portos?.find((porto) => porto.id === porto_id)?.pais?.id}
       />
     </>
   );
