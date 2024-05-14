@@ -26,11 +26,7 @@ export function PeopleTable() {
     data: pessoasdata,
     isLoading,
     mutate,
-  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher, {
-    refreshInterval: 1000,
-  });
-
-  console.log(pessoasdata);
+  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher);
 
   const chunked = chunk(pessoasdata ?? [], 10);
   const pessoas = chunked[activePage - 1];
