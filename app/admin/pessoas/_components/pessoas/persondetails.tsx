@@ -50,7 +50,6 @@ export default function PersonDetails(props: {
       body: JSON.stringify({ id }),
     });
     if (result.ok) {
-      mutate();
       toast({
         className: 'bg-green-200',
         title: 'Sucesso',
@@ -67,6 +66,7 @@ export default function PersonDetails(props: {
       });
     }
     setDeleting(false);
+    mutate();
   }
 
   return (
