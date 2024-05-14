@@ -80,7 +80,7 @@ export function PeopleTable() {
         open={open}
         setOpen={setOpen}
         pessoa_id={pessoa_id}
-        mutate={mutate}
+        // mutate={mutate}
       />
     </div>
   );
