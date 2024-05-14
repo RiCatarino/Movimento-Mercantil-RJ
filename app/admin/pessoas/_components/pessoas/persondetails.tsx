@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/dialog';
 import fetcher from '@/lib/fetch';
 import { Dispatch, SetStateAction, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 import PersonRelacaoEmbarcacaoTable from './personrelacembarcacaotable';
 import { Button } from '@/components/ui/button';
 import {
@@ -29,7 +29,7 @@ export default function PersonDetails(props: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   pessoa_id: number | undefined;
-  mutate: () => void;
+  mutate: KeyedMutator<Pessoa[]>;
 }) {
   const { open, setOpen, pessoa_id, mutate } = props;
   const { toast } = useToast();
