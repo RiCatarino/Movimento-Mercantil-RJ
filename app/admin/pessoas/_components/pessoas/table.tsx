@@ -26,7 +26,11 @@ export function PeopleTable() {
     data: pessoasdata,
     isLoading,
     mutate,
-  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher, {});
+  } = useSWR<Pessoa[]>('/api/pessoa/read', fetcher, {
+    refreshInterval: 1000,
+  });
+
+  console.log(pessoasdata);
 
   const chunked = chunk(pessoasdata ?? [], 10);
   const pessoas = chunked[activePage - 1];
@@ -80,7 +84,7 @@ export function PeopleTable() {
         open={open}
         setOpen={setOpen}
         pessoa_id={pessoa_id}
-        // mutate={mutate}
+        mutate={mutate}
       />
     </div>
   );
