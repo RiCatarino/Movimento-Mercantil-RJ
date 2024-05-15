@@ -31,7 +31,7 @@ import { XIcon } from 'lucide-react';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 
-export function TabelaTitulos() {
+export default function TabelaTitulos() {
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [titulo_id, setTituloId] = useState<number | undefined>();

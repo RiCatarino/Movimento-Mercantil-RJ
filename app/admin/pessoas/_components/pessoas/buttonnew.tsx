@@ -64,10 +64,11 @@ export default function NewPerson(props: { mutate: () => void }) {
     },
   });
 
-  const { data: pais, isLoading } = useSWR<Pais[]>('/api/pais/read', fetcher);
-  const { data: titulo_nobreza, isLoading: isLoadingNobreza } = useSWR<
-    TituloNobreza[]
-  >('/api/titulo_nobreza/read', fetcher);
+  const { data: pais } = useSWR<Pais[]>(open && '/api/pais/read', fetcher);
+  const { data: titulo_nobreza, isLoading } = useSWR<TituloNobreza[]>(
+    open && '/api/titulo_nobreza/read',
+    fetcher
+  );
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);

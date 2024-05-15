@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic'; // needed because of mutations
 
 export async function GET() {
   const result = await prisma.pessoa.findMany({
@@ -21,11 +23,12 @@ export async function GET() {
         },
       },
     },
+    take: 10,
 
     orderBy: {
-      id: "desc",
+      id: 'desc',
     },
   });
 
-  return Response.json(result);
+  return NextResponse.json(result);
 }

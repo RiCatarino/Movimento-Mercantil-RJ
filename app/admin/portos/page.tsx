@@ -1,4 +1,4 @@
-import { TabelaPortos } from './_components/table';
+import TabelaPortos from './_components/table';
 
 export default function UnidadesDeMedidaPage() {
   return (
