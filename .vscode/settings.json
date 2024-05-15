@@ -2,5 +2,6 @@
   "WillLuke.nextjs.addTypesOnSave": true,
   "WillLuke.nextjs.hasPrompted": true,
   "git.ignoreLimitWarning": true,
-  "cSpell.words": ["Backoffice", "Ratelimit", "tripdetails", "upstash"]
+  "cSpell.words": ["Backoffice", "Ratelimit", "tripdetails", "upstash"],
+  "cSpell.ignoreWords": ["byname", "implemetar"]
 }

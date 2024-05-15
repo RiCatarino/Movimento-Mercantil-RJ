@@ -6,7 +6,8 @@ export async function GET() {
       id: true,
       texto_descritivo: true,
       tipo: true,
+      imagem_embarcacao: true,
     },
-  })
+  });
   return Response.json(result);
-};
+}
