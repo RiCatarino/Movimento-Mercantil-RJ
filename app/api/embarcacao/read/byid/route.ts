@@ -11,7 +11,14 @@ export async function GET(req: Request) {
       id: true,
       nome: true,
       observacao: true,
-      tipo_embarcacao: true,
+      tipo_embarcacao: {
+        select: {
+          id: true,
+          texto_descritivo: true,
+          tipo: true,
+          imagem_embarcacao: true,
+        },
+      },
       relacao_embarcacao_proprietario: {
         select: {
           id: true,
@@ -22,7 +29,6 @@ export async function GET(req: Request) {
               pais: true,
             },
           },
-
           pessoa: {
             select: {
               nome: true,

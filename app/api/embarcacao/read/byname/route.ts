@@ -14,7 +14,14 @@ export async function GET(req: Request) {
       id: true,
       nome: true,
       observacao: true,
-      tipo_embarcacao: true,
+      tipo_embarcacao: {
+        select: {
+          id: true,
+          texto_descritivo: true,
+          tipo: true,
+          imagem_embarcacao: true,
+        },
+      },
       pais: true,
     },
   });

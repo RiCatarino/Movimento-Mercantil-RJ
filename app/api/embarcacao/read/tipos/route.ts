@@ -6,7 +6,12 @@ export async function GET() {
       id: true,
       texto_descritivo: true,
       tipo: true,
-      imagem_embarcacao: true,
+      imagem_embarcacao: {
+        select: {
+          id: true,
+          imagem: true,
+        },
+      },
     },
   });
   return Response.json(result);
