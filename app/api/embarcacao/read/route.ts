@@ -1,4 +1,4 @@
-import prism from '@/lib/prisma';
+import prism from "@/lib/prisma";
 
 export async function GET() {
   const result = await prism.embarcacao.findMany({
@@ -19,7 +19,7 @@ export async function GET() {
       },
     },
     orderBy: {
-      id: 'asc',
+      id: "asc",
     },
   });
   return Response.json(result);
