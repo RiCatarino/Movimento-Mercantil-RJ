@@ -57,7 +57,6 @@ model pessoa {
   comandante                      viagem[]                        @relation("comandante")
   armador                         viagem[]                        @relation("armador")
   relac_mercadoria_viagem         relac_mercadoria_viagem[]
-  // created_at DateTime @default(now())
   relac_mercadoria_escala         relac_mercadoria_escala[]
 }
 
@@ -67,7 +66,7 @@ model embarcacao {
   nome                            String?                         @db.VarChar(100)
   id_pais                         Int?
   observacao                      String?
-  tipo_embarcacao                 tipo_embarcacao?                @relation(fields: [id_tipo_embarcacao], references: [id])
+  tipo_embarcacao                 tipo_embarcacao?                @relation(fields: [id_tipo_embarcacao], references: [id], onDelete: Cascade)
   pais                            pais?                           @relation(fields: [id_pais], references: [id])
   relacao_embarcacao_proprietario relac_embarcacao_proprietario[]
   viagem                          viagem[]
@@ -77,7 +76,7 @@ model tipo_embarcacao {
   id                Int                 @id @default(autoincrement())
   texto_descritivo  String
   tipo              String              @db.VarChar()
-  embarcacao        embarcacao[]
+  embarcacao        embarcacao[] 
   imagem_embarcacao imagem_embarcacao[]
 }
 
