@@ -19,7 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-export function EscalasDrawer(props: {
+export default function EscalasDrawer(props: {
   open: boolean;
   setOpen: (open: boolean) => void;
   relac_mercadoria_escala: RelacMercadoriaEscala[] | undefined;

@@ -1,4 +1,4 @@
-import { TableUnidadesDeMedida } from './_components/table';
+import TableUnidadesDeMedida from './_components/table';
 
 export default function UnidadesDeMedidaPage() {
   return (

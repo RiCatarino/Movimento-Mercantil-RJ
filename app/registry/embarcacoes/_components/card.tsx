@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-
 export default function EmbarcacaoCard(props: {
   image: string | undefined;
   nome: string;

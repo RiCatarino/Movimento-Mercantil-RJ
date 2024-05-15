@@ -1,4 +1,4 @@
-import { TabelaPaises } from './_components/table';
+import TabelaPaises from './_components/table';
 
 export default function UnidadesDeMedidaPage() {
   return (

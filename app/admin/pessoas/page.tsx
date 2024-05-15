@@ -1,7 +1,7 @@
-import { PeopleTable } from './_components/pessoas/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TabelaTitulos } from './_components/titulos/table';
-import { TabelaCargos } from './_components/cargos/table';
+import TabelaTitulos from './_components/titulos/table';
+import TabelaCargos from './_components/cargos/table';
+import TabelaPessoas from './_components/pessoas/table';
 
 export default function PessoasPage() {
   return (
@@ -23,7 +23,7 @@ export default function PessoasPage() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value='pessoas'>
-          <PeopleTable />
+          <TabelaPessoas />
         </TabsContent>
         <TabsContent value='titulos'>
           <TabelaTitulos />

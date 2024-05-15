@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Table,
@@ -7,12 +7,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
-import Loader from "@/components/loader";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import TipoDetails from "./details";
+} from '@/components/ui/table';
+import { useState } from 'react';
+import Loader from '@/components/loader';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import TipoDetails from './details';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,27 +23,27 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { XIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
-import NovoTipo from "./buttonnew";
-import { Input } from "@/components/ui/input";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
+} from '@/components/ui/alert-dialog';
+import { XIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import NovoTipo from './buttonnew';
+import { Input } from '@/components/ui/input';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
 
-export function TableTipos() {
+export default function TableTipos() {
   const [open, setOpen] = useState(false);
   const [idTipo, setIdTipo] = useState<number | undefined>();
   const [deleting, setDeleting] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [activePage, setPage] = useState(1);
 
   const {
     data: tiposdata,
     isLoading,
     mutate,
-  } = useSWR<TipoEmbarcacao[]>("/api/tipo_embarcacao/read", fetcher);
+  } = useSWR<TipoEmbarcacao[]>('/api/tipo_embarcacao/read', fetcher);
 
   // Código para quando a API estiver a funcionar
   // const {
@@ -63,39 +63,39 @@ export function TableTipos() {
   async function handleDeleteTipo(id: number) {
     setDeleting(true);
     await fetch(`/api/tipo_embarcacao/delete`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: "bg-green-200",
-      title: "Sucesso",
+      className: 'bg-green-200',
+      title: 'Sucesso',
       duration: 5000,
-      description: "Tipo removido com sucesso",
+      description: 'Tipo removido com sucesso',
     });
     setDeleting(false);
   }
 
   if (isLoading)
     return (
-      <main className="flex flex-row justify-center p-4">
-        <Loader classProp="w-24 h-24 self-center flex" />
+      <main className='flex flex-row justify-center p-4'>
+        <Loader classProp='w-24 h-24 self-center flex' />
       </main>
     );
 
   return (
-    <div className="flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl">
-      <div className="flex flex-row justify-between gap-4 ">
+    <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
+      <div className='flex flex-row justify-between gap-4 '>
         <Input
-          className="rounded-xl"
-          placeholder="Pesquisar..."
+          className='rounded-xl'
+          placeholder='Pesquisar...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NovoTipo mutate={mutate} />
       </div>
 
       <Table>
-        <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow>
             <TableHead>ID</TableHead>
             <TableHead>Tipo</TableHead>
@@ -105,27 +105,27 @@ export function TableTipos() {
         <TableBody>
           {tipos?.map((tipo) => (
             <TableRow
-              className="cursor-pointer hover:bg-blue-100"
+              className='cursor-pointer hover:bg-blue-100'
               key={tipo.id}
               onClick={(e) => {
                 setIdTipo(tipo.id);
                 setOpen(true);
               }}
             >
-              <TableCell className="font-medium w-10">{tipo.id}</TableCell>
-              <TableCell className="font-medium">{tipo.tipo}</TableCell>
-              <TableCell className="w-4">
+              <TableCell className='font-medium w-10'>{tipo.id}</TableCell>
+              <TableCell className='font-medium'>{tipo.tipo}</TableCell>
+              <TableCell className='w-4'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button
-                      size="icon"
-                      variant="link"
-                      className="text-xs text-blue-500"
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
                       onClick={(e) => {
                         e.stopPropagation();
                       }}
                     >
-                      <XIcon className="w-4 text-red-700" />
+                      <XIcon className='w-4 text-red-700' />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent
@@ -134,7 +134,7 @@ export function TableTipos() {
                     }}
                   >
                     <AlertDialogHeader>
-                      <AlertDialogTitle className="text-red-500">
+                      <AlertDialogTitle className='text-red-500'>
                         Tem a certeza?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
@@ -146,12 +146,12 @@ export function TableTipos() {
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
                         disabled={deleting}
-                        className="bg-red-500 hover:bg-red-600"
+                        className='bg-red-500 hover:bg-red-600'
                         onClick={(e) => {
                           handleDeleteTipo(tipo.id);
                         }}
                       >
-                        {deleting && <Loader classProp="w-4 h-4" />} Remover
+                        {deleting && <Loader classProp='w-4 h-4' />} Remover
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

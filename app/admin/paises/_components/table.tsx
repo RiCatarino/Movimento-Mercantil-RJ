@@ -30,7 +30,8 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { useState } from 'react';
 import DialogEditarPais from './dialogedit';
-export function TabelaPaises() {
+
+export default function TabelaPaises() {
   const [openEdit, setOpenEdit] = useState(false);
   const [paisId, setPaisId] = useState<number | undefined>();
   const [activePage, setPage] = useState(1);

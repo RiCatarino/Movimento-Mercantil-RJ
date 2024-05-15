@@ -12,7 +12,7 @@ import VesselDetails from './vesseldetails';
 import { useState } from 'react';
 import Loader from '@/components/loader';
 
-export function DataTable(props: {
+export default function DataTable(props: {
   embarcacoes: Embarcacao[] | undefined;
   isLoading: boolean;
   mutate: () => void;

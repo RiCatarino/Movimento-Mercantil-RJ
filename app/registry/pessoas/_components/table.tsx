@@ -14,7 +14,7 @@ import fetcher from '@/lib/fetch';
 import Loader from '@/components/loader';
 import useSWR from 'swr';
 
-export function PeopleTable() {
+export default function PeopleTable() {
   const [open, setOpen] = useState(false);
   const [pessoa_id, setPessoaId] = useState<number | undefined>();
   const {

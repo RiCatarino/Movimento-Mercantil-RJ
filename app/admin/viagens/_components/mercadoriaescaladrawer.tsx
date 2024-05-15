@@ -5,7 +5,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
+} from '@/components/ui/drawer';
 
 import {
   Table,
@@ -15,7 +15,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from '@/components/ui/table';
 
 import {
   AlertDialog,
@@ -27,19 +27,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from '@/components/ui/alert-dialog';
 
-import BotaoNovaMercadoriaEscala from "./buttons/buttonnewmerchinstop";
-import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import fetcher from "@/lib/fetch";
-import useSWR from "swr";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
-import { useState } from "react";
+import BotaoNovaMercadoriaEscala from './buttons/buttonnewmerchinstop';
+import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import fetcher from '@/lib/fetch';
+import useSWR from 'swr';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
+import { useState } from 'react';
 
-export function MercadoriaEscalasDrawer(props: {
+export default function MercadoriaEscalasDrawer(props: {
   open: boolean;
   setOpen: (open: boolean) => void;
   escala_id: number | undefined;
@@ -60,7 +60,7 @@ export function MercadoriaEscalasDrawer(props: {
 
   async function handleDeleteMercadoriaEscala(id: number) {
     await fetch(`/api/escala/delete/mercadoria`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     mutate();
@@ -68,19 +68,19 @@ export function MercadoriaEscalasDrawer(props: {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerContent className=" mb-3.5 min-h-[50%] w-full max-h-[95%]">
-        <div className="w-full max-w-full px-4   ">
+      <DrawerContent className=' mb-3.5 min-h-[50%] w-full max-h-[95%]'>
+        <div className='w-full max-w-full px-4   '>
           <DrawerHeader>
             <DrawerTitle>Mercadorias</DrawerTitle>
             <DrawerDescription>
               Aqui pode ver a lista de mercadorias associadas a esta escala.
             </DrawerDescription>
           </DrawerHeader>
-          <ScrollArea className=" w-full">
-            <div className="w-full max-h-96 whitespace-nowrap">
-              <Table className=" overflow-y-visible max-h-fit relative">
-                <TableHeader className="p-2 text-xs bg-blue-200 border-t-0 ">
-                  <TableRow className="rounded-ss-xl">
+          <ScrollArea className=' w-full'>
+            <div className='w-full max-h-96 whitespace-nowrap'>
+              <Table className=' overflow-y-visible max-h-fit relative'>
+                <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
+                  <TableRow className='rounded-ss-xl'>
                     <TableHead>Qt.</TableHead>
                     <TableHead>Mercadoria</TableHead>
                     <TableHead>Unid. Medida</TableHead>
@@ -90,44 +90,44 @@ export function MercadoriaEscalasDrawer(props: {
                     <TableHead></TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody className="overflow-y-auto ">
+                <TableBody className='overflow-y-auto '>
                   {relac_mercadoria_escala_data?.map((mercadoria) => (
-                    <TableRow className="hover:bg-blue-100" key={mercadoria.id}>
-                      <TableCell className="text-xs font-medium">
+                    <TableRow className='hover:bg-blue-100' key={mercadoria.id}>
+                      <TableCell className='text-xs font-medium'>
                         {mercadoria.quantidade}
                       </TableCell>
-                      <TableCell className="text-xs font-medium">
+                      <TableCell className='text-xs font-medium'>
                         {mercadoria.mercadoria?.nome}
                       </TableCell>
-                      <TableCell className="text-xs font-medium">
+                      <TableCell className='text-xs font-medium'>
                         {mercadoria?.unidade_de_medida?.unidade_medida}
                       </TableCell>
-                      <TableCell className="text-xs font-medium">
+                      <TableCell className='text-xs font-medium'>
                         {/* format value as brazilian real */}
-                        {new Intl.NumberFormat("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
+                        {new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
                         }).format(mercadoria.valor_frete)}
                       </TableCell>
-                      <TableCell className="text-xs font-medium">
+                      <TableCell className='text-xs font-medium'>
                         {mercadoria.cosignatario?.nome}
                       </TableCell>
-                      <TableCell className="text-xs font-medium">
-                        {mercadoria.movimento === "E"
-                          ? "Entrada"
-                          : mercadoria.movimento === "S"
-                          ? "Saída"
-                          : "N/A"}
+                      <TableCell className='text-xs font-medium'>
+                        {mercadoria.movimento === 'E'
+                          ? 'Entrada'
+                          : mercadoria.movimento === 'S'
+                          ? 'Saída'
+                          : 'N/A'}
                       </TableCell>
-                      <TableCell className="text-xs font-medium w-10">
+                      <TableCell className='text-xs font-medium w-10'>
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <Button
-                              size="icon"
-                              variant="link"
-                              className="text-xs text-blue-500"
+                              size='icon'
+                              variant='link'
+                              className='text-xs text-blue-500'
                             >
-                              <XIcon className="w-4 text-red-700" />
+                              <XIcon className='w-4 text-red-700' />
                             </Button>
                           </AlertDialogTrigger>
                           <AlertDialogContent>
@@ -143,7 +143,7 @@ export function MercadoriaEscalasDrawer(props: {
                             <AlertDialogFooter>
                               <AlertDialogCancel>Cancelar</AlertDialogCancel>
                               <AlertDialogAction
-                                className="bg-red-500 hover:bg-red-600"
+                                className='bg-red-500 hover:bg-red-600'
                                 disabled={false}
                                 onClick={() => {
                                   handleDeleteMercadoriaEscala(mercadoria.id);
@@ -160,8 +160,8 @@ export function MercadoriaEscalasDrawer(props: {
                 </TableBody>
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={1} className="text-xs font-bold">
-                      Total:{" "}
+                    <TableCell colSpan={1} className='text-xs font-bold'>
+                      Total:{' '}
                       {relac_mercadoria_escala_data?.reduce(
                         (acc, mercadoria) => acc + (mercadoria.quantidade || 0),
                         0
@@ -170,11 +170,11 @@ export function MercadoriaEscalasDrawer(props: {
                     <TableCell></TableCell>
                     <TableCell></TableCell>
 
-                    <TableCell colSpan={1} className="text-xs font-bold">
-                      Total:{" "}
-                      {new Intl.NumberFormat("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
+                    <TableCell colSpan={1} className='text-xs font-bold'>
+                      Total:{' '}
+                      {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
                       }).format(
                         relac_mercadoria_escala?.reduce(
                           (acc, mercadoria) =>
@@ -194,7 +194,7 @@ export function MercadoriaEscalasDrawer(props: {
                 activePage={activePage}
                 setPage={setPage}
               />
-              <ScrollBar orientation="vertical" />
+              <ScrollBar orientation='vertical' />
             </div>
           </ScrollArea>
           {/* <DrawerFooter>
