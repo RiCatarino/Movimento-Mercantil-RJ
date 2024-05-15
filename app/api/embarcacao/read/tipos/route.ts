@@ -1,5 +1,6 @@
 import prism from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   const result = await prism.tipo_embarcacao.findMany({
     select: {

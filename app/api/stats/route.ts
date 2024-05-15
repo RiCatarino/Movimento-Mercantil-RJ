@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
 export async function GET() {
   const embarcacoes = await prisma.embarcacao.aggregate({
     _count: {
