@@ -85,8 +85,7 @@
 
 /* Actual Code for Steering and its rotation starts here. * Replace the wheel with our image. */
 #steering {
-  background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/626f7f20-56da-4a6c-9996-50364c8b9ae2/dattwm8-b0b21b4e-cbb8-4828-a3d2-14e048d41508.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyNmY3ZjIwLTU2ZGEtNGE2Yy05OTk2LTUwMzY0YzhiOWFlMlwvZGF0dHdtOC1iMGIyMWI0ZS1jYmI4LTQ4MjgtYTNkMi0xNGUwNDhkNDE1MDgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.QxvpfiUFdZ-n2btPLRSr0107Kcst6LkyK-aUlt01MCQ')
-    center no-repeat;
+  background: url('/public/logo.webp') center no-repeat;
   background-size: 100%;
   position: relative;
   animation: rotateWheel 5s infinite;

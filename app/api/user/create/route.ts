@@ -2,14 +2,13 @@ import prisma from '@/lib/prisma';
 import { hash } from '@node-rs/argon2';
 import { generateIdFromEntropySize } from 'lucia';
 import sendEmailNotification from '@/lib/sendemail';
+import isEmail from 'validator/es/lib/isEmail';
 
 export async function POST(req: Request) {
   const { useremail } = await req.json();
   const email = useremail.toLowerCase();
 
-  var validRegex =
-    /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/;
-  if (!validRegex.test(email)) {
+  if (!isEmail(email)) {
     return new Response('Email Inválido', {
       status: 400,
       statusText: 'Email Inválido',

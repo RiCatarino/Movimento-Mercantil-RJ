@@ -1,4 +1,4 @@
-import PeopleTable from '../pessoas/_components/table';
+import PeopleTable from './_components/table';
 import Search from './_components/search';
 
 export default function PessoasPage() {

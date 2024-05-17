@@ -1,6 +1,6 @@
-import prisma from "@/lib/prisma";
+import prisma from '@/lib/prisma';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export async function GET() {
   const embarcacoes = await prisma.embarcacao.aggregate({
     _count: {
@@ -44,6 +44,12 @@ export async function GET() {
     },
   });
 
+  const usuarios = await prisma.user.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
   const result = {
     embarcacoes,
     pessoas,
@@ -52,6 +58,8 @@ export async function GET() {
     titulo_nobreza,
     unidades_de_medida,
     portos,
+    usuarios,
   };
+
   return Response.json(result);
 }
