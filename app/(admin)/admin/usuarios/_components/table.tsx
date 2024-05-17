@@ -24,7 +24,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
+import { LockIcon, UnlockIcon, XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
@@ -52,8 +52,31 @@ export default function TabelaUsuarios() {
       className: 'bg-green-200',
       title: 'Sucesso',
       duration: 5000,
-      description: 'Unidade removida com sucesso',
+      description: 'Usuário removido com sucesso',
     });
+  }
+
+  async function handleBlock(id: number, habilitado: boolean) {
+    await fetch(`/api/user/update/block`, {
+      method: 'DELETE',
+      body: JSON.stringify({ id, habilitado }),
+    });
+    mutate();
+    if (habilitado) {
+      toast({
+        className: 'bg-green-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Usuário desbloqueado com sucesso',
+      });
+    } else {
+      toast({
+        className: 'bg-red-200',
+        title: 'Sucesso',
+        duration: 5000,
+        description: 'Usuário bloqueado com sucesso',
+      });
+    }
   }
 
   if (isLoading)
@@ -112,38 +135,84 @@ export default function TabelaUsuarios() {
               </TableCell>
 
               <TableCell className='w-4'>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      size='icon'
-                      variant='link'
-                      className='text-xs text-blue-500'
-                    >
-                      <XIcon className='w-4 text-red-700' />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className='text-red-500'>
-                        Tem a certeza?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. Esta ação irá remover a
-                        unidade de medida.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction
-                        disabled={isLoading}
-                        className='bg-red-500 hover:bg-red-600'
-                        onClick={() => handleDeleteUser(usuario.id)}
+                <div className='flex flex-row gap-2'>
+                  {/* BLOCK/UNBLOCK USERS */}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size='icon'
+                        variant='link'
+                        className='text-xs text-blue-500'
                       >
-                        {isLoading ? 'Aguarde...' : 'Remover'}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                        {usuario.habilitado ? (
+                          <LockIcon className='w-4 text-red-700' />
+                        ) : (
+                          <UnlockIcon className='w-4 text-green-700' />
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          {usuario.habilitado
+                            ? 'Bloquear Usuário'
+                            : 'Desbloquear Usuário'}
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {usuario.habilitado
+                            ? 'Deseja bloquear o usuário?'
+                            : 'Deseja desbloquear o usuário?'}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          disabled={isLoading}
+                          className='bg-red-500 hover:bg-red-600'
+                          onClick={() =>
+                            handleBlock(usuario.id, !usuario.habilitado)
+                          }
+                        >
+                          {isLoading ? 'Aguarde...' : 'Sim'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+
+                  {/* DELETE USERS */}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size='icon'
+                        variant='link'
+                        className='text-xs text-blue-500'
+                      >
+                        <XIcon className='w-4 text-red-700' />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className='text-red-500'>
+                          Tem a certeza?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Esta ação não pode ser desfeita. Esta ação irá remover
+                          a unidade de medida.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          disabled={isLoading}
+                          className='bg-red-500 hover:bg-red-600'
+                          onClick={() => handleDeleteUser(usuario.id)}
+                        >
+                          {isLoading ? 'Aguarde...' : 'Remover'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
               </TableCell>
             </TableRow>
           ))}
