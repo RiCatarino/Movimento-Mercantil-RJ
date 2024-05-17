@@ -14,11 +14,13 @@ datasource db {
 }
 
 model User {
-  id       String    @id
-  email String    @unique
-  password_hash String
-  sessions Session[]
-  role     Role      @default(EDITOR)
+  id              String    @id
+  email           String    @unique
+  password_hash   String
+  nome            String
+  sessions        Session[]
+  abilitado       Boolean   @default(true)
+  role            Role      @default(EDITOR)
 }
 
 model Session {
