@@ -1,9 +1,16 @@
-import prisma from '@/lib/prisma';
-import dayjs from 'dayjs';
-var customParseFormat = require('dayjs/plugin/customParseFormat');
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import dayjs from "dayjs";
+var customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
 
 export async function POST(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const {
     id_embarcacao,
     porto_origem,
@@ -25,18 +32,18 @@ export async function POST(req: Request) {
 
   const result = await prisma.viagem.create({
     data: {
-      data_viagem: dayjs(data_viagem, 'DD-MM-YYYY').isValid()
-        ? dayjs(data_viagem, 'DD-MM-YYYY').toDate()
+      data_viagem: dayjs(data_viagem, "DD-MM-YYYY").isValid()
+        ? dayjs(data_viagem, "DD-MM-YYYY").toDate()
         : null,
       dias_porto_destino: Number(dias_porto_destino) || null,
       dias_porto_origem: Number(dias_porto_origem) || null,
       entrada_sahida: entrada_sahida || null,
       dias_viagem: Number(dias_viagem) || null,
-      data_chegada: dayjs(data_chegada, 'DD-MM-YYYY').isValid()
-        ? dayjs(data_chegada, 'DD-MM-YYYY').toDate()
+      data_chegada: dayjs(data_chegada, "DD-MM-YYYY").isValid()
+        ? dayjs(data_chegada, "DD-MM-YYYY").toDate()
         : null,
-      data_rio: dayjs(data_rio, 'DD-MM-YYYY').isValid()
-        ? dayjs(data_rio, 'DD-MM-YYYY').toDate()
+      data_rio: dayjs(data_rio, "DD-MM-YYYY").isValid()
+        ? dayjs(data_rio, "DD-MM-YYYY").toDate()
         : null,
       tripulacao: Number(tripulacao) || null,
       total_passageiros: Number(passageiros) || null,

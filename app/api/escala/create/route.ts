@@ -1,9 +1,16 @@
-import prisma from '@/lib/prisma';
-import dayjs from 'dayjs';
-var customParseFormat = require('dayjs/plugin/customParseFormat');
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import dayjs from "dayjs";
+var customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
 
 export async function POST(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const {
     viagem_id,
     porto_id,
@@ -25,7 +32,7 @@ export async function POST(req: Request) {
           id: porto_id,
         },
       },
-      data_escala: dayjs(data, 'DD/MM/YYYY').toDate(),
+      data_escala: dayjs(data, "DD/MM/YYYY").toDate(),
       ano: Number(ano),
       dias_porto: dias_porto,
       entrada_de_passageiros: entrada_de_passageiros,

@@ -1,6 +1,13 @@
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function PUT(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const { porto_id, nome, id_pais } = await req.json();
 
   const existe = await prisma.porto.findFirst({
@@ -11,7 +18,7 @@ export async function PUT(req: Request) {
         },
         nome: {
           equals: nome,
-          mode: 'insensitive',
+          mode: "insensitive",
         },
         pais: {
           id: Number(id_pais),
@@ -21,9 +28,9 @@ export async function PUT(req: Request) {
   });
 
   if (existe) {
-    return new Response('Porto já existe', {
+    return new Response("Porto já existe", {
       status: 409,
-      statusText: 'Porto já existe',
+      statusText: "Porto já existe",
     });
   }
 

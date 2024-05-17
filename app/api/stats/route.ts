@@ -1,7 +1,14 @@
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export async function GET() {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const embarcacoes = await prisma.embarcacao.aggregate({
     _count: {
       id: true,

@@ -1,8 +1,15 @@
+import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const nome = searchParams.get("nome");
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const result = await prisma.embarcacao.findMany({
     where: {
       nome: {

@@ -1,3 +1,4 @@
+import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
@@ -9,6 +10,12 @@ const ratelimit = new Ratelimit({
 });
 
 export async function GET(request: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const ip = request.headers.get("x-forwarded-for") ?? "";
   const { success, reset } = await ratelimit.limit(ip);
 

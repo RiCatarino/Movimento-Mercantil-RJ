@@ -1,7 +1,13 @@
+import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const { nome, tipo, observacao } = await req.json();
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
   const existe = await prisma.embarcacao.findFirst({
     where: {
