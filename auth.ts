@@ -1,8 +1,8 @@
-import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import { PrismaClient } from "@prisma/client";
-import { Lucia, Session, User } from "lucia";
-import { cookies } from "next/headers";
-import { cache } from "react";
+import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
+import { PrismaClient } from '@prisma/client';
+import { Lucia, Session, User } from 'lucia';
+import { cookies } from 'next/headers';
+import { cache } from 'react';
 
 const client = new PrismaClient();
 
@@ -15,13 +15,14 @@ export const lucia = new Lucia(adapter, {
     expires: false,
     attributes: {
       // set to true when using HTTPS
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
     },
   },
   getUserAttributes: (attributes) => {
     return {
       // attributes has the type of DatabaseUserAttributes
       email: attributes.email,
+      role: attributes.role,
     };
   },
 });
@@ -63,7 +64,7 @@ export const validateRequest = cache(
 );
 
 // IMPORTANT!
-declare module "lucia" {
+declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: DatabaseUserAttributes;
@@ -72,4 +73,5 @@ declare module "lucia" {
 
 interface DatabaseUserAttributes {
   email: string;
+  role: 'EDITOR' | 'ADMIN';
 }
