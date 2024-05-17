@@ -1,3 +1,9 @@
+interface User {
+  id: number;
+  email: string;
+  role: 'EDITOR' | 'ADMIN';
+}
+
 interface Cargo {
   id: number;
   cargo: string;

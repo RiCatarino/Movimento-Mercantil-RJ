@@ -1,17 +1,10 @@
-import { lucia, validateRequest } from "@/auth";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { lucia, validateRequest } from '@/auth';
+import { cookies } from 'next/headers';
 
 export async function GET() {
-  const { user } = await validateRequest();
-
-  if (!user) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
   const { session } = await validateRequest();
   if (!session) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
   await lucia.invalidateSession(session.id);
@@ -23,8 +16,8 @@ export async function GET() {
     sessionCookie.attributes
   );
 
-  return new Response("OK", {
+  return new Response('OK', {
     status: 200,
-    statusText: "OK",
+    statusText: 'OK',
   });
 }
