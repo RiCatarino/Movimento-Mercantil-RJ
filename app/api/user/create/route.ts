@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const { useremail } = await req.json();
+  const { useremail, nome, role } = await req.json();
   const email = useremail.toLowerCase();
 
   if (!isEmail(email)) {
@@ -69,6 +69,8 @@ export async function POST(req: Request) {
       id: userId,
       email: email,
       password_hash: passwordHash,
+      nome: nome,
+      role: role,
     },
   });
   await sendEmailNotification(

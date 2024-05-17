@@ -55,6 +55,13 @@ export async function POST(req: Request) {
     });
   }
 
+  if (!existingUser.habilitado) {
+    return new Response('Password ou usuário errados', {
+      status: 401,
+      statusText: 'Password ou usuário errados',
+    });
+  }
+
   const session = await lucia.createSession(existingUser.id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
