@@ -3,6 +3,12 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function GET() {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const { session } = await validateRequest();
   if (!session) {
     return new Response("Unauthorized", { status: 401 });

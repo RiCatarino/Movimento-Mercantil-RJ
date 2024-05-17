@@ -1,8 +1,15 @@
-import prisma from '@/lib/prisma';
-import { NextResponse } from 'next/server';
-export const dynamic = 'force-dynamic'; // needed because of mutations
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic"; // needed because of mutations
 
 export async function GET() {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const result = await prisma.pessoa.findMany({
     select: {
       id: true,
@@ -26,7 +33,7 @@ export async function GET() {
     take: 10,
 
     orderBy: {
-      id: 'desc',
+      id: "desc",
     },
   });
 

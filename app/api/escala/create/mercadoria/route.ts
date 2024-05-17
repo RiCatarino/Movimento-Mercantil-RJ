@@ -1,6 +1,13 @@
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const {
     cosignatario,
     mercadoria,
@@ -20,9 +27,9 @@ export async function POST(req: Request) {
     !valor_frete &&
     !movimento
   ) {
-    return new Response('Preencha pelo menos um dos campos', {
+    return new Response("Preencha pelo menos um dos campos", {
       status: 400,
-      statusText: 'Preencha pelo menos um dos campos',
+      statusText: "Preencha pelo menos um dos campos",
     });
   }
 

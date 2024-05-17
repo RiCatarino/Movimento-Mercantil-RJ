@@ -18,6 +18,7 @@ model User {
   email String    @unique
   password_hash String
   sessions Session[]
+  role     Role      @default(EDITOR)
 }
 
 model Session {
@@ -234,4 +235,9 @@ model relac_mercadoria_viagem {
   mercadoria        mercadoria?        @relation(fields: [id_mercadoria], references: [id])
   unidade_de_medida unidade_de_medida? @relation(fields: [id_unidade_medida], references: [id])
   cosignatario      pessoa?            @relation(fields: [id_cosignatario], references: [id])
+}
+
+enum Role {
+  EDITOR
+  ADMIN
 }

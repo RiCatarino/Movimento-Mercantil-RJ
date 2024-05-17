@@ -1,6 +1,13 @@
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const { tipo, descricao } = await req.json();
 
   const existe = await prisma.tipo_embarcacao.findFirst({
@@ -10,9 +17,9 @@ export async function POST(req: Request) {
   });
 
   if (existe) {
-    return new Response('Tipo de Embarcação já existe', {
+    return new Response("Tipo de Embarcação já existe", {
       status: 409,
-      statusText: 'Tipo de Embarcação já existe',
+      statusText: "Tipo de Embarcação já existe",
     });
   }
 

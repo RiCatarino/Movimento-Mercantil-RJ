@@ -1,8 +1,17 @@
-import prisma from '@/lib/prisma';
-import dayjs from 'dayjs';
-var customParseFormat = require('dayjs/plugin/customParseFormat');
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import dayjs from "dayjs";
+
+var customParseFormat = require("dayjs/plugin/customParseFormat");
 dayjs.extend(customParseFormat);
+
 export async function POST(req: Request) {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const { cargo, data, ano, pessoa } = await req.json();
 
   const result = await prisma.relac_pessoa_cargo.create({
@@ -18,7 +27,7 @@ export async function POST(req: Request) {
           id: Number(cargo),
         },
       },
-      data_cargo: dayjs(data, 'DD/MM/YYYY').toDate(),
+      data_cargo: dayjs(data, "DD/MM/YYYY").toDate(),
       ano: Number(ano),
     },
   });
