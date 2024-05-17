@@ -1,7 +1,9 @@
 interface User {
   id: number;
+  nome: string;
   email: string;
   role: 'EDITOR' | 'ADMIN';
+  habilitado: boolean;
 }
 
 interface Cargo {

@@ -85,7 +85,7 @@
 
 /* Actual Code for Steering and its rotation starts here. * Replace the wheel with our image. */
 #steering {
-  background: url('/public/logo.webp') center no-repeat;
+  background: url('../public/logo.webp') center no-repeat;
   background-size: 100%;
   position: relative;
   animation: rotateWheel 5s infinite;

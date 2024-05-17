@@ -15,20 +15,31 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import { Plus, UserPlusIcon } from 'lucide-react';
+import { UserPlusIcon } from 'lucide-react';
 import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
+import { KeyedMutator } from 'swr';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 const formSchema = z.object({
   useremail: z.string().email({ message: 'Email inválido' }),
+  nome: z.string().min(1, { message: 'Nome inválido' }),
+  role: z.enum(['ADMIN', 'EDITOR']),
 });
 
-export default function BotaoNovoUsuario() {
-  // const { mutate } = props;
+export default function BotaoNovoUsuario(props: {
+  mutate: KeyedMutator<User[]>;
+}) {
+  const { mutate } = props;
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -37,6 +48,8 @@ export default function BotaoNovoUsuario() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       useremail: '',
+      nome: '',
+      role: 'EDITOR',
     },
   });
 
@@ -50,26 +63,26 @@ export default function BotaoNovoUsuario() {
     if (result.ok) {
       setOpen(false);
       form.reset();
-      // mutate();
+      mutate();
       toast({
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Unidade criada com sucesso',
+        description: 'Utilizador criado com sucesso',
       });
     } else if (result.status === 409) {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Unidade já existe',
+        description: 'Utilizador já existe',
       });
     } else {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao criar unidade',
+        description: 'Erro ao criar utilizador',
       });
     }
     setSubmitting(false);
@@ -99,6 +112,38 @@ export default function BotaoNovoUsuario() {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input type='email' className='rounded-xl' {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='nome'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input className='rounded-xl' {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='role'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Função</FormLabel>
+                  <FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger>
+                        <SelectValue>{field.value}</SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value='ADMIN'>Admin</SelectItem>
+                        <SelectItem value='EDITOR'>Editor</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                 </FormItem>
               )}

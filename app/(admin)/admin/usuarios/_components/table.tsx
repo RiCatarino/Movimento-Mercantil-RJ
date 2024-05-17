@@ -12,7 +12,6 @@ import { useState } from 'react';
 import Loader from '@/components/loader';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
-import BotaoNovaUnidade from './buttonnew';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,20 +28,22 @@ import { XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
+import BotaoNovoUsuario from './buttonnew';
+import { Badge } from '@/components/ui/badge';
 
-export default function TableUnidadesDeMedida() {
+export default function TabelaUsuarios() {
   const [activePage, setPage] = useState(1);
   const {
-    data: unidadesdata,
+    data: usuariosdata,
     isLoading,
     mutate,
-  } = useSWR<User[]>('/api/unidade_de_medida/read', fetcher);
+  } = useSWR<User[]>('/api/user/read', fetcher);
 
-  const chunked = chunk(unidadesdata ?? [], 10);
-  const unidades = chunked[activePage - 1];
+  const chunked = chunk(usuariosdata ?? [], 10);
+  const usuarios = chunked[activePage - 1];
 
-  async function handleDeleteUnidade(id: number) {
-    await fetch(`/api/unidade_de_medida/delete`, {
+  async function handleDeleteUser(id: number) {
+    await fetch(`/api/user/delete`, {
       method: 'DELETE',
       body: JSON.stringify({ id }),
     });
@@ -66,26 +67,50 @@ export default function TableUnidadesDeMedida() {
     // <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
     <>
       {/* <NewVessel mutate={mutate} /> */}
-      <BotaoNovaUnidade mutate={mutate} />
+      <BotaoNovoUsuario mutate={mutate} />
 
       <Table>
         <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
           <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Unidade de Medida</TableHead>
+            <TableHead>Nome</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Função</TableHead>
+            <TableHead>Habilitado</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {unidades?.map((unidade) => (
+          {usuarios?.map((usuario) => (
             <TableRow
               className='cursor-pointer hover:bg-blue-100'
-              key={unidade.id}
+              key={usuario.id}
             >
-              <TableCell className='font-medium w-10'>{unidade.id}</TableCell>
+              <TableCell className='font-medium'>{usuario.nome}</TableCell>
+              <TableCell className='font-medium'>{usuario.email}</TableCell>
               <TableCell className='font-medium'>
-                {unidade.unidade_medida}
+                <Badge
+                  className={
+                    usuario.role === 'ADMIN'
+                      ? 'bg-yellow-600 hover:bg-yellow-600'
+                      : 'bg-green-400 hover:bg-green-400'
+                  }
+                >
+                  {usuario.role}{' '}
+                </Badge>
               </TableCell>
+              <TableCell className='font-medium'>
+                <Badge
+                  variant='outline'
+                  className={
+                    usuario.habilitado
+                      ? 'border-green-600 hover:border-green-600'
+                      : 'border-red-400 hover:border-red-400'
+                  }
+                >
+                  {usuario.habilitado ? 'Sim' : 'Não'}
+                </Badge>
+              </TableCell>
+
               <TableCell className='w-4'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -112,7 +137,7 @@ export default function TableUnidadesDeMedida() {
                       <AlertDialogAction
                         disabled={isLoading}
                         className='bg-red-500 hover:bg-red-600'
-                        onClick={() => handleDeleteUnidade(unidade.id)}
+                        onClick={() => handleDeleteUser(usuario.id)}
                       >
                         {isLoading ? 'Aguarde...' : 'Remover'}
                       </AlertDialogAction>
