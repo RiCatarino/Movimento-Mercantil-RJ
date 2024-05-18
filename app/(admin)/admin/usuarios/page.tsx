@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 
 export default async function UsersPage() {
   const { user } = await validateRequest();
+
   if (!user) {
     return redirect('/auth/signin');
   }

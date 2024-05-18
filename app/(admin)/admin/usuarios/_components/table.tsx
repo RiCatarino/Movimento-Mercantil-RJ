@@ -24,15 +24,18 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { LockIcon, UnlockIcon, XIcon } from 'lucide-react';
+import { EditIcon, LockIcon, UnlockIcon, XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import BotaoNovoUsuario from './buttonnew';
 import { Badge } from '@/components/ui/badge';
+import DialogEditarUsuario from './edituserdialog';
 
 export default function TabelaUsuarios() {
   const [activePage, setPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [open, setOpen] = useState(false);
   const {
     data: usuariosdata,
     isLoading,
@@ -42,7 +45,7 @@ export default function TabelaUsuarios() {
   const chunked = chunk(usuariosdata ?? [], 10);
   const usuarios = chunked[activePage - 1];
 
-  async function handleDeleteUser(id: number) {
+  async function handleDeleteUser(id: string) {
     await fetch(`/api/user/delete`, {
       method: 'DELETE',
       body: JSON.stringify({ id }),
@@ -56,7 +59,7 @@ export default function TabelaUsuarios() {
     });
   }
 
-  async function handleBlock(id: number, habilitado: boolean) {
+  async function handleBlock(id: string, habilitado: boolean) {
     await fetch(`/api/user/update/block`, {
       method: 'DELETE',
       body: JSON.stringify({ id, habilitado }),
@@ -136,6 +139,18 @@ export default function TabelaUsuarios() {
 
               <TableCell className='w-4'>
                 <div className='flex flex-row gap-2'>
+                  {/* UPDATE USERS */}
+                  <Button
+                    size='icon'
+                    variant='link'
+                    onClick={() => {
+                      setSelectedUser(usuario);
+                      setOpen(true);
+                    }}
+                  >
+                    <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
+                  </Button>
+
                   {/* BLOCK/UNBLOCK USERS */}
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
@@ -145,9 +160,9 @@ export default function TabelaUsuarios() {
                         className='text-xs text-blue-500'
                       >
                         {usuario.habilitado ? (
-                          <LockIcon className='w-4 text-red-700' />
+                          <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
                         ) : (
-                          <UnlockIcon className='w-4 text-green-700' />
+                          <UnlockIcon className='w-4 bg-green-700 text-white p-1 rounded-lg' />
                         )}
                       </Button>
                     </AlertDialogTrigger>
@@ -219,12 +234,15 @@ export default function TabelaUsuarios() {
         </TableBody>
       </Table>
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
-
-      {/* <VesselDetails
+      <DialogEditarUsuario
+        mutate={mutate}
         open={open}
         setOpen={setOpen}
-        embarcacao_id={embarcacao_id}
-      /> */}
+        user_id={selectedUser?.id}
+        nome={selectedUser?.nome}
+        email={selectedUser?.email}
+        role={selectedUser?.role}
+      />
     </>
   );
 }
