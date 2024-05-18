@@ -125,7 +125,9 @@ export default function NavBar() {
         <DropdownMenuContent>
           <DropdownMenuLabel>A minha Conta</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Perfil</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push('/admin/meuperfil')}>
+            Perfil
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className='text-red-400 focus:text-red-600'
