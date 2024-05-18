@@ -23,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
+import { useSession } from '@/app/SessionContext';
 
 export default function NavBar() {
   const [sidebar, setSideBar] = useState(false);
@@ -30,6 +31,7 @@ export default function NavBar() {
   const pathname = usePathname();
   const [pageName, setPageName] = useState('');
   const router = useRouter();
+  const { user } = useSession();
 
   useEffect(() => {
     switch (pathname) {
@@ -116,7 +118,7 @@ export default function NavBar() {
           <Button variant='ghost'>
             <div className='flex flex-row items-center justify-center text-blue-400'>
               <UserCheck />
-              <span className='ms-3'>Utilizador Autónoma</span>
+              <span className='ms-3'>{user?.nome}</span>
             </div>
           </Button>
         </DropdownMenuTrigger>
