@@ -1,5 +1,6 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
+import { start } from "repl";
 
 export async function GET(req: Request) {
   const { user } = await validateRequest();
@@ -9,18 +10,20 @@ export async function GET(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
+  const tipo = searchParams.get("tipo");
 
-  const result = await prisma.tipo_embarcacao.findFirst({
+  const result = await prisma.tipo_embarcacao.findMany({
     where: {
-      id: Number(id),
+      tipo: { startsWith: tipo?.toString(), mode: "insensitive" },
     },
     select: {
+      id: true,
       tipo: true,
     },
     orderBy: {
       tipo: "asc",
     },
   });
+
   return Response.json(result);
 }
