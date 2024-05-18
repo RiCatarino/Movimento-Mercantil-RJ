@@ -62,8 +62,9 @@ export default function TabelaUsuarios() {
   }
 
   async function handleBlock(id: string, habilitado: boolean) {
+    console.log(habilitado);
     await fetch(`/api/user/update/block`, {
-      method: 'DELETE',
+      method: 'PUT',
       body: JSON.stringify({ id, habilitado }),
     });
     mutate();
@@ -76,7 +77,7 @@ export default function TabelaUsuarios() {
       });
     } else {
       toast({
-        className: 'bg-red-200',
+        className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
         description: 'Usuário bloqueado com sucesso',
@@ -216,7 +217,7 @@ export default function TabelaUsuarios() {
                         {usuario.habilitado ? (
                           <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
                         ) : (
-                          <UnlockIcon className='w-4 bg-green-700 text-white p-1 rounded-lg' />
+                          <UnlockIcon className='w-6 bg-green-700 text-white p-1 rounded-lg' />
                         )}
                       </Button>
                     </AlertDialogTrigger>
