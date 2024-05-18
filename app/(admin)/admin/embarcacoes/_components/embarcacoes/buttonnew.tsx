@@ -133,32 +133,37 @@ export default function NewVessel(props: { mutate: () => void }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tipo</FormLabel>
-                  <FormControl>
-                    <Select onValueChange={field.onChange} value={field?.value}>
+                  <Select
+                    name='tipos'
+                    onValueChange={field.onChange}
+                    value={field?.value}
+                  >
+                    <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder='Selecione um tipo' />
                       </SelectTrigger>
-                      <SelectContent className='overflow-visible '>
-                        {tiposEmbarcacao?.map((tipo) => (
-                          <SelectItem key={tipo.id} value={tipo.id.toString()}>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
-                                <TooltipContent
-                                  side='right'
-                                  className='p-2 ml-10 overflow-y-auto rounded-lg max-w-96 max-h-96'
-                                >
-                                  <p className='font-bold'>Descrição: </p>
-                                  <br />
-                                  <p>{tipo.texto_descritivo}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+                    </FormControl>
+                    <SelectContent className='overflow-visible '>
+                      {tiposEmbarcacao?.map((tipo) => (
+                        <SelectItem key={tipo.id} value={tipo.id.toString()}>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger>{tipo.tipo}</TooltipTrigger>
+                              <TooltipContent
+                                side='right'
+                                className='p-2 ml-10 overflow-y-auto rounded-lg max-w-96 max-h-96'
+                              >
+                                <p className='font-bold'>Descrição: </p>
+                                <br />
+                                <p>{tipo.texto_descritivo}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+
                   <FormMessage />
                 </FormItem>
               )}

@@ -91,10 +91,11 @@ export default function NavBar() {
       <button
         data-drawer-target='default-sidebar'
         data-drawer-toggle='default-sidebar'
-        aria-controls='default-sidebar'
+        // aria-controls='default-sidebar'
+        aria-label='Open sidebar'
         type='button'
         onClick={() => setSideBar(!sidebar)}
-        className='inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+        className=' inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
       >
         <span className='sr-only'>Open sidebar</span>
         <svg

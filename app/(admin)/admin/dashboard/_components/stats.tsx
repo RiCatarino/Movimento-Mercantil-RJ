@@ -32,8 +32,6 @@ interface StatsProps {
 export default function Stats() {
   const { data: stats } = useSWR<StatsProps>('/api/stats', fetcher);
 
-  console.log(stats);
-
   return (
     <div className='flex flex-wrap gap-2'>
       <StatsCard

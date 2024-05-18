@@ -111,7 +111,6 @@ export default function VesselDetails(props: {
                     <div className='flex flex-wrap gap-2'>
                       {embarcacao?.tipo_embarcacao?.imagem_embarcacao?.map(
                         (img) => (
-                          // { X Button in upper right corner of the image}
                           <img
                             key={img.id}
                             src={img.imagem}

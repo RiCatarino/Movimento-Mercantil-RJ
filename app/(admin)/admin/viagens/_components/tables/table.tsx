@@ -22,7 +22,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectTriggerFilter,
   SelectValue,
 } from '@/components/ui/select';
@@ -59,11 +58,12 @@ export default function TripsTable() {
     <>
       <div className='flex flex-wrap-reverse md:flex-row md:flex-nowrap justify-between gap-4'>
         <Input
+          name='search'
           className='rounded-xl'
           placeholder='Pesquisar...'
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Select onValueChange={(e) => setSelectedYear(e)}>
+        <Select name='ano' onValueChange={(e) => setSelectedYear(e)}>
           <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
             <SelectValue placeholder='Ano' />
           </SelectTriggerFilter>
@@ -80,7 +80,7 @@ export default function TripsTable() {
           </SelectContent>
         </Select>
 
-        <Select onValueChange={(e) => setSelectedType(e)}>
+        <Select name='tipo' onValueChange={(e) => setSelectedType(e)}>
           <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
             <SelectValue placeholder='Tipo' />
           </SelectTriggerFilter>
@@ -95,55 +95,62 @@ export default function TripsTable() {
         </Select>
         <BotaoNovaViagem />
       </div>
-
-      <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
-          <TableRow className='rounded-ss-xl'>
-            <TableHead>ID</TableHead>
-            <TableHead>Data Rio</TableHead>
-            <TableHead>Tipo</TableHead>
-            <TableHead>Embarcação</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {viagens?.map((viagem) => (
-            <TableRow
-              className='cursor-pointer hover:bg-blue-100'
-              key={viagem.id}
-              onClick={(e) => {
-                setViagem(viagem);
-                setOpen(true);
-              }}
-            >
-              <TableCell className='text-xs font-medium'>{viagem.id}</TableCell>
-              <TableCell className='text-xs font-medium'>
-                {viagem.data_rio
-                  ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
-                  : 'N/A'}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {viagem.entrada_sahida}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {viagem.embarcacao.nome}
-              </TableCell>
-              <TableCell className='w-4'>
-                <Button
-                  className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setViagem(viagem);
-                    setOpenEdit(true);
-                  }}
-                >
-                  <EditIcon size={24} />
-                </Button>
-              </TableCell>
+      {isLoading ? (
+        <div className='flex flex-row justify-center p-4'>
+          <Loader classProp='w-24 h-24 self-center flex' />
+        </div>
+      ) : (
+        <Table>
+          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableRow className='rounded-ss-xl'>
+              <TableHead>ID</TableHead>
+              <TableHead>Data Rio</TableHead>
+              <TableHead>Tipo</TableHead>
+              <TableHead>Embarcação</TableHead>
+              <TableHead></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {viagens?.map((viagem) => (
+              <TableRow
+                className='cursor-pointer hover:bg-blue-100'
+                key={viagem.id}
+                onClick={(e) => {
+                  setViagem(viagem);
+                  setOpen(true);
+                }}
+              >
+                <TableCell className='text-xs font-medium'>
+                  {viagem.id}
+                </TableCell>
+                <TableCell className='text-xs font-medium'>
+                  {viagem.data_rio
+                    ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
+                    : 'N/A'}
+                </TableCell>
+                <TableCell className='text-xs font-medium'>
+                  {viagem.entrada_sahida}
+                </TableCell>
+                <TableCell className='text-xs font-medium'>
+                  {viagem.embarcacao.nome}
+                </TableCell>
+                <TableCell className='w-4'>
+                  <Button
+                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setViagem(viagem);
+                      setOpenEdit(true);
+                    }}
+                  >
+                    <EditIcon size={24} />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
       <TripDetails
         open={open}
