@@ -1,13 +1,13 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
-import { hash } from '@node-rs/argon2';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import { hash } from "@node-rs/argon2";
 
 export async function PUT(req: Request) {
   const { password } = await req.json();
   const { user } = await validateRequest();
-  console.log('password', password);
-  if (!user || user.role !== 'ADMIN') {
-    return new Response('Unauthorized', { status: 401 });
+
+  if (!user) {
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const passwordHash = await hash(password, {
