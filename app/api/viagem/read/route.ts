@@ -76,6 +76,8 @@ export async function GET() {
       },
     },
 
+    take: 100,
+
     orderBy: {
       id: "asc",
     },
