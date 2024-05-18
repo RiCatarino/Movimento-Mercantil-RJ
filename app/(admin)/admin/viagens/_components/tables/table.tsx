@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
+// import utc from 'dayjs/plugin/utc';
 import fetcher from '@/lib/fetch';
 import useSWR from 'swr';
 import TripDetails from '../tripdetails';
@@ -23,15 +23,20 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectTriggerFilter,
   SelectValue,
 } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { EditIcon } from 'lucide-react';
+import DialogEditarViagem from '../dialogedit';
 
-dayjs.extend(utc);
+// dayjs.extend(utc);
 
 export default function TripsTable() {
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [viagem_id, setViagemId] = useState<number | undefined>();
+  const [openEdit, setOpenEdit] = useState(false);
+  const [viagem, setViagem] = useState<Viagem>();
   const [searchText, setSearchText] = useState('');
   const [selectedYear, setSelectedYear] = useState('none');
   const [selectedType, setSelectedType] = useState('none');
@@ -59,9 +64,9 @@ export default function TripsTable() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Select onValueChange={(e) => setSelectedYear(e)}>
-          <SelectTrigger className='rounded-xl w-full md:w-[180px]'>
+          <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
             <SelectValue placeholder='Ano' />
-          </SelectTrigger>
+          </SelectTriggerFilter>
           <SelectContent>
             <SelectItem key='empty' value='none'>
               {'Sem filtro'}
@@ -76,9 +81,9 @@ export default function TripsTable() {
         </Select>
 
         <Select onValueChange={(e) => setSelectedType(e)}>
-          <SelectTrigger className='rounded-xl w-full md:w-[180px]'>
+          <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
             <SelectValue placeholder='Tipo' />
-          </SelectTrigger>
+          </SelectTriggerFilter>
 
           <SelectContent>
             <SelectItem key='empty' value='none'>
@@ -98,6 +103,7 @@ export default function TripsTable() {
             <TableHead>Data Rio</TableHead>
             <TableHead>Tipo</TableHead>
             <TableHead>Embarcação</TableHead>
+            <TableHead></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -106,14 +112,14 @@ export default function TripsTable() {
               className='cursor-pointer hover:bg-blue-100'
               key={viagem.id}
               onClick={(e) => {
-                setViagemId(viagem.id);
+                setViagem(viagem);
                 setOpen(true);
               }}
             >
               <TableCell className='text-xs font-medium'>{viagem.id}</TableCell>
               <TableCell className='text-xs font-medium'>
                 {viagem.data_rio
-                  ? dayjs.utc(viagem.data_rio).format('DD/MM/YYYY')
+                  ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
                   : 'N/A'}
               </TableCell>
               <TableCell className='text-xs font-medium'>
@@ -121,6 +127,18 @@ export default function TripsTable() {
               </TableCell>
               <TableCell className='text-xs font-medium'>
                 {viagem.embarcacao.nome}
+              </TableCell>
+              <TableCell className='w-4'>
+                <Button
+                  className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setViagem(viagem);
+                    setOpenEdit(true);
+                  }}
+                >
+                  <EditIcon size={24} />
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -130,7 +148,13 @@ export default function TripsTable() {
       <TripDetails
         open={open}
         setOpen={setOpen}
-        viagem_id={viagem_id}
+        viagem_id={viagem?.id}
+        mutate={mutate}
+      />
+      <DialogEditarViagem
+        open={openEdit}
+        setOpen={setOpenEdit}
+        viagem_id={viagem?.id}
         mutate={mutate}
       />
     </>

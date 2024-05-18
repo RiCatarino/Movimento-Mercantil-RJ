@@ -26,8 +26,6 @@ export async function GET(req: Request) {
     orderBy: {
       nome: 'asc',
     },
-
-    take: 10,
   });
   return Response.json(result);
 }

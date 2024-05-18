@@ -136,15 +136,31 @@ export default function TripDetails(props: {
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
-                  Porto Origem
+                  Porto de Origem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_origem?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
-                  Porto Destino
+                  Dias no porto de origem
+                </div>
+                <div className='p-2 text-xs'>
+                  {viagem?.dias_porto_origem || 'N/A'}
+                </div>
+              </div>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                  Porto de Destino
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_destino?.nome}</div>
+              </div>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                  Dias no porto de destino
+                </div>
+                <div className='p-2 text-xs'>
+                  {viagem?.dias_porto_destino || 'N/A'}
+                </div>
               </div>
             </div>
 

@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,34 +19,45 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
+import { KeyedMutator } from 'swr';
 
 const formSchema = z.object({
+  id: z.number(),
   tipo: z.string().min(1, { message: 'Nome muito curto' }),
   descricao: z.string().min(1, { message: 'Selecione um tipo' }),
 });
 
-export default function NovoTipo(props: { mutate: () => void }) {
-  const { mutate } = props;
+export default function DialogEditarTipo(props: {
+  mutate: KeyedMutator<TipoEmbarcacao[]>;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  tipo: TipoEmbarcacao | undefined;
+}) {
+  const { mutate, open, setOpen, tipo } = props;
   const { toast } = useToast();
-  const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      tipo: '',
-      descricao: '',
-    },
   });
+
+  useEffect(() => {
+    if (tipo) {
+      form.reset({
+        id: tipo.id,
+        tipo: tipo.tipo,
+        descricao: tipo.texto_descritivo,
+      });
+    }
+  }, [tipo]);
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/tipo_embarcacao/create', {
-      method: 'POST',
+    const result = await fetch('/api/tipo_embarcacao/update', {
+      method: 'PUT',
       body: JSON.stringify(values),
     });
 
@@ -59,14 +69,14 @@ export default function NovoTipo(props: { mutate: () => void }) {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Tipo de embarcação adicionado com sucesso',
+        description: 'Tipo de embarcação editado com sucesso',
       });
     } else {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao adicionar tipo de embarcação',
+        description: 'Erro ao editar tipo de embarcação',
       });
     }
     setSubmitting(false);
@@ -74,20 +84,10 @@ export default function NovoTipo(props: { mutate: () => void }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
-          Adicionar Tipo <Plus size={24} />
-        </Button>
-      </DialogTrigger>
-      <DialogContent
-        className='w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'
-        onInteractOutside={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <DialogContent className='w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle className='text-blue-500'>
-            Criar Tipo de Embarcação
+            Editar Tipo de Embarcação
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
@@ -130,7 +130,7 @@ export default function NovoTipo(props: { mutate: () => void }) {
               className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
-              Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+              Editar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
             </Button>
           </form>
         </Form>
