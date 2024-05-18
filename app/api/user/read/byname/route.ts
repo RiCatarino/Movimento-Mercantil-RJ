@@ -9,16 +9,16 @@ export async function GET(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const nome = searchParams.get("nome");
+  const search = searchParams.get("search");
 
   const result = await prisma.user.findMany({
     where: {
       OR: [
         {
-          nome: { startsWith: nome?.toString(), mode: "insensitive" },
+          nome: { startsWith: search?.toString(), mode: "insensitive" },
         },
         {
-          email: { startsWith: nome?.toString(), mode: "insensitive" },
+          email: { startsWith: search?.toString(), mode: "insensitive" },
         },
       ],
     },

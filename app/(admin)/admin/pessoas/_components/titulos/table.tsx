@@ -40,12 +40,18 @@ export default function TabelaTitulos() {
   const [titulo, setTitulo] = useState<TituloNobreza>();
   const [deleting, setDeleting] = useState(false);
   const [name, setName] = useState<string | undefined>();
+  const [searchText, setSearchText] = useState("");
 
   const {
     data: titulosdata,
     isLoading,
     mutate,
-  } = useSWR<TituloNobreza[]>('/api/titulo_nobreza/read', fetcher);
+  } = useSWR<TituloNobreza[]>(
+    searchText
+      ? "/api/titulo_nobreza/read/byname?titulo=" + searchText
+      : "/api/titulo_nobreza/read",
+    fetcher
+  );
 
   const chunked = chunk(titulosdata ?? [], 10);
   const titulos = chunked[activePage - 1];
@@ -66,19 +72,20 @@ export default function TabelaTitulos() {
     setDeleting(false);
   }
 
-  if (isLoading)
-    return (
-      <main className='flex flex-row justify-center p-4'>
-        <Loader classProp='w-24 h-24 self-center flex' />
-      </main>
-    );
+  // if (isLoading)
+  //   return (
+  //     <main className="flex flex-row justify-center p-4">
+  //       <Loader classProp="w-24 h-24 self-center flex" />
+  //     </main>
+  //   );
+
 
   return (
     <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
       <div className='flex justify-between gap-4'>
         <Input
-          placeholder='Pesquisar por nome'
-          onChange={(e) => setName(e.target.value)}
+          placeholder="Pesquisar por nome"
+          onChange={(e) => setSearchText(e.target.value)}
           value={name}
           className='rounded-xl'
         />
