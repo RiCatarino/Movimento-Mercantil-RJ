@@ -38,12 +38,18 @@ export default function TabelaCargos() {
   const [cargo_id, setCargoId] = useState<number | undefined>();
   const [deleting, setDeleting] = useState(false);
   const [name, setName] = useState<string | undefined>();
+  const [searchText, setSearchText] = useState("");
 
   const {
     data: cargosdata,
     isLoading,
     mutate,
-  } = useSWR<Cargo[]>("/api/cargo/read", fetcher);
+  } = useSWR<Cargo[]>(
+    searchText
+      ? "/api/cargo/read/byname?cargo=" + searchText
+      : "/api/cargo/read",
+    fetcher
+  );
 
   const chunked = chunk(cargosdata ?? [], 10);
   const cargos = chunked[activePage - 1];
@@ -64,19 +70,19 @@ export default function TabelaCargos() {
     setDeleting(false);
   }
 
-  if (isLoading)
-    return (
-      <main className="flex flex-row justify-center p-4">
-        <Loader classProp="w-24 h-24 self-center flex" />
-      </main>
-    );
+  // if (isLoading)
+  //   return (
+  //     <main className="flex flex-row justify-center p-4">
+  //       <Loader classProp="w-24 h-24 self-center flex" />
+  //     </main>
+  //   );
 
   return (
     <div className="flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl">
       <div className="flex justify-between gap-4">
         <Input
           placeholder="Pesquisar por nome"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setSearchText(e.target.value)}
           value={name}
           className="rounded-xl"
         />
