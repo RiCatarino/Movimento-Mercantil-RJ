@@ -242,7 +242,7 @@ export default async function sendEmailNotification(
                                 <tr>
                                   <td class="pad">
                                     <div class="alignment" align="center" style="line-height:10px">
-                                      <div style="max-width: 145px;"><a href="http://www.example.com/" target="_blank" style="outline:none" tabindex="-1"><img src="https://github.com/RiCatarino/Movimento-Mercantil-RJ/blob/main/public/logo.png?raw=true" style="display: block; height: auto; border: 0; width: 100%;" width="145" alt="Logo" title="Logo" height="auto"></a></div>
+                                      <div style="max-width: 145px;"><a href="http://www.example.com/" target="_blank" style="outline:none" tabindex="-1"><img src="https://movimento-mercantil-rj.vercel.app/logoazul.png" style="display: block; height: auto; border: 0; width: 100%;" width="145" alt="Logo" title="Logo" height="auto"></a></div>
                                     </div>
                                   </td>
                                 </tr>
