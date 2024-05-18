@@ -171,7 +171,7 @@ export default async function sendEmailNotification(
                                 <tr>
                                   <td class="pad">
                                     <div style="color:#40507a;font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;line-height:120%;text-align:left;mso-line-height-alt:19.2px;">
-                                      <p style="margin: 0; word-break: break-word;"><span>A sua password temporária é:&nbsp ${message};</span></p>
+                                      <p style="margin: 0; word-break: break-word;"><span>A sua password temporária é:&nbsp ${message}</span></p>
                                     </div>
                                   </td>
                                 </tr>

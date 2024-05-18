@@ -106,18 +106,6 @@ export default function BotaoNovoUsuario(props: {
           >
             <FormField
               control={form.control}
-              name='useremail'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type='email' className='rounded-xl' {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name='nome'
               render={({ field }) => (
                 <FormItem>
@@ -128,6 +116,19 @@ export default function BotaoNovoUsuario(props: {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name='useremail'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type='email' className='rounded-xl' {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name='role'

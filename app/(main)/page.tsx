@@ -458,7 +458,7 @@ export default function Home() {
               asChild
               className='self-end w-full text-lg shadow-2xl h-14 transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
             >
-              <Link href={'/admin/dashboard'}>Visitar BackOffice</Link>
+              <Link href={'/auth/signin'}>Visitar BackOffice</Link>
             </Button>
           </div>
         </motion.div>
