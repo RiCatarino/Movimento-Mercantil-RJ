@@ -13,9 +13,9 @@ export async function GET(req: Request) {
   const result = await prisma.viagem.findMany({
     where: {
       OR: [
-        {
-          id: Number(search),
-        },
+        // {
+        //   id: Number(search),
+        // },
         {
           embarcacao: {
             nome: { startsWith: search?.toString(), mode: "insensitive" },
