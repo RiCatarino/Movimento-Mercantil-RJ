@@ -97,7 +97,7 @@ export default function TipoDetails(props: {
                   <div className='flex flex-wrap gap-2'>
                     {tipo?.imagem_embarcacao.map((img) => (
                       // { X Button in upper right corner of the image}
-                      <div className='relative'>
+                      <div className='relative' key={img.id}>
                         <button
                           className='absolute -top-1 -right-1 p-1 bg-red-500 rounded-full'
                           onClick={() => handleDeleteImage(img.id)}
@@ -105,7 +105,6 @@ export default function TipoDetails(props: {
                           <XIcon className=' text-white' />
                         </button>
                         <img
-                          key={img.id}
                           src={img.imagem}
                           alt={tipo.tipo}
                           className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
