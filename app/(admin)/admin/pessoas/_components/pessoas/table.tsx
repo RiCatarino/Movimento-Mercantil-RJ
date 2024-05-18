@@ -18,12 +18,16 @@ import NewPerson from './buttonnew';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { EditIcon } from 'lucide-react';
+import DialogEditPessoa from './dialogedit';
 
 export default function TabelaPessoas() {
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [pessoa_id, setPessoaId] = useState<number | undefined>();
-  const [name, setName] = useState<string | undefined>();
+  const [name, setName] = useState<string>('');
+  const [openEdit, setOpenEdit] = useState(false);
+  const [pessoa, setPessoa] = useState<Pessoa>();
   const {
     data: pessoasdata,
     isLoading,
@@ -60,6 +64,7 @@ export default function TabelaPessoas() {
                 <TableHead>Nome</TableHead>
                 <TableHead>Título Nobreza</TableHead>
                 <TableHead>País</TableHead>
+                <TableHead></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -69,7 +74,7 @@ export default function TabelaPessoas() {
                   key={pessoa.id}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setPessoaId(pessoa.id);
+                    setPessoa(pessoa);
                     setOpen(true);
                   }}
                 >
@@ -85,6 +90,18 @@ export default function TabelaPessoas() {
                   <TableCell className='text-xs font-medium'>
                     {pessoa.pais?.pais}
                   </TableCell>
+                  <TableCell className='w-4'>
+                    <Button
+                      className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPessoa(pessoa);
+                        setOpenEdit(true);
+                      }}
+                    >
+                      <EditIcon size={24} />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -97,11 +114,17 @@ export default function TabelaPessoas() {
           <PersonDetails
             open={open}
             setOpen={setOpen}
-            pessoa_id={pessoa_id}
+            pessoa_id={pessoa?.id}
             mutate={mutate}
           />
         </div>
       )}
+      <DialogEditPessoa
+        open={openEdit}
+        setOpen={setOpenEdit}
+        pessoa={pessoa}
+        mutate={mutate}
+      />
     </div>
   );
 }
