@@ -32,12 +32,15 @@ import BotaoNovoUsuario from './buttonnew';
 import { Badge } from '@/components/ui/badge';
 import DialogEditarUsuario from './edituserdialog';
 import { Input } from '@/components/ui/input';
+import { useSession } from '@/app/SessionContext';
 
 export default function TabelaUsuarios() {
   const [activePage, setPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const { user } = useSession();
+
   const {
     data: usuariosdata,
     isLoading,
@@ -160,130 +163,133 @@ export default function TabelaUsuarios() {
                   {usuario.habilitado ? 'Sim' : 'Não'}
                 </Badge>
               </TableCell>
+              {usuario.id != user?.id ? (
+                <TableCell className='w-4'>
+                  <div className='flex flex-row gap-2'>
+                    {/* UPDATE USERS */}
+                    <Button
+                      size='icon'
+                      variant='link'
+                      onClick={() => {
+                        setSelectedUser(usuario);
+                        setOpen(true);
+                      }}
+                    >
+                      <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
+                    </Button>
 
-              <TableCell className='w-4'>
-                <div className='flex flex-row gap-2'>
-                  {/* UPDATE USERS */}
-                  <Button
-                    size='icon'
-                    variant='link'
-                    onClick={() => {
-                      setSelectedUser(usuario);
-                      setOpen(true);
-                    }}
-                  >
-                    <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
-                  </Button>
-
-                  {/* RESET PASSWORD */}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
-                      >
-                        <KeyIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Resetar Senha</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Resetar a senha do usuário?
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={isLoading}
-                          className='bg-red-500 hover:bg-red-600'
-                          onClick={() => resetPassword(usuario.id)}
+                    {/* RESET PASSWORD */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
                         >
-                          {isLoading ? 'Aguarde...' : 'Sim'}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                          <KeyIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Resetar Senha</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Resetar a senha do usuário?
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            disabled={isLoading}
+                            className='bg-red-500 hover:bg-red-600'
+                            onClick={() => resetPassword(usuario.id)}
+                          >
+                            {isLoading ? 'Aguarde...' : 'Sim'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
 
-                  {/* BLOCK/UNBLOCK USERS */}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
-                      >
-                        {usuario.habilitado ? (
-                          <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
-                        ) : (
-                          <UnlockIcon className='w-6 bg-green-700 text-white p-1 rounded-lg' />
-                        )}
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          {usuario.habilitado
-                            ? 'Bloquear Usuário'
-                            : 'Desbloquear Usuário'}
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          {usuario.habilitado
-                            ? 'Deseja bloquear o usuário?'
-                            : 'Deseja desbloquear o usuário?'}
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={isLoading}
-                          className='bg-red-500 hover:bg-red-600'
-                          onClick={() =>
-                            handleBlock(usuario.id, !usuario.habilitado)
-                          }
+                    {/* BLOCK/UNBLOCK USERS */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
                         >
-                          {isLoading ? 'Aguarde...' : 'Sim'}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                          {usuario.habilitado ? (
+                            <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
+                          ) : (
+                            <UnlockIcon className='w-6 bg-green-700 text-white p-1 rounded-lg' />
+                          )}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            {usuario.habilitado
+                              ? 'Bloquear Usuário'
+                              : 'Desbloquear Usuário'}
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {usuario.habilitado
+                              ? 'Deseja bloquear o usuário?'
+                              : 'Deseja desbloquear o usuário?'}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            disabled={isLoading}
+                            className='bg-red-500 hover:bg-red-600'
+                            onClick={() =>
+                              handleBlock(usuario.id, !usuario.habilitado)
+                            }
+                          >
+                            {isLoading ? 'Aguarde...' : 'Sim'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
 
-                  {/* DELETE USERS */}
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
-                      >
-                        <XIcon className='w-4 text-red-700' />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className='text-red-500'>
-                          Tem a certeza?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Esta ação não pode ser desfeita. Esta ação irá remover
-                          a unidade de medida.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={isLoading}
-                          className='bg-red-500 hover:bg-red-600'
-                          onClick={() => handleDeleteUser(usuario.id)}
+                    {/* DELETE USERS */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
                         >
-                          {isLoading ? 'Aguarde...' : 'Remover'}
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </TableCell>
+                          <XIcon className='w-4 text-red-700' />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className='text-red-500'>
+                            Tem a certeza?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Esta ação não pode ser desfeita. Esta ação irá
+                            remover o usuário.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            disabled={isLoading}
+                            className='bg-red-500 hover:bg-red-600'
+                            onClick={() => handleDeleteUser(usuario.id)}
+                          >
+                            {isLoading ? 'Aguarde...' : 'Remover'}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </TableCell>
+              ) : (
+                <TableCell></TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
