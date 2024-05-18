@@ -1,5 +1,6 @@
 'use client';
 
+import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
@@ -9,14 +10,12 @@ import { useState } from 'react';
 export default function SignInPage() {
   const [useremail, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
 
     try {
@@ -77,6 +76,7 @@ export default function SignInPage() {
             type='submit'
             className='shadow-[0_4px_14px_0_rgb(0,118,255,39%)] hover:shadow-[0_6px_20px_rgba(0,118,255,23%)] hover:bg-[rgba(0,118,255,0.9)] px-8 py-2 bg-[#0070f3] rounded-2xl text-white font-light transition duration-200 ease-linear w-[50%] font-bold'
           >
+            {loading && <Loader classProp='ml-2 w-6 h-6' />}
             {loading ? 'Entrando...' : 'Entrar'}
           </Button>
         </form>
