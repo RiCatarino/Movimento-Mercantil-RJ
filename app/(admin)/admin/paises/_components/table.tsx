@@ -41,7 +41,10 @@ export default function TabelaPaises() {
     data: paisesdata,
     isLoading,
     mutate,
-  } = useSWR<Pais[]>("/api/pais/read", fetcher);
+  } = useSWR<Pais[]>(
+    searchText ? "/api/pais/read/byname?pais=" + searchText : "/api/pais/read",
+    fetcher
+  );
 
   const chunked = chunk(paisesdata ?? [], 10);
   const paises = chunked[activePage - 1];
@@ -60,12 +63,12 @@ export default function TabelaPaises() {
     });
   }
 
-  if (isLoading)
-    return (
-      <main className="flex flex-row justify-center p-4">
-        <Loader classProp="w-24 h-24 self-center flex" />
-      </main>
-    );
+  // if (isLoading)
+  //   return (
+  //     <main className="flex flex-row justify-center p-4">
+  //       <Loader classProp="w-24 h-24 self-center flex" />
+  //     </main>
+  //   );
 
   return (
     // <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>

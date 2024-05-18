@@ -32,17 +32,22 @@ export default function TabelaPortos() {
     data: portosdata,
     isLoading,
     mutate,
-  } = useSWR<Porto[]>("/api/porto/read", fetcher);
+  } = useSWR<Porto[]>(
+    searchText
+      ? "/api/porto/read/byname?nome=" + searchText
+      : "/api/porto/read",
+    fetcher
+  );
 
   const chunked = chunk(portosdata ?? [], 10);
   const portos = chunked[activePage - 1];
 
-  if (isLoading)
-    return (
-      <main className="flex flex-row justify-center p-4">
-        <Loader classProp="w-24 h-24 self-center flex" />
-      </main>
-    );
+  // if (isLoading)
+  //   return (
+  //     <main className="flex flex-row justify-center p-4">
+  //       <Loader classProp="w-24 h-24 self-center flex" />
+  //     </main>
+  //   );
 
   return (
     <>
