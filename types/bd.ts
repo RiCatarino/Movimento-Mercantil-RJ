@@ -1,5 +1,5 @@
 interface User {
-  id: number;
+  id: string;
   nome: string;
   email: string;
   role: 'EDITOR' | 'ADMIN';

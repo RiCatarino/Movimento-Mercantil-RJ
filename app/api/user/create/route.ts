@@ -73,11 +73,7 @@ export async function POST(req: Request) {
       role: role,
     },
   });
-  await sendEmailNotification(
-    email,
-    'Sua senha temporária',
-    `Sua senha temporária é: ${password}`
-  );
+  await sendEmailNotification(email, 'Sua senha temporária', `${password}`);
 
   return new Response('Usuário criado com sucesso.', {
     status: 201,
