@@ -208,14 +208,17 @@ export default function BotaoNovaViagem() {
                 render={({ field }) => (
                   <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
                     <FormLabel>Data da Viagem</FormLabel>
+
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                        }}
-                      />
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -260,35 +263,37 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Data de Chegada</FormLabel>
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          //if date is after data_inicio
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            //if date is after data_inicio
 
-                          if (form.watch('data_viagem')) {
-                            if (
-                              dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
-                                dayjs(
-                                  form.getValues('data_viagem'),
-                                  'DD-MM-YYYY'
+                            if (form.watch('data_viagem')) {
+                              if (
+                                dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
+                                  dayjs(
+                                    form.getValues('data_viagem'),
+                                    'DD-MM-YYYY'
+                                  )
                                 )
-                              )
-                            ) {
-                              form.setValue('data_chegada', e.target.value);
+                              ) {
+                                form.setValue('data_chegada', e.target.value);
+                              } else {
+                                toast({
+                                  variant: 'destructive',
+                                  title: 'Erro',
+                                  description:
+                                    'Data de fim deve ser após a data de início',
+                                });
+                              }
                             } else {
-                              toast({
-                                variant: 'destructive',
-                                title: 'Erro',
-                                description:
-                                  'Data de fim deve ser após a data de início',
-                              });
+                              field.onChange(e.target.value);
                             }
-                          } else {
-                            field.onChange(e.target.value);
-                          }
-                        }}
-                      />
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -357,13 +362,15 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
                     <FormLabel>Data Rio</FormLabel>
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                        }}
-                      />
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -409,6 +416,7 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Tipo</FormLabel>
                     <Select
+                      name='entrada_sahida'
                       onValueChange={field.onChange}
                       // defaultValue={field.value?.toString()}
                     >

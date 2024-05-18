@@ -14,8 +14,6 @@ export default function TableMercadorias(props: {
 }) {
   const { mercadorias } = props;
 
-  console.log(mercadorias);
-
   return (
     <Table>
       <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>

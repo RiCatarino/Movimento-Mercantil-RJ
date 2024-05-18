@@ -35,7 +35,6 @@ import chunk from '@/lib/chunk';
 import DialogEditarEmbarcacao from './dialogedit';
 
 export default function TableEmbarcacoes() {
-  const [filter, setFilter] = useState(null);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [embarcacao, setEmbarcacao] = useState<Embarcacao>();
@@ -73,43 +72,33 @@ export default function TableEmbarcacoes() {
     setDeleting(false);
   }
 
-  // if (isLoading)
-  //   return (
-  //     <main className='flex flex-row justify-center p-4'>
-  //       <Loader classProp='w-24 h-24 self-center flex' />
-  //     </main>
-  //   );
-
-  // const handleSearch = (selectedEmbarcacao: any) => {
-  //   setFilter(selectedEmbarcacao.nome);
-  // };
-
   return (
     <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
       <div className='flex flex-row justify-between gap-4 '>
         <Input
+          id='search'
           className='rounded-xl'
           placeholder='Pesquisar...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NewVessel mutate={mutate} />
       </div>
-
-      <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Nome</TableHead>
-            <TableHead>Tipo de Embarcação</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {embarcacoes
-            ?.filter(
-              (embarcacao) => !filter || embarcacao.nome.includes(filter)
-            )
-            .map((embarcacao) => (
+      {isLoading ? (
+        <div className='flex flex-row justify-center p-4'>
+          <Loader classProp='w-24 h-24 self-center flex' />
+        </div>
+      ) : (
+        <Table>
+          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Nome</TableHead>
+              <TableHead>Tipo de Embarcação</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {embarcacoes.map((embarcacao) => (
               <TableRow
                 className='cursor-pointer hover:bg-blue-100'
                 key={embarcacao.id}
@@ -180,8 +169,9 @@ export default function TableEmbarcacoes() {
                 </TableCell>
               </TableRow>
             ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      )}
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
       <VesselDetails
         open={open}

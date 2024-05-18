@@ -40,7 +40,7 @@ export default function TabelaCargos() {
   const [cargo, setCargo] = useState<Cargo>();
   const [deleting, setDeleting] = useState(false);
   const [name, setName] = useState<string | undefined>();
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   const {
     data: cargosdata,
@@ -48,11 +48,10 @@ export default function TabelaCargos() {
     mutate,
   } = useSWR<Cargo[]>(
     searchText
-      ? "/api/cargo/read/byname?cargo=" + searchText
-      : "/api/cargo/read",
+      ? '/api/cargo/read/byname?cargo=' + searchText
+      : '/api/cargo/read',
     fetcher
   );
-
 
   const chunked = chunk(cargosdata ?? [], 10);
   const cargos = chunked[activePage - 1];
@@ -84,97 +83,104 @@ export default function TabelaCargos() {
     <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
       <div className='flex justify-between gap-4'>
         <Input
-          placeholder="Pesquisar por nome"
+          name='search'
+          placeholder='Pesquisar por nome'
           onChange={(e) => setSearchText(e.target.value)}
           value={name}
           className='rounded-xl'
         />
         <NovoTitulo mutate={mutate} />
       </div>
-      <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
-          <TableRow className='rounded-ss-xl'>
-            <TableHead>ID</TableHead>
-            <TableHead>Cargo</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {cargos?.map((cargo) => (
-            <TableRow
-              className='cursor-pointer hover:bg-blue-100'
-              key={cargo.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                setCargo(cargo);
-                setOpen(true);
-              }}
-            >
-              <TableCell className='text-xs font-medium w-10'>
-                {cargo.id}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {cargo.cargo}
-              </TableCell>
-              <TableCell className='w-4'>
-                <div className='flex gap-2'>
-                  <Button
-                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCargo(cargo);
-                      setOpenEdit(true);
-                    }}
-                  >
-                    <EditIcon size={24} />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        size='icon'
-                        variant='link'
-                        className='text-xs text-blue-500'
+      {isLoading ? (
+        <div className='flex flex-row justify-center p-4'>
+          <Loader classProp='w-24 h-24 self-center flex' />
+        </div>
+      ) : (
+        <Table>
+          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableRow className='rounded-ss-xl'>
+              <TableHead>ID</TableHead>
+              <TableHead>Cargo</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {cargos?.map((cargo) => (
+              <TableRow
+                className='cursor-pointer hover:bg-blue-100'
+                key={cargo.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCargo(cargo);
+                  setOpen(true);
+                }}
+              >
+                <TableCell className='text-xs font-medium w-10'>
+                  {cargo.id}
+                </TableCell>
+                <TableCell className='text-xs font-medium'>
+                  {cargo.cargo}
+                </TableCell>
+                <TableCell className='w-4'>
+                  <div className='flex gap-2'>
+                    <Button
+                      className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCargo(cargo);
+                        setOpenEdit(true);
+                      }}
+                    >
+                      <EditIcon size={24} />
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <XIcon className='w-4 text-red-700' />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
                       >
-                        <XIcon className='w-4 text-red-700' />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className='text-red-500'>
-                          Tem a certeza?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          Esta ação não pode ser desfeita. Esta ação irá remover
-                          o cargo.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={deleting}
-                          className='bg-red-500 hover:bg-red-600'
-                          onClick={(e) => {
-                            handleDeleteCargo(cargo.id);
-                          }}
-                        >
-                          {deleting && <Loader classProp='w-4 h-4' />} Remover
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className='text-red-500'>
+                            Tem a certeza?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Esta ação não pode ser desfeita. Esta ação irá
+                            remover o cargo.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            disabled={deleting}
+                            className='bg-red-500 hover:bg-red-600'
+                            onClick={(e) => {
+                              handleDeleteCargo(cargo.id);
+                            }}
+                          >
+                            {deleting && <Loader classProp='w-4 h-4' />} Remover
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
       <CargoDetails open={open} setOpen={setOpen} cargo_id={cargo?.id} />
       <DialogEditarCargo
