@@ -1,21 +1,20 @@
-import { lucia, validateRequest } from '@/auth';
+import { validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
 
 export async function PUT(req: Request) {
-  const { id, habilitado } = await req.json();
+  const { nome } = await req.json();
   const { user } = await validateRequest();
 
-  if (!user || user.role !== 'ADMIN') {
+  if (!user) {
     return new Response('Unauthorized', { status: 401 });
   }
-  await lucia.invalidateUserSessions(id);
 
   const result = await prisma.user.update({
     where: {
-      id: id,
+      id: user.id,
     },
     data: {
-      habilitado: habilitado,
+      nome: nome,
     },
   });
   return Response.json(result);
