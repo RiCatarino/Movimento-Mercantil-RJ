@@ -49,9 +49,11 @@ export default function DialogEditarPais(props: {
 
   useEffect(() => {
     if (open) {
-      form.setValue('id_pais', id_pais);
-      form.setValue('nome', nome);
-      form.setValue('gentilico', gentilico);
+      form.reset({
+        nome: nome,
+        gentilico: gentilico,
+        id_pais: id_pais,
+      });
     }
   }, [open]);
 
