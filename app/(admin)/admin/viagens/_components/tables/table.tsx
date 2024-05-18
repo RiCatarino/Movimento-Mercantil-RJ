@@ -7,8 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import fetcher from "@/lib/fetch";
 import dayjs from "dayjs";
+
+import fetcher from "@/lib/fetch";
 import useSWR from "swr";
 import TripDetails from "../tripdetails";
 import { useState } from "react";
@@ -25,22 +26,37 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// var utc = require("dayjs/plugin/utc");
+// dayjs.extend(utc);
+
 export default function TripsTable() {
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [viagem_id, setViagemId] = useState<number | undefined>();
   const [searchText, setSearchText] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   const {
     data: viagensdata,
     isLoading,
     mutate,
-  } = useSWR<Viagem[]>("/api/viagem/read", fetcher);
+  } = useSWR<Viagem[]>(
+    searchText || selectedYear !== "" || selectedType !== ""
+      ? `/api/viagem/read/bysearch?search=${searchText}&ano=${selectedYear}&tipo=${selectedType}`
+      : "/api/viagem/read/",
+    fetcher
+  );
 
   const chunked = chunk(viagensdata ?? [], 10);
   const viagens = chunked[activePage - 1];
 
-  if (isLoading) return <Loader classProp="w-24 h-24 self-center" />;
+  console.log(searchText);
+
+  // if (isLoading) return <Loader classProp="w-24 h-24 self-center" />;
+
+  console.log(selectedYear);
+  console.log(selectedType);
   return (
     <>
       <div className="flex flex-row justify-between gap-4 ">
@@ -49,8 +65,7 @@ export default function TripsTable() {
           placeholder="Pesquisar..."
           onChange={(e) => setSearchText(e.target.value)}
         />
-
-        <Select>
+        <Select onValueChange={(e) => setSelectedYear(e)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Ano" />
           </SelectTrigger>
@@ -67,7 +82,7 @@ export default function TripsTable() {
           </SelectContent>
         </Select>
 
-        <Select>
+        <Select onValueChange={(e) => setSelectedType(e)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Tipo" />
           </SelectTrigger>
@@ -80,7 +95,6 @@ export default function TripsTable() {
             <SelectItem value="Entrada">Entrada</SelectItem>
           </SelectContent>
         </Select>
-
         <BotaoNovaViagem />
       </div>
 
@@ -106,7 +120,8 @@ export default function TripsTable() {
               <TableCell className="text-xs font-medium">{viagem.id}</TableCell>
               <TableCell className="text-xs font-medium">
                 {viagem.data_rio
-                  ? dayjs(viagem.data_rio).format("DD/MM/YYYY")
+                  ? dayjs(viagem.data_rio).format("DD/MM/YYYY") +
+                    viagem.data_rio
                   : "N/A"}
               </TableCell>
               <TableCell className="text-xs font-medium">

@@ -90,14 +90,14 @@ export default function TabelaUsuarios() {
 
   async function resetPassword(id: string) {
     await fetch(`/api/user/update/resetpassword`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify({ id }),
     });
     toast({
-      className: 'bg-green-200',
-      title: 'Sucesso',
+      className: "bg-green-200",
+      title: "Sucesso",
       duration: 5000,
-      description: 'Senha resetada com sucesso',
+      description: "Senha resetada com sucesso",
     });
   }
 
@@ -177,7 +177,7 @@ export default function TabelaUsuarios() {
                     >
                       <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
                     </Button>
-
+                    
                     {/* RESET PASSWORD */}
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
@@ -208,7 +208,6 @@ export default function TabelaUsuarios() {
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
-
                     {/* BLOCK/UNBLOCK USERS */}
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
