@@ -6,7 +6,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -21,6 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -45,12 +45,13 @@ export default function ChangePassword() {
     },
   });
 
+  const router = useRouter();
+
   async function handleSubmit(values: z.infer<typeof passwordSchema>) {
-    console.log(values);
     setSubmitting(true);
     const result = await fetch('/api/user/update/password', {
       method: 'PUT',
-      body: JSON.stringify(values.password),
+      body: JSON.stringify(values),
     });
     if (result.ok) {
       form.reset();
@@ -58,7 +59,15 @@ export default function ChangePassword() {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Senha alterada com sucesso',
+        description:
+          'Senha alterada com sucesso, será redirecionado para o login',
+      });
+      await fetch('/api/user/signout', {
+        method: 'GET',
+      }).then(() => {
+        setTimeout(() => {
+          router.push('/auth/signin');
+        }, 2000);
       });
     } else {
       toast({
@@ -117,6 +126,7 @@ export default function ChangePassword() {
               </FormMessage>
             )}
             <Button
+              disabled={submitting}
               type='submit'
               className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
             >
