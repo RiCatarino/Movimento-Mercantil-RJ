@@ -82,6 +82,20 @@ export default function TabelaUsuarios() {
     }
   }
 
+  async function resetPassword(id: string) {
+    await fetch(`/api/user/update/resetpassword`, {
+      method: 'PUT',
+      body: JSON.stringify({ id }),
+    });
+    mutate();
+    toast({
+      className: 'bg-green-200',
+      title: 'Sucesso',
+      duration: 5000,
+      description: 'Senha resetada com sucesso',
+    });
+  }
+
   if (isLoading)
     return (
       <main className='flex flex-row justify-center p-4'>
@@ -150,6 +164,41 @@ export default function TabelaUsuarios() {
                   >
                     <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
                   </Button>
+
+                  {/* RESET PASSWORD */}
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size='icon'
+                        variant='link'
+                        className='text-xs text-blue-500'
+                      >
+                        {usuario.habilitado ? (
+                          <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
+                        ) : (
+                          <UnlockIcon className='w-4 bg-green-700 text-white p-1 rounded-lg' />
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Resetar Senha</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Resetar a senha do usuário?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          disabled={isLoading}
+                          className='bg-red-500 hover:bg-red-600'
+                          onClick={() => resetPassword(usuario.id)}
+                        >
+                          {isLoading ? 'Aguarde...' : 'Sim'}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
 
                   {/* BLOCK/UNBLOCK USERS */}
                   <AlertDialog>
