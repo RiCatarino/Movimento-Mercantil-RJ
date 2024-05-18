@@ -2,19 +2,20 @@ import { validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
 
 export async function PUT(req: Request) {
-  const { cargo, id } = await req.json();
   const { user } = await validateRequest();
 
   if (!user) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const existe = await prisma.cargo.findFirst({
+  const { titulo, id } = await req.json();
+
+  const existe = await prisma.titulo_nobreza.findFirst({
     where: {
       AND: [
         {
-          cargo: {
-            equals: cargo,
+          titulo: {
+            equals: titulo,
             mode: 'insensitive',
           },
         },
@@ -28,18 +29,18 @@ export async function PUT(req: Request) {
   });
 
   if (existe) {
-    return new Response('Cargo já existe', {
+    return new Response('Título de Nobreza já existe', {
       status: 409,
-      statusText: 'Cargo já existe',
+      statusText: 'Título de Nobreza já existe',
     });
   }
 
-  const result = await prisma.cargo.update({
+  const result = await prisma.titulo_nobreza.update({
     where: {
-      id: Number(id),
+      id: id,
     },
     data: {
-      cargo: cargo,
+      titulo: titulo,
     },
   });
   return Response.json(result);
