@@ -183,6 +183,25 @@ export default function TripDetails(props: {
                         {viagem?.embarcacao?.tipo_embarcacao?.texto_descritivo}
                       </div>
                     </div>
+                    {viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao &&
+                      viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao
+                        .length > 0 && (
+                        <div className='flex flex-col gap-2 p-2'>
+                          <div className='flex flex-wrap gap-2'>
+                            {viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao?.map(
+                              (img) => (
+                                // { X Button in upper right corner of the image}
+                                <img
+                                  key={img.id}
+                                  src={img.imagem}
+                                  alt={viagem?.embarcacao?.tipo_embarcacao.tipo}
+                                  className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
+                                />
+                              )
+                            )}
+                          </div>
+                        </div>
+                      )}
                     <div className='flex flex-col w-full mt-2 border gap-1 rounded-xl'>
                       <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                         Observação
