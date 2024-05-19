@@ -57,6 +57,71 @@ export async function GET() {
     },
   });
 
+  const embarcacaoWithMostViagens = await prisma.viagem.groupBy({
+    by: ["id_embarcacao"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        id_embarcacao: "desc",
+      },
+    },
+    take: 1,
+  });
+
+  const mestreWithMostViagens = await prisma.viagem.groupBy({
+    by: ["mestre_id"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        mestre_id: "desc",
+      },
+    },
+    take: 1,
+  });
+
+  const capitaoWithMostViagens = await prisma.viagem.groupBy({
+    by: ["capitao_id"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        capitao_id: "desc",
+      },
+    },
+    take: 1,
+  });
+
+  const armadorWithMostViagens = await prisma.viagem.groupBy({
+    by: ["armador_id"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        armador_id: "desc",
+      },
+    },
+    take: 1,
+  });
+
+  const comandanteWithMostViagens = await prisma.viagem.groupBy({
+    by: ["comandante_id"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        comandante_id: "desc",
+      },
+    },
+    take: 1,
+  });
+
   const result = {
     embarcacoes,
     pessoas,
@@ -66,6 +131,11 @@ export async function GET() {
     unidades_de_medida,
     portos,
     usuarios,
+    embarcacaoWithMostViagens: embarcacaoWithMostViagens[0],
+    mestreWithMostViagens: mestreWithMostViagens[0],
+    capitaoWithMostViagens: capitaoWithMostViagens[0],
+    armadorWithMostViagens: armadorWithMostViagens[0],
+    comandanteWithMostViagens: comandanteWithMostViagens[0],
   };
 
   return Response.json(result);
