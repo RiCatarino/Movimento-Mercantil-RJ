@@ -83,9 +83,9 @@ export default function TableUnidadesDeMedida() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead>ID</TableHead>
+              {/* <TableHead>ID</TableHead> */}
               <TableHead>Unidade de Medida</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -96,7 +96,7 @@ export default function TableUnidadesDeMedida() {
                 className='cursor-pointer hover:bg-blue-100'
                 key={unidade.id}
               >
-                <TableCell className='font-medium w-10'>{unidade.id}</TableCell>
+                {/* <TableCell className='font-medium w-10'>{unidade.id}</TableCell> */}
                 <TableCell className='font-medium'>
                   {unidade.unidade_medida}
                 </TableCell>

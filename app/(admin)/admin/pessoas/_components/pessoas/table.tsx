@@ -59,11 +59,11 @@ export default function TabelaPessoas() {
       ) : (
         <div>
           <Table>
-            <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
               <TableRow className='rounded-ss-xl'>
-                <TableHead>ID</TableHead>
-                <TableHead>Nome</TableHead>
-                <TableHead>Título Nobreza</TableHead>
+                <TableHead className='w-4'>ID</TableHead>
+                <TableHead className='w-96'>Nome</TableHead>
+                <TableHead>Título de Nobreza</TableHead>
                 <TableHead>País</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -79,16 +79,12 @@ export default function TabelaPessoas() {
                     setOpen(true);
                   }}
                 >
-                  <TableCell className='text-xs font-medium'>
-                    {pessoa.id}
-                  </TableCell>
-                  <TableCell className='text-xs font-medium'>
-                    {pessoa.nome}
-                  </TableCell>
-                  <TableCell className='text-xs font-medium'>
+                  <TableCell className='font-medium'>{pessoa.id}</TableCell>
+                  <TableCell className='font-medium'>{pessoa.nome}</TableCell>
+                  <TableCell className='font-medium'>
                     {pessoa?.titulo_nobreza?.titulo}
                   </TableCell>
-                  <TableCell className='text-xs font-medium'>
+                  <TableCell className='font-medium'>
                     {pessoa.pais?.pais}
                   </TableCell>
                   <TableCell className='w-4'>

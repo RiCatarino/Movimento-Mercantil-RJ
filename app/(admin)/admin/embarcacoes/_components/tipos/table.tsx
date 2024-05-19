@@ -90,7 +90,7 @@ export default function TableTipos() {
         <Table>
           <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead>ID</TableHead>
+              {/* <TableHead className='w-4'>ID</TableHead> */}
               <TableHead>Tipo</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -105,7 +105,7 @@ export default function TableTipos() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium w-10'>{tipo.id}</TableCell>
+                {/* <TableCell className='font-medium w-10'>{tipo.id}</TableCell> */}
                 <TableCell className='font-medium'>{tipo.tipo}</TableCell>
                 <TableCell className='w-4'>
                   <div className='flex gap-2'>

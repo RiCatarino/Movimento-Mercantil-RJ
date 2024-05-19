@@ -66,10 +66,10 @@ export default function TabelaPortos() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Nome</TableHead>
+              <TableHead className='w-4'>ID</TableHead>
+              <TableHead className='w-96'>Nome</TableHead>
               <TableHead>País</TableHead>
               <TableHead></TableHead>
             </TableRow>

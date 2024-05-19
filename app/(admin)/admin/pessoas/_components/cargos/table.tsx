@@ -97,9 +97,9 @@ export default function TabelaCargos() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow className='rounded-ss-xl'>
-              <TableHead>ID</TableHead>
+              {/* <TableHead>ID</TableHead> */}
               <TableHead>Cargo</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -115,12 +115,8 @@ export default function TabelaCargos() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='text-xs font-medium w-10'>
-                  {cargo.id}
-                </TableCell>
-                <TableCell className='text-xs font-medium'>
-                  {cargo.cargo}
-                </TableCell>
+                {/* <TableCell className='font-medium w-10'>{cargo.id}</TableCell> */}
+                <TableCell className='font-medium'>{cargo.cargo}</TableCell>
                 <TableCell className='w-4'>
                   <div className='flex gap-2'>
                     <Button
