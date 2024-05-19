@@ -34,7 +34,7 @@ export default function EmbarcacoesPage() {
 
   return (
     <main className='md:p-28'>
-      {/* <div className=' dark:bg-black  md:mt-0'> */}
+      {/* <div className=' dark:bg-black md:mt-0'> */}
       {/* <Search
         searchInput={searchInput}
         setSearchInput={setSearchInput}
@@ -124,7 +124,7 @@ export default function EmbarcacoesPage() {
             isLoading={isLoading}
             mutate={mutate}
           /> */}
-      <div className='w-full grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 mb-10  items-center justify-center self-center '>
+      <div className='items-center self-center justify-center w-full mb-10 grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 '>
         {embarcacoes?.map((embarcacao) => (
           <EmbarcacaoCard
             key={embarcacao.id}

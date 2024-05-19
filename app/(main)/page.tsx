@@ -420,7 +420,7 @@ function Globe() {
 export default function Home() {
   return (
     <>
-      <div className='z-0 absolute pointer-events-none  w-full'>
+      <div className='absolute z-0 w-full pointer-events-none '>
         <svg
           version='1.1'
           xmlns='http://www.w3.org/2000/svg'
@@ -429,7 +429,7 @@ export default function Home() {
           y='0px'
           width='100%'
           // height='100vh'
-          className='h-screen absolute'
+          className='absolute h-screen'
           viewBox='0 0 1600 900'
           preserveAspectRatio='xMidYMax slice'
         >
@@ -502,7 +502,7 @@ export default function Home() {
         </svg>
       </div>
       {/* <div className='max-h-screen '> */}
-      <div className=' mt-28 lg:mt-0 z-10 flex align-middle flex-wrap-reverse lg:flex-nowrap items-center justify-center w-full dark:bg-black lg:h-screen'>
+      <div className='z-10 flex flex-wrap-reverse items-center justify-center w-full align-middle  mt-28 lg:mt-0 lg:flex-nowrap dark:bg-black lg:h-screen'>
         <Globe />
         <motion.div
           initial={{
@@ -518,7 +518,7 @@ export default function Home() {
           }}
           className='div'
         >
-          <h1 className='text-4xl text-red-500 font-extrabold text-center bg-white p-2 rounded-xl'>
+          <h1 className='p-2 text-4xl font-extrabold text-center text-red-500 bg-white rounded-xl'>
             Este site encontra-se em desenvolvimento.
           </h1>
           <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>

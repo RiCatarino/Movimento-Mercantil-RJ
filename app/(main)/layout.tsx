@@ -27,7 +27,7 @@ export default async function MainLayout({
       id='magicpattern'
     >
       <nav className='absolute z-10 w-full'>
-        <div className='flex items-center justify-between p-4 mt-5 bg-white shadow-xl rounded-3xl md:mx-24'>
+        <div className='flex items-center justify-between p-4 mx-8 mt-5 bg-white shadow-xl rounded-3xl lg:mx-24'>
           <div className='flex items-center space-x-4'>
             <Loader classProp='w-8 h-8' />
             <h1 className='ml-6 text-xl font-bold'>MM RJ</h1>
@@ -36,7 +36,7 @@ export default async function MainLayout({
             <Link href='/sobre'>
               <Button
                 size='sm'
-                className='rounded-xl bg-blue-400 hover:bg-blue-500'
+                className='bg-blue-400 rounded-xl hover:bg-blue-500'
               >
                 <CircleHelp size={16} className='mr-2' /> Sobre
               </Button>

@@ -86,7 +86,7 @@ export default function NavBar() {
   return (
     <nav
       ref={sideNavRef}
-      className='flex flex-row items-center justify-between w-full h-20 px-5 border-b-2 shadow'
+      className='flex flex-row items-center justify-between w-full h-20 px-5 align-middle border-b-2 shadow'
     >
       <button
         data-drawer-target='default-sidebar'
@@ -95,7 +95,7 @@ export default function NavBar() {
         aria-label='Open sidebar'
         type='button'
         onClick={() => setSideBar(!sidebar)}
-        className=' inline-flex items-center p-2 mt-2 text-sm text-gray-500 rounded-lg ms-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+        className='inline-flex items-center p-2 text-sm text-gray-500 rounded-lg ms-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
       >
         <span className='sr-only'>Open sidebar</span>
         <svg
@@ -112,19 +112,19 @@ export default function NavBar() {
           ></path>
         </svg>
       </button>
-      <h1 className='text-xl font-bold text-center'>{pageName}</h1>
+      <h1 className='text-lg font-bold text-center md:text-xl'>{pageName}</h1>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost'>
             <div className='flex flex-row items-center justify-center text-blue-400'>
               <UserCheck />
-              <span className='ms-3'>{user?.nome}</span>
+              <span className='hidden ms-3 md:flex'>{user?.nome}</span>
             </div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>A minha Conta</DropdownMenuLabel>
+        <DropdownMenuContent className='mr-10 md:mr-5'>
+          <DropdownMenuLabel>{user?.email}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => router.push('/admin/meuperfil')}>
             Perfil
@@ -152,7 +152,7 @@ export default function NavBar() {
           aria-label='Sidebar'
         >
           <div className='h-full px-3 py-4 overflow-y-auto bg-white border shadow-2xl rounded-xl dark:bg-gray-800'>
-            <ul className='font-medium space-y-3'>
+            <ul className='space-y-3 font-medium'>
               <li>
                 <Link
                   onClick={() => {

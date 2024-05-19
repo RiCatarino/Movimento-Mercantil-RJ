@@ -66,9 +66,9 @@ export default function TableUnidadesDeMedida() {
     });
   }
   return (
-    // <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
+    // <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
     <>
-      <div className='flex flex-row justify-between gap-4 '>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
           className='rounded-xl'
@@ -96,14 +96,14 @@ export default function TableUnidadesDeMedida() {
                 className='cursor-pointer hover:bg-blue-100'
                 key={unidade.id}
               >
-                {/* <TableCell className='font-medium w-10'>{unidade.id}</TableCell> */}
+                {/* <TableCell className='w-10 font-medium'>{unidade.id}</TableCell> */}
                 <TableCell className='font-medium'>
                   {unidade.unidade_medida}
                 </TableCell>
                 <TableCell className='w-4'>
                   <div className='flex gap-2'>
                     <Button
-                      className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                       onClick={(e) => {
                         e.stopPropagation();
                         setUnidade(unidade);

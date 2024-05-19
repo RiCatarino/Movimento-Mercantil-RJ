@@ -9,16 +9,16 @@ export default function PessoasPage() {
     //   <NewPerson />
     //   <PeopleTable />
     // </main>
-    <main className='p-4 md:mx-24 '>
+    <main className='p-4 lg:mx-24 '>
       <Tabs defaultValue='pessoas' className='w-full'>
-        <TabsList className='rounded-3xl bg-blue-200 w-full'>
-          <TabsTrigger value='pessoas' className='rounded-3xl w-1/2 '>
+        <TabsList className='w-full bg-blue-200 rounded-3xl'>
+          <TabsTrigger value='pessoas' className='w-1/2 rounded-3xl '>
             Pessoas
           </TabsTrigger>
-          <TabsTrigger value='titulos' className='rounded-3xl w-1/2'>
+          <TabsTrigger value='titulos' className='w-1/2 rounded-3xl'>
             Títulos de Nobreza
           </TabsTrigger>
-          <TabsTrigger value='cargos' className='rounded-3xl w-1/2'>
+          <TabsTrigger value='cargos' className='w-1/2 rounded-3xl'>
             Cargos
           </TabsTrigger>
         </TabsList>

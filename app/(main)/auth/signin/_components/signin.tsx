@@ -40,23 +40,26 @@ export default function SignInPage() {
   };
 
   return (
-    <div className='flex flex-row h-screen'>
-      <div className='flex items-center justify-center w-full'>
+    <div className='flex flex-col h-screen lg:flex-row'>
+      <div className='flex items-center justify-center w-full h-1/2 lg:h-auto '>
         <Image
           src='/logo.webp'
           alt='Sign In'
           width={500}
           height={500}
           style={{ filter: 'sepia(100%) hue-rotate(190deg) saturate(500%)' }}
+          className='w-1/2'
         />
       </div>
-      <div className='flex flex-col items-center justify-center w-full bg-blue-400 gap-4'>
-        <h1 className=' text-4xl text-white font-extrabold'>
-          Entrar no backoffice
+      <div className='flex flex-col items-center justify-center w-full bg-blue-400 gap-4 h-1/2 lg:h-auto '>
+        <h1 className='text-4xl font-bold text-center text-white '>
+          Entrar no
+          <br />
+          <span className='font-extrabold text-white '>Backoffice</span>
         </h1>
         <form
           onSubmit={handleSubmit}
-          className='flex flex-col gap-4 w-full items-center'
+          className='flex flex-col items-center w-full gap-4'
         >
           <Input
             type='email'

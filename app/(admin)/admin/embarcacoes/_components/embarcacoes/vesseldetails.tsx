@@ -107,7 +107,7 @@ export default function VesselDetails(props: {
               </div>
               {embarcacao?.tipo_embarcacao?.imagem_embarcacao &&
                 embarcacao?.tipo_embarcacao?.imagem_embarcacao.length > 0 && (
-                  <div className='flex flex-col gap-2 p-2'>
+                  <div className='flex flex-col p-2 gap-2'>
                     <div className='flex flex-wrap gap-2'>
                       {embarcacao?.tipo_embarcacao?.imagem_embarcacao?.map(
                         (img) => (
@@ -115,7 +115,7 @@ export default function VesselDetails(props: {
                             key={img.id}
                             src={img.imagem}
                             alt={embarcacao?.tipo_embarcacao.tipo}
-                            className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
+                            className='w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto'
                           />
                         )
                       )}

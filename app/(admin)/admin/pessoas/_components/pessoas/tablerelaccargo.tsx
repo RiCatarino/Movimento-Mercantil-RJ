@@ -78,7 +78,7 @@ export default function TabelaPessoaCargo(props: {
               <TableCell className='px-4 py-0 text-xs'>
                 {relacao.ano || 'N/A'}
               </TableCell>
-              <TableCell className='px-4 py-0 text-xs w-10'>
+              <TableCell className='w-10 px-4 py-0 text-xs'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button

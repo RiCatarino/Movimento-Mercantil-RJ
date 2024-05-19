@@ -71,7 +71,7 @@ export default function PersonDetails(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='min-w-[50%] max-w-[95%] md:max-w-[50%] p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className='min-w-[50%] max-w-[95%] lg:max-w-[50%] p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle>Pessoa</DialogTitle>
         </DialogHeader>
@@ -82,7 +82,7 @@ export default function PersonDetails(props: {
         ) : (
           <>
             <div className='flex flex-wrap gap-2'>
-              <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
+              <div className='flex w-full lg:w-auto flex-col gap-1 rounded-xl border min-w-[50%]'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Nome
                 </div>
