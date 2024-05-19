@@ -53,6 +53,35 @@ export async function GET(req: Request) {
           },
         },
       },
+      viagem: {
+        select: {
+          id: true,
+          data_chegada: true,
+          data_viagem: true,
+          porto_origem: {
+            select: {
+              id: true,
+              nome: true,
+              pais: {
+                select: {
+                  pais: true,
+                },
+              },
+            },
+          },
+          porto_destino: {
+            select: {
+              id: true,
+              nome: true,
+              pais: {
+                select: {
+                  pais: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
