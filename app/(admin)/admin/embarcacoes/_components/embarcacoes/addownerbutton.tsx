@@ -41,6 +41,7 @@ import { Calendar } from '@/components/ui/calendar';
 import dayjs from 'dayjs';
 import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
+import { ptBR } from 'date-fns/locale';
 
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -220,6 +221,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -287,6 +289,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()

@@ -6,16 +6,22 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Turnstile, { useTurnstile } from 'react-turnstile';
 
 export default function SignInPage() {
   const [useremail, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [token, setToken] = useState('');
+  const turnstile = useTurnstile();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!token) {
+      return;
+    }
     setLoading(true);
 
     try {
@@ -34,6 +40,7 @@ export default function SignInPage() {
       router.push('/admin/dashboard');
     } catch (error) {
       console.error(error);
+      turnstile.reset();
     } finally {
       setLoading(false);
     }
@@ -51,7 +58,7 @@ export default function SignInPage() {
           className='w-1/2'
         />
       </div>
-      <div className='flex flex-col items-center justify-center w-full bg-blue-400 gap-4 h-1/2 lg:h-auto '>
+      <div className='flex flex-col items-center justify-center w-full gap-4 bg-blue-400 h-1/2 lg:h-auto '>
         <h1 className='text-4xl font-bold text-center text-white '>
           Entrar no
           <br />
@@ -62,6 +69,7 @@ export default function SignInPage() {
           className='flex flex-col items-center w-full gap-4'
         >
           <Input
+            name='useremail'
             type='email'
             placeholder='Email'
             className='rounded-xl w-[50%]'
@@ -69,6 +77,7 @@ export default function SignInPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
+            name='password'
             type='password'
             placeholder='Senha'
             className='rounded-xl w-[50%]'
@@ -82,6 +91,10 @@ export default function SignInPage() {
             {loading && <Loader classProp='ml-2 w-6 h-6' />}
             {loading ? 'Entrando...' : 'Entrar'}
           </Button>
+          <Turnstile
+            sitekey='0x4AAAAAAAaieK38rD9jtI_y'
+            onVerify={(token) => setToken(token)}
+          />
         </form>
       </div>
     </div>

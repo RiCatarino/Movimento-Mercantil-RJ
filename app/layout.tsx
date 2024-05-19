@@ -38,7 +38,7 @@ export default async function RootLayout({
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased max-h-screen',
+          'min-h-screen bg-background font-sans antialiased',
           fontSans.variable
         )}
       >

@@ -31,6 +31,7 @@ import { Calendar } from '@/components/ui/calendar';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import { cn } from '@/lib/utils';
+import { ptBR } from 'date-fns/locale';
 
 const formSchema = z.object({
   data: z.string().min(1, { message: 'Nome muito curto' }),
@@ -116,7 +117,7 @@ export default function BotaoNovaeEscala(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
+        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg float-end'>
           Adicionar Escala <Plus size={24} />
         </Button>
       </DialogTrigger>
@@ -154,6 +155,7 @@ export default function BotaoNovaeEscala(props: {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -275,7 +277,7 @@ export default function BotaoNovaeEscala(props: {
               )}
             />
 
-            <div className=' grid grid-flow-row grid-cols-2 gap-2'>
+            <div className='grid grid-flow-row grid-cols-2 gap-2 '>
               <FormField
                 control={form.control}
                 name='entrada_de_passageiros'
