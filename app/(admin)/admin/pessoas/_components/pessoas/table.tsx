@@ -41,8 +41,8 @@ export default function TabelaPessoas() {
   const pessoas = chunked[activePage - 1];
 
   return (
-    <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
-      <div className='flex justify-between gap-4'>
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
           placeholder='Pesquisar por nome'
@@ -89,7 +89,7 @@ export default function TabelaPessoas() {
                   </TableCell>
                   <TableCell className='w-4'>
                     <Button
-                      className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                       onClick={(e) => {
                         e.stopPropagation();
                         setPessoa(pessoa);

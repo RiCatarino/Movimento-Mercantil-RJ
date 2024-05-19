@@ -51,7 +51,7 @@ export default function TabelaPortos() {
 
   return (
     <>
-      <div className='flex flex-row justify-between gap-4 '>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
           className='rounded-xl'
@@ -84,7 +84,7 @@ export default function TabelaPortos() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium w-10'>{porto.id}</TableCell>
+                <TableCell className='w-10 font-medium'>{porto.id}</TableCell>
                 <TableCell className='font-medium max-w-32'>
                   {porto.nome}
                 </TableCell>
@@ -93,7 +93,7 @@ export default function TabelaPortos() {
                 </TableCell>
                 <TableCell className='w-4'>
                   <Button
-                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                    className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                     onClick={(e) => {
                       e.stopPropagation();
                       setPortoId(porto.id);

@@ -107,7 +107,7 @@ export default function TabelaUsuarios() {
 
   return (
     <>
-      <div className='flex flex-row justify-between gap-4 '>
+      <div className='flex flex-col-reverse justify-between gap-4 md:flex-row '>
         <Input
           name='search'
           className='rounded-xl'
@@ -170,7 +170,7 @@ export default function TabelaUsuarios() {
                         setOpen(true);
                       }}
                     >
-                      <EditIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
+                      <EditIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
                     </Button>
 
                     {/* RESET PASSWORD */}
@@ -181,7 +181,7 @@ export default function TabelaUsuarios() {
                           variant='link'
                           className='text-xs text-blue-500'
                         >
-                          <KeyIcon className='w-6 bg-blue-500 text-white p-1 rounded-lg' />
+                          <KeyIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent>
@@ -212,9 +212,9 @@ export default function TabelaUsuarios() {
                           className='text-xs text-blue-500'
                         >
                           {usuario.habilitado ? (
-                            <LockIcon className='w-6 bg-red-700 text-white p-1 rounded-lg' />
+                            <LockIcon className='w-6 p-1 text-white bg-red-700 rounded-lg' />
                           ) : (
-                            <UnlockIcon className='w-6 bg-green-700 text-white p-1 rounded-lg' />
+                            <UnlockIcon className='w-6 p-1 text-white bg-green-700 rounded-lg' />
                           )}
                         </Button>
                       </AlertDialogTrigger>

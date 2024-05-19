@@ -2,7 +2,7 @@ import { AnimatedTooltipPreview } from './_components/people';
 
 export default function Sobre() {
   return (
-    <div className='flex flex-col items-center align-middle min-h-screen justify-center gap-4 '>
+    <div className='flex flex-col items-center justify-center min-h-screen align-middle gap-4 '>
       <h1 className='text-4xl font-bold '>Sobre</h1>
       <h2 className='mx-auto w-[50%] text-justify bg-white p-4 rounded-3xl'>
         O projeto Circuitos Oceânicos tem por objetivo mapear e analisar as

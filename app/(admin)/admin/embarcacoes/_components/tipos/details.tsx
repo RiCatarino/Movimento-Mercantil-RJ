@@ -75,39 +75,39 @@ export default function TipoDetails(props: {
         {!isLoading && (
           <>
             <div className='flex flex-wrap gap-2'>
-              <div className='flex flex-col gap-1 rounded-xl border w-full'>
+              <div className='flex flex-col w-full border gap-1 rounded-xl'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Tipo
                 </div>
                 <div className='p-2 text-xs'>{tipo?.tipo}</div>
               </div>
 
-              <div className='flex flex-col gap-1 rounded-xl border w-full'>
+              <div className='flex flex-col w-full border gap-1 rounded-xl'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Descrição
                 </div>
                 <div className='p-2 text-xs'>{tipo?.texto_descritivo}</div>
               </div>
 
-              <div className='flex flex-col gap-1 rounded-xl border w-full'>
+              <div className='flex flex-col w-full border gap-1 rounded-xl'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Imagens
                 </div>
-                <div className='flex flex-col gap-2 p-2'>
+                <div className='flex flex-col p-2 gap-2'>
                   <div className='flex flex-wrap gap-2'>
                     {tipo?.imagem_embarcacao.map((img) => (
                       // { X Button in upper right corner of the image}
                       <div className='relative' key={img.id}>
                         <button
-                          className='absolute -top-1 -right-1 p-1 bg-red-500 rounded-full'
+                          className='absolute p-1 bg-red-500 rounded-full -top-1 -right-1'
                           onClick={() => handleDeleteImage(img.id)}
                         >
-                          <XIcon className=' text-white' />
+                          <XIcon className='text-white ' />
                         </button>
                         <img
                           src={img.imagem}
                           alt={tipo.tipo}
-                          className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
+                          className='w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto'
                         />
                       </div>
                     ))}

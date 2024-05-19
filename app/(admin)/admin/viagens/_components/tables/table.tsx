@@ -56,43 +56,45 @@ export default function TripsTable() {
 
   return (
     <>
-      <div className='flex flex-wrap-reverse md:flex-row md:flex-nowrap justify-between gap-4'>
+      <div className='flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4'>
         <Input
           name='search'
-          className='rounded-xl'
+          className='rounded-xl '
           placeholder='Pesquisar...'
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Select name='ano' onValueChange={(e) => setSelectedYear(e)}>
-          <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
-            <SelectValue placeholder='Ano' />
-          </SelectTriggerFilter>
-          <SelectContent>
-            <SelectItem key='empty' value='none'>
-              {'Sem filtro'}
-            </SelectItem>
-
-            {Array.from({ length: 23 }, (_, i) => 1808 + i).map((year) => (
-              <SelectItem key={year} value={String(year)}>
-                {year}
+        <div className='flex flex-col md:flex-row gap-4 '>
+          <Select name='ano' onValueChange={(e) => setSelectedYear(e)}>
+            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
+              <SelectValue placeholder='Ano' />
+            </SelectTriggerFilter>
+            <SelectContent>
+              <SelectItem key='empty' value='none'>
+                {'Sem filtro'}
               </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
 
-        <Select name='tipo' onValueChange={(e) => setSelectedType(e)}>
-          <SelectTriggerFilter className='rounded-xl w-full md:w-[180px]'>
-            <SelectValue placeholder='Tipo' />
-          </SelectTriggerFilter>
+              {Array.from({ length: 23 }, (_, i) => 1808 + i).map((year) => (
+                <SelectItem key={year} value={String(year)}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <SelectContent>
-            <SelectItem key='empty' value='none'>
-              {'Sem filtro'}
-            </SelectItem>
-            <SelectItem value='Sahida'>Sahida</SelectItem>
-            <SelectItem value='Entrada'>Entrada</SelectItem>
-          </SelectContent>
-        </Select>
+          <Select name='tipo' onValueChange={(e) => setSelectedType(e)}>
+            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
+              <SelectValue placeholder='Tipo' />
+            </SelectTriggerFilter>
+
+            <SelectContent>
+              <SelectItem key='empty' value='none'>
+                {'Sem filtro'}
+              </SelectItem>
+              <SelectItem value='Sahida'>Sahida</SelectItem>
+              <SelectItem value='Entrada'>Entrada</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <BotaoNovaViagem />
       </div>
       {isLoading ? (
@@ -103,9 +105,9 @@ export default function TripsTable() {
         <Table>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow className='rounded-ss-xl'>
-              <TableHead>ID</TableHead>
-              <TableHead>Data Rio</TableHead>
-              <TableHead>Tipo</TableHead>
+              <TableHead className='w-4'>ID</TableHead>
+              <TableHead className='w-96'>Data Rio</TableHead>
+              <TableHead className='w-96'>Tipo</TableHead>
               <TableHead>Embarcação</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -134,7 +136,7 @@ export default function TripsTable() {
                 </TableCell>
                 <TableCell className='w-4'>
                   <Button
-                    className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                    className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                     onClick={(e) => {
                       e.stopPropagation();
                       setViagem(viagem);

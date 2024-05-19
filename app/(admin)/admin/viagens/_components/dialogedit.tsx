@@ -226,7 +226,7 @@ export default function DialogEditarViagem(props: {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg sm:max-w-[90%] md:max-w-[75%] lg:max-w-[50%] w-[95%]  '>
+      <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg md:max-w-[98%] lg:max-w-[50%] w-[95%]  '>
         <SheetHeader>
           <SheetTitle className='text-blue-500'>Editar Viagem</SheetTitle>
         </SheetHeader>
@@ -234,7 +234,7 @@ export default function DialogEditarViagem(props: {
         <ScrollArea className='h-full overflow-y-auto no-scrollbar'>
           {(isLoading || submitting) && (
             <div className=' w-max'>
-              <div className=' absolute bg-white bg-opacity-70 z-10 h-full w-full rounded-2xl flex items-center justify-center'>
+              <div className='absolute z-10 flex items-center justify-center w-full h-full bg-white  bg-opacity-70 rounded-2xl'>
                 <div className='flex items-center'>
                   <Loader classProp='w-48 h-48' />
                 </div>
@@ -539,8 +539,16 @@ export default function DialogEditarViagem(props: {
                             {field.value
                               ? portos?.find(
                                   (porto) => porto.id === field.value
-                                )?.nome
-                              : 'Seleccionar Porto'}
+                                )?.nome +
+                                (portos?.find(
+                                  (porto) => porto.id === field.value
+                                )?.pais?.pais
+                                  ? ' | ' +
+                                    portos?.find(
+                                      (porto) => porto.id === field.value
+                                    )?.pais?.pais
+                                  : '')
+                              : 'Selecionar Porto'}
                             <ChevronsUpDownIcon className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                           </Button>
                         </FormControl>
@@ -616,8 +624,16 @@ export default function DialogEditarViagem(props: {
                             {field.value
                               ? portos?.find(
                                   (porto) => porto.id === field.value
-                                )?.nome
-                              : 'Seleccionar Porto'}
+                                )?.nome +
+                                (portos?.find(
+                                  (porto) => porto.id === field.value
+                                )?.pais?.pais
+                                  ? ' | ' +
+                                    portos?.find(
+                                      (porto) => porto.id === field.value
+                                    )?.pais?.pais
+                                  : '')
+                              : 'Selecionar Porto'}
                             <ChevronsUpDownIcon className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                           </Button>
                         </FormControl>

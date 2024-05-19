@@ -7,17 +7,17 @@ export default function registryPage() {
     //   className="flex flex-col min-h-full overflow-visible"
     // >
     <div className='py-24 md:px-28'>
-      <div className='grid md:mx-auto w-full p-6 lg:p-0 lg:w-10/12 sm:grid-cols-1 md:grid-cols-3 '>
+      <div className='w-full p-6 grid md:mx-auto lg:p-0 lg:w-10/12 sm:grid-cols-1 md:grid-cols-3 '>
         <Link href='/registry/embarcacoes'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl text-white md:text-3xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Embarcações</p>
               </div>
 
-              <div className='absolute inset-x-0 z-50 flex items-end text-white transition duration-300 ease-in-out opacity-0 cursor-pointer rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
+              <div className='absolute inset-x-0 z-50 flex items-end text-white opacity-0 cursor-pointer transition duration-300 ease-in-out rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
                 <div className='w-full'>
-                  <div className='justify-end p-4 pb-10 space-y-3 text-lg transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
+                  <div className='justify-end p-4 pb-10 text-lg space-y-3 transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
                     <div className='text-right uppercase '>
                       Aceda a todas a toda a informação sobre as embarcações
                     </div>
@@ -37,13 +37,13 @@ export default function registryPage() {
         <Link href='/registry/viagens'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl text-white md:text-3xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Viagens</p>
               </div>
 
-              <div className='absolute inset-x-0 z-50 flex items-end text-white transition duration-300 ease-in-out opacity-0 cursor-pointer rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
+              <div className='absolute inset-x-0 z-50 flex items-end text-white opacity-0 cursor-pointer transition duration-300 ease-in-out rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
                 <div className='w-full'>
-                  <div className='justify-end p-4 pb-10 space-y-3 text-lg transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
+                  <div className='justify-end p-4 pb-10 text-lg space-y-3 transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
                     <div className='text-right uppercase '>
                       Aceda a todas a toda a informação sobre as viagens
                     </div>
@@ -63,13 +63,13 @@ export default function registryPage() {
         <Link href='/registry/pessoas'>
           <div className='relative m-2 mb-10 bg-white shadow-lg rounded-xl'>
             <div className='relative w-auto h-full overflow-hidden cursor-pointer rounded-xl group '>
-              <div className='absolute z-30 text-4xl md:text-3xl text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
+              <div className='absolute z-30 text-4xl text-white md:text-3xl -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2'>
                 <p className='font-extrabold text-white '>Pessoas</p>
               </div>
 
-              <div className='absolute inset-x-0 z-50 flex items-end text-white transition duration-300 ease-in-out opacity-0 cursor-pointer rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
+              <div className='absolute inset-x-0 z-50 flex items-end text-white opacity-0 cursor-pointer transition duration-300 ease-in-out rounded-xl group-hover:opacity-100 from-primarypurple to-transparent bg-gradient-to-t -bottom-2 pt-60'>
                 <div className='w-full'>
-                  <div className='justify-end p-4 pb-10 space-y-3 text-lg transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
+                  <div className='justify-end p-4 pb-10 text-lg space-y-3 transition duration-300 ease-in-out transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0'>
                     <div className='text-right uppercase '>
                       Aceda a todas a toda a informação sobre as pessoas
                     </div>

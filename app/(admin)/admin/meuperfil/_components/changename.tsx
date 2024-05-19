@@ -69,8 +69,8 @@ export default function ChangeName() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='text-blue-500'>Alterar senha</CardTitle>
-        <CardDescription>Pode alterar aqui a sua senha</CardDescription>
+        <CardTitle className='text-blue-500'>Alterar nome</CardTitle>
+        <CardDescription>Pode alterar aqui o seu nome</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -84,7 +84,7 @@ export default function ChangeName() {
               name='nome'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Senha</FormLabel>
+                  <FormLabel>Nome</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

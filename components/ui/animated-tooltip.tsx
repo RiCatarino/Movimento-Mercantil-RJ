@@ -41,7 +41,7 @@ export const AnimatedTooltip = ({
     <>
       {items.map((item, idx) => (
         <div
-          className='-mr-4  relative group'
+          className='relative -mr-4  group'
           key={item.name}
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -65,14 +65,14 @@ export const AnimatedTooltip = ({
                 rotate: rotate,
                 whiteSpace: 'nowrap',
               }}
-              className='absolute -top-16 -left-1/2 translate-x-1/2 flex text-xs  flex-col items-center justify-center rounded-md bg-blue-500 z-50 shadow-xl px-4 py-2'
+              className='absolute z-50 flex flex-col items-center justify-center px-4 py-2 text-xs bg-blue-500 shadow-xl -top-16 -left-1/2 translate-x-1/2  rounded-md'
             >
               <div className='absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px ' />
               <div className='absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px ' />
-              <div className='font-bold text-white relative z-30 text-base'>
+              <div className='relative z-30 text-base font-bold text-white'>
                 {item.name}
               </div>
-              <div className='text-white text-xs'>{item.designation}</div>
+              <div className='text-xs text-white'>{item.designation}</div>
             </motion.div>
           )}
           <Image

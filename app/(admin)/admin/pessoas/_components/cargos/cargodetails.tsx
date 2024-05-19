@@ -38,7 +38,7 @@ export default function CargoDetails(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='min-w-[50%] max-w-[95%] md:max-w-[50%] p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className='min-w-[50%] max-w-[95%] lg:max-w-[50%] p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle>Pessoas com este cargo</DialogTitle>
         </DialogHeader>

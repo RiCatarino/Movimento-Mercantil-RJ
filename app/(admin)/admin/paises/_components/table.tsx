@@ -63,18 +63,9 @@ export default function TabelaPaises() {
     });
   }
 
-  // if (isLoading)
-  //   return (
-  //     <main className="flex flex-row justify-center p-4">
-  //       <Loader classProp="w-24 h-24 self-center flex" />
-  //     </main>
-  //   );
-
   return (
-    // <div className='flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl'>
     <>
-      {/* <NewVessel mutate={mutate} /> */}
-      <div className='flex flex-row justify-between gap-4 '>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
           className='rounded-xl'
@@ -91,7 +82,7 @@ export default function TabelaPaises() {
         <Table>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead className='w-4'>ID</TableHead>
+              {/* <TableHead className='w-4'>ID</TableHead> */}
               <TableHead className='w-96'>Nome</TableHead>
               <TableHead>Gentílico</TableHead>
               <TableHead></TableHead>
@@ -103,13 +94,13 @@ export default function TabelaPaises() {
                 className='cursor-pointer hover:bg-blue-100'
                 key={pais.id}
               >
-                <TableCell className='font-medium w-10'>{pais.id}</TableCell>
+                {/* <TableCell className='w-10 font-medium'>{pais.id}</TableCell> */}
                 <TableCell className='font-medium'>{pais.pais}</TableCell>
                 <TableCell className='font-medium'>{pais.gentilico}</TableCell>
                 <TableCell className='w-4'>
                   <div className='flex gap-2'>
                     <Button
-                      className='bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white rounded-xl'
+                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                       onClick={(e) => {
                         e.stopPropagation();
                         setPaisId(pais.id);
