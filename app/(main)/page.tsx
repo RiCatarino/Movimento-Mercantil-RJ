@@ -403,11 +403,11 @@ function Globe() {
 
   return (
     // <div className='relative z-0 flex flex-row items-center justify-center py-20 md:h-auto dark:bg-black w-fit'>
-    <div className=' lg:max-w-[50%] w-full  relative overflow-hidden  md:h-[40rem]  '>
+    <div className='lg:max-w-[50%] w-full relative overflow-hidden h-30  lg:h-[40rem]  '>
       <div>
         {/* <div className='relative inset-x-0 bottom-0 z-40 h-40 pointer-events-none select-none w-fit bg-gradient-to-b from-transparent dark:to-black to-white' /> */}
         <div
-          className='z-10 w-full cursor-pointer lg:absolute -bottom-5 h-72 md:h-full drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
+          className='z-10 w-full cursor-pointer lg:absolute -bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
  '
         >
           <World data={sampleArcs} globeConfig={globeConfig} />
@@ -419,58 +419,8 @@ function Globe() {
 
 export default function Home() {
   return (
-    <main className='flex max-h-screen '>
-      <div className='z-10 flex flex-wrap-reverse items-center justify-center w-full  dark:bg-black md:h-screen md:mt-0 mt-52'>
-        <Globe />
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-          className='div'
-        >
-          <h1 className='text-4xl text-red-500 font-extrabold text-center bg-white p-2 rounded-xl'>
-            Este site encontra-se em desenvolvimento.
-          </h1>
-          <h2 className='text-xl font-bold text-center text-black md:text-4xl dark:text-white'>
-            Viagens pelo globo, a partir do Rio.
-          </h2>
-          <p className='max-w-md mx-auto mt-2 text-base font-normal text-center md:text-lg text-neutral-700 dark:text-neutral-200'>
-            Universidade Autónoma de Lisboa
-          </p>
-
-          <Image
-            src='/logocircuitosoceanicos.png'
-            className='mx-auto mt-4 bg-cover rounded-full hover:rotate-12 hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out'
-            width={200}
-            height={200}
-            alt='logo'
-          />
-          <div className='flex justify-center p-3' style={{}}>
-            <Button
-              asChild
-              className='self-end w-full text-lg shadow-2xl h-14 transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
-            >
-              <Link href={'/auth/signin'}>Visitar BackOffice</Link>
-            </Button>
-          </div>
-        </motion.div>
-        {/* </div> */}
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          width: '100%',
-        }}
-        className='z-0 mb-0 pointer-events-none '
-      >
+    <>
+      <div className='z-0 absolute pointer-events-none  w-full'>
         <svg
           version='1.1'
           xmlns='http://www.w3.org/2000/svg'
@@ -479,7 +429,7 @@ export default function Home() {
           y='0px'
           width='100%'
           // height='100vh'
-          className='h-screen'
+          className='h-screen absolute'
           viewBox='0 0 1600 900'
           preserveAspectRatio='xMidYMax slice'
         >
@@ -551,6 +501,52 @@ export default function Home() {
           </g>
         </svg>
       </div>
-    </main>
+      {/* <div className='max-h-screen '> */}
+      <div className=' mt-28 lg:mt-0 z-10 flex align-middle flex-wrap-reverse lg:flex-nowrap items-center justify-center w-full dark:bg-black lg:h-screen'>
+        <Globe />
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 1,
+          }}
+          className='div'
+        >
+          <h1 className='text-4xl text-red-500 font-extrabold text-center bg-white p-2 rounded-xl'>
+            Este site encontra-se em desenvolvimento.
+          </h1>
+          <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>
+            Viagens pelo globo, a partir do Rio.
+          </h2>
+          <p className='max-w-md mx-auto mt-2 text-base font-normal text-center lg:text-lg text-neutral-700 dark:text-neutral-200'>
+            Universidade Autónoma de Lisboa
+          </p>
+
+          <Image
+            src='/logocircuitosoceanicos.png'
+            className='mx-auto mt-4 bg-cover rounded-full hover:rotate-12 hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out'
+            width={200}
+            height={200}
+            alt='logo'
+          />
+          <div className='flex justify-center p-3' style={{}}>
+            <Button
+              asChild
+              className='self-end w-full text-lg shadow-2xl h-14 transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
+            >
+              <Link href={'/auth/signin'}>Visitar BackOffice</Link>
+            </Button>
+          </div>
+        </motion.div>
+        {/* </div> */}
+      </div>
+      {/* </div> */}
+    </>
   );
 }
