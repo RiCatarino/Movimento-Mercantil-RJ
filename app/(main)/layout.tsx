@@ -21,16 +21,18 @@ export default async function MainLayout({
   return (
     <div
       className={cn(
-        'min-h-screen bg-background font-sans antialiased max-h-screen relative',
+        'min-h-screen bg-background font-sans antialiased relative overflow-auto',
         fontSans.variable
       )}
       id='magicpattern'
     >
-      <nav className='absolute z-10 w-full'>
+      <nav className='relative z-10 w-full'>
         <div className='flex items-center justify-between p-4 mx-8 mt-5 bg-white shadow-xl rounded-3xl lg:mx-24'>
           <div className='flex items-center space-x-4'>
             <Loader classProp='w-8 h-8' />
-            <h1 className='ml-6 text-xl font-bold'>MM RJ</h1>
+            <Link href='/'>
+              <h1 className='ml-6 text-xl font-bold cursor-pointer'>MM RJ</h1>
+            </Link>
           </div>
           <div className='flex items-center space-x-4'>
             <Link href='/sobre'>
@@ -44,7 +46,7 @@ export default async function MainLayout({
           </div>
         </div>
       </nav>
-      <main className='bg-transparent '>{children}</main>
+      <main className='obg-transparent verflow-auto '>{children}</main>
     </div>
   );
 }

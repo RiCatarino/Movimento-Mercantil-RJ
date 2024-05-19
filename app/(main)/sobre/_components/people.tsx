@@ -2,7 +2,7 @@
 import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 import React from 'react';
 
-const people = [
+const people1 = [
   {
     id: 1,
     name: 'Ricardo Catarino',
@@ -21,19 +21,25 @@ const people = [
     designation: 'Estudante de Engenharia Informática',
     image: 'https://avatars.githubusercontent.com/u/63667943?v=4',
   },
+];
+
+const people2 = [
   {
     id: 4,
     name: 'Laercio Cruvinel Júnior',
     designation: 'Docente do Departamento de Ciências e Tecnologias -UAL',
-    image:
-      'https://lh6.googleusercontent.com/SVoY-JU7PrJgCG6ttphXGpsnIqvtcwGHJlEl5RhXKm66WVbF3IptTq_CkXD-lyitu1iM-d6ygE0I_ihrDmuVZePEoMKD4yn2vl0l05PZVN-CkyiKNVwXpeCrbs3D9alhiQ=w1280',
+    image: 'https://avatars.githubusercontent.com/u/43696678?v=4',
   },
 ];
-
-export function AnimatedTooltipPreview() {
+export function People() {
   return (
-    <div className='flex flex-row items-center justify-center w-full mb-10'>
-      <AnimatedTooltip items={people} />
+    <div className='flex flex-col items-center justify-center w-full gap-8 mb-10 md:gap-0 lg:flex-row'>
+      <div className='flex flex-row '>
+        <AnimatedTooltip items={people1} />
+      </div>
+      <div className='flex flex-row '>
+        <AnimatedTooltip items={people2} />
+      </div>
     </div>
   );
 }

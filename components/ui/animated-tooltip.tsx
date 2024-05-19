@@ -41,7 +41,7 @@ export const AnimatedTooltip = ({
     <>
       {items.map((item, idx) => (
         <div
-          className='relative -mr-4  group'
+          className='relative -mr-4 group'
           key={item.name}
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -52,7 +52,7 @@ export const AnimatedTooltip = ({
               animate={{
                 opacity: 1,
                 y: 0,
-                scale: 1,
+                scale: 0.8,
                 transition: {
                   type: 'spring',
                   stiffness: 260,
@@ -65,7 +65,7 @@ export const AnimatedTooltip = ({
                 rotate: rotate,
                 whiteSpace: 'nowrap',
               }}
-              className='absolute z-50 flex flex-col items-center justify-center px-4 py-2 text-xs bg-blue-500 shadow-xl -top-16 -left-1/2 translate-x-1/2  rounded-md'
+              className='absolute z-50 flex flex-col items-center justify-center px-4 py-2 text-xs translate-x-1/2 bg-blue-500 rounded-md shadow-xl -top-16 -left-1/2'
             >
               <div className='absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px ' />
               <div className='absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px ' />
@@ -81,7 +81,7 @@ export const AnimatedTooltip = ({
             width={200}
             src={item.image}
             alt={item.name}
-            className=' antialiased object-cover !m-0 !p-0 object-top rounded-full h-40 w-40 border-2 group-hover:scale-105 group-hover:z-30 border-blue-300  relative transition duration-500'
+            className=' antialiased object-cover !m-0 !p-0 object-top rounded-full h-24 w-24 lg:h-40 lg:w-40 border-2 group-hover:scale-105 group-hover:z-30 border-blue-300  relative transition duration-500'
           />
         </div>
       ))}

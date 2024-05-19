@@ -56,7 +56,7 @@ import {
 } from '@/components/ui/select';
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
-import { is, ptBR } from 'date-fns/locale';
+import { ptBR } from 'date-fns/locale';
 
 const formSchema = z.object({
   id: z.number(),
@@ -234,7 +234,7 @@ export default function DialogEditarViagem(props: {
         <ScrollArea className='h-full overflow-y-auto no-scrollbar'>
           {(isLoading || submitting) && (
             <div className=' w-max'>
-              <div className='absolute z-10 flex items-center justify-center w-full h-full bg-white  bg-opacity-70 rounded-2xl'>
+              <div className='absolute z-10 flex items-center justify-center w-full h-full bg-white bg-opacity-70 rounded-2xl'>
                 <div className='flex items-center'>
                   <Loader classProp='w-48 h-48' />
                 </div>
@@ -243,7 +243,7 @@ export default function DialogEditarViagem(props: {
           )}
           <Form {...form}>
             <form
-              className='flex flex-wrap p-1 gap-2 md:gap-4'
+              className='flex flex-wrap gap-2 p-1 md:gap-4'
               onSubmit={form.handleSubmit(handleSubmit)}
             >
               <FormField

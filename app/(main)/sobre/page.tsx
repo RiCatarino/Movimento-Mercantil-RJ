@@ -1,10 +1,12 @@
-import { AnimatedTooltipPreview } from './_components/people';
+import { Partners } from './_components/partners';
+import { People } from './_components/people';
+import { Titulo } from './_components/title';
 
 export default function Sobre() {
   return (
-    <div className='flex flex-col items-center justify-center min-h-screen align-middle gap-4 '>
-      <h1 className='text-4xl font-bold '>Sobre</h1>
-      <h2 className='mx-auto w-[50%] text-justify bg-white p-4 rounded-3xl'>
+    <div className='flex flex-col items-center justify-center gap-4 p-4 mt-10 overflow-x-hidden lg:p-0'>
+      <Titulo />
+      <span className='lg:mx-auto w-full h-[50%] lg:w-[50%] text-justify bg-white p-4 rounded-3xl'>
         O projeto Circuitos Oceânicos tem por objetivo mapear e analisar as
         petições enviadas da América portuguesa ao Conselho Ultramarino e
         Secretário de Estado, entre os séculos XVIII e XIX, tomando como central
@@ -32,8 +34,9 @@ export default function Sobre() {
         do tema e da documentação, delimita-se sua análise às capitanias de
         Minas Gerais, São Paulo, Mato Grosso e Goiás. O projeto possui
         atualmente financiamento da FAPESP (processo número 2021/09104-0).
-      </h2>
-      <AnimatedTooltipPreview />
+      </span>
+      <People />
+      <Partners />
     </div>
   );
 }

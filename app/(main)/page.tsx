@@ -403,13 +403,10 @@ function Globe() {
 
   return (
     // <div className='relative z-0 flex flex-row items-center justify-center py-20 md:h-auto dark:bg-black w-fit'>
-    <div className='lg:max-w-[50%] w-full relative overflow-hidden h-30  lg:h-[40rem]  '>
+    <div className='lg:max-w-[50%] w-full relative overflow-hidden h-30  lg:h-[40rem] bg-transparent  '>
       <div>
         {/* <div className='relative inset-x-0 bottom-0 z-40 h-40 pointer-events-none select-none w-fit bg-gradient-to-b from-transparent dark:to-black to-white' /> */}
-        <div
-          className='z-10 w-full cursor-pointer lg:absolute -bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 transition-all duration-300 ease-in-out
- '
-        >
+        <div className='z-10 w-full transition-all duration-300 ease-in-out cursor-pointer lg:absolute lg:-bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 '>
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
       </div>
@@ -502,7 +499,7 @@ export default function Home() {
         </svg>
       </div>
       {/* <div className='max-h-screen '> */}
-      <div className='z-10 flex flex-wrap-reverse items-center justify-center w-full align-middle  mt-28 lg:mt-0 lg:flex-nowrap dark:bg-black lg:h-screen'>
+      <div className='z-10 flex flex-wrap-reverse w-full min-h-screen p-0 lg:w-full lg:p-10 lg:flex-nowrap dark:bg-black lg:h-screen'>
         <Globe />
         <motion.div
           initial={{
@@ -516,32 +513,34 @@ export default function Home() {
           transition={{
             duration: 1,
           }}
-          className='div'
+          className='lg:max-w-[50%] w-full relative  h-full my-auto lg:h-[40rem] z-40 p-3  '
         >
-          <h1 className='p-2 text-4xl font-extrabold text-center text-red-500 bg-white rounded-xl'>
-            Este site encontra-se em desenvolvimento.
-          </h1>
-          <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>
-            Viagens pelo globo, a partir do Rio.
-          </h2>
-          <p className='max-w-md mx-auto mt-2 text-base font-normal text-center lg:text-lg text-neutral-700 dark:text-neutral-200'>
-            Universidade Autónoma de Lisboa
-          </p>
+          <div className='z-10 w-full transition-all duration-300 ease-in-out cursor-pointer h-fit lg:absolute -bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 '>
+            <h1 className='justify-center w-full p-2 mx-auto text-xl font-extrabold text-center text-red-500 bg-white lg:text-4xl lg:w-1/2 rounded-xl'>
+              Este site encontra-se em <br /> desenvolvimento.
+            </h1>
+            <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>
+              Viagens pelo globo, a partir do Rio.
+            </h2>
+            <p className='max-w-md mx-auto mt-2 text-base font-normal text-center lg:text-lg text-neutral-700 dark:text-neutral-200'>
+              Universidade Autónoma de Lisboa
+            </p>
 
-          <Image
-            src='/logocircuitosoceanicos.png'
-            className='mx-auto mt-4 bg-cover rounded-full hover:rotate-12 hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out'
-            width={200}
-            height={200}
-            alt='logo'
-          />
-          <div className='flex justify-center p-3' style={{}}>
-            <Button
-              asChild
-              className='self-end w-full text-lg shadow-2xl h-14 transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
-            >
-              <Link href={'/auth/signin'}>Visitar BackOffice</Link>
-            </Button>
+            <Image
+              src='/logocircuitosoceanicos.png'
+              className='w-24 mx-auto mt-4 transition-all duration-300 ease-in-out bg-cover rounded-full hover:rotate-12 hover:scale-105 hover:shadow-2xl'
+              width={200}
+              height={200}
+              alt='logo'
+            />
+            <div className='flex justify-center p-3' style={{}}>
+              <Button
+                asChild
+                className='self-end w-full text-lg transition-all duration-500 shadow-2xl h-14 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
+              >
+                <Link href={'/auth/signin'}>Visitar BackOffice</Link>
+              </Button>
+            </div>
           </div>
         </motion.div>
         {/* </div> */}
