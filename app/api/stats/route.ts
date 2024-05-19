@@ -1,12 +1,13 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import { ca } from "date-fns/locale";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export async function GET() {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const embarcacoes = await prisma.embarcacao.aggregate({
@@ -64,17 +65,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryEmbarcacaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ['id_embarcacao'],
+    by: ["id_embarcacao"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_embarcacao: 'desc',
+        id_embarcacao: "desc",
       },
     },
     take: 1,
@@ -96,58 +97,143 @@ export async function GET() {
   EmbarcacaoWithMostViagens.name = queryEmbarcacao?.nome;
 
   // Mestre com mais viagens
+  let mestreWithMostViagens: {
+    count: number;
+    name: string | null | undefined;
+  } = {
+    count: 0,
+    name: "",
+  };
 
-  const mestreWithMostViagens = await prisma.viagem.groupBy({
-    by: ['mestre_id'],
+  const queryMestreWithMostViagens = await prisma.viagem.groupBy({
+    by: ["mestre_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        mestre_id: 'desc',
+        mestre_id: "desc",
       },
     },
     take: 1,
   });
 
-  const capitaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ['capitao_id'],
+  const idmestre = queryMestreWithMostViagens[0].mestre_id;
+  const queryMestre = await prisma.pessoa.findUnique({
+    where: {
+      id: idmestre || undefined,
+    },
+    select: {
+      nome: true,
+    },
+  });
+
+  mestreWithMostViagens.count = queryMestreWithMostViagens[0]._count._all;
+  mestreWithMostViagens.name = queryMestre?.nome;
+
+  // Capitao com mais viagens
+  let capitaoWithMostViagens: {
+    count: number;
+    name: string | null | undefined;
+  } = {
+    count: 0,
+    name: "",
+  };
+
+  const queryCapitaoWithMostViagens = await prisma.viagem.groupBy({
+    by: ["capitao_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        capitao_id: 'desc',
+        capitao_id: "desc",
       },
     },
     take: 1,
   });
 
-  const armadorWithMostViagens = await prisma.viagem.groupBy({
-    by: ['armador_id'],
+  const idcapitao = queryCapitaoWithMostViagens[0].capitao_id;
+  const queryCapitao = await prisma.pessoa.findUnique({
+    where: {
+      id: idcapitao || undefined,
+    },
+    select: {
+      nome: true,
+    },
+  });
+  capitaoWithMostViagens.count = queryCapitaoWithMostViagens[0]._count._all;
+  capitaoWithMostViagens.name = queryCapitao?.nome;
+
+  // Armador com mais viagens
+
+  let armadorWithMostViagens: {
+    count: number;
+    name: string | null | undefined;
+  } = {
+    count: 0,
+    name: "",
+  };
+
+  const queryArmadorWithMostViagens = await prisma.viagem.groupBy({
+    by: ["armador_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        armador_id: 'desc',
+        armador_id: "desc",
       },
     },
     take: 1,
   });
 
-  const comandanteWithMostViagens = await prisma.viagem.groupBy({
-    by: ['comandante_id'],
+  const idarmador = queryArmadorWithMostViagens[0].armador_id;
+  const queryArmador = await prisma.pessoa.findUnique({
+    where: {
+      id: idarmador || undefined,
+    },
+    select: {
+      nome: true,
+    },
+  });
+  armadorWithMostViagens.count = queryArmadorWithMostViagens[0]._count._all;
+  armadorWithMostViagens.name = queryArmador?.nome;
+
+  // Comandante com mais viagens
+  let comandanteWithMostViagens: {
+    count: number;
+    name: string | null | undefined;
+  } = {
+    count: 0,
+    name: "",
+  };
+
+  const queryComandanteWithMostViagens = await prisma.viagem.groupBy({
+    by: ["comandante_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        comandante_id: 'desc',
+        comandante_id: "desc",
       },
     },
     take: 1,
   });
+
+  const idcomandante = queryComandanteWithMostViagens[0].comandante_id;
+  const queryComandante = await prisma.pessoa.findUnique({
+    where: {
+      id: idcomandante || undefined,
+    },
+    select: {
+      nome: true,
+    },
+  });
+  comandanteWithMostViagens.count =
+    queryComandanteWithMostViagens[0]._count._all;
+  comandanteWithMostViagens.name = queryComandante?.nome;
 
   const result = {
     embarcacoes,
@@ -159,10 +245,10 @@ export async function GET() {
     portos,
     usuarios,
     embarcacaoWithMostViagens: EmbarcacaoWithMostViagens,
-    mestreWithMostViagens: mestreWithMostViagens[0],
-    capitaoWithMostViagens: capitaoWithMostViagens[0],
-    armadorWithMostViagens: armadorWithMostViagens[0],
-    comandanteWithMostViagens: comandanteWithMostViagens[0],
+    mestreWithMostViagens: mestreWithMostViagens,
+    capitaoWithMostViagens: capitaoWithMostViagens,
+    armadorWithMostViagens: armadorWithMostViagens,
+    comandanteWithMostViagens: comandanteWithMostViagens,
   };
 
   return Response.json(result);
