@@ -235,6 +235,82 @@ export async function GET() {
     queryComandanteWithMostViagens[0]._count._all;
   comandanteWithMostViagens.name = queryComandante?.nome;
 
+  //Porto com mais escalas
+  let portoWithMostEscalas: {
+    count: number;
+    name: string | null | undefined;
+    pais: string | null | undefined;
+  } = {
+    count: 0,
+    name: "",
+    pais: "",
+  };
+
+  const queryPortoWithMostEscalas = await prisma.escala.groupBy({
+    by: ["id_porto"],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        id_porto: "desc",
+      },
+    },
+    take: 1,
+  });
+
+  const idporto = queryPortoWithMostEscalas[0].id_porto;
+  const queryPorto = await prisma.porto.findUnique({
+    where: {
+      id: idporto || undefined,
+    },
+    select: {
+      nome: true,
+      pais: {
+        select: {
+          pais: true,
+        },
+      },
+    },
+  });
+  portoWithMostEscalas.count = queryPortoWithMostEscalas[0]._count._all;
+  portoWithMostEscalas.name = queryPorto?.nome;
+  portoWithMostEscalas.pais = queryPorto?.pais?.pais;
+
+  //viagem com mais total de passageiros
+  let viagemWithMostPassageiros: {
+    count: number;
+    id: number | null | undefined;
+  } = {
+    count: 0,
+    id: 0,
+  };
+
+  const queryViagemWithMostPassageiros = await prisma.viagem.groupBy({
+    by: ["id"],
+    _sum: {
+      total_passageiros: true,
+    },
+    orderBy: {
+      _sum: {
+        total_passageiros: "desc",
+      },
+    },
+    take: 1,
+  });
+  const queryViagem = await prisma.viagem.findUnique({
+    where: {
+      id: queryViagemWithMostPassageiros[0].id || undefined,
+    },
+    select: {
+      total_passageiros: true,
+    },
+  });
+
+  viagemWithMostPassageiros.id = queryViagemWithMostPassageiros[0].id;
+  viagemWithMostPassageiros.count =
+    queryViagemWithMostPassageiros[0]._sum.total_passageiros ?? 0;
+
   const result = {
     embarcacoes,
     pessoas,
@@ -249,6 +325,8 @@ export async function GET() {
     capitaoWithMostViagens: capitaoWithMostViagens,
     armadorWithMostViagens: armadorWithMostViagens,
     comandanteWithMostViagens: comandanteWithMostViagens,
+    portoWithMostEscalas: portoWithMostEscalas,
+    viagemWithMostPassageiros: viagemWithMostPassageiros,
   };
 
   return Response.json(result);
