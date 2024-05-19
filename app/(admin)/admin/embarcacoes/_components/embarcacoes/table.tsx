@@ -89,16 +89,16 @@ export default function TableEmbarcacoes() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Nome</TableHead>
+              <TableHead className='w-4'>ID</TableHead>
+              <TableHead className=' w-96'>Nome</TableHead>
               <TableHead>Tipo de Embarcação</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {embarcacoes.map((embarcacao) => (
+            {embarcacoes?.map((embarcacao) => (
               <TableRow
                 className='cursor-pointer hover:bg-blue-100'
                 key={embarcacao.id}

@@ -97,10 +97,10 @@ export default function TabelaTitulos() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow className='rounded-ss-xl'>
-              <TableHead>ID</TableHead>
-              <TableHead>Título Nobreza</TableHead>
+              {/* <TableHead>ID</TableHead> */}
+              <TableHead>Título de Nobreza</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -115,12 +115,8 @@ export default function TabelaTitulos() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='text-xs font-medium w-10'>
-                  {titulo.id}
-                </TableCell>
-                <TableCell className='text-xs font-medium'>
-                  {titulo.titulo}
-                </TableCell>
+                {/* <TableCell className='font-medium w-10'>{titulo.id}</TableCell> */}
+                <TableCell className='font-medium'>{titulo.titulo}</TableCell>
                 <TableCell className='w-4'>
                   <div className='flex gap-2'>
                     <Button
