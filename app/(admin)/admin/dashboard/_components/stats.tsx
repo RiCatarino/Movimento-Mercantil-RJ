@@ -18,6 +18,13 @@ interface AggregateCount {
   };
 }
 
+interface withMost {
+  count: number;
+  name: string;
+  id: number;
+  pais: string;
+}
+
 interface StatsProps {
   embarcacoes: AggregateCount;
   pessoas: AggregateCount;
@@ -27,6 +34,12 @@ interface StatsProps {
   unidades_de_medida: AggregateCount;
   portos: AggregateCount;
   usuarios: AggregateCount;
+  embarcacaoWithMostViagens: withMost;
+  mestreWithMostViagens: withMost;
+  armadorWithMostViagens: withMost;
+  comandanteWithMostViagens: withMost;
+  portoWithMostEscalas: withMost;
+  viagemWithMostPassageiros: withMost;
 }
 
 export default function Stats() {
@@ -69,6 +82,44 @@ export default function Stats() {
         title='Unidades de Medida'
         value={stats?.unidades_de_medida?._count.id || 0}
         icon={<PersonStanding />}
+      />
+      <StatsCard
+        title='Embarcações com mais viagens'
+        value={stats?.embarcacaoWithMostViagens?.name || 'N/A'}
+        icon={<Ship />}
+      />
+      <StatsCard
+        title='Mestre com mais viagens'
+        value={stats?.mestreWithMostViagens?.name || 'N/A'}
+        icon={<PersonStanding />}
+      />
+      <StatsCard
+        title='Armador com mais viagens'
+        value={stats?.armadorWithMostViagens?.name || 'N/A'}
+        icon={<PersonStanding />}
+      />
+      <StatsCard
+        title='Comandante com mais viagens'
+        value={stats?.comandanteWithMostViagens?.name || 'N/A'}
+        icon={<PersonStanding />}
+      />
+      <StatsCard
+        title='Porto com mais escalas'
+        value={
+          stats?.portoWithMostEscalas?.name +
+            ' | ' +
+            stats?.portoWithMostEscalas?.pais || 'N/A'
+        }
+        icon={<PersonStanding />}
+      />
+      <StatsCard
+        title='Viagem com mais passageiros'
+        value={
+          stats?.viagemWithMostPassageiros?.count +
+            ' | ID: ' +
+            stats?.viagemWithMostPassageiros?.id || 'N/A'
+        }
+        icon={<GitCompareArrows />}
       />
     </div>
   );

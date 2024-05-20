@@ -3,6 +3,7 @@
 import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/use-toast';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -34,7 +35,13 @@ export default function SignInPage() {
       });
 
       if (!response.ok) {
-        throw new Error('Invalid email or password');
+        toast({
+          title: 'Erro',
+          variant: 'destructive',
+          description: 'Email ou senha incorretos',
+          duration: 5000,
+        });
+        return;
       }
 
       router.push('/admin/dashboard');

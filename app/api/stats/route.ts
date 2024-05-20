@@ -1,13 +1,13 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
-import { ca } from "date-fns/locale";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
+import { ca } from 'date-fns/locale';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export async function GET() {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
   const embarcacoes = await prisma.embarcacao.aggregate({
@@ -65,17 +65,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: "",
+    name: '',
   };
 
   const queryEmbarcacaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ["id_embarcacao"],
+    by: ['id_embarcacao'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_embarcacao: "desc",
+        id_embarcacao: 'desc',
       },
     },
     take: 1,
@@ -102,17 +102,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: "",
+    name: '',
   };
 
   const queryMestreWithMostViagens = await prisma.viagem.groupBy({
-    by: ["mestre_id"],
+    by: ['mestre_id'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        mestre_id: "desc",
+        mestre_id: 'desc',
       },
     },
     take: 1,
@@ -137,17 +137,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: "",
+    name: '',
   };
 
   const queryCapitaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ["capitao_id"],
+    by: ['capitao_id'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        capitao_id: "desc",
+        capitao_id: 'desc',
       },
     },
     take: 1,
@@ -172,17 +172,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: "",
+    name: '',
   };
 
   const queryArmadorWithMostViagens = await prisma.viagem.groupBy({
-    by: ["armador_id"],
+    by: ['armador_id'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        armador_id: "desc",
+        armador_id: 'desc',
       },
     },
     take: 1,
@@ -206,17 +206,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: "",
+    name: '',
   };
 
   const queryComandanteWithMostViagens = await prisma.viagem.groupBy({
-    by: ["comandante_id"],
+    by: ['comandante_id'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        comandante_id: "desc",
+        comandante_id: 'desc',
       },
     },
     take: 1,
@@ -242,18 +242,18 @@ export async function GET() {
     pais: string | null | undefined;
   } = {
     count: 0,
-    name: "",
-    pais: "",
+    name: '',
+    pais: '',
   };
 
   const queryPortoWithMostEscalas = await prisma.escala.groupBy({
-    by: ["id_porto"],
+    by: ['id_porto'],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_porto: "desc",
+        id_porto: 'desc',
       },
     },
     take: 1,
@@ -286,30 +286,25 @@ export async function GET() {
     id: 0,
   };
 
-  const queryViagemWithMostPassageiros = await prisma.viagem.groupBy({
-    by: ["id"],
-    _sum: {
-      total_passageiros: true,
-    },
-    orderBy: {
-      _sum: {
-        total_passageiros: "desc",
+  const queryViagemWithMostPassageiros = await prisma.viagem.findMany({
+    where: {
+      total_passageiros: {
+        not: null,
       },
     },
-    take: 1,
-  });
-  const queryViagem = await prisma.viagem.findUnique({
-    where: {
-      id: queryViagemWithMostPassageiros[0].id || undefined,
+    orderBy: {
+      total_passageiros: 'desc',
     },
+    take: 1,
     select: {
+      id: true,
       total_passageiros: true,
     },
   });
 
   viagemWithMostPassageiros.id = queryViagemWithMostPassageiros[0].id;
   viagemWithMostPassageiros.count =
-    queryViagemWithMostPassageiros[0]._sum.total_passageiros ?? 0;
+    queryViagemWithMostPassageiros[0]?.total_passageiros ?? 0;
 
   const result = {
     embarcacoes,
@@ -328,6 +323,8 @@ export async function GET() {
     portoWithMostEscalas: portoWithMostEscalas,
     viagemWithMostPassageiros: viagemWithMostPassageiros,
   };
+
+  console.log(result);
 
   return Response.json(result);
 }

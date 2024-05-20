@@ -1,4 +1,3 @@
-import { Toaster } from '@/components/ui/toaster';
 import NavBar from './_components/navbar';
 import { SessionProvider } from '../SessionContext';
 import { validateRequest } from '@/auth';
@@ -14,9 +13,7 @@ export default async function DashboardLayout({
     <SessionProvider value={session}>
       <NavBar />
       <div className='p-4 lg:p-8'>
-        <>
-          {children} <Toaster />
-        </>
+        <>{children}</>
       </div>
     </SessionProvider>
   );
