@@ -1,8 +1,15 @@
 import TableEmbarcacoes from './_components/embarcacoes/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TableTipos from './_components/tipos/table';
+import { validateRequest } from '@/auth';
+import { redirect } from 'next/navigation';
 
-export default function EmbarcacoesPage() {
+export default async function EmbarcacoesPage() {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return redirect('/auth/signin');
+  }
   return (
     <main className='p-4 lg:mx-24 '>
       <title>Embarcações</title>

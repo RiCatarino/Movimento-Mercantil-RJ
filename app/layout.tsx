@@ -2,7 +2,7 @@ import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 // import { usePathname } from 'next/navigation';
-import { HomeIcon } from 'lucide-react';
+import { Toaster } from '@/components/ui/toaster';
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -42,7 +42,9 @@ export default async function RootLayout({
           fontSans.variable
         )}
       >
-        <main className='bg-transparent '>{children}</main>
+        <main className='bg-transparent '>
+          {children} <Toaster />
+        </main>
       </body>
     </html>
   );

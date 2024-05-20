@@ -333,9 +333,9 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
               control={form.control}
               name='pais'
               render={({ field }) => (
-                <FormItem className='flex flex-col'>
+                <FormItem className='flex flex-col basis-full md:basis-1/2'>
                   <FormLabel>País</FormLabel>
-                  <Popover open={selectPais} onOpenChange={setSelectPais}>
+                  <Popover modal open={selectPais} onOpenChange={setSelectPais}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button

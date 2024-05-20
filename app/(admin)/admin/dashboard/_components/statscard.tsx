@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function StatsCard(props: {
   title: string;
-  value: number;
+  value: number | string;
   icon: React.ReactNode;
   //   percentage: number;
 }) {

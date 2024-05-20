@@ -41,7 +41,8 @@ export default function PortoDetails(props: {
 }) {
   const { open, setOpen, porto_id, mutate } = props;
   const [deleting, setDeleting] = useState(false);
-  const [activePage, setPage] = useState(1);
+  const [activePageOrigem, setPageOrigem] = useState(1);
+  const [activePageDestino, setPageDestino] = useState(1);
 
   const {
     data: porto,
@@ -53,10 +54,10 @@ export default function PortoDetails(props: {
   );
 
   const chunked_origem = chunk(porto?.viagem_origem ?? [], 5);
-  const porto_origem = chunked_origem[activePage - 1];
+  const porto_origem = chunked_origem[activePageOrigem - 1];
 
   const chunked_destino = chunk(porto?.viagem_destino ?? [], 5);
-  const porto_destino = chunked_destino[activePage - 1];
+  const porto_destino = chunked_destino[activePageDestino - 1];
 
   async function handleDeletePorto(id: number | undefined) {
     setDeleting(true);
@@ -137,8 +138,8 @@ export default function PortoDetails(props: {
                 </Table>
                 <Paginacao
                   chunked={chunked_origem}
-                  activePage={activePage}
-                  setPage={setPage}
+                  activePage={activePageOrigem}
+                  setPage={setPageOrigem}
                 />
               </div>
             </div>
@@ -176,8 +177,8 @@ export default function PortoDetails(props: {
                 </Table>
                 <Paginacao
                   chunked={chunked_origem}
-                  activePage={activePage}
-                  setPage={setPage}
+                  activePage={activePageDestino}
+                  setPage={setPageDestino}
                 />
               </div>
             </div>

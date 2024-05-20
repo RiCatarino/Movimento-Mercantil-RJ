@@ -8,7 +8,7 @@ export default async function Dashboard() {
   const { user } = await validateRequest();
 
   if (!user) {
-    redirect('/');
+    return redirect('/auth/signin');
   }
 
   return <Stats />;
