@@ -145,7 +145,11 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
                   <FormLabel>Pessoa</FormLabel>
-                  <Popover open={selectPessoa} onOpenChange={setSelectPessoa}>
+                  <Popover
+                    modal
+                    open={selectPessoa}
+                    onOpenChange={setSelectPessoa}
+                  >
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
