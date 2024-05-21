@@ -69,7 +69,7 @@ export default function TabelaPaises() {
         <Input
           name='search'
           className='rounded-xl'
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovoPais mutate={mutate} />

@@ -76,6 +76,7 @@ export default function SignInPage() {
           className='flex flex-col items-center w-full gap-4'
         >
           <Input
+            disabled={!token}
             name='useremail'
             type='email'
             placeholder='Email'
@@ -84,6 +85,7 @@ export default function SignInPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
+            disabled={!token}
             name='password'
             type='password'
             placeholder='Senha'

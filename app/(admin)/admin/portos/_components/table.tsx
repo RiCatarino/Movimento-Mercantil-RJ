@@ -55,7 +55,7 @@ export default function TabelaPortos() {
         <Input
           name='search'
           className='rounded-xl'
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovaUnidade mutate={mutate} />
@@ -68,7 +68,7 @@ export default function TabelaPortos() {
         <Table>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead className='w-4'>ID</TableHead>
+              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
               <TableHead className='w-96'>Nome</TableHead>
               <TableHead>País</TableHead>
               <TableHead></TableHead>
@@ -84,7 +84,9 @@ export default function TabelaPortos() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='w-10 font-medium'>{porto.id}</TableCell>
+                <TableCell className='w-10 font-medium hidden md:table-cell'>
+                  {porto.id}
+                </TableCell>
                 <TableCell className='font-medium max-w-32'>
                   {porto.nome}
                 </TableCell>

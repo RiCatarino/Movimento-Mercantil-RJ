@@ -78,7 +78,7 @@ export default function TableEmbarcacoes() {
         <Input
           id='search'
           className='rounded-xl'
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NewVessel mutate={mutate} />
@@ -91,9 +91,9 @@ export default function TableEmbarcacoes() {
         <Table>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow>
-              <TableHead className='w-4'>ID</TableHead>
-              <TableHead className=' w-96'>Nome</TableHead>
-              <TableHead>Tipo de Embarcação</TableHead>
+              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
+              <TableHead className='md:w-96'>Nome</TableHead>
+              <TableHead>Tipo</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
@@ -107,7 +107,9 @@ export default function TableEmbarcacoes() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium'>{embarcacao.id}</TableCell>
+                <TableCell className='font-medium hidden md:table-cell'>
+                  {embarcacao.id}
+                </TableCell>
                 <TableCell className='font-medium'>{embarcacao.nome}</TableCell>
                 <TableCell className='font-medium'>
                   {embarcacao.tipo_embarcacao?.tipo}
