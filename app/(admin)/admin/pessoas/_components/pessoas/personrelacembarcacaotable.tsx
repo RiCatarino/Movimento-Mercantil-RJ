@@ -50,11 +50,11 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
   }
 
   return (
-    <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
+    <div className='w-full rounded-ss-xl rounded-se-xl gap-4 antialiased'>
       <Table className='shadow-xl'>
         <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
           <TableRow className='rounded-ss-xl'>
-            <TableHead>ID</TableHead>
+            <TableHead className='hidden md:table-cell'>ID</TableHead>
             <TableHead>Embarcação</TableHead>
             <TableHead>Início</TableHead>
             <TableHead>Fim</TableHead>
@@ -65,7 +65,7 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
         <TableBody>
           {pessoadata?.map((relacao) => (
             <TableRow key={relacao.id}>
-              <TableCell className='px-4 py-0 text-xs font-medium'>
+              <TableCell className='px-4 py-0 text-xs font-medium hidden md:table-cell'>
                 {relacao.embarcacao.id}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>

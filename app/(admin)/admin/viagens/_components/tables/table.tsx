@@ -60,7 +60,7 @@ export default function TripsTable() {
         <Input
           name='search'
           className='rounded-xl '
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome de embarcação...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <div className='flex flex-col md:flex-row gap-4 '>
@@ -105,7 +105,7 @@ export default function TripsTable() {
         <Table>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
             <TableRow className='rounded-ss-xl'>
-              <TableHead className='w-4'>ID</TableHead>
+              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
               <TableHead className='w-96'>Data Rio</TableHead>
               <TableHead className='w-96'>Tipo</TableHead>
               <TableHead>Embarcação</TableHead>
@@ -122,7 +122,9 @@ export default function TripsTable() {
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium'>{viagem.id}</TableCell>
+                <TableCell className='font-medium hidden md:table-cell'>
+                  {viagem.id}
+                </TableCell>
                 <TableCell className='font-medium'>
                   {viagem.data_rio
                     ? dayjs(viagem.data_rio).format('DD/MM/YYYY')

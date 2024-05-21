@@ -77,7 +77,7 @@ export default function TableTipos() {
         <Input
           name='search'
           className='rounded-xl'
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NovoTipo mutate={mutate} />

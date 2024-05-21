@@ -82,6 +82,13 @@ export default function NewVessel(props: { mutate: () => void }) {
         duration: 5000,
         description: 'Embarcação adicionada com sucesso',
       });
+    } else if (result.status === 409) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro',
+        duration: 5000,
+        description: 'Esta embarcação já existe',
+      });
     } else {
       toast({
         variant: 'destructive',

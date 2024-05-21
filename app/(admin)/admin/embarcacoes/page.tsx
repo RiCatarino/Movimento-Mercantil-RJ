@@ -11,7 +11,7 @@ export default async function EmbarcacoesPage() {
     return redirect('/auth/signin');
   }
   return (
-    <main className='p-4 lg:mx-24 '>
+    <main className='p-1 md:p-4 lg:mx-24 '>
       <title>Embarcações</title>
       <Tabs defaultValue='embarcacoes' className='w-full'>
         <TabsList className='w-full bg-blue-200 rounded-3xl'>

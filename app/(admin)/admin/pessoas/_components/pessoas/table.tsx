@@ -45,7 +45,7 @@ export default function TabelaPessoas() {
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
-          placeholder='Pesquisar por nome'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setName(e.target.value)}
           value={name}
           className='rounded-xl'
@@ -57,13 +57,15 @@ export default function TabelaPessoas() {
           <Loader classProp='w-24 h-24 self-center flex' />
         </main>
       ) : (
-        <div>
+        <div className='flex flex-col gap-4'>
           <Table>
             <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
               <TableRow className='rounded-ss-xl'>
-                <TableHead className='w-4'>ID</TableHead>
+                <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
                 <TableHead className='w-96'>Nome</TableHead>
-                <TableHead>Título de Nobreza</TableHead>
+                <TableHead className='hidden md:table-cell'>
+                  Título de Nobreza
+                </TableHead>
                 <TableHead>País</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -79,9 +81,11 @@ export default function TabelaPessoas() {
                     setOpen(true);
                   }}
                 >
-                  <TableCell className='font-medium'>{pessoa.id}</TableCell>
+                  <TableCell className='font-medium hidden md:table-cell'>
+                    {pessoa.id}
+                  </TableCell>
                   <TableCell className='font-medium'>{pessoa.nome}</TableCell>
-                  <TableCell className='font-medium'>
+                  <TableCell className='font-medium hidden md:table-cell'>
                     {pessoa?.titulo_nobreza?.titulo}
                   </TableCell>
                   <TableCell className='font-medium'>

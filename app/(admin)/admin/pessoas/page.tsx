@@ -12,7 +12,7 @@ export default async function PessoasPage() {
     return redirect('/auth/signin');
   }
   return (
-    <main className='p-4 lg:mx-24 '>
+    <main className='p-1 md:p-4 lg:mx-24 '>
       <Tabs defaultValue='pessoas' className='w-full'>
         <TabsList className='w-full bg-blue-200 rounded-3xl'>
           <TabsTrigger value='pessoas' className='w-1/2 rounded-3xl '>

@@ -77,7 +77,7 @@ export default function TabelaCargos() {
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
-          placeholder='Pesquisar por nome'
+          placeholder='Pesquisar por nome do cargo...'
           onChange={(e) => setSearchText(e.target.value)}
           value={name}
           className='rounded-xl'

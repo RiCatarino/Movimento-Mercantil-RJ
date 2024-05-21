@@ -111,7 +111,7 @@ export default function TabelaUsuarios() {
         <Input
           name='search'
           className='rounded-xl'
-          placeholder='Pesquisar...'
+          placeholder='Pesquisar por nome ou e-mail...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovoUsuario mutate={mutate} />

@@ -1,33 +1,30 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
-import dayjs from "dayjs";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
+import dayjs from 'dayjs';
 
-var customParseFormat = require("dayjs/plugin/customParseFormat");
+var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
   const { searchParams } = new URL(req.url);
-  const search = searchParams.get("search");
-  const ano = searchParams.get("ano");
-  const tipo = searchParams.get("tipo");
+  const search = searchParams.get('search');
+  const ano = searchParams.get('ano');
+  const tipo = searchParams.get('tipo');
   const result = await prisma.viagem.findMany({
     where: {
       AND: [
-        // {
-        //   id: Number(search),
-        // },
         {
           embarcacao: {
-            nome: { startsWith: search?.toString(), mode: "insensitive" },
+            nome: { startsWith: search?.toString(), mode: 'insensitive' },
           },
         },
-        ...(ano && ano !== "none"
+        ...(ano && ano !== 'none'
           ? [
               {
                 data_rio: {
@@ -38,7 +35,7 @@ export async function GET(req: Request) {
             ]
           : []),
 
-        ...(tipo && tipo !== "none"
+        ...(tipo && tipo !== 'none'
           ? [
               {
                 entrada_sahida: tipo?.toString(),
@@ -117,7 +114,7 @@ export async function GET(req: Request) {
     take: 100,
 
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
   });
   return Response.json(result);
