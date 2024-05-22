@@ -518,6 +518,10 @@ export default function Home() {
           <div className='z-10 w-full transition-all duration-300 ease-in-out cursor-pointer h-fit lg:absolute -bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 '>
             <h1 className='justify-center w-full p-2 mx-auto text-xl font-extrabold text-center text-red-500 bg-white lg:text-4xl lg:w-1/2 rounded-xl'>
               Este site encontra-se em <br /> desenvolvimento.
+              <p className='text-xs text-blue-800'>
+                {' '}
+                Report de bugs e sugestões para: 30008236@students.ual.pt{' '}
+              </p>
             </h1>
             <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>
               Viagens pelo globo, a partir do Rio.
