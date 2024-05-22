@@ -92,7 +92,3 @@ O **Projeto Movimento Mercantil** representa um esforço significativo para torn
 
 - **Documentação do Next.js:** [https://nextjs.org/docs](https://nextjs.org/docs)
 - **Visual Studio Code:** [https://code.visualstudio.com/](https://code.visualstudio.com/)
-
----
-
-**Nota:** Certifique-se de adaptar e expandir o conteúdo conforme necessário para refletir com precisão as especificidades do seu projeto.

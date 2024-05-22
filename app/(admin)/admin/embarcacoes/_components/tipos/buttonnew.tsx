@@ -59,14 +59,14 @@ export default function NovoTipo(props: { mutate: () => void }) {
         className: 'bg-green-200',
         title: 'Sucesso',
         duration: 5000,
-        description: 'Embarcação adicionada com sucesso',
+        description: 'Tipo de embarcação adicionado com sucesso',
       });
     } else {
       toast({
         variant: 'destructive',
         title: 'Erro',
         duration: 5000,
-        description: 'Erro ao adicionar embarcação',
+        description: 'Erro ao adicionar tipo de embarcação',
       });
     }
     setSubmitting(false);

@@ -76,9 +76,11 @@ export default function DialogEditarPorto(props: {
 
   useEffect(() => {
     if (open) {
-      form.setValue('porto_id', porto_id);
-      form.setValue('nome', nome);
-      form.setValue('id_pais', pais);
+      form.reset({
+        porto_id: porto_id,
+        nome: nome,
+        id_pais: pais,
+      });
     }
   }, [open, paises]);
 

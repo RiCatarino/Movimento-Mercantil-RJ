@@ -136,15 +136,31 @@ export default function TripDetails(props: {
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
-                  Porto Origem
+                  Porto de Origem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_origem?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
-                  Porto Destino
+                  Dias no porto de origem
+                </div>
+                <div className='p-2 text-xs'>
+                  {viagem?.dias_porto_origem || 'N/A'}
+                </div>
+              </div>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                  Porto de Destino
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_destino?.nome}</div>
+              </div>
+              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                  Dias no porto de destino
+                </div>
+                <div className='p-2 text-xs'>
+                  {viagem?.dias_porto_destino || 'N/A'}
+                </div>
               </div>
             </div>
 
@@ -186,7 +202,7 @@ export default function TripDetails(props: {
                     {viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao &&
                       viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao
                         .length > 0 && (
-                        <div className='flex flex-col gap-2 p-2'>
+                        <div className='flex flex-col p-2 gap-2'>
                           <div className='flex flex-wrap gap-2'>
                             {viagem?.embarcacao?.tipo_embarcacao?.imagem_embarcacao?.map(
                               (img) => (
@@ -195,7 +211,7 @@ export default function TripDetails(props: {
                                   key={img.id}
                                   src={img.imagem}
                                   alt={viagem?.embarcacao?.tipo_embarcacao.tipo}
-                                  className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
+                                  className='w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto'
                                 />
                               )
                             )}
@@ -216,7 +232,7 @@ export default function TripDetails(props: {
                 <AccordionItem value='crew' className='w-full'>
                   <AccordionTrigger>Tripulação</AccordionTrigger>
                   <AccordionContent>
-                    <div className='flex flex-row flex-1 gap-2'>
+                    <div className='flex flex-wrap flex-1 gap-2'>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
                         <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                           Comandante
@@ -303,7 +319,7 @@ export default function TripDetails(props: {
                 <AlertDialogTrigger className='self-end mt-10' asChild>
                   <Button
                     variant='destructive'
-                    className='self-end justify-end'
+                    className='w-full md:self-end md:justify-end md:w-fit'
                   >
                     Remover <Trash className='w-5 h-5 ml-2' />
                   </Button>

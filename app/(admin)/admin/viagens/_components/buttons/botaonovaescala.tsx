@@ -31,6 +31,7 @@ import { Calendar } from '@/components/ui/calendar';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import { cn } from '@/lib/utils';
+import { ptBR } from 'date-fns/locale';
 
 const formSchema = z.object({
   data: z.string().min(1, { message: 'Nome muito curto' }),
@@ -77,7 +78,7 @@ export default function BotaoNovaeEscala(props: {
     },
   });
 
-  const { data: portos, isLoading } = useSWR<Porto[]>(
+  const { data: portos } = useSWR<Porto[]>(
     viagem_id != undefined && '/api/porto/read/byname?name=' + searchName,
     fetcher
   );
@@ -116,11 +117,11 @@ export default function BotaoNovaeEscala(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
+        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg float-end'>
           Adicionar Escala <Plus size={24} />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle className='text-blue-500'>Adicionar Escala</DialogTitle>
         </DialogHeader>
@@ -154,6 +155,7 @@ export default function BotaoNovaeEscala(props: {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -275,7 +277,7 @@ export default function BotaoNovaeEscala(props: {
               )}
             />
 
-            <div className=' grid grid-flow-row grid-cols-2 gap-2'>
+            <div className='grid grid-flow-row grid-cols-2 gap-2 '>
               <FormField
                 control={form.control}
                 name='entrada_de_passageiros'

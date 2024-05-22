@@ -1,26 +1,47 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
+import dayjs from 'dayjs';
 
-export const dynamic = "force-dynamic";
+var customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
+export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
   const { searchParams } = new URL(req.url);
-  const search = searchParams.get("search");
+  const search = searchParams.get('search');
+  const ano = searchParams.get('ano');
+  const tipo = searchParams.get('tipo');
   const result = await prisma.viagem.findMany({
     where: {
-      OR: [
-        // {
-        //   id: Number(search),
-        // },
+      AND: [
         {
           embarcacao: {
-            nome: { startsWith: search?.toString(), mode: "insensitive" },
+            nome: { startsWith: search?.toString(), mode: 'insensitive' },
           },
         },
+        ...(ano && ano !== 'none'
+          ? [
+              {
+                data_rio: {
+                  gte: new Date(`${ano}-01-01`),
+                  lte: new Date(`${ano}-12-31`),
+                },
+              },
+            ]
+          : []),
+
+        ...(tipo && tipo !== 'none'
+          ? [
+              {
+                entrada_sahida: tipo?.toString(),
+              },
+            ]
+          : []),
       ],
     },
 
@@ -90,8 +111,10 @@ export async function GET(req: Request) {
       },
     },
 
+    take: 100,
+
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
   });
   return Response.json(result);

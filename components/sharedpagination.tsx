@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination';
 
 export default function Paginacao(props: {
   chunked: any[];
@@ -22,7 +22,7 @@ export default function Paginacao(props: {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className="cursor-pointer text-blue-500"
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white '
             onClick={() => {
               if (activePage > 1) {
                 setPage(activePage - 1);
@@ -30,14 +30,14 @@ export default function Paginacao(props: {
             }}
           />
         </PaginationItem>
-        <PaginationItem className="flex gap-2">
+        <PaginationItem className='hidden md:gap-2 md:flex'>
           {chunked.length <= 8
             ? chunked.map((_, index) => (
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                      : "cursor-pointer "
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      : 'cursor-pointer '
                   }
                   key={index}
                   onClick={() => setPage(index + 1)}
@@ -50,8 +50,8 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                      : "cursor-pointer "
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      : 'cursor-pointer '
                   }
                   key={index}
                   onClick={() => setPage(index + 1)}
@@ -63,8 +63,8 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                      : "cursor-pointer "
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      : 'cursor-pointer '
                   }
                   key={index}
                   onClick={() => setPage(index + 1)}
@@ -79,15 +79,15 @@ export default function Paginacao(props: {
           </PaginationItem>
         )}
 
-        <PaginationItem>
+        <PaginationItem className='hidden md:gap-2 md:flex'>
           {activePage >= 6 &&
             activePage < chunked.length - 2 &&
             chunked.slice(activePage - 2, activePage + 1).map((_, index) => (
               <PaginationLink
                 className={
                   activePage - activePage + 1 == index
-                    ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                    : "cursor-pointer "
+                    ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                    : 'cursor-pointer '
                 }
                 key={index}
                 onClick={() => setPage(activePage - 1 + index)}
@@ -101,14 +101,14 @@ export default function Paginacao(props: {
             <PaginationEllipsis />
           </PaginationItem>
         )}
-        <PaginationItem>
+        <PaginationItem className='hidden md:gap-2 md:flex'>
           {chunked.length >= 9 && activePage < chunked.length - 2
             ? chunked.slice(-1).map((_, index) => (
                 <PaginationLink
                   className={
                     activePage == chunked.length
-                      ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                      : "cursor-pointer "
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      : 'cursor-pointer '
                   }
                   key={index}
                   onClick={() => setPage(chunked.length)}
@@ -121,8 +121,8 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == chunked.length - 2 + index
-                      ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white"
-                      : "cursor-pointer"
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      : 'cursor-pointer'
                   }
                   key={index}
                   onClick={() => setPage(chunked.length - 2 + index)}
@@ -134,7 +134,7 @@ export default function Paginacao(props: {
 
         <PaginationItem>
           <PaginationNext
-            className="cursor-pointer text-blue-500"
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white '
             onClick={() => {
               if (activePage < chunked.length) {
                 setPage(activePage + 1);

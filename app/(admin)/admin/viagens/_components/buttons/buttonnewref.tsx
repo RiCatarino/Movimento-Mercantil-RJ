@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/popover';
 import dayjs from 'dayjs';
 import { Calendar } from '@/components/ui/calendar';
+import { ptBR } from 'date-fns/locale';
 
 const formSchema = z.object({
   data: z.string().min(1, { message: 'Nome muito curto' }),
@@ -79,7 +80,7 @@ export default function ButtonNewRef(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
+        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg float-end'>
           Adicionar Referência Documental <Plus size={24} />
         </Button>
       </DialogTrigger>
@@ -119,6 +120,7 @@ export default function ButtonNewRef(props: {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()

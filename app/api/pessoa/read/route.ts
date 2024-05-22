@@ -17,6 +17,7 @@ export async function GET() {
       pais: true,
       titulo_nobreza: {
         select: {
+          id: true,
           titulo: true,
         },
       },
@@ -30,7 +31,7 @@ export async function GET() {
         },
       },
     },
-    take: 10,
+    take: 100,
 
     orderBy: {
       id: "desc",

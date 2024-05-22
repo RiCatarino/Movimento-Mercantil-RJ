@@ -187,12 +187,12 @@ export default function BotaoNovaViagem() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
+        <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Viagem
           <Plus size={24} />
         </Button>
       </SheetTrigger>
-      <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg sm:max-w-[90%] md:max-w-[75%] lg:max-w-[50%] w-[95%]  '>
+      <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg md:max-w-[98%] lg:max-w-[50%] w-[95%]  '>
         <SheetHeader>
           <SheetTitle className='text-blue-500'>Adicionar Viagem</SheetTitle>
         </SheetHeader>
@@ -208,14 +208,17 @@ export default function BotaoNovaViagem() {
                 render={({ field }) => (
                   <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
                     <FormLabel>Data da Viagem</FormLabel>
+
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                        }}
-                      />
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -260,35 +263,37 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Data de Chegada</FormLabel>
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          //if date is after data_inicio
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            //if date is after data_inicio
 
-                          if (form.watch('data_viagem')) {
-                            if (
-                              dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
-                                dayjs(
-                                  form.getValues('data_viagem'),
-                                  'DD-MM-YYYY'
+                            if (form.watch('data_viagem')) {
+                              if (
+                                dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
+                                  dayjs(
+                                    form.getValues('data_viagem'),
+                                    'DD-MM-YYYY'
+                                  )
                                 )
-                              )
-                            ) {
-                              form.setValue('data_chegada', e.target.value);
+                              ) {
+                                form.setValue('data_chegada', e.target.value);
+                              } else {
+                                toast({
+                                  variant: 'destructive',
+                                  title: 'Erro',
+                                  description:
+                                    'Data de fim deve ser após a data de início',
+                                });
+                              }
                             } else {
-                              toast({
-                                variant: 'destructive',
-                                title: 'Erro',
-                                description:
-                                  'Data de fim deve ser após a data de início',
-                              });
+                              field.onChange(e.target.value);
                             }
-                          } else {
-                            field.onChange(e.target.value);
-                          }
-                        }}
-                      />
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -357,13 +362,15 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col basis-1/2 grow md:grow-0'>
                     <FormLabel>Data Rio</FormLabel>
                     <div className='flex w-full gap-2'>
-                      <Input
-                        placeholder='DD-MM-YYYY'
-                        value={field.value || ''}
-                        onChange={(e) => {
-                          field.onChange(e.target.value);
-                        }}
-                      />
+                      <FormControl>
+                        <Input
+                          placeholder='DD-MM-YYYY'
+                          value={field.value || ''}
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                          }}
+                        />
+                      </FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
@@ -409,6 +416,7 @@ export default function BotaoNovaViagem() {
                   <FormItem className='flex flex-col grow'>
                     <FormLabel>Tipo</FormLabel>
                     <Select
+                      name='entrada_sahida'
                       onValueChange={field.onChange}
                       // defaultValue={field.value?.toString()}
                     >
@@ -492,8 +500,16 @@ export default function BotaoNovaViagem() {
                             {field.value
                               ? portos?.find(
                                   (porto) => porto.id === field.value
-                                )?.nome
-                              : 'Seleccionar Porto'}
+                                )?.nome +
+                                (portos?.find(
+                                  (porto) => porto.id === field.value
+                                )?.pais?.pais
+                                  ? ' | ' +
+                                    portos?.find(
+                                      (porto) => porto.id === field.value
+                                    )?.pais?.pais
+                                  : '')
+                              : 'Selecionar Porto'}
                             <ChevronsUpDownIcon className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                           </Button>
                         </FormControl>
@@ -569,8 +585,16 @@ export default function BotaoNovaViagem() {
                             {field.value
                               ? portos?.find(
                                   (porto) => porto.id === field.value
-                                )?.nome
-                              : 'Seleccionar Porto'}
+                                )?.nome +
+                                (portos?.find(
+                                  (porto) => porto.id === field.value
+                                )?.pais?.pais
+                                  ? ' | ' +
+                                    portos?.find(
+                                      (porto) => porto.id === field.value
+                                    )?.pais?.pais
+                                  : '')
+                              : 'Selecionar Porto'}
                             <ChevronsUpDownIcon className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                           </Button>
                         </FormControl>

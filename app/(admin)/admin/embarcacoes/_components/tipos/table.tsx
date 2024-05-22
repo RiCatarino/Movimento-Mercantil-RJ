@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Table,
@@ -7,12 +7,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
-import Loader from "@/components/loader";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import TipoDetails from "./details";
+} from '@/components/ui/table';
+import { useState } from 'react';
+import Loader from '@/components/loader';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import TipoDetails from './details';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,27 +23,23 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { XIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
-import NovoTipo from "./buttonnew";
-import { Input } from "@/components/ui/input";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
+} from '@/components/ui/alert-dialog';
+import { EditIcon, XIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import NovoTipo from './buttonnew';
+import { Input } from '@/components/ui/input';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
+import DialogEditarTipo from './dialogedit';
 
 export default function TableTipos() {
   const [open, setOpen] = useState(false);
-  const [idTipo, setIdTipo] = useState<number | undefined>();
+  const [openEdit, setOpenEdit] = useState(false);
+  const [tipo, setTipo] = useState<TipoEmbarcacao>();
   const [deleting, setDeleting] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [activePage, setPage] = useState(1);
-
-  // const {
-  //   data: tiposdata,
-  //   isLoading,
-  //   mutate,
-  // } = useSWR<TipoEmbarcacao[]>('/api/tipo_embarcacao/read', fetcher);
 
   const {
     data: tiposdata,
@@ -51,12 +47,10 @@ export default function TableTipos() {
     mutate,
   } = useSWR<TipoEmbarcacao[]>(
     searchText
-      ? "/api/tipo_embarcacao/read/byname?tipo=" + searchText
-      : "/api/tipo_embarcacao/read",
+      ? '/api/tipo_embarcacao/read/byname?tipo=' + searchText
+      : '/api/tipo_embarcacao/read',
     fetcher
   );
-
-  console.log(tiposdata);
 
   const chunked = chunk(tiposdata ?? [], 10);
   const tipos = chunked[activePage - 1];
@@ -64,108 +58,123 @@ export default function TableTipos() {
   async function handleDeleteTipo(id: number) {
     setDeleting(true);
     await fetch(`/api/tipo_embarcacao/delete`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: "bg-green-200",
-      title: "Sucesso",
+      className: 'bg-green-200',
+      title: 'Sucesso',
       duration: 5000,
-      description: "Tipo removido com sucesso",
+      description: 'Tipo removido com sucesso',
     });
     setDeleting(false);
   }
 
-  // if (isLoading)
-  //   return (
-  //     <main className="flex flex-row justify-center p-4">
-  //       <Loader classProp="w-24 h-24 self-center flex" />
-  //     </main>
-  //   );
-
   return (
-    <div className="flex flex-col  gap-2 mt-2 p-2 border-2 border-gray-300 border-solid shadow-lg rounded-3xl">
-      <div className="flex flex-row justify-between gap-4 ">
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
-          className="rounded-xl"
-          placeholder="Pesquisar..."
+          name='search'
+          className='rounded-xl'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NovoTipo mutate={mutate} />
       </div>
-
-      <Table>
-        <TableHeader className="p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 ">
-          <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Tipo</TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {tipos?.map((tipo) => (
-            <TableRow
-              className="cursor-pointer hover:bg-blue-100"
-              key={tipo.id}
-              onClick={(e) => {
-                setIdTipo(tipo.id);
-                setOpen(true);
-              }}
-            >
-              <TableCell className="font-medium w-10">{tipo.id}</TableCell>
-              <TableCell className="font-medium">{tipo.tipo}</TableCell>
-              <TableCell className="w-4">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
+      {isLoading ? (
+        <div className='flex flex-row justify-center p-4'>
+          <Loader classProp='w-24 h-24 self-center flex' />
+        </div>
+      ) : (
+        <Table>
+          <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableRow>
+              {/* <TableHead className='w-4'>ID</TableHead> */}
+              <TableHead>Tipo</TableHead>
+              <TableHead></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tipos?.map((tipo) => (
+              <TableRow
+                className='cursor-pointer hover:bg-blue-100'
+                key={tipo.id}
+                onClick={(e) => {
+                  setTipo(tipo);
+                  setOpen(true);
+                }}
+              >
+                {/* <TableCell className='w-10 font-medium'>{tipo.id}</TableCell> */}
+                <TableCell className='font-medium'>{tipo.tipo}</TableCell>
+                <TableCell className='w-4'>
+                  <div className='flex gap-2'>
                     <Button
-                      size="icon"
-                      variant="link"
-                      className="text-xs text-blue-500"
+                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                       onClick={(e) => {
                         e.stopPropagation();
+                        setTipo(tipo);
+                        setOpenEdit(true);
                       }}
                     >
-                      <XIcon className="w-4 text-red-700" />
+                      <EditIcon size={24} />
                     </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className="text-red-500">
-                        Tem a certeza?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Esta ação não pode ser desfeita. Esta ação irá remover o
-                        tipo de embarcação.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction
-                        disabled={deleting}
-                        className="bg-red-500 hover:bg-red-600"
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <XIcon className='w-4 text-red-700' />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent
                         onClick={(e) => {
-                          handleDeleteTipo(tipo.id);
+                          e.stopPropagation();
                         }}
                       >
-                        {deleting && <Loader classProp="w-4 h-4" />} Remover
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className='text-red-500'>
+                            Tem a certeza?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Esta ação não pode ser desfeita. Esta ação irá
+                            remover o tipo de embarcação.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            disabled={deleting}
+                            className='bg-red-500 hover:bg-red-600'
+                            onClick={(e) => {
+                              handleDeleteTipo(tipo.id);
+                            }}
+                          >
+                            {deleting && <Loader classProp='w-4 h-4' />} Remover
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
       <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
-
-      <TipoDetails open={open} setOpen={setOpen} tipo_id={idTipo} />
+      <TipoDetails open={open} setOpen={setOpen} tipo_id={tipo?.id} />
+      <DialogEditarTipo
+        open={openEdit}
+        setOpen={setOpenEdit}
+        tipo={tipo}
+        mutate={mutate}
+      />
     </div>
   );
 }

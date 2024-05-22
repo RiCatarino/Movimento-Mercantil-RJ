@@ -116,7 +116,7 @@ export default function BotaoNovaImagem(props: {
               <img
                 src={form.watch('imagem')}
                 alt='Url Inválido'
-                className='rounded-lg max-w-full'
+                className='max-w-full rounded-lg'
               />
             )}
             <Button

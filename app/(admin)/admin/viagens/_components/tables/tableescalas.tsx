@@ -79,7 +79,7 @@ export default function TableEscalas(props: {
               <TableCell className='text-xs font-medium'>
                 {escala.dias_porto}
               </TableCell>
-              <TableCell className='text-xs font-medium'>
+              <TableCell className='text-xs font-medium '>
                 {escala.porto.nome}
               </TableCell>
               <TableCell className='text-xs font-medium'>

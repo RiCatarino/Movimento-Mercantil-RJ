@@ -41,6 +41,7 @@ import { Calendar } from '@/components/ui/calendar';
 import dayjs from 'dayjs';
 import Loader from '@/components/loader';
 import { useToast } from '@/components/ui/use-toast';
+import { ptBR } from 'date-fns/locale';
 
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -144,7 +145,11 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
                   <FormLabel>Pessoa</FormLabel>
-                  <Popover open={selectPessoa} onOpenChange={setSelectPessoa}>
+                  <Popover
+                    modal
+                    open={selectPessoa}
+                    onOpenChange={setSelectPessoa}
+                  >
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -220,6 +225,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -287,6 +293,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()
@@ -330,9 +337,9 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
               control={form.control}
               name='pais'
               render={({ field }) => (
-                <FormItem className='flex flex-col'>
+                <FormItem className='flex flex-col basis-full md:basis-1/2'>
                   <FormLabel>País</FormLabel>
-                  <Popover open={selectPais} onOpenChange={setSelectPais}>
+                  <Popover modal open={selectPais} onOpenChange={setSelectPais}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button

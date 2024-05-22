@@ -2,23 +2,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TabelaTitulos from './_components/titulos/table';
 import TabelaCargos from './_components/cargos/table';
 import TabelaPessoas from './_components/pessoas/table';
+import { redirect } from 'next/navigation';
+import { validateRequest } from '@/auth';
 
-export default function PessoasPage() {
+export default async function PessoasPage() {
+  const { user } = await validateRequest();
+
+  if (!user) {
+    return redirect('/auth/signin');
+  }
   return (
-    // <main className='flex flex-col p-4 mx-0 mt-5 border-2 border-gray-300 border-solid shadow-lg gap-2 rounded-3xl md:mx-24 '>
-    //   <NewPerson />
-    //   <PeopleTable />
-    // </main>
-    <main className='p-4 md:mx-24 '>
+    <main className='p-1 md:p-4 lg:mx-24 '>
       <Tabs defaultValue='pessoas' className='w-full'>
-        <TabsList className='rounded-3xl bg-blue-200 w-full'>
-          <TabsTrigger value='pessoas' className='rounded-3xl w-1/2 '>
+        <TabsList className='w-full bg-blue-200 rounded-3xl'>
+          <TabsTrigger value='pessoas' className='w-1/2 rounded-3xl '>
             Pessoas
           </TabsTrigger>
-          <TabsTrigger value='titulos' className='rounded-3xl w-1/2'>
+          <TabsTrigger value='titulos' className='w-1/2 rounded-3xl'>
             Títulos de Nobreza
           </TabsTrigger>
-          <TabsTrigger value='cargos' className='rounded-3xl w-1/2'>
+          <TabsTrigger value='cargos' className='w-1/2 rounded-3xl'>
             Cargos
           </TabsTrigger>
         </TabsList>

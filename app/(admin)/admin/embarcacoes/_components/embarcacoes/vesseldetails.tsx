@@ -34,6 +34,12 @@ import Loader from '@/components/loader';
 import { XIcon } from 'lucide-react';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export default function VesselDetails(props: {
   open: boolean;
@@ -42,7 +48,8 @@ export default function VesselDetails(props: {
 }) {
   const { open, setOpen, embarcacao_id } = props;
   const [deleting, setDeleting] = useState(false);
-  const [activePage, setPage] = useState(1);
+  const [activePagePessoas, setPagePessoas] = useState(1);
+  const [activePageViagens, setPageViagens] = useState(1);
 
   const {
     data: embarcacao,
@@ -53,8 +60,14 @@ export default function VesselDetails(props: {
     fetcher
   );
 
-  const chunked = chunk(embarcacao?.relacao_embarcacao_proprietario ?? [], 5);
-  const embarcacoes = chunked[activePage - 1];
+  const chunkedpessoas = chunk(
+    embarcacao?.relacao_embarcacao_proprietario ?? [],
+    5
+  );
+  const pessoas = chunkedpessoas[activePagePessoas - 1];
+
+  const chunkedviagens = chunk(embarcacao?.viagem ?? [], 5);
+  const viagens = chunkedviagens[activePageViagens - 1];
 
   async function handleDeleteOwner(id: number) {
     setDeleting(true);
@@ -82,7 +95,7 @@ export default function VesselDetails(props: {
         </DialogHeader>
         {!isLoading && (
           <>
-            <div className='flex flex-wrap gap-2'>
+            <div className='flex flex-wrap gap-4'>
               <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
                 <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
                   Nome
@@ -107,16 +120,15 @@ export default function VesselDetails(props: {
               </div>
               {embarcacao?.tipo_embarcacao?.imagem_embarcacao &&
                 embarcacao?.tipo_embarcacao?.imagem_embarcacao.length > 0 && (
-                  <div className='flex flex-col gap-2 p-2'>
+                  <div className='flex flex-col p-2 gap-2'>
                     <div className='flex flex-wrap gap-2'>
                       {embarcacao?.tipo_embarcacao?.imagem_embarcacao?.map(
                         (img) => (
-                          // { X Button in upper right corner of the image}
                           <img
                             key={img.id}
                             src={img.imagem}
                             alt={embarcacao?.tipo_embarcacao.tipo}
-                            className=' max-h-64 md:max-w-96 rounded-lg w-full md:w-auto border '
+                            className='w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto'
                           />
                         )
                       )}
@@ -129,80 +141,169 @@ export default function VesselDetails(props: {
                 </div>
                 <div className='p-2 text-xs'>{embarcacao?.observacao}</div>
               </div>
-              <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
-                <Table>
-                  <TableHeader className='p-2 text-xs bg-blue-200 '>
-                    <TableRow className='rounded-ss-xl'>
-                      <TableHead>Pessoa</TableHead>
-                      <TableHead>Início</TableHead>
-                      <TableHead>Fim</TableHead>
-                      <TableHead>País</TableHead>
-                      <TableHead></TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {embarcacoes?.map((relacao) => (
-                      <TableRow key={relacao.id}>
-                        <TableCell className='text-xs font-medium'>
-                          {relacao.pessoa.nome} | {relacao.pessoa?.pais?.pais}
-                        </TableCell>
-                        <TableCell className='text-xs'>
-                          {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
-                        </TableCell>
-                        <TableCell className='text-xs'>
-                          {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
-                        </TableCell>
+              <Accordion
+                type='single'
+                collapsible
+                className='flex flex-col flex-1 w-full'
+              >
+                <AccordionItem value='vessel' className='w-full'>
+                  <AccordionTrigger>Pessoas</AccordionTrigger>
+                  <AccordionContent>
+                    {/* <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'> */}
+                    <Table>
+                      <TableHeader className='p-2 text-xs bg-blue-200 '>
+                        <TableRow className='rounded-ss-xl'>
+                          <TableHead>Pessoa</TableHead>
+                          <TableHead>Início</TableHead>
+                          <TableHead>Fim</TableHead>
+                          <TableHead>País</TableHead>
+                          <TableHead></TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {pessoas?.map(
+                          (relacao: RelacEmbarcacaoProprietario) => (
+                            <TableRow key={relacao.id}>
+                              <TableCell className='text-xs font-medium'>
+                                {relacao.pessoa.nome} |{' '}
+                                {relacao.pessoa?.pais?.pais}
+                              </TableCell>
+                              <TableCell className='text-xs'>
+                                {dayjs(relacao.data_inicio).format(
+                                  'DD/MM/YYYY'
+                                )}
+                              </TableCell>
+                              <TableCell className='text-xs'>
+                                {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
+                              </TableCell>
 
-                        <TableCell className='text-xs'>
-                          {relacao.pais.pais}
-                        </TableCell>
-                        <TableCell>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                size='icon'
-                                variant='link'
-                                className='text-xs text-blue-500'
-                              >
-                                <XIcon className='w-4 text-red-700' />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle className='text-red-500'>
-                                  Tem a certeza?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Esta ação não pode ser desfeita. Esta ação irá
-                                  remover o proprietário da embarcação.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                <AlertDialogAction
-                                  disabled={deleting}
-                                  className='bg-red-500 hover:bg-red-600'
-                                  onClick={() => handleDeleteOwner(relacao.id)}
-                                >
-                                  {deleting ? 'Aguarde...' : 'Remover'}
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                  {embarcacao?.relacao_embarcacao_proprietario.length === 0 && (
-                    <TableCaption>Nenhum proprietário encontrado</TableCaption>
-                  )}
-                </Table>
-                <Paginacao
-                  chunked={chunked}
-                  activePage={activePage}
-                  setPage={setPage}
-                />
-              </div>
+                              <TableCell className='text-xs'>
+                                {relacao.pais.pais}
+                              </TableCell>
+                              <TableCell>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button
+                                      size='icon'
+                                      variant='link'
+                                      className='text-xs text-blue-500'
+                                    >
+                                      <XIcon className='w-4 text-red-700' />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle className='text-red-500'>
+                                        Tem a certeza?
+                                      </AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        Esta ação não pode ser desfeita. Esta
+                                        ação irá remover o proprietário da
+                                        embarcação.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>
+                                        Cancelar
+                                      </AlertDialogCancel>
+                                      <AlertDialogAction
+                                        disabled={deleting}
+                                        className='bg-red-500 hover:bg-red-600'
+                                        onClick={() =>
+                                          handleDeleteOwner(relacao.id)
+                                        }
+                                      >
+                                        {deleting ? 'Aguarde...' : 'Remover'}
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
+                      </TableBody>
+                      {embarcacao?.relacao_embarcacao_proprietario.length ===
+                        0 && (
+                        <TableCaption>
+                          Nenhum proprietário encontrado
+                        </TableCaption>
+                      )}
+                    </Table>
+                    <Paginacao
+                      chunked={chunkedpessoas}
+                      activePage={activePagePessoas}
+                      setPage={setPagePessoas}
+                    />
+                    {/* </div> */}
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value='trip' className='w-full'>
+                  <AccordionTrigger>Viagens</AccordionTrigger>
+                  <AccordionContent>
+                    {/* VIAGENS */}
+                    {/* <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'> */}
+                    <Table>
+                      <TableHeader className='p-2 text-xs bg-blue-200 '>
+                        <TableRow className='rounded-ss-xl'>
+                          <TableHead className='hidden md:table-cell'>
+                            ID
+                          </TableHead>
+                          <TableHead>Data rio</TableHead>
+                          <TableHead>Tipo</TableHead>
+                          <TableHead>Origem</TableHead>
+                          <TableHead>Destino</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {viagens?.map((viagem) => (
+                          <TableRow key={viagem.id}>
+                            <TableCell className='text-xs font-medium hidden md:table-cell'>
+                              {viagem.id}
+                            </TableCell>
+                            <TableCell className='text-xs'>
+                              {viagem.data_rio
+                                ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
+                                : 'N/A'}
+                            </TableCell>
+                            <TableCell className='text-xs'>
+                              {viagem.entrada_sahida}
+                            </TableCell>
+                            <TableCell className='text-xs'>
+                              {viagem.porto_origem?.nome
+                                ? viagem.porto_origem?.nome
+                                : 'N/A'}
+                              {viagem.porto_origem?.pais?.pais
+                                ? ' | ' + viagem.porto_origem?.pais?.pais
+                                : ''}
+                            </TableCell>
+                            <TableCell className='text-xs'>
+                              {viagem.porto_destino?.nome
+                                ? viagem.porto_destino?.nome
+                                : 'N/A'}
+                              {viagem.porto_destino?.pais?.pais
+                                ? ' | ' + viagem.porto_destino?.pais?.pais
+                                : ''}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                      {embarcacao?.viagem.length === 0 && (
+                        <TableCaption>
+                          Nenhuma viagem encontrada para esta embarcação
+                        </TableCaption>
+                      )}
+                    </Table>
+
+                    <Paginacao
+                      chunked={chunkedpessoas}
+                      activePage={activePagePessoas}
+                      setPage={setPagePessoas}
+                    />
+                    {/* </div> */}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
             <AddOwner mutate={mutateEmbarcacao} embarcacaoId={embarcacao_id} />
           </>

@@ -135,7 +135,7 @@ export default function ButtonNewMerch(props: {
           Adicionar Mercadoria <Plus size={24} />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
         <DialogHeader>
           <DialogTitle className='text-blue-500'>
             Adicionar Mercadoria

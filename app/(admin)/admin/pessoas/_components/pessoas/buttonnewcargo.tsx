@@ -40,6 +40,7 @@ import { cn } from '@/lib/utils';
 import Loader from '@/components/loader';
 import { toast } from '@/components/ui/use-toast';
 import { Calendar } from '@/components/ui/calendar';
+import { ptBR } from 'date-fns/locale';
 import dayjs from 'dayjs';
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -206,6 +207,7 @@ export default function BotaoNovoCargo(props: {
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          locale={ptBR}
                           defaultMonth={
                             dayjs(field.value, 'DD-MM-YYYY').isValid()
                               ? dayjs(field.value, 'DD-MM-YYYY').toDate()

@@ -1,14 +1,15 @@
-import { validateRequest } from '@/auth';
+import { lucia, validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
 import { hash } from '@node-rs/argon2';
 
 export async function PUT(req: Request) {
   const { password } = await req.json();
   const { user } = await validateRequest();
-  console.log('password', password);
-  if (!user || user.role !== 'ADMIN') {
+
+  if (!user) {
     return new Response('Unauthorized', { status: 401 });
   }
+  await lucia.invalidateUserSessions(user.id);
 
   const passwordHash = await hash(password, {
     // recommended minimum parameters
