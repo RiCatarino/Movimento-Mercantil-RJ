@@ -109,6 +109,20 @@ export async function GET(req: Request) {
           nome: true,
         },
       },
+      noticia: {
+        select: {
+          assunto: true,
+        },
+      },
+      relac_viagem_referencia_doc: {
+        select: {
+          referencia_documental: {
+            select: {
+              nome_periodico: true,
+            },
+          },
+        },
+      },
     },
 
     take: 100,

@@ -31,6 +31,7 @@ import chunk from '@/lib/chunk';
 import { useState } from 'react';
 import DialogEditarPais from './dialogedit';
 import { Input } from '@/components/ui/input';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TabelaPaises() {
   const [openEdit, setOpenEdit] = useState(false);
@@ -73,6 +74,7 @@ export default function TabelaPaises() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovoPais mutate={mutate} />
+        <BotaoExportarParaExcel paises={paisesdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>

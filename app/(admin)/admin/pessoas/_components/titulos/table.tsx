@@ -32,6 +32,7 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { Input } from '@/components/ui/input';
 import DialogEditarTituloNobreza from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TabelaTitulos() {
   const [activePage, setPage] = useState(1);
@@ -72,13 +73,6 @@ export default function TabelaTitulos() {
     setDeleting(false);
   }
 
-  // if (isLoading)
-  //   return (
-  //     <main className="flex flex-row justify-center p-4">
-  //       <Loader classProp="w-24 h-24 self-center flex" />
-  //     </main>
-  //   );
-
   return (
     <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
@@ -90,6 +84,7 @@ export default function TabelaTitulos() {
           className='rounded-xl'
         />
         <NovoTitulo mutate={mutate} />
+        <BotaoExportarParaExcel titulos={titulosdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>

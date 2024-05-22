@@ -28,6 +28,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
 import DialogEditarViagem from '../dialogedit';
+import BotaoExportarParaExcel from '../buttons/buttonexport';
 
 // dayjs.extend(utc);
 
@@ -96,6 +97,7 @@ export default function TripsTable() {
           </Select>
         </div>
         <BotaoNovaViagem />
+        <BotaoExportarParaExcel viagens={viagensdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>

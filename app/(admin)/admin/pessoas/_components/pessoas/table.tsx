@@ -21,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
 import DialogEditPessoa from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TabelaPessoas() {
   const [activePage, setPage] = useState(1);
@@ -51,6 +52,7 @@ export default function TabelaPessoas() {
           className='rounded-xl'
         />
         <NewPerson mutate={mutate} />
+        <BotaoExportarParaExcel pessoas={pessoasdata} />
       </div>
       {isLoading ? (
         <main className='flex flex-row justify-center p-4'>
