@@ -436,7 +436,7 @@ export default function Home() {
         >
           <h1 className="text-4xl text-red-500 font-extrabold text-center bg-white p-2 rounded-xl">
             Este site encontra-se em desenvolvimento.
-            <p> Report de bugs e sugestões para: 30008236@students.ual.pt </p>
+            <p> Report de bugs e sugestões para: 30008236@students.ual.pt  </p>
           </h1>
           <h2 className="text-xl font-bold text-center text-black md:text-4xl dark:text-white">
             Viagens pelo globo, a partir do Rio.
