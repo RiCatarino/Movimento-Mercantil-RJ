@@ -125,9 +125,12 @@ export default function Stats() {
           <StatsCard
             title='Viagem com mais passageiros'
             value={
-              stats?.viagemWithMostPassageiros?.count +
+              (stats?.viagemWithMostPassageiros?.count +
                 ' | ID: ' +
-                stats?.viagemWithMostPassageiros?.id || 'N/A'
+                stats?.viagemWithMostPassageiros?.id !=
+                'undefined' &&
+                stats?.viagemWithMostPassageiros?.id) ||
+              'N/A'
             }
             icon={<GitCompareArrows />}
           />
