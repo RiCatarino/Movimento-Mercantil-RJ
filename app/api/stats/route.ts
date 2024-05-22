@@ -329,7 +329,5 @@ export async function GET() {
     viagemWithMostPassageiros: viagemWithMostPassageiros,
   };
 
-  console.log(result);
-
   return Response.json(result);
 }
