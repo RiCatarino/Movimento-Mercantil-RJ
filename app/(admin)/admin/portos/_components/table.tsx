@@ -20,6 +20,7 @@ import DialogEditarPorto from './dialogedit';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { Input } from '@/components/ui/input';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TabelaPortos() {
   const [activePage, setPage] = useState(1);
@@ -42,13 +43,6 @@ export default function TabelaPortos() {
   const chunked = chunk(portosdata ?? [], 10);
   const portos = chunked[activePage - 1];
 
-  // if (isLoading)
-  //   return (
-  //     <main className="flex flex-row justify-center p-4">
-  //       <Loader classProp="w-24 h-24 self-center flex" />
-  //     </main>
-  //   );
-
   return (
     <>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
@@ -59,6 +53,7 @@ export default function TabelaPortos() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovaUnidade mutate={mutate} />
+        <BotaoExportarParaExcel portos={portosdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>

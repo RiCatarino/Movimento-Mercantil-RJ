@@ -32,6 +32,7 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { Input } from '@/components/ui/input';
 import DialogEditarCargo from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TabelaCargos() {
   const [activePage, setPage] = useState(1);
@@ -83,6 +84,7 @@ export default function TabelaCargos() {
           className='rounded-xl'
         />
         <NovoTitulo mutate={mutate} />
+        <BotaoExportarParaExcel cargos={cargos} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>

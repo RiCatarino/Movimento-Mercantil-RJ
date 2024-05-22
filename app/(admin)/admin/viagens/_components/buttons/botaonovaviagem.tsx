@@ -189,7 +189,7 @@ export default function BotaoNovaViagem() {
       <SheetTrigger asChild>
         <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
           Adicionar Viagem
-          <Plus size={24} />
+          <Plus className='ml-2' size={24} />
         </Button>
       </SheetTrigger>
       <SheetContent className=' flex flex-col h-[99%] mr-[2.5%] sm:mr-2  my-auto rounded-lg md:max-w-[98%] lg:max-w-[50%] w-[95%]  '>

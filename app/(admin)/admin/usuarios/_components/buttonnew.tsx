@@ -92,7 +92,7 @@ export default function BotaoNovoUsuario(props: {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className='self-end w-full transition-all duration-500 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl md:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600 '>
-          Novo Usuário <UserPlusIcon size={24} />
+          Novo Usuário <UserPlusIcon className='ml-2' size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className=' w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
