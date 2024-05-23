@@ -8,13 +8,17 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const session = await validateRequest();
+  var pjson = require('@/package.json');
 
   return (
     <SessionProvider value={session}>
       <NavBar />
-      <div className='p-4 lg:p-8'>
+      <main className='p-4 lg:p-8'>
         <>{children}</>
-      </div>
+      </main>
+      <footer className='p-4 lg:p-8 text-center text-gray-500 relative bottom-0  w-full'>
+        Versão {pjson.version}
+      </footer>
     </SessionProvider>
   );
 }

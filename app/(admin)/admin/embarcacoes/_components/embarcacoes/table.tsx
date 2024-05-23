@@ -33,6 +33,7 @@ import { Input } from '@/components/ui/input';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import DialogEditarEmbarcacao from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TableEmbarcacoes() {
   const [open, setOpen] = useState(false);
@@ -82,6 +83,7 @@ export default function TableEmbarcacoes() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NewVessel mutate={mutate} />
+        <BotaoExportarParaExcel embarcacoes={embarcacoesdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>
