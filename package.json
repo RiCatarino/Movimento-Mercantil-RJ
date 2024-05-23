@@ -1,6 +1,6 @@
 {
   "name": "movimentomercantil",
-  "version": "0.1.0",
+  "version": "0.1.46",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -36,7 +36,7 @@
     "dayjs": "^1.11.11",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
-    "framer-motion": "^11.2.5",
+    "framer-motion": "^11.2.6",
     "limiter": "^2.1.0",
     "lucia": "^3.2.0",
     "lucide-react": "^0.379.0",

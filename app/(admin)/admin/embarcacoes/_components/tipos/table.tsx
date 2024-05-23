@@ -32,6 +32,7 @@ import { Input } from '@/components/ui/input';
 import chunk from '@/lib/chunk';
 import Paginacao from '@/components/sharedpagination';
 import DialogEditarTipo from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
 
 export default function TableTipos() {
   const [open, setOpen] = useState(false);
@@ -80,7 +81,8 @@ export default function TableTipos() {
           placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <NovoTipo mutate={mutate} />
+        <NovoTipo mutate={mutate} />{' '}
+        <BotaoExportarParaExcel tipos={tiposdata} />
       </div>
       {isLoading ? (
         <div className='flex flex-row justify-center p-4'>
