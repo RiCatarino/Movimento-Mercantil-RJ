@@ -1,3 +1,6 @@
+import createMDX from 'fumadocs-mdx/config';
+const withMDX = createMDX();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -23,4 +26,4 @@ const nextConfig = {
     ],
   },
 };
-export default nextConfig;
+export default withMDX(nextConfig);

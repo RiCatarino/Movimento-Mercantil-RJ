@@ -1,10 +1,14 @@
 import type { Config } from 'tailwindcss';
-
+import { createPreset } from 'fumadocs-ui/tailwind-plugin';
 const { fontFamily } = require('tailwindcss/defaultTheme');
+
+/** @type {import('tailwindcss').Config} */
 
 const config = {
   darkMode: ['class'],
+  presets: [createPreset()],
   content: [
+    './node_modules/fumadocs-ui/dist/**/*.js',
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
