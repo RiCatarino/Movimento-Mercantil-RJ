@@ -148,7 +148,7 @@ export default function NavBar() {
       {sidebar && (
         <aside
           id='default-sidebar'
-          className='absolute z-40 mt-20 top-2 left-2 w-60 '
+          className='absolute z-50 mt-20 top-2 left-2 w-60 '
           aria-label='Sidebar'
         >
           <div className='h-full px-3 py-4 overflow-y-auto bg-white border shadow-2xl rounded-xl dark:bg-gray-800'>

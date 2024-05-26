@@ -2,6 +2,7 @@ import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 // import { usePathname } from 'next/navigation';
+import { RootProvider } from 'fumadocs-ui/provider';
 import { Toaster } from '@/components/ui/toaster';
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -43,7 +44,9 @@ export default async function RootLayout({
         )}
       >
         <main className='bg-transparent '>
-          {children} <Toaster />
+          <RootProvider>
+            {children} <Toaster />
+          </RootProvider>
         </main>
       </body>
     </html>
