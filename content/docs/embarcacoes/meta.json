@@ -1,0 +1,5 @@
+{
+  "title": "Embarcações",
+  "pages": ["criar", "apagar"],
+  "defaultOpen": false
+}
