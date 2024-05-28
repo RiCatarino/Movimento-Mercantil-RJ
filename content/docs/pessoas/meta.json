@@ -1,0 +1,5 @@
+{
+  "title": "Pessoas",
+  "pages": ["criar", "apagar"],
+  "defaultOpen": false
+}
