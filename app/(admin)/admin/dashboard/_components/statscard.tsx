@@ -10,7 +10,7 @@ export default function StatsCard(props: {
 }) {
   const { title, value, icon } = props;
   return (
-    <Card className=' drop-shadow-lg grow'>
+    <Card className=' drop-shadow-lg w-full hover:bg-blue-100 hover:scale-105 transition-all duration-300'>
       <CardHeader className='flex flex-row items-center justify-between pb-2 space-y-0'>
         <CardTitle className='text-sm font-medium'>{title}</CardTitle>
         {/* <Users className='w-4 h-4 text-muted-foreground' /> */}

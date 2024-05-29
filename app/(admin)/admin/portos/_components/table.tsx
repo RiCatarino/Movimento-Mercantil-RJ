@@ -21,13 +21,16 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import { Input } from '@/components/ui/input';
 import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
 
 export default function TabelaPortos() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get('nome');
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
   const [porto_id, setPortoId] = useState<number | undefined>();
   const [openEdit, setOpenEdit] = useState(false);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(name ?? '');
 
   const {
     data: portosdata,
@@ -47,6 +50,7 @@ export default function TabelaPortos() {
     <>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
+          value={searchText}
           name='search'
           className='rounded-xl'
           placeholder='Pesquisar por nome...'

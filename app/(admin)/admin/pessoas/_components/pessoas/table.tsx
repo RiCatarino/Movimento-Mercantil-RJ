@@ -22,11 +22,14 @@ import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
 import DialogEditPessoa from './dialogedit';
 import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
 
 export default function TabelaPessoas() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get('nome');
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>(name ?? '');
   const [openEdit, setOpenEdit] = useState(false);
   const [pessoa, setPessoa] = useState<Pessoa>();
   const {
@@ -34,7 +37,9 @@ export default function TabelaPessoas() {
     isLoading,
     mutate,
   } = useSWR<Pessoa[]>(
-    name ? '/api/pessoa/read/byname?nome=' + name : '/api/pessoa/read',
+    searchText
+      ? '/api/pessoa/read/byname?nome=' + searchText
+      : '/api/pessoa/read',
     fetcher
   );
 
@@ -47,8 +52,8 @@ export default function TabelaPessoas() {
         <Input
           name='search'
           placeholder='Pesquisar por nome...'
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={(e) => setSearchText(e.target.value)}
+          value={searchText}
           className='rounded-xl'
         />
         <NewPerson mutate={mutate} />
