@@ -1,6 +1,5 @@
 import { validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
-import { ca } from 'date-fns/locale';
 
 export const dynamic = 'force-dynamic';
 export async function GET() {
@@ -41,6 +40,12 @@ export async function GET() {
   });
 
   const unidades_de_medida = await prisma.unidade_de_medida.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
+  const cargos = await prisma.cargo.aggregate({
     _count: {
       id: true,
     },
@@ -318,6 +323,7 @@ export async function GET() {
     tipo_embarcacao,
     titulo_nobreza,
     unidades_de_medida,
+    cargos,
     portos,
     usuarios,
     embarcacaoWithMostViagens: EmbarcacaoWithMostViagens,

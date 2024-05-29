@@ -34,14 +34,17 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import DialogEditarEmbarcacao from './dialogedit';
 import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
 
 export default function TableEmbarcacoes() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get('nome');
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [embarcacao, setEmbarcacao] = useState<Embarcacao>();
   const [deleting, setDeleting] = useState(false);
   const [activePage, setPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(name ?? '');
 
   const {
     data: embarcacoesdata,
@@ -78,6 +81,7 @@ export default function TableEmbarcacoes() {
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           id='search'
+          value={searchText}
           className='rounded-xl'
           placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
