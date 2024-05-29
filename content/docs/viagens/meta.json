@@ -1,0 +1,5 @@
+{
+  "title": "Viagens",
+  "pages": ["criar", "apagar"],
+  "defaultOpen": false
+}

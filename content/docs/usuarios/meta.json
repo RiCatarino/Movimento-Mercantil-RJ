@@ -1,0 +1,5 @@
+{
+  "title": "Usuários",
+  "pages": ["criar", "apagar"],
+  "defaultOpen": false
+}
