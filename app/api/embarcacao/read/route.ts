@@ -30,6 +30,7 @@ export async function GET() {
     orderBy: {
       nome: 'asc',
     },
+    take: 10,
   });
   return Response.json(result);
 }

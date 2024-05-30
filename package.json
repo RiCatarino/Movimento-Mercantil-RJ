@@ -1,6 +1,6 @@
 {
   "name": "movimentomercantil",
-  "version": "0.1.46",
+  "version": "0.1.48",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -50,6 +50,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",
     "react-turnstile": "^1.1.3",
+    "recharts": "^2.12.7",
     "sonner": "^1.4.41",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
