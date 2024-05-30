@@ -8,22 +8,22 @@ import {
   PersonStanding,
   Ship,
   TagIcon,
-  Users,
   WeightIcon,
 } from 'lucide-react';
 import useSWR from 'swr';
 import fetcher from '@/lib/fetch';
 import Loader from '@/components/loader';
 import Link from 'next/link';
+import { BarChart, Bar, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 // import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 interface AggregateCount {
   _count: {
@@ -47,8 +47,8 @@ interface StatsProps {
   cargos: AggregateCount;
   unidades_de_medida: AggregateCount;
   portos: AggregateCount;
-  usuarios: AggregateCount;
-  embarcacaoWithMostViagens: withMost;
+  // usuarios: AggregateCount;
+  // embarcacaoWithMostViagens: withMost;
   mestreWithMostViagens: withMost;
   armadorWithMostViagens: withMost;
   comandanteWithMostViagens: withMost;
@@ -57,9 +57,32 @@ interface StatsProps {
   viagemWithMostPassageiros: withMost;
 }
 
+const data = [
+  {
+    name: 'Embarcação A',
+    viagens: 4000,
+  },
+  {
+    name: 'Embarcação B',
+    viagens: 3000,
+  },
+  {
+    name: 'Embarcação C',
+    viagens: 2000,
+  },
+  {
+    name: 'Embarcação D',
+    viagens: 2780,
+  },
+  {
+    name: 'Embarcação E',
+    viagens: 1890,
+  },
+];
+
 export default function Stats() {
   const { data: stats, isLoading } = useSWR<StatsProps>('/api/stats', fetcher);
-
+  const router = useRouter();
   return (
     <>
       {isLoading ? (
@@ -92,18 +115,73 @@ export default function Stats() {
                     icon={<Ship />}
                   />
                 </Link>
-                <Link
+                {/* <Link
                   href={
                     '/admin/embarcacoes?nome=' +
                     stats?.embarcacaoWithMostViagens?.name
                   }
-                >
-                  <StatsCard
+                > */}
+                {/* <StatsCard
                     title='Embarcação com mais viagens'
                     value={stats?.embarcacaoWithMostViagens?.name || 'N/A'}
                     icon={<Ship />}
-                  />
-                </Link>
+                  /> */}
+                {/* </Link> */}
+
+                <Card className='w-full shadow-xl'>
+                  <CardHeader>
+                    <CardTitle className='text-sm font-medium'>
+                      Embarcações com mais viagens
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ResponsiveContainer
+                      width='100%'
+                      minHeight={200}
+                      height='95%'
+                    >
+                      <BarChart
+                        width={500}
+                        height={100}
+                        // className='w-full '
+                        data={data}
+                        margin={{
+                          top: 20,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <Tooltip
+                          cursor={{ fill: 'transparent' }}
+                          wrapperStyle={{
+                            color: '#fff',
+                            backgroundColor: '#000',
+                            padding: '5px',
+                            borderRadius: '5px',
+                          }}
+                          content={(prop) =>
+                            prop?.payload
+                              ? prop?.payload[0]?.payload?.name
+                              : 'N/A'
+                          }
+                        />
+                        {/* <YAxis dataKey='viagens' /> */}
+                        <Bar
+                          label={{ position: 'top', fontSize: 10 }}
+                          cursor='pointer'
+                          // cursor='pointer'
+                          onClick={(e) => {
+                            router.push('/admin/embarcacoes?nome=' + e?.name);
+                          }}
+                          className=' fill-blue-500 hover:fill-slate-400 transition-all duration-500'
+                          radius={[10, 10, 0, 0]}
+                          dataKey='viagens'
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
               </div>
             </CardContent>
           </Card>
@@ -262,7 +340,7 @@ export default function Stats() {
             </CardContent>
           </Card>
 
-          <Card className='w-full shadow-xl'>
+          {/* <Card className='w-full shadow-xl'>
             <CardHeader>
               <CardTitle className='text-blue-500'>Usuários</CardTitle>
               <CardDescription>Estatísticas dos Usuários</CardDescription>
@@ -278,7 +356,7 @@ export default function Stats() {
                 </Link>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       )}
     </>
