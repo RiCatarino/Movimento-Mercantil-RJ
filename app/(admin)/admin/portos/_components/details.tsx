@@ -94,25 +94,25 @@ export default function PortoDetails(props: {
           <>
             <div className='flex flex-wrap gap-2 '>
               <div className='flex w-full lg:w-auto flex-col gap-1 rounded-xl border min-w-[50%]'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Nome
                 </div>
                 <div className='p-2 text-xs'>{porto?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   País
                 </div>
                 <div className='p-2 text-xs'>{porto?.pais?.pais}</div>
               </div>
             </div>
             <div className='flex flex-col w-full border gap-1 rounded-xl'>
-              <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+              <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                 Viagens de Origem
               </div>
               <div className='flex-1 max-w-xs p-2  md:max-w-full rounded-ss-xl rounded-se-xl'>
                 <Table>
-                  <TableHeader className='p-2 text-xs bg-blue-200 '>
+                  <TableHeader className='p-2 text-xs bg-blue-200 dark:bg-slate-900 '>
                     <TableRow className='rounded-ss-xl'>
                       <TableHead>ID</TableHead>
                       <TableHead>Embarcação</TableHead>
@@ -146,12 +146,12 @@ export default function PortoDetails(props: {
 
             {/* DESTINO */}
             <div className='flex flex-col w-full border gap-1 rounded-xl'>
-              <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+              <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                 Viagens de Destino
               </div>
               <div className='flex-1 max-w-xs p-2  md:max-w-full rounded-ss-xl rounded-se-xl'>
                 <Table>
-                  <TableHeader className='p-2 text-xs bg-blue-200 '>
+                  <TableHeader className='p-2 text-xs bg-blue-200 dark:bg-slate-900 '>
                     <TableRow className='rounded-ss-xl'>
                       <TableHead>ID</TableHead>
                       <TableHead>Embarcação</TableHead>

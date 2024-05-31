@@ -17,7 +17,7 @@ export default function StatsCard(props: {
         <div className='ml-2 text-blue-500'>{icon}</div>
       </CardHeader>
       <CardContent>
-        <div className='text-2xl font-bold text-blue-500'>{value}</div>
+        <div className='text-xl  font-bold text-blue-500'>{value}</div>
         {/* <p className="text-xs text-muted-foreground">+180.1% from last month</p> */}
       </CardContent>
     </Card>

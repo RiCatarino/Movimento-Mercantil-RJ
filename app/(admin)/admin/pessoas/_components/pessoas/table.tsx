@@ -47,7 +47,7 @@ export default function TabelaPessoas() {
   const pessoas = chunked[activePage - 1];
 
   return (
-    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl'>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
@@ -66,7 +66,7 @@ export default function TabelaPessoas() {
       ) : (
         <div className='flex flex-col gap-4'>
           <Table>
-            <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
               <TableRow className='rounded-ss-xl'>
                 <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
                 <TableHead className='w-96'>Nome</TableHead>

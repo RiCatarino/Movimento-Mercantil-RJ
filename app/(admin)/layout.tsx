@@ -16,7 +16,7 @@ export default async function DashboardLayout({
       <main className='p-4 lg:p-8'>
         <>{children}</>
       </main>
-      <footer className='p-4 lg:p-8 text-center text-gray-500 relative bottom-0  w-full'>
+      <footer className='p-4 lg:p-8 text-center text-gray-500 relative bottom-0  w-full dark:text-slate-950'>
         Versão {pjson.version}
       </footer>
     </SessionProvider>

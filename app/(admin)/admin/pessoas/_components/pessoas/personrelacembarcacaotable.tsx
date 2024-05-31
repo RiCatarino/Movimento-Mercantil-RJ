@@ -52,7 +52,7 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
   return (
     <div className='w-full rounded-ss-xl rounded-se-xl gap-4 antialiased'>
       <Table className='shadow-xl'>
-        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead className='hidden md:table-cell'>ID</TableHead>
             <TableHead>Embarcação</TableHead>

@@ -22,7 +22,7 @@ export default function Paginacao(props: {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white '
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
             onClick={() => {
               if (activePage > 1) {
                 setPage(activePage - 1);
@@ -36,7 +36,7 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                       : 'cursor-pointer '
                   }
                   key={index}
@@ -50,7 +50,7 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                       : 'cursor-pointer '
                   }
                   key={index}
@@ -63,7 +63,7 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == index + 1
-                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                       : 'cursor-pointer '
                   }
                   key={index}
@@ -86,7 +86,7 @@ export default function Paginacao(props: {
               <PaginationLink
                 className={
                   activePage - activePage + 1 == index
-                    ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                    ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                     : 'cursor-pointer '
                 }
                 key={index}
@@ -107,7 +107,7 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == chunked.length
-                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                       : 'cursor-pointer '
                   }
                   key={index}
@@ -121,7 +121,7 @@ export default function Paginacao(props: {
                 <PaginationLink
                   className={
                     activePage == chunked.length - 2 + index
-                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white'
+                      ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                       : 'cursor-pointer'
                   }
                   key={index}
@@ -134,7 +134,7 @@ export default function Paginacao(props: {
 
         <PaginationItem>
           <PaginationNext
-            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white '
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
             onClick={() => {
               if (activePage < chunked.length) {
                 setPage(activePage + 1);

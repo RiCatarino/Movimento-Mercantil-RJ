@@ -87,7 +87,7 @@ export default function TripDetails(props: {
           <>
             <div className='flex flex-wrap gap-2'>
               <div className='flex flex-col border gap-1 rounded-xl '>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Data de Partida
                 </div>
                 <div className='p-2 text-xs'>
@@ -97,7 +97,7 @@ export default function TripDetails(props: {
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Data de Chegada
                 </div>
                 <div className='p-2 text-xs'>
@@ -107,7 +107,7 @@ export default function TripDetails(props: {
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Data Rio
                 </div>
                 <div className='p-2 text-xs'>
@@ -117,31 +117,31 @@ export default function TripDetails(props: {
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Dias de Viagem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.dias_viagem}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Tripulação
                 </div>
                 <div className='p-2 text-xs'>{viagem?.tripulacao}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Passageiros
                 </div>
                 <div className='p-2 text-xs'>{viagem?.total_passageiros}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Porto de Origem
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_origem?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Dias no porto de origem
                 </div>
                 <div className='p-2 text-xs'>
@@ -149,13 +149,13 @@ export default function TripDetails(props: {
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Porto de Destino
                 </div>
                 <div className='p-2 text-xs'>{viagem?.porto_destino?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Dias no porto de destino
                 </div>
                 <div className='p-2 text-xs'>
@@ -175,7 +175,7 @@ export default function TripDetails(props: {
                   <AccordionContent>
                     <div className='flex flex-row flex-1 gap-2'>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Nome
                         </div>
                         <div className='p-2 text-xs'>
@@ -183,7 +183,7 @@ export default function TripDetails(props: {
                         </div>
                       </div>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Tipo
                         </div>
                         <div className='p-2 text-xs'>
@@ -192,7 +192,7 @@ export default function TripDetails(props: {
                       </div>
                     </div>
                     <div className='flex flex-col mt-2 border gap-1 rounded-xl grow'>
-                      <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                      <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                         Descrição
                       </div>
                       <div className='p-2 text-xs'>
@@ -219,7 +219,7 @@ export default function TripDetails(props: {
                         </div>
                       )}
                     <div className='flex flex-col w-full mt-2 border gap-1 rounded-xl'>
-                      <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                      <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                         Observação
                       </div>
                       <div className='p-2 text-xs'>
@@ -234,7 +234,7 @@ export default function TripDetails(props: {
                   <AccordionContent>
                     <div className='flex flex-wrap flex-1 gap-2'>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Comandante
                         </div>
                         <div className='p-2 text-xs'>
@@ -242,7 +242,7 @@ export default function TripDetails(props: {
                         </div>
                       </div>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Capitão
                         </div>
                         <div className='p-2 text-xs'>
@@ -250,7 +250,7 @@ export default function TripDetails(props: {
                         </div>
                       </div>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Armador
                         </div>
                         <div className='p-2 text-xs'>
@@ -258,7 +258,7 @@ export default function TripDetails(props: {
                         </div>
                       </div>
                       <div className='flex flex-col border gap-1 rounded-xl grow'>
-                        <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                        <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                           Mestre
                         </div>
                         <div className='p-2 text-xs'>
