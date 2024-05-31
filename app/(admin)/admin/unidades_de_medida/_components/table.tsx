@@ -85,7 +85,7 @@ export default function TableUnidadesDeMedida() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
             <TableRow>
               {/* <TableHead>ID</TableHead> */}
               <TableHead>Unidade de Medida</TableHead>

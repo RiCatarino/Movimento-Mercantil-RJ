@@ -86,7 +86,7 @@ export default function NavBar() {
   return (
     <nav
       ref={sideNavRef}
-      className='flex flex-row items-center justify-between w-full h-20 px-5 align-middle border-b-2 shadow'
+      className='flex flex-row items-center justify-between w-full h-20 px-5 align-middle border-b-2 shadow dark:bg-slate-950'
     >
       <button
         data-drawer-target='default-sidebar'

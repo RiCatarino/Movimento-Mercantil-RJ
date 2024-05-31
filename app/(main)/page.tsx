@@ -499,7 +499,7 @@ export default function Home() {
         </svg>
       </div>
       {/* <div className='max-h-screen '> */}
-      <div className='z-10 flex flex-wrap-reverse w-full min-h-screen p-0 lg:w-full lg:p-10 lg:flex-nowrap dark:bg-black lg:h-screen'>
+      <div className='z-10 flex flex-wrap-reverse w-full min-h-screen p-0 lg:w-full lg:p-10 lg:flex-nowrap dark:bg-slate-700 lg:h-screen'>
         <Globe />
         <motion.div
           initial={{

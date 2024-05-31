@@ -125,7 +125,7 @@ export default function TabelaUsuarios() {
       </div>
 
       <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
           <TableRow>
             <TableHead>Nome</TableHead>
             <TableHead>Email</TableHead>
