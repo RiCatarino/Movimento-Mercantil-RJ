@@ -316,7 +316,7 @@ export default function Stats() {
                   <Card className='w-full shadow-xl'>
                     <CardHeader>
                       <CardTitle className='text-sm font-medium'>
-                        Embarcações com mais viagens
+                        Top 5 Embarcações com mais viagens
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -370,7 +370,7 @@ export default function Stats() {
                   <Card className='w-full shadow-xl'>
                     <CardHeader>
                       <CardTitle className='text-sm font-medium'>
-                        Páises com mais portos
+                        Top 5 Países com mais portos
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -426,7 +426,7 @@ export default function Stats() {
                   <Card className='w-full shadow-xl'>
                     <CardHeader>
                       <CardTitle className='text-sm font-medium'>
-                        Tipos de embarcações mais comuns
+                        Top 5 Tipos de embarcações mais comuns
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
