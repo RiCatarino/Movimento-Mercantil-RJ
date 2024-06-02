@@ -1,5 +1,5 @@
 {
   "title": "Porto",
-  "pages": ["funcionalidade"],
+  "pages": ["novo-porto", "editar-porto", "apagar"],
   "defaultOpen": false
 }

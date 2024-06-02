@@ -1,5 +1,5 @@
 {
   "title": "Unidades de Medida",
-  "pages": ["funcionalidade"],
+  "pages": ["nova-unidade", "editar-unidade", "apagar"],
   "defaultOpen": false
 }
