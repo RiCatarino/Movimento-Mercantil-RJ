@@ -22,11 +22,14 @@ import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
 import DialogEditPessoa from './dialogedit';
 import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
 
 export default function TabelaPessoas() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get('nome');
   const [activePage, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>(name ?? '');
   const [openEdit, setOpenEdit] = useState(false);
   const [pessoa, setPessoa] = useState<Pessoa>();
   const {
@@ -34,7 +37,9 @@ export default function TabelaPessoas() {
     isLoading,
     mutate,
   } = useSWR<Pessoa[]>(
-    name ? '/api/pessoa/read/byname?nome=' + name : '/api/pessoa/read',
+    searchText
+      ? '/api/pessoa/read/byname?nome=' + searchText
+      : '/api/pessoa/read',
     fetcher
   );
 
@@ -42,13 +47,13 @@ export default function TabelaPessoas() {
   const pessoas = chunked[activePage - 1];
 
   return (
-    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl'>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           name='search'
           placeholder='Pesquisar por nome...'
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={(e) => setSearchText(e.target.value)}
+          value={searchText}
           className='rounded-xl'
         />
         <NewPerson mutate={mutate} />
@@ -61,7 +66,7 @@ export default function TabelaPessoas() {
       ) : (
         <div className='flex flex-col gap-4'>
           <Table>
-            <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+            <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
               <TableRow className='rounded-ss-xl'>
                 <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
                 <TableHead className='w-96'>Nome</TableHead>

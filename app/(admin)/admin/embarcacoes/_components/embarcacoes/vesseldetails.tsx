@@ -97,13 +97,13 @@ export default function VesselDetails(props: {
           <>
             <div className='flex flex-wrap gap-4'>
               <div className='flex flex-col gap-1 rounded-xl border min-w-[50%]'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Nome
                 </div>
                 <div className='p-2 text-xs'>{embarcacao?.nome}</div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Tipo
                 </div>
                 <div className='p-2 text-xs'>
@@ -111,7 +111,7 @@ export default function VesselDetails(props: {
                 </div>
               </div>
               <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Descrição
                 </div>
                 <div className='p-2 text-xs'>
@@ -136,7 +136,7 @@ export default function VesselDetails(props: {
                   </div>
                 )}
               <div className='flex flex-col w-full border gap-1 rounded-xl'>
-                <div className='p-2 text-sm bg-blue-200 rounded-ss-xl rounded-se-xl'>
+                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Observação
                 </div>
                 <div className='p-2 text-xs'>{embarcacao?.observacao}</div>
@@ -151,7 +151,7 @@ export default function VesselDetails(props: {
                   <AccordionContent>
                     {/* <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'> */}
                     <Table>
-                      <TableHeader className='p-2 text-xs bg-blue-200 '>
+                      <TableHeader className='p-2 text-xs bg-blue-200  dark:bg-slate-900'>
                         <TableRow className='rounded-ss-xl'>
                           <TableHead>Pessoa</TableHead>
                           <TableHead>Início</TableHead>
@@ -244,7 +244,7 @@ export default function VesselDetails(props: {
                     {/* VIAGENS */}
                     {/* <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'> */}
                     <Table>
-                      <TableHeader className='p-2 text-xs bg-blue-200 '>
+                      <TableHeader className='p-2 text-xs bg-blue-200 dark:bg-slate-900 '>
                         <TableRow className='rounded-ss-xl'>
                           <TableHead className='hidden md:table-cell'>
                             ID

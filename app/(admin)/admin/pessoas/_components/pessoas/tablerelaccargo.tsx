@@ -56,7 +56,7 @@ export default function TabelaPessoaCargo(props: {
   return (
     <div className='flex flex-col md:max-w-full rounded-ss-xl rounded-se-xl gap-4'>
       <Table className='shadow-xl'>
-        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900  '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>Cargo</TableHead>
             <TableHead>Data</TableHead>

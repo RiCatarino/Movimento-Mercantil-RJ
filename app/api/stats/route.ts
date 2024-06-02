@@ -1,6 +1,5 @@
 import { validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
-import { ca } from 'date-fns/locale';
 
 export const dynamic = 'force-dynamic';
 export async function GET() {
@@ -41,6 +40,12 @@ export async function GET() {
   });
 
   const unidades_de_medida = await prisma.unidade_de_medida.aggregate({
+    _count: {
+      id: true,
+    },
+  });
+
+  const cargos = await prisma.cargo.aggregate({
     _count: {
       id: true,
     },
@@ -311,6 +316,133 @@ export async function GET() {
   viagemWithMostPassageiros.count =
     queryViagemWithMostPassageiros[0]?.total_passageiros ?? 0;
 
+  //Top 5 embarcacoes com mais viagens
+  const topEmbarcacoesWithMostViagens = await prisma.viagem.groupBy({
+    by: ['id_embarcacao'],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        id_embarcacao: 'desc',
+      },
+    },
+    take: 5,
+  });
+
+  const top5Embarcacoes = await Promise.all(
+    topEmbarcacoesWithMostViagens.map(async (item) => {
+      const embarcacao = await prisma.embarcacao.findUnique({
+        where: {
+          id: item.id_embarcacao || undefined,
+        },
+        select: {
+          nome: true,
+        },
+      });
+      return {
+        name: embarcacao?.nome || 'Desconhecida',
+        viagens: item._count._all,
+      };
+    })
+  );
+
+  // países com mais portos
+  const topPaisesWithMostPortos = await prisma.porto.groupBy({
+    by: ['id_pais'],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        id_pais: 'desc',
+      },
+    },
+    take: 5,
+  });
+
+  const top5Paises = await Promise.all(
+    topPaisesWithMostPortos.map(async (item) => {
+      const pais = await prisma.pais.findUnique({
+        where: {
+          id: item.id_pais || undefined,
+        },
+        select: {
+          pais: true,
+        },
+      });
+      return {
+        name: pais?.pais || 'Desconhecido',
+        portos: item._count._all,
+      };
+    })
+  );
+
+  // top 5 tipos de embarcação mais populares
+
+  const topTipoEmbarcacao = await prisma.embarcacao.groupBy({
+    by: ['id_tipo_embarcacao'],
+    _count: {
+      _all: true,
+    },
+    orderBy: {
+      _count: {
+        id_tipo_embarcacao: 'desc',
+      },
+    },
+    take: 5,
+  });
+
+  const top5TipoEmbarcacao = await Promise.all(
+    topTipoEmbarcacao.map(async (item) => {
+      const tipoEmbarcacao = await prisma.tipo_embarcacao.findUnique({
+        where: {
+          id: item.id_tipo_embarcacao || undefined,
+        },
+        select: {
+          tipo: true,
+        },
+      });
+      return {
+        name: tipoEmbarcacao?.tipo || 'Desconhecido',
+        embarcacoes: item._count._all,
+      };
+    })
+  );
+
+  // top 5mercadorias mais transportadas
+
+  // const topMercadoriasTransportadas =
+  //   await prisma.relac_mercadoria_escala.groupBy({
+  //     by: ['id_mercadoria'],
+  //     _sum: {
+  //       quantidade: true,
+  //     },
+  //     orderBy: {
+  //       _sum: {
+  //         quantidade: 'desc',
+  //       },
+  //     },
+  //     take: 5,
+  //   });
+
+  // const top5Mercadorias = await Promise.all(
+  //   topMercadoriasTransportadas.map(async (item) => {
+  //     const mercadoria = await prisma.mercadoria.findUnique({
+  //       where: {
+  //         id: item.id_mercadoria || undefined,
+  //       },
+  //       select: {
+  //         nome: true,
+  //       },
+  //     });
+  //     return {
+  //       name: mercadoria?.nome || 'Desconhecida',
+  //       quantidade: item._sum.quantidade || 0,
+  //     };
+  //   })
+  // );
+
   const result = {
     embarcacoes,
     pessoas,
@@ -318,6 +450,7 @@ export async function GET() {
     tipo_embarcacao,
     titulo_nobreza,
     unidades_de_medida,
+    cargos,
     portos,
     usuarios,
     embarcacaoWithMostViagens: EmbarcacaoWithMostViagens,
@@ -327,6 +460,9 @@ export async function GET() {
     comandanteWithMostViagens: comandanteWithMostViagens,
     portoWithMostEscalas: portoWithMostEscalas,
     viagemWithMostPassageiros: viagemWithMostPassageiros,
+    top5EmbarcacoesWithMostViagens: top5Embarcacoes,
+    topPaisesWithMostPortos: top5Paises,
+    top5TipoEmbarcacao: top5TipoEmbarcacao,
   };
 
   return Response.json(result);
