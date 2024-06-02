@@ -23,6 +23,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+
 import { Button } from '@/components/ui/button';
 import { EditIcon, KeyIcon, LockIcon, UnlockIcon, XIcon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
@@ -106,7 +113,7 @@ export default function TabelaUsuarios() {
   }
 
   return (
-    <>
+    <TooltipProvider>
       <div className='flex flex-col-reverse justify-between gap-4 md:flex-row '>
         <Input
           name='search'
@@ -118,7 +125,7 @@ export default function TabelaUsuarios() {
       </div>
 
       <Table>
-        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+        <TableHeader className='p-2 text-xs border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
           <TableRow>
             <TableHead>Nome</TableHead>
             <TableHead>Email</TableHead>
@@ -162,28 +169,37 @@ export default function TabelaUsuarios() {
                 <TableCell className='w-4'>
                   <div className='flex flex-row gap-2'>
                     {/* UPDATE USERS */}
-                    <Button
-                      size='icon'
-                      variant='link'
-                      onClick={() => {
-                        setSelectedUser(usuario);
-                        setOpen(true);
-                      }}
-                    >
-                      <EditIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
-                    </Button>
-
-                    {/* RESET PASSWORD */}
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
                         <Button
                           size='icon'
                           variant='link'
-                          className='text-xs text-blue-500'
+                          onClick={() => {
+                            setSelectedUser(usuario);
+                            setOpen(true);
+                          }}
                         >
-                          <KeyIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
+                          <EditIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
                         </Button>
-                      </AlertDialogTrigger>
+                      </TooltipTrigger>
+                      <TooltipContent>Editar Usuário</TooltipContent>
+                    </Tooltip>
+                    {/* RESET PASSWORD */}
+                    <AlertDialog>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              size='icon'
+                              variant='link'
+                              className='text-xs text-blue-500'
+                            >
+                              <KeyIcon className='w-6 p-1 text-white bg-blue-500 rounded-lg' />
+                            </Button>
+                          </AlertDialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>Resetar Senha</TooltipContent>
+                      </Tooltip>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Resetar Senha</AlertDialogTitle>
@@ -203,21 +219,31 @@ export default function TabelaUsuarios() {
                         </AlertDialogFooter>
                       </AlertDialogContent>
                     </AlertDialog>
+
                     {/* BLOCK/UNBLOCK USERS */}
                     <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          size='icon'
-                          variant='link'
-                          className='text-xs text-blue-500'
-                        >
-                          {usuario.habilitado ? (
-                            <LockIcon className='w-6 p-1 text-white bg-red-700 rounded-lg' />
-                          ) : (
-                            <UnlockIcon className='w-6 p-1 text-white bg-green-700 rounded-lg' />
-                          )}
-                        </Button>
-                      </AlertDialogTrigger>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              size='icon'
+                              variant='link'
+                              className='text-xs text-blue-500'
+                            >
+                              {usuario.habilitado ? (
+                                <LockIcon className='w-6 p-1 text-white bg-red-700 rounded-lg' />
+                              ) : (
+                                <UnlockIcon className='w-6 p-1 text-white bg-green-700 rounded-lg' />
+                              )}
+                            </Button>
+                          </AlertDialogTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {usuario.habilitado
+                            ? 'Bloquear Usuário'
+                            : 'Desbloquear Usuário'}
+                        </TooltipContent>
+                      </Tooltip>
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>
@@ -298,6 +324,6 @@ export default function TabelaUsuarios() {
         email={selectedUser?.email}
         role={selectedUser?.role}
       />
-    </>
+    </TooltipProvider>
   );
 }

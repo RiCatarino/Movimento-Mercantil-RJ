@@ -48,7 +48,7 @@ export default function TableEscalas(props: {
   return (
     <>
       <Table className='border-b'>
-        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 '>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
           <TableRow className='rounded-ss-xl'>
             <TableHead>Data</TableHead>
             <TableHead>Ano</TableHead>

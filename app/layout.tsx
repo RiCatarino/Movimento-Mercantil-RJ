@@ -39,11 +39,11 @@ export default async function RootLayout({
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'min-h-screen bg-white dark:bg-slate-700 font-sans antialiased',
           fontSans.variable
         )}
       >
-        <main className='bg-transparent '>
+        <main>
           <RootProvider>
             {children} <Toaster />
           </RootProvider>

@@ -21,13 +21,13 @@ export default async function MainLayout({
   return (
     <div
       className={cn(
-        'min-h-screen bg-background font-sans antialiased relative overflow-auto',
+        'min-h-screen bg-background dark:bg-slate-700 dark:bg-opacity-0 font-sans antialiased relative overflow-auto',
         fontSans.variable
       )}
       id='magicpattern'
     >
       <nav className='relative z-10 w-full'>
-        <div className='flex items-center justify-between p-4 mx-8 mt-5 bg-white shadow-xl rounded-3xl lg:mx-24'>
+        <div className='flex items-center justify-between p-4 mx-8 mt-5 bg-white dark:bg-slate-900 shadow-xl rounded-3xl lg:mx-24'>
           <div className='flex items-center space-x-4'>
             <Loader classProp='w-8 h-8' />
             <Link href='/'>

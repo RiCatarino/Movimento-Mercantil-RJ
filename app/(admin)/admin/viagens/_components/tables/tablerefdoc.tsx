@@ -6,13 +6,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import dayjs from "dayjs";
-import { useState } from "react";
-import Loader from "@/components/loader";
-import ButtonNewRef from "../buttons/buttonnewref";
-import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
+} from '@/components/ui/table';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+import Loader from '@/components/loader';
+import ButtonNewRef from '../buttons/buttonnewref';
+import { Button } from '@/components/ui/button';
+import { XIcon } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,9 +23,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
+} from '@/components/ui/alert-dialog';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
 
 export default function TableRefDocumental(props: {
   viagem_id: number | undefined;
@@ -42,7 +42,7 @@ export default function TableRefDocumental(props: {
   async function handleDeleteRef(id: number) {
     setDeleting(true);
     await fetch(`/api/referencia_documental/delete`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     mutate();
@@ -50,14 +50,14 @@ export default function TableRefDocumental(props: {
   }
 
   if (deleting) {
-    return <Loader classProp="w-10 h-10" />;
+    return <Loader classProp='w-10 h-10' />;
   }
 
   return (
     <>
-      <Table className="border-b">
-        <TableHeader className="p-2 text-xs bg-blue-200 border-t-0 ">
-          <TableRow className="rounded-ss-xl">
+      <Table className='border-b'>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
+          <TableRow className='rounded-ss-xl'>
             <TableHead>Data de Publicação</TableHead>
             <TableHead>Nome do Periódico</TableHead>
             <TableHead></TableHead>
@@ -65,27 +65,27 @@ export default function TableRefDocumental(props: {
         </TableHeader>
         <TableBody>
           {refdocsdata?.map((ref) => (
-            <TableRow className="cursor-pointer hover:bg-blue-100" key={ref.id}>
-              <TableCell className="text-xs font-medium">
-                {dayjs(ref.data_publicacao).format("DD-MM-YYYY")}
+            <TableRow className='cursor-pointer hover:bg-blue-100' key={ref.id}>
+              <TableCell className='text-xs font-medium'>
+                {dayjs(ref.data_publicacao).format('DD-MM-YYYY')}
               </TableCell>
-              <TableCell className="text-xs font-medium">
+              <TableCell className='text-xs font-medium'>
                 {ref.referencia_documental?.nome_periodico}
               </TableCell>
-              <TableCell className="w-4">
+              <TableCell className='w-4'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button
-                      size="icon"
-                      variant="link"
-                      className="text-xs text-blue-500"
+                      size='icon'
+                      variant='link'
+                      className='text-xs text-blue-500'
                     >
-                      <XIcon className="w-4 text-red-700" />
+                      <XIcon className='w-4 text-red-700' />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle className="text-red-500">
+                      <AlertDialogTitle className='text-red-500'>
                         Tem a certeza?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
@@ -97,12 +97,12 @@ export default function TableRefDocumental(props: {
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
                         disabled={deleting}
-                        className="bg-red-500 hover:bg-red-600"
+                        className='bg-red-500 hover:bg-red-600'
                         onClick={() =>
                           handleDeleteRef(ref.referencia_documental.id)
                         }
                       >
-                        {deleting ? "Aguarde..." : "Remover"}
+                        {deleting ? 'Aguarde...' : 'Remover'}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

@@ -34,14 +34,17 @@ import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import DialogEditarEmbarcacao from './dialogedit';
 import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
 
 export default function TableEmbarcacoes() {
+  const searchParams = useSearchParams();
+  const name = searchParams.get('nome');
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [embarcacao, setEmbarcacao] = useState<Embarcacao>();
   const [deleting, setDeleting] = useState(false);
   const [activePage, setPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(name ?? '');
 
   const {
     data: embarcacoesdata,
@@ -74,10 +77,11 @@ export default function TableEmbarcacoes() {
   }
 
   return (
-    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 border-solid shadow-lg  gap-2 rounded-3xl'>
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl'>
       <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
           id='search'
+          value={searchText}
           className='rounded-xl'
           placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
@@ -91,7 +95,7 @@ export default function TableEmbarcacoes() {
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 '>
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
             <TableRow>
               <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
               <TableHead className='md:w-96'>Nome</TableHead>
