@@ -1,5 +1,14 @@
 {
   "title": "Pessoas",
-  "pages": ["criar", "apagar"],
+  "pages": [
+    "adicionar-cargo",
+    "adicionar-pessoa",
+    "editar-cargo",
+    "editar-pessoa",
+    "editar-titulo",
+    "novo-cargo",
+    "novo-titulo",
+    "apagar"
+  ],
   "defaultOpen": false
 }

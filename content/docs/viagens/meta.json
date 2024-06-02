@@ -1,5 +1,11 @@
 {
   "title": "Viagens",
-  "pages": ["criar", "apagar"],
+  "pages": [
+    "adicionar-viagem",
+    "editar-viagem",
+    "adicionar-escala",
+    "adicionar-mercadoria",
+    "adicionar-noticia"
+  ],
   "defaultOpen": false
 }
