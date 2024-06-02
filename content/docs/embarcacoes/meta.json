@@ -1,0 +1,13 @@
+{
+  "title": "Embarcações",
+  "pages": [
+    "adicionar-embarcacao",
+    "editar-embarcacao",
+    "adicionar-proprietario",
+    "adicionar-tipo",
+    "editar-tipoembarcacao",
+    "adicionar-imagem",
+    "apagar"
+  ],
+  "defaultOpen": false
+}
