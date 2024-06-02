@@ -1,0 +1,12 @@
+{
+  "title": "Usuários",
+  "pages": [
+    "novo-usuario",
+    "editar-usuario",
+    "resetar-senha",
+    "bloquear-usuarios",
+    "desbloquear-usuarios",
+    "apagar"
+  ],
+  "defaultOpen": false
+}

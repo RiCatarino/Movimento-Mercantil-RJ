@@ -1,0 +1,5 @@
+{
+  "title": "Unidades de Medida",
+  "pages": ["nova-unidade", "editar-unidade", "apagar"],
+  "defaultOpen": false
+}
