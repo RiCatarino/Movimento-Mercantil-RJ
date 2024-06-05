@@ -8,6 +8,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
 // import utc from 'dayjs/plugin/utc';
 import fetcher from '@/lib/fetch';
 import useSWR from 'swr';
@@ -30,7 +32,9 @@ import { EditIcon } from 'lucide-react';
 import DialogEditarViagem from '../dialogedit';
 import BotaoExportarParaExcel from '../buttons/buttonexport';
 
-// dayjs.extend(utc);
+//extend dayjs with utc plugin
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function TripsTable() {
   const [activePage, setPage] = useState(1);
@@ -54,6 +58,8 @@ export default function TripsTable() {
 
   const chunked = chunk(viagensdata ?? [], 10);
   const viagens = chunked[activePage - 1];
+
+  console.log(viagens);
 
   return (
     <>
@@ -129,7 +135,7 @@ export default function TripsTable() {
                 </TableCell>
                 <TableCell className='font-medium'>
                   {viagem.data_rio
-                    ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
+                    ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
                     : 'N/A'}
                 </TableCell>
                 <TableCell className='font-medium'>
