@@ -40,6 +40,7 @@ import { Badge } from '@/components/ui/badge';
 import DialogEditarUsuario from './edituserdialog';
 import { Input } from '@/components/ui/input';
 import { useSession } from '@/app/SessionContext';
+import BotaoExportarBD from './buttonexportdb';
 
 export default function TabelaUsuarios() {
   const [activePage, setPage] = useState(1);
@@ -114,7 +115,7 @@ export default function TabelaUsuarios() {
 
   return (
     <TooltipProvider>
-      <div className='flex flex-col-reverse justify-between gap-4 md:flex-row '>
+      <div className='flex flex-col-reverse justify-between gap-4 md:flex-row'>
         <Input
           name='search'
           className='rounded-xl'
@@ -122,6 +123,7 @@ export default function TabelaUsuarios() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <BotaoNovoUsuario mutate={mutate} />
+        <BotaoExportarBD />
       </div>
 
       <Table>
