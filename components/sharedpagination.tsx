@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
+} from "@/components/ui/pagination";
 
 export default function Paginacao(props: {
   chunked: any[];
@@ -22,8 +22,8 @@ export default function Paginacao(props: {
       <PaginationLink
         className={
           activePage === start + index
-            ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
-            : 'cursor-pointer'
+            ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
+            : "cursor-pointer"
         }
         key={start + index}
         onClick={() => setPage(start + index)}
@@ -38,7 +38,7 @@ export default function Paginacao(props: {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
+            className="text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
             onClick={() => {
               if (activePage > 1) {
                 setPage(activePage - 1);
@@ -47,12 +47,12 @@ export default function Paginacao(props: {
           />
         </PaginationItem>
 
-        <PaginationItem className='hidden md:gap-2 md:flex'>
+        <PaginationItem className="hidden md:gap-2 md:flex">
           <PaginationLink
             className={
               activePage === 1
-                ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
-                : 'cursor-pointer'
+                ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
+                : "cursor-pointer"
             }
             key={1}
             onClick={() => setPage(1)}
@@ -69,10 +69,10 @@ export default function Paginacao(props: {
           {chunked.length <= 8
             ? renderPaginationLinks(2, chunked.length - 1)
             : activePage <= 4
-            ? renderPaginationLinks(2, 5)
-            : activePage > 4 && activePage < chunked.length - 3
-            ? renderPaginationLinks(activePage - 1, activePage + 1)
-            : renderPaginationLinks(chunked.length - 4, chunked.length - 1)}
+              ? renderPaginationLinks(2, 5)
+              : activePage > 4 && activePage < chunked.length - 3
+                ? renderPaginationLinks(activePage - 1, activePage + 1)
+                : renderPaginationLinks(chunked.length - 4, chunked.length - 1)}
 
           {activePage < chunked.length - 3 && (
             <PaginationItem>
@@ -83,8 +83,8 @@ export default function Paginacao(props: {
           <PaginationLink
             className={
               activePage === chunked.length
-                ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
-                : 'cursor-pointer'
+                ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
+                : "cursor-pointer"
             }
             key={chunked.length}
             onClick={() => setPage(chunked.length)}
@@ -95,7 +95,7 @@ export default function Paginacao(props: {
 
         <PaginationItem>
           <PaginationNext
-            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
+            className="text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
             onClick={() => {
               if (activePage < chunked.length) {
                 setPage(activePage + 1);

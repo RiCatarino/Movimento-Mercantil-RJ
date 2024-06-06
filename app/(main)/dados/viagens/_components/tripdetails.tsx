@@ -47,7 +47,7 @@ export default function TripDetails(props: {
     mutate: mutateViagem,
   } = useSWR<Viagem>(
     viagem_id ? `/api/viagem/read/byid?id=${viagem_id}` : null,
-    fetcher
+    fetcher,
   );
 
   async function handleDeletePerson(id: number) {

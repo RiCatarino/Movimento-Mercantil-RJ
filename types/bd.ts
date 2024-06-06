@@ -2,7 +2,7 @@ interface User {
   id: string;
   nome: string;
   email: string;
-  role: 'EDITOR' | 'ADMIN';
+  role: "EDITOR" | "ADMIN";
   habilitado: boolean;
 }
 

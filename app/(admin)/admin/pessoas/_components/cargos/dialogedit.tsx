@@ -1,13 +1,13 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+} from "@/components/ui/dialog";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -15,17 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 
-import Loader from '@/components/loader';
-import { toast } from '@/components/ui/use-toast';
-import { KeyedMutator } from 'swr';
+import Loader from "@/components/loader";
+import { toast } from "@/components/ui/use-toast";
+import { KeyedMutator } from "swr";
 
 const formSchema = z.object({
   id: z.number(),
-  cargo: z.string().min(1, { message: 'Escreva o nome do Cargo' }),
+  cargo: z.string().min(1, { message: "Escreva o nome do Cargo" }),
 });
 
 export default function DialogEditarCargo(props: {
@@ -50,8 +50,8 @@ export default function DialogEditarCargo(props: {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/cargo/update', {
-      method: 'PUT',
+    const result = await fetch("/api/cargo/update", {
+      method: "PUT",
       body: JSON.stringify(values),
     });
 
@@ -60,17 +60,17 @@ export default function DialogEditarCargo(props: {
       form.reset();
       mutate();
       toast({
-        className: 'bg-green-200',
-        title: 'Sucesso',
+        className: "bg-green-200",
+        title: "Sucesso",
         duration: 5000,
-        description: 'Cargo editado com sucesso',
+        description: "Cargo editado com sucesso",
       });
     } else {
       toast({
-        variant: 'destructive',
-        title: 'Erro',
+        variant: "destructive",
+        title: "Erro",
         duration: 5000,
-        description: 'Erro ao editar cargo',
+        description: "Erro ao editar cargo",
       });
     }
     setSubmitting(false);
@@ -78,23 +78,23 @@ export default function DialogEditarCargo(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className='w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className="w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Editar Cargo</DialogTitle>
+          <DialogTitle className="text-blue-500">Editar Cargo</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className='flex flex-col gap-2'
+            className="flex flex-col gap-2"
           >
             <FormField
               control={form.control}
-              name='cargo'
+              name="cargo"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Cargo</FormLabel>
                   <FormControl>
-                    <Input placeholder='Ex: Mestre' {...field} />
+                    <Input placeholder="Ex: Mestre" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -102,11 +102,11 @@ export default function DialogEditarCargo(props: {
             />
 
             <Button
-              type='submit'
-              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
+              type="submit"
+              className="self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit"
               disabled={submitting}
             >
-              Editar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+              Editar {submitting && <Loader classProp="ml-2 w-6 h-6" />}
             </Button>
           </form>
         </Form>

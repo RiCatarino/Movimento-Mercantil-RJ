@@ -1,13 +1,13 @@
-import { lucia, validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
-import { hash } from '@node-rs/argon2';
+import { lucia, validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
+import { hash } from "@node-rs/argon2";
 
 export async function PUT(req: Request) {
   const { password } = await req.json();
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
   await lucia.invalidateUserSessions(user.id);
 

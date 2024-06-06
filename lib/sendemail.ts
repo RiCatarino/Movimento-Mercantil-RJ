@@ -3,15 +3,15 @@
 export default async function sendEmailNotification(
   email: String,
   subject: String,
-  message: String
+  message: String,
 ) {
-  const nodemailer = require('nodemailer');
+  const nodemailer = require("nodemailer");
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER_HOST,
     port: process.env.EMAIL_SERVER_PORT,
 
     tls: {
-      ciphers: 'SSLv3',
+      ciphers: "SSLv3",
       rejectUnauthorized: false,
     },
     secure: false,
@@ -268,7 +268,7 @@ export default async function sendEmailNotification(
     if (error) {
       console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log("Email sent: " + info.response);
     }
   });
 }

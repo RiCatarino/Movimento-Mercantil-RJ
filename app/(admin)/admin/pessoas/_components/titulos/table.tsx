@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Table,
   TableBody,
@@ -6,15 +6,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 // import VesselDetails from './vesseldetails';
-import fetcher from '@/lib/fetch';
-import Loader from '@/components/loader';
-import useSWR from 'swr';
-import NovoTitulo from './buttonnew';
-import { useState } from 'react';
-import TituloDetails from './titulodetails';
-import { toast } from '@/components/ui/use-toast';
+import fetcher from "@/lib/fetch";
+import Loader from "@/components/loader";
+import useSWR from "swr";
+import NovoTitulo from "./buttonnew";
+import { useState } from "react";
+import TituloDetails from "./titulodetails";
+import { toast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,14 +25,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { EditIcon, XIcon } from 'lucide-react';
-import Paginacao from '@/components/sharedpagination';
-import chunk from '@/lib/chunk';
-import { Input } from '@/components/ui/input';
-import DialogEditarTituloNobreza from './dialogedit';
-import BotaoExportarParaExcel from './buttonexport';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { EditIcon, XIcon } from "lucide-react";
+import Paginacao from "@/components/sharedpagination";
+import chunk from "@/lib/chunk";
+import { Input } from "@/components/ui/input";
+import DialogEditarTituloNobreza from "./dialogedit";
+import BotaoExportarParaExcel from "./buttonexport";
 
 export default function TabelaTitulos() {
   const [activePage, setPage] = useState(1);
@@ -41,7 +41,7 @@ export default function TabelaTitulos() {
   const [titulo, setTitulo] = useState<TituloNobreza>();
   const [deleting, setDeleting] = useState(false);
   const [name, setName] = useState<string | undefined>();
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
 
   const {
     data: titulosdata,
@@ -49,9 +49,9 @@ export default function TabelaTitulos() {
     mutate,
   } = useSWR<TituloNobreza[]>(
     searchText
-      ? '/api/titulo_nobreza/read/byname?titulo=' + searchText
-      : '/api/titulo_nobreza/read',
-    fetcher
+      ? "/api/titulo_nobreza/read/byname?titulo=" + searchText
+      : "/api/titulo_nobreza/read",
+    fetcher,
   );
 
   const chunked = chunk(titulosdata ?? [], 10);
@@ -60,40 +60,40 @@ export default function TabelaTitulos() {
   async function handleDeleteTitulo(id: number) {
     setDeleting(true);
     await fetch(`/api/titulo_nobreza/delete`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: 'bg-green-200',
-      title: 'Sucesso',
+      className: "bg-green-200",
+      title: "Sucesso",
       duration: 5000,
-      description: 'Título removido com sucesso',
+      description: "Título removido com sucesso",
     });
     setDeleting(false);
   }
 
   return (
-    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl '>
-      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
+    <div className="flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl ">
+      <div className="flex flex-col-reverse justify-between md:flex-row gap-4 ">
         <Input
-          name='search'
-          placeholder='Pesquisar por título...'
+          name="search"
+          placeholder="Pesquisar por título..."
           onChange={(e) => setSearchText(e.target.value)}
           value={name}
-          className='rounded-xl'
+          className="rounded-xl"
         />
         <NovoTitulo mutate={mutate} />
         <BotaoExportarParaExcel titulos={titulosdata} />
       </div>
       {isLoading ? (
-        <div className='flex flex-row justify-center p-4'>
-          <Loader classProp='w-24 h-24 self-center flex' />
+        <div className="flex flex-row justify-center p-4">
+          <Loader classProp="w-24 h-24 self-center flex" />
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
-            <TableRow className='rounded-ss-xl'>
+          <TableHeader className="p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950">
+            <TableRow className="rounded-ss-xl">
               {/* <TableHead>ID</TableHead> */}
               <TableHead>Título</TableHead>
               <TableHead></TableHead>
@@ -102,7 +102,7 @@ export default function TabelaTitulos() {
           <TableBody>
             {titulos?.map((titulo) => (
               <TableRow
-                className='cursor-pointer hover:bg-blue-100'
+                className="cursor-pointer hover:bg-blue-100"
                 key={titulo.id}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -111,11 +111,11 @@ export default function TabelaTitulos() {
                 }}
               >
                 {/* <TableCell className='w-10 font-medium'>{titulo.id}</TableCell> */}
-                <TableCell className='font-medium'>{titulo.titulo}</TableCell>
-                <TableCell className='w-4'>
-                  <div className='flex gap-2'>
+                <TableCell className="font-medium">{titulo.titulo}</TableCell>
+                <TableCell className="w-4">
+                  <div className="flex gap-2">
                     <Button
-                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
+                      className="text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl"
                       onClick={(e) => {
                         e.stopPropagation();
                         setTitulo(titulo);
@@ -127,14 +127,14 @@ export default function TabelaTitulos() {
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
-                          size='icon'
-                          variant='link'
-                          className='text-xs text-blue-500'
+                          size="icon"
+                          variant="link"
+                          className="text-xs text-blue-500"
                           onClick={(e) => {
                             e.stopPropagation();
                           }}
                         >
-                          <XIcon className='w-4 text-red-700' />
+                          <XIcon className="w-4 text-red-700" />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent
@@ -143,7 +143,7 @@ export default function TabelaTitulos() {
                         }}
                       >
                         <AlertDialogHeader>
-                          <AlertDialogTitle className='text-red-500'>
+                          <AlertDialogTitle className="text-red-500">
                             Tem a certeza?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
@@ -155,12 +155,12 @@ export default function TabelaTitulos() {
                           <AlertDialogCancel>Cancelar</AlertDialogCancel>
                           <AlertDialogAction
                             disabled={deleting}
-                            className='bg-red-500 hover:bg-red-600'
+                            className="bg-red-500 hover:bg-red-600"
                             onClick={(e) => {
                               handleDeleteTitulo(titulo.id);
                             }}
                           >
-                            {deleting && <Loader classProp='w-4 h-4' />} Remover
+                            {deleting && <Loader classProp="w-4 h-4" />} Remover
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>

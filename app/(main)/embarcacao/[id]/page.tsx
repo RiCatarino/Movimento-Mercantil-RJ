@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
   //pedir ao zé para fazer o fetch da embarcação com o id = params.id
@@ -14,15 +14,15 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [params.id]);
 
   return (
-    <main className='flex p-4 mx-10 mt-5 border-2 border-gray-300 border-solid shadow-lg rounded-3xl md:mx-24 '>
-      <table className='w-full p-10 text-left border border-separate table-auto rounded-xl border-spacing-y-2 '>
-        <thead className='p-1 text-xs uppercase bg-blue-200 rounded-xl'>
+    <main className="flex p-4 mx-10 mt-5 border-2 border-gray-300 border-solid shadow-lg rounded-3xl md:mx-24 ">
+      <table className="w-full p-10 text-left border border-separate table-auto rounded-xl border-spacing-y-2 ">
+        <thead className="p-1 text-xs uppercase bg-blue-200 rounded-xl">
           <tr>
-            <th className='p-2 rounded-l-lg'>Embarcação</th>
+            <th className="p-2 rounded-l-lg">Embarcação</th>
             <th>Tipo</th>
           </tr>
         </thead>
-        <tbody className=''>
+        <tbody className="">
           {/* {personData?.map((row, index) => (
             <tr
               key={index}

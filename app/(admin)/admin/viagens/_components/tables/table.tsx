@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Table,
   TableBody,
@@ -6,32 +6,32 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import tz from 'dayjs/plugin/timezone';
+} from "@/components/ui/table";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 // import utc from 'dayjs/plugin/utc';
-import fetcher from '@/lib/fetch';
-import useSWR from 'swr';
-import TripDetails from '../tripdetails';
-import { useState } from 'react';
-import Loader from '@/components/loader';
-import Paginacao from '@/components/sharedpagination';
-import chunk from '@/lib/chunk';
-import BotaoNovaViagem from '../buttons/botaonovaviagem';
-import { Input } from '@/components/ui/input';
+import fetcher from "@/lib/fetch";
+import useSWR from "swr";
+import TripDetails from "../tripdetails";
+import { useState } from "react";
+import Loader from "@/components/loader";
+import Paginacao from "@/components/sharedpagination";
+import chunk from "@/lib/chunk";
+import BotaoNovaViagem from "../buttons/botaonovaviagem";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTriggerFilter,
   SelectValue,
-} from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { EditIcon } from 'lucide-react';
-import DialogEditarViagem from '../dialogedit';
-import BotaoExportarParaExcel from '../buttons/buttonexport';
-import PaginacaoByTotal from '@/components/sharedpaginationbytotal';
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { EditIcon } from "lucide-react";
+import DialogEditarViagem from "../dialogedit";
+import BotaoExportarParaExcel from "../buttons/buttonexport";
+import PaginacaoByTotal from "@/components/sharedpaginationbytotal";
 
 //extend dayjs with utc plugin
 dayjs.extend(utc);
@@ -42,13 +42,13 @@ export default function TripsTable() {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [viagem, setViagem] = useState<Viagem>();
-  const [searchText, setSearchText] = useState('');
-  const [selectedYear, setSelectedYear] = useState('none');
-  const [selectedType, setSelectedType] = useState('none');
+  const [searchText, setSearchText] = useState("");
+  const [selectedYear, setSelectedYear] = useState("none");
+  const [selectedType, setSelectedType] = useState("none");
 
   const { data: totaltrips, isLoading: isLoadingTotal } = useSWR<number>(
-    '/api/viagem/read/total',
-    fetcher
+    "/api/viagem/read/total",
+    fetcher,
   );
 
   const {
@@ -58,7 +58,7 @@ export default function TripsTable() {
   } = useSWR<Viagem[]>(
     `/api/viagem/read/bysearch?search=${searchText}&ano=${selectedYear}&tipo=${selectedType}&page=${activePage}`,
     // : '/api/viagem/read/',
-    fetcher
+    fetcher,
   );
 
   // const chunked = chunk(totaltrips, 10);
@@ -67,21 +67,21 @@ export default function TripsTable() {
   console.log(viagensdata);
   return (
     <>
-      <div className='flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4'>
+      <div className="flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4">
         <Input
-          name='search'
-          className='rounded-xl '
-          placeholder='Pesquisar por nome de embarcação...'
+          name="search"
+          className="rounded-xl "
+          placeholder="Pesquisar por nome de embarcação..."
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <div className='flex flex-col md:flex-row gap-4 '>
-          <Select name='ano' onValueChange={(e) => setSelectedYear(e)}>
-            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
-              <SelectValue placeholder='Ano' />
+        <div className="flex flex-col md:flex-row gap-4 ">
+          <Select name="ano" onValueChange={(e) => setSelectedYear(e)}>
+            <SelectTriggerFilter className="rounded-xl w-full md:w-1/2 lg:w-[180px]">
+              <SelectValue placeholder="Ano" />
             </SelectTriggerFilter>
             <SelectContent>
-              <SelectItem key='empty' value='none'>
-                {'Sem filtro'}
+              <SelectItem key="empty" value="none">
+                {"Sem filtro"}
               </SelectItem>
 
               {Array.from({ length: 23 }, (_, i) => 1808 + i).map((year) => (
@@ -92,17 +92,17 @@ export default function TripsTable() {
             </SelectContent>
           </Select>
 
-          <Select name='tipo' onValueChange={(e) => setSelectedType(e)}>
-            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
-              <SelectValue placeholder='Tipo' />
+          <Select name="tipo" onValueChange={(e) => setSelectedType(e)}>
+            <SelectTriggerFilter className="rounded-xl w-full md:w-1/2 lg:w-[180px]">
+              <SelectValue placeholder="Tipo" />
             </SelectTriggerFilter>
 
             <SelectContent>
-              <SelectItem key='empty' value='none'>
-                {'Sem filtro'}
+              <SelectItem key="empty" value="none">
+                {"Sem filtro"}
               </SelectItem>
-              <SelectItem value='Sahida'>Sahida</SelectItem>
-              <SelectItem value='Entrada'>Entrada</SelectItem>
+              <SelectItem value="Sahida">Sahida</SelectItem>
+              <SelectItem value="Entrada">Entrada</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -110,16 +110,16 @@ export default function TripsTable() {
         <BotaoExportarParaExcel viagens={viagensdata} />
       </div>
       {isLoading ? (
-        <div className='flex flex-row justify-center p-4'>
-          <Loader classProp='w-24 h-24 self-center flex' />
+        <div className="flex flex-row justify-center p-4">
+          <Loader classProp="w-24 h-24 self-center flex" />
         </div>
       ) : (
         <Table>
-          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
-            <TableRow className='rounded-ss-xl'>
-              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
-              <TableHead className='w-96'>Data Rio</TableHead>
-              <TableHead className='w-96'>Tipo</TableHead>
+          <TableHeader className="p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950">
+            <TableRow className="rounded-ss-xl">
+              <TableHead className="w-4 hidden md:table-cell">ID</TableHead>
+              <TableHead className="w-96">Data Rio</TableHead>
+              <TableHead className="w-96">Tipo</TableHead>
               <TableHead>Embarcação</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -127,30 +127,30 @@ export default function TripsTable() {
           <TableBody>
             {viagensdata?.map((viagem) => (
               <TableRow
-                className='cursor-pointer hover:bg-blue-100'
+                className="cursor-pointer hover:bg-blue-100"
                 key={viagem.id}
                 onClick={(e) => {
                   setViagem(viagem);
                   setOpen(true);
                 }}
               >
-                <TableCell className='font-medium hidden md:table-cell'>
+                <TableCell className="font-medium hidden md:table-cell">
                   {viagem.id}
                 </TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.data_rio
-                    ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
-                    : 'N/A'}
+                    ? dayjs.tz(viagem.data_rio, "UTC").format("DD/MM/YYYY")
+                    : "N/A"}
                 </TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.entrada_sahida}
                 </TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.embarcacao.nome}
                 </TableCell>
-                <TableCell className='w-4'>
+                <TableCell className="w-4">
                   <Button
-                    className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
+                    className="text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl"
                     onClick={(e) => {
                       e.stopPropagation();
                       setViagem(viagem);

@@ -1,11 +1,11 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function PUT(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const { id, nome, pais, titulo_nobreza } = await req.json();
@@ -17,7 +17,7 @@ export async function PUT(req: Request) {
       },
       nome: {
         equals: nome,
-        mode: 'insensitive',
+        mode: "insensitive",
       },
       pais: {
         id: Number(pais),
@@ -29,9 +29,9 @@ export async function PUT(req: Request) {
   });
 
   if (existe) {
-    return new Response('Pessoa já existe', {
+    return new Response("Pessoa já existe", {
       status: 409,
-      statusText: 'Pessoa já existe',
+      statusText: "Pessoa já existe",
     });
   }
 
