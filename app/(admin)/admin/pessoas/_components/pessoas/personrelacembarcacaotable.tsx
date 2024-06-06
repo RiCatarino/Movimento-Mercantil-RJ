@@ -9,6 +9,9 @@ import {
 } from '@/components/ui/table';
 
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
+
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -27,6 +30,9 @@ import fetcher from '@/lib/fetch';
 import { XIcon } from 'lucide-react';
 import chunk from '@/lib/chunk';
 import Paginacao from '@/components/sharedpagination';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function PersonRelacaoEmbarcacaoTable(props: {
   pessoa: Pessoa | undefined;
@@ -72,10 +78,14 @@ export default function PersonRelacaoEmbarcacaoTable(props: {
                 {relacao.embarcacao.nome}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
-                {dayjs(relacao.data_inicio).format('DD/MM/YYYY')}
+                {relacao.data_inicio
+                  ? dayjs.tz(relacao.data_inicio, 'UTC').format('DD/MM/YYYY')
+                  : 'N/A'}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
-                {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
+                {relacao.data_fim
+                  ? dayjs.tz(relacao.data_fim, 'UTC').format('DD/MM/YYYY')
+                  : 'N/A'}
               </TableCell>
 
               <TableCell className='px-4 py-0 text-xs'>

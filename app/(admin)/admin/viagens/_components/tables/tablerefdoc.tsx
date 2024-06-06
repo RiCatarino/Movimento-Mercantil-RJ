@@ -8,6 +8,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
 import { useState } from 'react';
 import Loader from '@/components/loader';
 import ButtonNewRef from '../buttons/buttonnewref';
@@ -26,6 +28,9 @@ import {
 } from '@/components/ui/alert-dialog';
 import chunk from '@/lib/chunk';
 import Paginacao from '@/components/sharedpagination';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function TableRefDocumental(props: {
   viagem_id: number | undefined;
@@ -67,7 +72,7 @@ export default function TableRefDocumental(props: {
           {refdocsdata?.map((ref) => (
             <TableRow className='cursor-pointer hover:bg-blue-100' key={ref.id}>
               <TableCell className='text-xs font-medium'>
-                {dayjs(ref.data_publicacao).format('DD-MM-YYYY')}
+                {dayjs.tz(ref.data_publicacao, 'UTC').format('DD/MM/YYYY')}
               </TableCell>
               <TableCell className='text-xs font-medium'>
                 {ref.referencia_documental?.nome_periodico}

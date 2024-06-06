@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/table';
 
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -28,6 +30,9 @@ import { XIcon } from 'lucide-react';
 import BotaoNovoCargo from './buttonnewcargo';
 import chunk from '@/lib/chunk';
 import Paginacao from '@/components/sharedpagination';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -72,7 +77,7 @@ export default function TabelaPessoaCargo(props: {
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
                 {relacao.data_cargo
-                  ? dayjs(relacao.data_cargo).format('DD/MM/YYYY')
+                  ? dayjs.tz(relacao.data_cargo, 'UTC').format('DD/MM/YYYY')
                   : 'N/A'}
               </TableCell>
               <TableCell className='px-4 py-0 text-xs'>
