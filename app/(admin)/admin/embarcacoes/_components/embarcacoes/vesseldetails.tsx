@@ -18,6 +18,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -40,6 +42,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function VesselDetails(props: {
   open: boolean;
@@ -169,12 +174,14 @@ export default function VesselDetails(props: {
                                 {relacao.pessoa?.pais?.pais}
                               </TableCell>
                               <TableCell className='text-xs'>
-                                {dayjs(relacao.data_inicio).format(
-                                  'DD/MM/YYYY'
-                                )}
+                                {dayjs
+                                  .tz(relacao.data_inicio, 'UTC')
+                                  .format('DD/MM/YYYY')}
                               </TableCell>
                               <TableCell className='text-xs'>
-                                {dayjs(relacao.data_fim).format('DD/MM/YYYY')}
+                                {dayjs
+                                  .tz(relacao.data_fim, 'UTC')
+                                  .format('DD/MM/YYYY')}
                               </TableCell>
 
                               <TableCell className='text-xs'>
@@ -263,7 +270,9 @@ export default function VesselDetails(props: {
                             </TableCell>
                             <TableCell className='text-xs'>
                               {viagem.data_rio
-                                ? dayjs(viagem.data_rio).format('DD/MM/YYYY')
+                                ? dayjs
+                                    .tz(viagem.data_rio, 'UTC')
+                                    .format('DD/MM/YYYY')
                                 : 'N/A'}
                             </TableCell>
                             <TableCell className='text-xs'>

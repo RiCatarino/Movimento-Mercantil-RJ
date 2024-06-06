@@ -22,6 +22,9 @@ import {
 } from '@/components/ui/alert-dialog'; // import AddOwner from './addownerbutton';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
+
 import {
   Accordion,
   AccordionContent,
@@ -35,6 +38,9 @@ import { Trash } from 'lucide-react';
 import BotaoNovaeEscala from './buttons/botaonovaescala';
 import TableRefDocumental from './tables/tablerefdoc';
 import TableNews from './tables/tablenews';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function TripDetails(props: {
   open: boolean;
@@ -92,7 +98,7 @@ export default function TripDetails(props: {
                 </div>
                 <div className='p-2 text-xs'>
                   {viagem?.data_viagem
-                    ? dayjs(viagem?.data_viagem).format('DD/MM/YYYY')
+                    ? dayjs.tz(viagem.data_viagem, 'UTC').format('DD/MM/YYYY')
                     : 'N/A'}
                 </div>
               </div>
@@ -102,7 +108,7 @@ export default function TripDetails(props: {
                 </div>
                 <div className='p-2 text-xs'>
                   {viagem?.data_chegada
-                    ? dayjs(viagem?.data_chegada).format('DD/MM/YYYY')
+                    ? dayjs.tz(viagem.data_chegada, 'UTC').format('DD/MM/YYYY')
                     : 'N/A'}{' '}
                 </div>
               </div>
@@ -112,7 +118,7 @@ export default function TripDetails(props: {
                 </div>
                 <div className='p-2 text-xs'>
                   {viagem?.data_rio
-                    ? dayjs(viagem?.data_rio).format('DD/MM/YYYY')
+                    ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
                     : 'N/A'}{' '}
                 </div>
               </div>

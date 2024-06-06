@@ -7,6 +7,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import tz from 'dayjs/plugin/timezone';
 import { useState } from 'react';
 import MercadoriaEscalasDrawer from '../mercadoriaescaladrawer';
 import { XIcon } from 'lucide-react';
@@ -14,6 +16,9 @@ import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
+
+dayjs.extend(utc);
+dayjs.extend(tz);
 
 export default function TableEscalas(props: {
   escalas: Escala[] | undefined;
@@ -71,7 +76,7 @@ export default function TableEscalas(props: {
               }}
             >
               <TableCell className='text-xs font-medium'>
-                {dayjs(escala.data_escala).format('DD-MM-YYYY')}
+                {dayjs.tz(escala.data_escala, 'UTC').format('DD/MM/YYYY')}
               </TableCell>
               <TableCell className='text-xs font-medium'>
                 {escala.ano}

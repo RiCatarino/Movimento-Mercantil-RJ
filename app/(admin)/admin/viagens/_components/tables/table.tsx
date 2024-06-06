@@ -59,8 +59,6 @@ export default function TripsTable() {
   const chunked = chunk(viagensdata ?? [], 10);
   const viagens = chunked[activePage - 1];
 
-  console.log(viagens);
-
   return (
     <>
       <div className='flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4'>
