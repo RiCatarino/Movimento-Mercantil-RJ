@@ -33,7 +33,7 @@ function setHeaders(worksheet: any) {
   setHeaderStyle(worksheet.getCell('A1'));
   worksheet.getCell('B1').value = 'Nome';
   setHeaderStyle(worksheet.getCell('B1'));
-  worksheet.getCell('C1').value = 'Título de Nobreza';
+  worksheet.getCell('C1').value = 'Título';
   setHeaderStyle(worksheet.getCell('C1'));
   worksheet.getCell('D1').value = 'País';
   setHeaderStyle(worksheet.getCell('D1'));

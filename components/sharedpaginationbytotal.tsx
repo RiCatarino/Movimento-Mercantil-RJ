@@ -8,14 +8,15 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
-export default function Paginacao(props: {
-  chunked: any[];
+export default function PaginacaoByTotal(props: {
+  total: number | undefined;
   activePage: number;
   setPage: (page: number) => void;
 }) {
-  const { chunked, activePage, setPage } = props;
+  const { total, activePage, setPage } = props;
 
-  if (chunked.length <= 1) return null;
+  if (!total) return null;
+  if (total <= 1) return null;
 
   const renderPaginationLinks = (start: number, end: number) => {
     return Array.from({ length: end - start + 1 }, (_, index) => (
@@ -33,6 +34,12 @@ export default function Paginacao(props: {
     ));
   };
 
+  const renderEllipsis = (key: string) => (
+    <PaginationItem key={key}>
+      <PaginationEllipsis />
+    </PaginationItem>
+  );
+
   return (
     <Pagination>
       <PaginationContent>
@@ -46,7 +53,6 @@ export default function Paginacao(props: {
             }}
           />
         </PaginationItem>
-
         <PaginationItem className='hidden md:gap-2 md:flex'>
           <PaginationLink
             className={
@@ -59,45 +65,32 @@ export default function Paginacao(props: {
           >
             1
           </PaginationLink>
-
-          {activePage > 4 && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-
-          {chunked.length <= 8
-            ? renderPaginationLinks(2, chunked.length - 1)
+          {activePage > 4 && renderEllipsis('ellipsis-start')}
+          {total <= 8
+            ? renderPaginationLinks(2, total - 1)
             : activePage <= 4
             ? renderPaginationLinks(2, 5)
-            : activePage > 4 && activePage < chunked.length - 3
+            : activePage > 4 && activePage < total - 3
             ? renderPaginationLinks(activePage - 1, activePage + 1)
-            : renderPaginationLinks(chunked.length - 4, chunked.length - 1)}
-
-          {activePage < chunked.length - 3 && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
-
+            : renderPaginationLinks(total - 4, total - 1)}
+          {activePage < total - 3 && renderEllipsis('ellipsis-end')}
           <PaginationLink
             className={
-              activePage === chunked.length
+              activePage === total
                 ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
                 : 'cursor-pointer'
             }
-            key={chunked.length}
-            onClick={() => setPage(chunked.length)}
+            key={total}
+            onClick={() => setPage(total)}
           >
-            {chunked.length}
+            {total}
           </PaginationLink>
         </PaginationItem>
-
         <PaginationItem>
           <PaginationNext
             className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
             onClick={() => {
-              if (activePage < chunked.length) {
+              if (activePage < total) {
                 setPage(activePage + 1);
               }
             }}

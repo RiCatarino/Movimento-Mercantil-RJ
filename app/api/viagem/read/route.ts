@@ -76,10 +76,10 @@ export async function GET() {
       },
     },
 
-    take: 100,
+    take: 10,
 
     orderBy: {
-      data_rio: 'asc',
+      id: 'asc',
     },
   });
   return Response.json(result);

@@ -85,87 +85,109 @@ export default function TripDetails(props: {
                 <Loader classProp='w-24 h-24' />
               </div>
             ) : (
-              'Viagem #' + viagem_id
+              'Viagem #' + viagem_id + ' - ' + viagem?.embarcacao?.nome
             )}
           </DialogTitle>
         </DialogHeader>
         {!isLoading && (
           <>
-            <div className='flex flex-wrap gap-2'>
-              <div className='flex flex-col border gap-1 rounded-xl '>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Data de Partida
+            <div className='flex flex-col gap-2'>
+              <div className='flex flex-wrap gap-2'>
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Data de Partida
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.data_viagem
+                      ? dayjs.tz(viagem.data_viagem, 'UTC').format('DD/MM/YYYY')
+                      : 'N/A'}
+                  </div>
                 </div>
-                <div className='p-2 text-xs'>
-                  {viagem?.data_viagem
-                    ? dayjs.tz(viagem.data_viagem, 'UTC').format('DD/MM/YYYY')
-                    : 'N/A'}
+
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Porto de Origem
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.porto_origem?.nome
+                      ? viagem?.porto_origem?.nome +
+                        ' | ' +
+                        viagem?.porto_origem?.pais?.pais
+                      : 'N/A'}
+                  </div>
+                </div>
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Dias no porto de origem
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.dias_porto_origem || 'N/A'}
+                  </div>
                 </div>
               </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Data de Chegada
+
+              <div className='flex flex-wrap gap-2'>
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Data de Chegada
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.data_chegada
+                      ? dayjs
+                          .tz(viagem.data_chegada, 'UTC')
+                          .format('DD/MM/YYYY')
+                      : 'N/A'}{' '}
+                  </div>
                 </div>
-                <div className='p-2 text-xs'>
-                  {viagem?.data_chegada
-                    ? dayjs.tz(viagem.data_chegada, 'UTC').format('DD/MM/YYYY')
-                    : 'N/A'}{' '}
+
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Porto de Destino
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.porto_destino?.nome +
+                      ' | ' +
+                      viagem?.porto_destino?.pais?.pais}
+                  </div>
+                </div>
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Dias no porto de destino
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.dias_porto_destino || 'N/A'}
+                  </div>
                 </div>
               </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Data Rio
+
+              <div className='flex flex-wrap gap-2'>
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Data Rio
+                  </div>
+                  <div className='p-2 text-xs'>
+                    {viagem?.data_rio
+                      ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
+                      : 'N/A'}{' '}
+                  </div>
                 </div>
-                <div className='p-2 text-xs'>
-                  {viagem?.data_rio
-                    ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
-                    : 'N/A'}{' '}
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Dias de Viagem
+                  </div>
+                  <div className='p-2 text-xs'>{viagem?.dias_viagem}</div>
                 </div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Dias de Viagem
-                </div>
-                <div className='p-2 text-xs'>{viagem?.dias_viagem}</div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
+                {/* <div className='flex flex-col border gap-1 rounded-xl grow'>
                 <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
                   Tripulação
                 </div>
                 <div className='p-2 text-xs'>{viagem?.tripulacao}</div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Passageiros
-                </div>
-                <div className='p-2 text-xs'>{viagem?.total_passageiros}</div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Porto de Origem
-                </div>
-                <div className='p-2 text-xs'>{viagem?.porto_origem?.nome}</div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Dias no porto de origem
-                </div>
-                <div className='p-2 text-xs'>
-                  {viagem?.dias_porto_origem || 'N/A'}
-                </div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Porto de Destino
-                </div>
-                <div className='p-2 text-xs'>{viagem?.porto_destino?.nome}</div>
-              </div>
-              <div className='flex flex-col border gap-1 rounded-xl grow'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
-                  Dias no porto de destino
-                </div>
-                <div className='p-2 text-xs'>
-                  {viagem?.dias_porto_destino || 'N/A'}
+              </div> */}
+                <div className='flex flex-col border gap-1 rounded-xl grow'>
+                  <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                    Passageiros
+                  </div>
+                  <div className='p-2 text-xs'>{viagem?.total_passageiros}</div>
                 </div>
               </div>
             </div>

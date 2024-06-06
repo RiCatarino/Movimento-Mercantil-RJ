@@ -25,8 +25,17 @@ export async function GET(req: Request) {
           },
         },
       },
-      porto_origem: true,
-      porto_destino: true,
+      porto_origem: {
+        include: {
+          pais: true,
+        },
+      },
+      porto_destino: {
+        include: {
+          pais: true,
+        },
+      },
+
       mestre: true,
       capitao: true,
       comandante: true,

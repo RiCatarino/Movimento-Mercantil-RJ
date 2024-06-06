@@ -31,6 +31,7 @@ import { Button } from '@/components/ui/button';
 import { EditIcon } from 'lucide-react';
 import DialogEditarViagem from '../dialogedit';
 import BotaoExportarParaExcel from '../buttons/buttonexport';
+import PaginacaoByTotal from '@/components/sharedpaginationbytotal';
 
 //extend dayjs with utc plugin
 dayjs.extend(utc);
@@ -45,20 +46,25 @@ export default function TripsTable() {
   const [selectedYear, setSelectedYear] = useState('none');
   const [selectedType, setSelectedType] = useState('none');
 
+  const { data: totaltrips, isLoading: isLoadingTotal } = useSWR<number>(
+    '/api/viagem/read/total',
+    fetcher
+  );
+
   const {
     data: viagensdata,
     isLoading,
     mutate,
   } = useSWR<Viagem[]>(
-    searchText || selectedYear !== 'none' || selectedType !== 'none'
-      ? `/api/viagem/read/bysearch?search=${searchText}&ano=${selectedYear}&tipo=${selectedType}`
-      : '/api/viagem/read/',
+    `/api/viagem/read/bysearch?search=${searchText}&ano=${selectedYear}&tipo=${selectedType}&page=${activePage}`,
+    // : '/api/viagem/read/',
     fetcher
   );
 
-  const chunked = chunk(viagensdata ?? [], 10);
-  const viagens = chunked[activePage - 1];
+  // const chunked = chunk(totaltrips, 10);
+  // const viagens = chunked[activekkPage - 1];
 
+  console.log(viagensdata);
   return (
     <>
       <div className='flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4'>
@@ -119,7 +125,7 @@ export default function TripsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {viagens?.map((viagem) => (
+            {viagensdata?.map((viagem) => (
               <TableRow
                 className='cursor-pointer hover:bg-blue-100'
                 key={viagem.id}
@@ -159,7 +165,13 @@ export default function TripsTable() {
           </TableBody>
         </Table>
       )}
-      <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
+      {!isLoadingTotal && (
+        <PaginacaoByTotal
+          total={totaltrips ? Math.ceil(totaltrips / 10) : 1}
+          activePage={activePage}
+          setPage={setPage}
+        />
+      )}
       <TripDetails
         open={open}
         setOpen={setOpen}

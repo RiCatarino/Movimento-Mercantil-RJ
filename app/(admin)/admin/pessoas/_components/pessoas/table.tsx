@@ -70,9 +70,7 @@ export default function TabelaPessoas() {
               <TableRow className='rounded-ss-xl'>
                 <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
                 <TableHead className='w-96'>Nome</TableHead>
-                <TableHead className='hidden md:table-cell'>
-                  Título de Nobreza
-                </TableHead>
+                <TableHead className='hidden md:table-cell'>Título</TableHead>
                 <TableHead>País</TableHead>
                 <TableHead></TableHead>
               </TableRow>

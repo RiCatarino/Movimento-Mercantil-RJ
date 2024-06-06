@@ -92,7 +92,7 @@ export default function ButtonNewNews(props: {
                   <Textarea
                     {...field}
                     rows={10}
-                    placeholder='Nome do Periódico h-fit'
+                    placeholder='Nome do Periódico'
                     className='w-full'
                   />
                 </FormItem>
