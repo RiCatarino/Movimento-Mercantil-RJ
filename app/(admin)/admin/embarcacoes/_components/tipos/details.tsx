@@ -3,10 +3,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import fetcher from '@/lib/fetch';
-import { Dispatch, SetStateAction } from 'react';
-import useSWR from 'swr';
+} from "@/components/ui/dialog";
+import fetcher from "@/lib/fetch";
+import { Dispatch, SetStateAction } from "react";
+import useSWR from "swr";
 import {
   Table,
   TableBody,
@@ -14,15 +14,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from "@/components/ui/table";
 
-import Loader from '@/components/loader';
-import BotaoNovaImagem from './buttonnewimage';
-import chunk from '@/lib/chunk';
-import Paginacao from '@/components/sharedpagination';
-import { useState } from 'react';
-import { XIcon } from 'lucide-react';
-import { toast } from '@/components/ui/use-toast';
+import Loader from "@/components/loader";
+import BotaoNovaImagem from "./buttonnewimage";
+import chunk from "@/lib/chunk";
+import Paginacao from "@/components/sharedpagination";
+import { useState } from "react";
+import { XIcon } from "lucide-react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function TipoDetails(props: {
   open: boolean;
@@ -38,7 +38,7 @@ export default function TipoDetails(props: {
     mutate: mutate,
   } = useSWR<TipoEmbarcacao>(
     tipo_id ? `/api/tipo_embarcacao/read/byid?id=${tipo_id}` : null,
-    fetcher
+    fetcher,
   );
 
   const chunked = chunk(tipo?.embarcacao ?? [], 5);
@@ -46,68 +46,68 @@ export default function TipoDetails(props: {
 
   async function handleDeleteImage(id: number) {
     await fetch(`/api/imagem_embarcacao/delete`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: 'bg-green-200',
-      title: 'Sucesso',
+      className: "bg-green-200",
+      title: "Sucesso",
       duration: 5000,
-      description: 'Imagem removida com sucesso',
+      description: "Imagem removida com sucesso",
     });
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className=' min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className=" min-w-[50%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>
             {isLoading ? (
-              <div className='flex items-center justify-center'>
-                <Loader classProp='w-24 h-24' />
+              <div className="flex items-center justify-center">
+                <Loader classProp="w-24 h-24" />
               </div>
             ) : (
-              'Tipo #' + tipo_id
+              "Tipo #" + tipo_id
             )}
           </DialogTitle>
         </DialogHeader>
         {!isLoading && (
           <>
-            <div className='flex flex-wrap gap-2'>
-              <div className='flex flex-col w-full border gap-1 rounded-xl'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+            <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col w-full border gap-1 rounded-xl">
+                <div className="p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl">
                   Tipo
                 </div>
-                <div className='p-2 text-xs'>{tipo?.tipo}</div>
+                <div className="p-2 text-xs">{tipo?.tipo}</div>
               </div>
 
-              <div className='flex flex-col w-full border gap-1 rounded-xl'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+              <div className="flex flex-col w-full border gap-1 rounded-xl">
+                <div className="p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl">
                   Descrição
                 </div>
-                <div className='p-2 text-xs'>{tipo?.texto_descritivo}</div>
+                <div className="p-2 text-xs">{tipo?.texto_descritivo}</div>
               </div>
 
-              <div className='flex flex-col w-full border gap-1 rounded-xl'>
-                <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+              <div className="flex flex-col w-full border gap-1 rounded-xl">
+                <div className="p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl">
                   Imagens
                 </div>
-                <div className='flex flex-col p-2 gap-2'>
-                  <div className='flex flex-wrap gap-2'>
+                <div className="flex flex-col p-2 gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {tipo?.imagem_embarcacao.map((img) => (
                       // { X Button in upper right corner of the image}
-                      <div className='relative' key={img.id}>
+                      <div className="relative" key={img.id}>
                         <button
-                          className='absolute p-1 bg-red-500 rounded-full -top-1 -right-1'
+                          className="absolute p-1 bg-red-500 rounded-full -top-1 -right-1"
                           onClick={() => handleDeleteImage(img.id)}
                         >
-                          <XIcon className='text-white ' />
+                          <XIcon className="text-white " />
                         </button>
                         <img
                           src={img.imagem}
                           alt={tipo.tipo}
-                          className='w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto'
+                          className="w-full border rounded-lg  max-h-64 md:max-w-96 md:w-auto"
                         />
                       </div>
                     ))}
@@ -116,10 +116,10 @@ export default function TipoDetails(props: {
                 </div>
               </div>
 
-              <div className='flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl'>
+              <div className="flex-1 max-w-xs  md:max-w-full rounded-ss-xl rounded-se-xl">
                 <Table>
-                  <TableHeader className='p-2 text-xs bg-blue-200 dark:bg-slate-900 '>
-                    <TableRow className='rounded-ss-xl'>
+                  <TableHeader className="p-2 text-xs bg-blue-200 dark:bg-slate-900 ">
+                    <TableRow className="rounded-ss-xl">
                       <TableHead>ID</TableHead>
                       <TableHead>Nome</TableHead>
                     </TableRow>
@@ -127,10 +127,10 @@ export default function TipoDetails(props: {
                   <TableBody>
                     {embarcacoes?.map((embarcacao) => (
                       <TableRow key={embarcacao.id}>
-                        <TableCell className='text-xs font-medium'>
+                        <TableCell className="text-xs font-medium">
                           {embarcacao.id}
                         </TableCell>
-                        <TableCell className='text-xs'>
+                        <TableCell className="text-xs">
                           {embarcacao.nome}
                         </TableCell>
                       </TableRow>

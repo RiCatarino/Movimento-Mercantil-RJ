@@ -1,28 +1,28 @@
-import { verify } from '@node-rs/argon2';
-import { cookies } from 'next/headers';
-import { lucia } from '@/auth';
-import prisma from '@/lib/prisma';
-import isEmail from 'validator/es/lib/isEmail';
+import { verify } from "@node-rs/argon2";
+import { cookies } from "next/headers";
+import { lucia } from "@/auth";
+import prisma from "@/lib/prisma";
+import isEmail from "validator/es/lib/isEmail";
 
 export async function POST(req: Request) {
   const { useremail, password } = await req.json();
   const email = useremail.toLowerCase();
 
   if (!isEmail(email)) {
-    return new Response('Password ou usuário errados', {
+    return new Response("Password ou usuário errados", {
       status: 401,
-      statusText: 'Password ou usuário errados',
+      statusText: "Password ou usuário errados",
     });
   }
 
   if (
-    typeof password !== 'string' ||
+    typeof password !== "string" ||
     password.length < 6 ||
     password.length > 255
   ) {
-    return new Response('Password ou usuário errados', {
+    return new Response("Password ou usuário errados", {
       status: 401,
-      statusText: 'Password ou usuário errados',
+      statusText: "Password ou usuário errados",
     });
   }
 
@@ -30,15 +30,15 @@ export async function POST(req: Request) {
     where: {
       email: {
         equals: email,
-        mode: 'insensitive',
+        mode: "insensitive",
       },
     },
   });
 
   if (!existingUser) {
-    return new Response('Password ou usuário errados', {
+    return new Response("Password ou usuário errados", {
       status: 401,
-      statusText: 'Password ou usuário errados',
+      statusText: "Password ou usuário errados",
     });
   }
 
@@ -49,16 +49,16 @@ export async function POST(req: Request) {
     parallelism: 1,
   });
   if (!validPassword) {
-    return new Response('Password ou usuário errados', {
+    return new Response("Password ou usuário errados", {
       status: 401,
-      statusText: 'Password ou usuário errados',
+      statusText: "Password ou usuário errados",
     });
   }
 
   if (!existingUser.habilitado) {
-    return new Response('Password ou usuário errados', {
+    return new Response("Password ou usuário errados", {
       status: 401,
-      statusText: 'Password ou usuário errados',
+      statusText: "Password ou usuário errados",
     });
   }
 
@@ -67,10 +67,10 @@ export async function POST(req: Request) {
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes
+    sessionCookie.attributes,
   );
-  return new Response('OK', {
+  return new Response("OK", {
     status: 200,
-    statusText: 'OK',
+    statusText: "OK",
   });
 }

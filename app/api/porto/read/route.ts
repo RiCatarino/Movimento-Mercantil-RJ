@@ -1,12 +1,12 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export async function GET() {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const result = await prisma.porto.findMany({
@@ -16,7 +16,7 @@ export async function GET() {
       pais: true,
     },
     orderBy: {
-      nome: 'asc',
+      nome: "asc",
     },
   });
   return Response.json(result);

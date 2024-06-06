@@ -6,10 +6,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { useState } from 'react';
-import Loader from '@/components/loader';
-import ButtonNewNews from '../buttons/buttonnewnews';
+} from "@/components/ui/table";
+import { useState } from "react";
+import Loader from "@/components/loader";
+import ButtonNewNews from "../buttons/buttonnewnews";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,11 +20,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { XIcon } from 'lucide-react';
-import chunk from '@/lib/chunk';
-import Paginacao from '@/components/sharedpagination';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { XIcon } from "lucide-react";
+import chunk from "@/lib/chunk";
+import Paginacao from "@/components/sharedpagination";
 
 export default function TableNews(props: {
   news: Noticia[] | undefined;
@@ -41,7 +41,7 @@ export default function TableNews(props: {
   async function handleDeleteNoticia(id: number) {
     setDeleting(true);
     await fetch(`/api/noticia/delete`, {
-      method: 'DELETE',
+      method: "DELETE",
       body: JSON.stringify({ id }),
     });
     mutate();
@@ -49,14 +49,14 @@ export default function TableNews(props: {
   }
 
   if (deleting) {
-    return <Loader classProp='w-10 h-10' />;
+    return <Loader classProp="w-10 h-10" />;
   }
 
   return (
     <>
-      <Table className='border-b'>
-        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
-          <TableRow className='rounded-ss-xl'>
+      <Table className="border-b">
+        <TableHeader className="p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 ">
+          <TableRow className="rounded-ss-xl">
             <TableHead>Assunto</TableHead>
             <TableHead></TableHead>
           </TableRow>
@@ -64,26 +64,26 @@ export default function TableNews(props: {
         <TableBody>
           {newsdata?.map((noticia) => (
             <TableRow
-              className='cursor-pointer hover:bg-blue-100'
+              className="cursor-pointer hover:bg-blue-100"
               key={noticia.id}
             >
-              <TableCell className='text-xs font-medium'>
+              <TableCell className="text-xs font-medium">
                 {noticia.assunto}
               </TableCell>
-              <TableCell className='w-4'>
+              <TableCell className="w-4">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button
-                      size='icon'
-                      variant='link'
-                      className='text-xs text-blue-500'
+                      size="icon"
+                      variant="link"
+                      className="text-xs text-blue-500"
                     >
-                      <XIcon className='w-4 text-red-700' />
+                      <XIcon className="w-4 text-red-700" />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle className='text-red-500'>
+                      <AlertDialogTitle className="text-red-500">
                         Tem a certeza?
                       </AlertDialogTitle>
                       <AlertDialogDescription>
@@ -95,10 +95,10 @@ export default function TableNews(props: {
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
                       <AlertDialogAction
                         disabled={deleting}
-                        className='bg-red-500 hover:bg-red-600'
+                        className="bg-red-500 hover:bg-red-600"
                         onClick={() => handleDeleteNoticia(noticia.id)}
                       >
-                        {deleting ? 'Aguarde...' : 'Remover'}
+                        {deleting ? "Aguarde..." : "Remover"}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>

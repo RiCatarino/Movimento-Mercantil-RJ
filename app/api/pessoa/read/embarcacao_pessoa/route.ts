@@ -1,15 +1,15 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const url = new URL(req.url);
-  const id = url.searchParams.get('id');
+  const id = url.searchParams.get("id");
   const result = await prisma.embarcacao.findUnique({
     where: {
       id: Number(id),

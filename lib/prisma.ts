@@ -1,6 +1,6 @@
 //Description: This file is used to create a singleton instance of PrismaClient
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 declare global {
   namespace NodeJS {
@@ -14,6 +14,6 @@ declare const global: NodeJS.Global;
 
 const prisma = global.prisma || new PrismaClient();
 
-if (process.env.NODE_ENV === 'development') global.prisma = prisma;
+if (process.env.NODE_ENV === "development") global.prisma = prisma;
 
 export default prisma;

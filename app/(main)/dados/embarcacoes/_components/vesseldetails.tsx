@@ -46,7 +46,7 @@ export default function VesselDetails(props: {
     mutate: mutateEmbarcacao,
   } = useSWR<Embarcacao>(
     embarcacao_id ? `/api/embarcacao/read/byid?id=${embarcacao_id}` : null,
-    fetcher
+    fetcher,
   );
 
   async function handleDeleteOwner(id: number) {
@@ -133,7 +133,7 @@ export default function VesselDetails(props: {
                             {relacao.pais.pais}
                           </TableCell>
                         </TableRow>
-                      )
+                      ),
                     )}
                   </TableBody>
                   {embarcacao?.relacao_embarcacao_proprietario.length === 0 && (

@@ -1,12 +1,12 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export async function GET() {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const embarcacoes = await prisma.embarcacao.aggregate({
@@ -70,17 +70,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryEmbarcacaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ['id_embarcacao'],
+    by: ["id_embarcacao"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_embarcacao: 'desc',
+        id_embarcacao: "desc",
       },
     },
     take: 1,
@@ -107,17 +107,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryMestreWithMostViagens = await prisma.viagem.groupBy({
-    by: ['mestre_id'],
+    by: ["mestre_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        mestre_id: 'desc',
+        mestre_id: "desc",
       },
     },
     take: 1,
@@ -143,17 +143,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryCapitaoWithMostViagens = await prisma.viagem.groupBy({
-    by: ['capitao_id'],
+    by: ["capitao_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        capitao_id: 'desc',
+        capitao_id: "desc",
       },
     },
     take: 1,
@@ -179,17 +179,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryArmadorWithMostViagens = await prisma.viagem.groupBy({
-    by: ['armador_id'],
+    by: ["armador_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        armador_id: 'desc',
+        armador_id: "desc",
       },
     },
     take: 1,
@@ -215,17 +215,17 @@ export async function GET() {
     name: string | null | undefined;
   } = {
     count: 0,
-    name: '',
+    name: "",
   };
 
   const queryComandanteWithMostViagens = await prisma.viagem.groupBy({
-    by: ['comandante_id'],
+    by: ["comandante_id"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        comandante_id: 'desc',
+        comandante_id: "desc",
       },
     },
     take: 1,
@@ -252,18 +252,18 @@ export async function GET() {
     pais: string | null | undefined;
   } = {
     count: 0,
-    name: '',
-    pais: '',
+    name: "",
+    pais: "",
   };
 
   const queryPortoWithMostEscalas = await prisma.escala.groupBy({
-    by: ['id_porto'],
+    by: ["id_porto"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_porto: 'desc',
+        id_porto: "desc",
       },
     },
     take: 1,
@@ -303,7 +303,7 @@ export async function GET() {
       },
     },
     orderBy: {
-      total_passageiros: 'desc',
+      total_passageiros: "desc",
     },
     take: 1,
     select: {
@@ -318,13 +318,13 @@ export async function GET() {
 
   //Top 5 embarcacoes com mais viagens
   const topEmbarcacoesWithMostViagens = await prisma.viagem.groupBy({
-    by: ['id_embarcacao'],
+    by: ["id_embarcacao"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_embarcacao: 'desc',
+        id_embarcacao: "desc",
       },
     },
     take: 5,
@@ -341,21 +341,21 @@ export async function GET() {
         },
       });
       return {
-        name: embarcacao?.nome || 'Desconhecida',
+        name: embarcacao?.nome || "Desconhecida",
         viagens: item._count._all,
       };
-    })
+    }),
   );
 
   // países com mais portos
   const topPaisesWithMostPortos = await prisma.porto.groupBy({
-    by: ['id_pais'],
+    by: ["id_pais"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_pais: 'desc',
+        id_pais: "desc",
       },
     },
     take: 5,
@@ -372,22 +372,22 @@ export async function GET() {
         },
       });
       return {
-        name: pais?.pais || 'Desconhecido',
+        name: pais?.pais || "Desconhecido",
         portos: item._count._all,
       };
-    })
+    }),
   );
 
   // top 5 tipos de embarcação mais populares
 
   const topTipoEmbarcacao = await prisma.embarcacao.groupBy({
-    by: ['id_tipo_embarcacao'],
+    by: ["id_tipo_embarcacao"],
     _count: {
       _all: true,
     },
     orderBy: {
       _count: {
-        id_tipo_embarcacao: 'desc',
+        id_tipo_embarcacao: "desc",
       },
     },
     take: 5,
@@ -404,10 +404,10 @@ export async function GET() {
         },
       });
       return {
-        name: tipoEmbarcacao?.tipo || 'Desconhecido',
+        name: tipoEmbarcacao?.tipo || "Desconhecido",
         embarcacoes: item._count._all,
       };
-    })
+    }),
   );
 
   // top 5mercadorias mais transportadas

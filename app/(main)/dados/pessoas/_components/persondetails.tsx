@@ -25,7 +25,7 @@ export default function PersonDetails(props: {
     mutate: mutatePessoa,
   } = useSWR<Pessoa>(
     pessoa_id ? `/api/pessoa/read/byid?id=${pessoa_id}` : null,
-    fetcher
+    fetcher,
   );
 
   return (

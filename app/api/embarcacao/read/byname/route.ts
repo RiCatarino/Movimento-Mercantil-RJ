@@ -1,20 +1,20 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const nome = searchParams.get('nome');
+  const nome = searchParams.get("nome");
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const result = await prisma.embarcacao.findMany({
     where: {
       nome: {
         startsWith: nome?.toString(),
-        mode: 'insensitive',
+        mode: "insensitive",
       },
     },
     select: {
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       },
     },
     orderBy: {
-      nome: 'asc',
+      nome: "asc",
     },
   });
 

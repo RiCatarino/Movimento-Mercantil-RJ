@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import { useSession } from '@/app/SessionContext';
-import Loader from '@/components/loader';
-import { Button } from '@/components/ui/button';
+import { useSession } from "@/app/SessionContext";
+import Loader from "@/components/loader";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 const formSchema = z.object({
-  nome: z.string().min(1, { message: 'Nome inválido' }),
+  nome: z.string().min(1, { message: "Nome inválido" }),
 });
 export default function ChangeName() {
   const [submitting, setSubmitting] = useState(false);
@@ -41,25 +41,25 @@ export default function ChangeName() {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/user/update/name', {
-      method: 'PUT',
+    const result = await fetch("/api/user/update/name", {
+      method: "PUT",
       body: JSON.stringify(values),
     });
     if (result.ok) {
-      form.setValue('nome', values.nome);
+      form.setValue("nome", values.nome);
       router.refresh();
       toast({
-        className: 'bg-green-200',
-        title: 'Sucesso',
+        className: "bg-green-200",
+        title: "Sucesso",
         duration: 5000,
-        description: 'Nome alterada com sucesso.',
+        description: "Nome alterada com sucesso.",
       });
     } else {
       toast({
-        className: 'bg-red-200',
-        title: 'Erro',
+        className: "bg-red-200",
+        title: "Erro",
         duration: 5000,
-        description: 'Erro ao alterar o nome',
+        description: "Erro ao alterar o nome",
       });
     }
 
@@ -69,19 +69,19 @@ export default function ChangeName() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className='text-blue-500'>Alterar nome</CardTitle>
+        <CardTitle className="text-blue-500">Alterar nome</CardTitle>
         <CardDescription>Pode alterar aqui o seu nome</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className='flex flex-col gap-2'
+            className="flex flex-col gap-2"
           >
             <FormField
               control={form.control}
               disabled={submitting}
-              name='nome'
+              name="nome"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
@@ -91,13 +91,13 @@ export default function ChangeName() {
                 </FormItem>
               )}
             />
-            <div className='flex justify-end h-max'>
+            <div className="flex justify-end h-max">
               <Button
                 disabled={submitting}
-                type='submit'
-                className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit '
+                type="submit"
+                className="self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit "
               >
-                {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+                {submitting && <Loader classProp="ml-2 w-6 h-6" />}
                 Alterar nome
               </Button>
             </div>

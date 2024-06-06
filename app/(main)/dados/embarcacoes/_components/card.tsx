@@ -8,23 +8,23 @@ export default function EmbarcacaoCard(props: {
 
   return (
     <>
-      <div className='cursor-pointer hover:scale-105 transition-all duration-300 col-span-1 relative flex max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl h-96'>
-        <div className='relative m-0 overflow-hidden text-gray-700 bg-transparent rounded-none shadow-none bg-clip-border'>
+      <div className="cursor-pointer hover:scale-105 transition-all duration-300 col-span-1 relative flex max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-xl h-96">
+        <div className="relative m-0 overflow-hidden text-gray-700 bg-transparent rounded-none shadow-none bg-clip-border">
           <img
             src={
               image
                 ? image
-                : 'https://jangadashow.com.br/wp-content/uploads/2023/09/a-historia-das-caravelas-os-navios-de-antigamente.webp'
+                : "https://jangadashow.com.br/wp-content/uploads/2023/09/a-historia-das-caravelas-os-navios-de-antigamente.webp"
             }
-            alt='imagem embarcação'
-            className='object-cover w-full rounded-xl'
+            alt="imagem embarcação"
+            className="object-cover w-full rounded-xl"
           />
         </div>
-        <div className='p-6'>
-          <h4 className='block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900'>
+        <div className="p-6">
+          <h4 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
             {nome}
           </h4>
-          <p className='mt-3 font-sans text-lg antialiased font-normal leading-relaxed text-gray-700 line-clamp-4 '>
+          <p className="mt-3 font-sans text-lg antialiased font-normal leading-relaxed text-gray-700 line-clamp-4 ">
             {tipo}
           </p>
         </div>
@@ -35,8 +35,8 @@ export default function EmbarcacaoCard(props: {
       </div>
 
       <link
-        rel='stylesheet'
-        href='https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css'
+        rel="stylesheet"
+        href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
       />
     </>
   );

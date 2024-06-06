@@ -1,14 +1,14 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+} from "@/components/ui/dialog";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -16,18 +16,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import useSWR, { KeyedMutator } from 'swr';
-import fetcher from '@/lib/fetch';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import useSWR, { KeyedMutator } from "swr";
+import fetcher from "@/lib/fetch";
 
-import { useEffect, useState } from 'react';
-import { ChevronsUpDown } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { ChevronsUpDown } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from "@/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -35,18 +35,18 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { cn } from '@/lib/utils';
-import Loader from '@/components/loader';
-import { toast } from '@/components/ui/use-toast';
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+import Loader from "@/components/loader";
+import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   id: z.number(),
-  nome: z.string().min(1, { message: 'Nome muito curto' }),
+  nome: z.string().min(1, { message: "Nome muito curto" }),
   titulo_nobreza: z
     .string()
-    .min(1, { message: 'Selecione um título de Nobreza' }),
-  pais: z.string().min(1, { message: 'Selecione um país' }),
+    .min(1, { message: "Selecione um título de Nobreza" }),
+  pais: z.string().min(1, { message: "Selecione um país" }),
 });
 
 export default function DialogEditPessoa(props: {
@@ -70,10 +70,10 @@ export default function DialogEditPessoa(props: {
     },
   });
 
-  const { data: pais } = useSWR<Pais[]>(open && '/api/pais/read', fetcher);
+  const { data: pais } = useSWR<Pais[]>(open && "/api/pais/read", fetcher);
   const { data: titulo_nobreza, isLoading } = useSWR<TituloNobreza[]>(
-    open && '/api/titulo_nobreza/read',
-    fetcher
+    open && "/api/titulo_nobreza/read",
+    fetcher,
   );
 
   useEffect(() => {
@@ -89,8 +89,8 @@ export default function DialogEditPessoa(props: {
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/pessoa/update', {
-      method: 'PUT',
+    const result = await fetch("/api/pessoa/update", {
+      method: "PUT",
       body: JSON.stringify(values),
     });
 
@@ -99,17 +99,17 @@ export default function DialogEditPessoa(props: {
       form.reset();
       mutate();
       toast({
-        className: 'bg-green-200',
-        title: 'Sucesso',
+        className: "bg-green-200",
+        title: "Sucesso",
         duration: 5000,
-        description: 'Pessoa editada com sucesso',
+        description: "Pessoa editada com sucesso",
       });
     } else {
       toast({
-        variant: 'destructive',
-        title: 'Erro',
+        variant: "destructive",
+        title: "Erro",
         duration: 5000,
-        description: 'Erro ao editar pessoa',
+        description: "Erro ao editar pessoa",
       });
     }
     setSubmitting(false);
@@ -117,23 +117,23 @@ export default function DialogEditPessoa(props: {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className=' min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll'>
+      <DialogContent className=" min-w-[75%] w-11/12 p-6 rounded-lg max-h-[95%] overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Criar Pessoa</DialogTitle>
+          <DialogTitle className="text-blue-500">Criar Pessoa</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className='flex flex-col gap-2'
+            className="flex flex-col gap-2"
           >
             <FormField
               control={form.control}
-              name='nome'
+              name="nome"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder='Ex: António Palma' {...field} />
+                    <Input placeholder="Ex: António Palma" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -142,34 +142,34 @@ export default function DialogEditPessoa(props: {
 
             <FormField
               control={form.control}
-              name='titulo_nobreza'
+              name="titulo_nobreza"
               render={({ field }) => (
-                <FormItem className='flex flex-col'>
+                <FormItem className="flex flex-col">
                   <FormLabel>Título de Nobreza</FormLabel>
                   <Popover open={selectNobreza} onOpenChange={setSelectNobreza}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant='outline'
-                          role='combobox'
+                          variant="outline"
+                          role="combobox"
                           className={cn(
-                            'w-full justify-between',
-                            !field.value && 'text-muted-foreground'
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground",
                           )}
                         >
                           {field.value
                             ? titulo_nobreza?.find(
                                 (titulo_nobreza) =>
-                                  titulo_nobreza.id.toString() === field.value
+                                  titulo_nobreza.id.toString() === field.value,
                               )?.titulo
-                            : 'Seleccionar Título de Nobreza'}
-                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
+                            : "Seleccionar Título de Nobreza"}
+                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                       <Command>
-                        <CommandInput placeholder='Procurar...' />
+                        <CommandInput placeholder="Procurar..." />
                         <CommandEmpty>Sem resultados</CommandEmpty>
                         <CommandGroup>
                           <CommandList>
@@ -179,8 +179,8 @@ export default function DialogEditPessoa(props: {
                                 key={titulo_nobreza.id}
                                 onSelect={() => {
                                   form.setValue(
-                                    'titulo_nobreza',
-                                    titulo_nobreza.id.toString()
+                                    "titulo_nobreza",
+                                    titulo_nobreza.id.toString(),
                                   );
                                   setSelectNobreza(false);
                                 }}
@@ -199,33 +199,33 @@ export default function DialogEditPessoa(props: {
 
             <FormField
               control={form.control}
-              name='pais'
+              name="pais"
               render={({ field }) => (
-                <FormItem className='flex flex-col'>
+                <FormItem className="flex flex-col">
                   <FormLabel>País</FormLabel>
                   <Popover open={selectPais} onOpenChange={setSelectPais}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant='outline'
-                          role='combobox'
+                          variant="outline"
+                          role="combobox"
                           className={cn(
-                            'w-full justify-between',
-                            !field.value && 'text-muted-foreground'
+                            "w-full justify-between",
+                            !field.value && "text-muted-foreground",
                           )}
                         >
                           {field.value
                             ? pais?.find(
-                                (pais) => pais.id.toString() === field.value
+                                (pais) => pais.id.toString() === field.value,
                               )?.pais
-                            : 'Seleccionar País'}
-                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
+                            : "Seleccionar País"}
+                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
                       <Command>
-                        <CommandInput placeholder='Procurar país...' />
+                        <CommandInput placeholder="Procurar país..." />
                         <CommandEmpty>País não encontrado</CommandEmpty>
                         <CommandGroup>
                           <CommandList>
@@ -234,7 +234,7 @@ export default function DialogEditPessoa(props: {
                                 value={pais.pais}
                                 key={pais.id}
                                 onSelect={() => {
-                                  form.setValue('pais', pais.id.toString());
+                                  form.setValue("pais", pais.id.toString());
                                   setSelectPais(false);
                                 }}
                               >
@@ -251,11 +251,11 @@ export default function DialogEditPessoa(props: {
             />
 
             <Button
-              type='submit'
-              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
+              type="submit"
+              className="self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit"
               disabled={submitting}
             >
-              Editar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+              Editar {submitting && <Loader classProp="ml-2 w-6 h-6" />}
             </Button>
           </form>
         </Form>

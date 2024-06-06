@@ -1,12 +1,12 @@
-import { Partners } from './_components/partners';
-import { People } from './_components/people';
-import { Titulo } from './_components/title';
+import { Partners } from "./_components/partners";
+import { People } from "./_components/people";
+import { Titulo } from "./_components/title";
 
 export default function Sobre() {
   return (
-    <div className='flex flex-col items-center justify-center gap-4 p-4 mt-10 overflow-x-hidden lg:p-0'>
+    <div className="flex flex-col items-center justify-center gap-4 p-4 mt-10 overflow-x-hidden lg:p-0">
       <Titulo />
-      <span className='lg:mx-auto w-full h-[50%] lg:w-[50%] text-justify bg-white p-4 rounded-3xl dark:bg-slate-900'>
+      <span className="lg:mx-auto w-full h-[50%] lg:w-[50%] text-justify bg-white p-4 rounded-3xl dark:bg-slate-900">
         O projeto Circuitos Oceânicos tem por objetivo mapear e analisar as
         petições enviadas da América portuguesa ao Conselho Ultramarino e
         Secretário de Estado, entre os séculos XVIII e XIX, tomando como central

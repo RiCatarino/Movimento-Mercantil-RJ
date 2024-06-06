@@ -1,25 +1,25 @@
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
+} from "@/components/ui/dialog";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 
 const formSchema = z.object({
-  assunto: z.string().min(1, { message: 'Nome muito curto' }),
+  assunto: z.string().min(1, { message: "Nome muito curto" }),
 });
 
-import { useToast } from '@/components/ui/use-toast';
-import { Textarea } from '@/components/ui/textarea';
-import Loader from '@/components/loader';
+import { useToast } from "@/components/ui/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import Loader from "@/components/loader";
 
 export default function ButtonNewNews(props: {
   mutate: () => void;
@@ -32,14 +32,14 @@ export default function ButtonNewNews(props: {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      assunto: '',
+      assunto: "",
     },
   });
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
     setSubmitting(true);
-    const result = await fetch('/api/noticia/create', {
-      method: 'POST',
+    const result = await fetch("/api/noticia/create", {
+      method: "POST",
       body: JSON.stringify({
         ...values,
         viagem_id,
@@ -49,19 +49,19 @@ export default function ButtonNewNews(props: {
     if (result.ok) {
       mutate();
       toast({
-        className: 'bg-green-200',
-        title: 'Sucesso',
+        className: "bg-green-200",
+        title: "Sucesso",
         duration: 5000,
-        description: 'Notícia adicionada com sucesso',
+        description: "Notícia adicionada com sucesso",
       });
       form.reset();
       setOpen(false);
     } else {
       toast({
-        variant: 'destructive',
-        title: 'Erro',
+        variant: "destructive",
+        title: "Erro",
         duration: 5000,
-        description: 'Erro ao adicionadar notícia',
+        description: "Erro ao adicionadar notícia",
       });
     }
     setSubmitting(false);
@@ -70,44 +70,44 @@ export default function ButtonNewNews(props: {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className='mt-2 mb-2 bg-blue-400 rounded-lg  float-end'>
+        <Button className="mt-2 mb-2 bg-blue-400 rounded-lg  float-end">
           Adicionar Notícia <Plus size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className='text-blue-500'>Adicionar Notícia</DialogTitle>
+          <DialogTitle className="text-blue-500">Adicionar Notícia</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
-            className='flex flex-col gap-2'
+            className="flex flex-col gap-2"
             onSubmit={form.handleSubmit(handleSubmit)}
           >
             <FormField
               control={form.control}
-              name='assunto'
+              name="assunto"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Assunto</FormLabel>
                   <Textarea
                     {...field}
                     rows={10}
-                    placeholder='Nome do Periódico'
-                    className='w-full'
+                    placeholder="Nome do Periódico"
+                    className="w-full"
                   />
                 </FormItem>
               )}
             />
             <Button
               disabled={submitting}
-              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
+              className="self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit"
             >
               {submitting ? (
                 <>
-                  <Loader classProp='w-4 h-4 mr-2' /> A adicionar...
+                  <Loader classProp="w-4 h-4 mr-2" /> A adicionar...
                 </>
               ) : (
-                'Guardar'
+                "Guardar"
               )}
             </Button>
           </form>

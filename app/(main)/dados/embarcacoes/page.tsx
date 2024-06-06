@@ -1,17 +1,17 @@
-'use client';
-import fetcher from '@/lib/fetch';
-import useSWR from 'swr';
-import Search from './_components/search';
-import React, { useState } from 'react';
+"use client";
+import fetcher from "@/lib/fetch";
+import useSWR from "swr";
+import Search from "./_components/search";
+import React, { useState } from "react";
 
-import EmbarcacaoCard from './_components/card';
+import EmbarcacaoCard from "./_components/card";
 
 export default function EmbarcacoesPage() {
-  const [searchEmbarcacaoName, setSearchEmbarcacaoName] = useState('');
+  const [searchEmbarcacaoName, setSearchEmbarcacaoName] = useState("");
 
   const { data: embarcacoes } = useSWR<Embarcacao[]>(
-    '/api/embarcacao/read',
-    fetcher
+    "/api/embarcacao/read",
+    fetcher,
   );
 
   console.log(embarcacoes);
@@ -33,7 +33,7 @@ export default function EmbarcacoesPage() {
   // );
 
   return (
-    <main className='md:p-28'>
+    <main className="md:p-28">
       {/* <div className=' dark:bg-black md:mt-0'> */}
       {/* <Search
         searchInput={searchInput}
@@ -124,7 +124,7 @@ export default function EmbarcacoesPage() {
             isLoading={isLoading}
             mutate={mutate}
           /> */}
-      <div className='items-center self-center justify-center w-full mb-10 grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 '>
+      <div className="items-center self-center justify-center w-full mb-10 grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-4 ">
         {embarcacoes?.map((embarcacao) => (
           <EmbarcacaoCard
             key={embarcacao.id}
