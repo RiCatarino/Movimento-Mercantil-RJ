@@ -1,33 +1,32 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
-import dayjs from "dayjs";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
+import dayjs from 'dayjs';
 
-var customParseFormat = require("dayjs/plugin/customParseFormat");
+var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
   const { searchParams } = new URL(req.url);
-  const search = searchParams.get("search");
-  const ano = searchParams.get("ano");
-  const tipo = searchParams.get("tipo");
-  const page = searchParams.get("page");
+  const search = searchParams.get('search');
+  const ano = searchParams.get('ano');
+  const tipo = searchParams.get('tipo');
+  const page = searchParams.get('page');
 
-  console.log(search, ano, tipo, page);
-  const result = await prisma.viagem.findMany({
+  const viagens = await prisma.viagem.findMany({
     where: {
       AND: [
         {
           embarcacao: {
-            nome: { startsWith: search?.toString(), mode: "insensitive" },
+            nome: { startsWith: search?.toString(), mode: 'insensitive' },
           },
         },
-        ...(ano && ano !== "none"
+        ...(ano && ano !== 'none'
           ? [
               {
                 data_rio: {
@@ -38,7 +37,7 @@ export async function GET(req: Request) {
             ]
           : []),
 
-        ...(tipo && tipo !== "none"
+        ...(tipo && tipo !== 'none'
           ? [
               {
                 entrada_sahida: tipo?.toString(),
@@ -131,8 +130,44 @@ export async function GET(req: Request) {
     },
 
     orderBy: {
-      id: "asc",
+      id: 'asc',
     },
   });
+
+  const total = await prisma.viagem.count({
+    where: {
+      AND: [
+        {
+          embarcacao: {
+            nome: { startsWith: search?.toString(), mode: 'insensitive' },
+          },
+        },
+        ...(ano && ano !== 'none'
+          ? [
+              {
+                data_rio: {
+                  gte: new Date(`${ano}-01-01`),
+                  lte: new Date(`${ano}-12-31`),
+                },
+              },
+            ]
+          : []),
+
+        ...(tipo && tipo !== 'none'
+          ? [
+              {
+                entrada_sahida: tipo?.toString(),
+              },
+            ]
+          : []),
+      ],
+    },
+  });
+
+  const result = {
+    viagens,
+    total,
+  };
+
   return Response.json(result);
 }
