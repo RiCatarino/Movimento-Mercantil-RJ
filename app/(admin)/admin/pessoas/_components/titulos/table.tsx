@@ -95,7 +95,7 @@ export default function TabelaTitulos() {
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
             <TableRow className='rounded-ss-xl'>
               {/* <TableHead>ID</TableHead> */}
-              <TableHead>Título de Nobreza</TableHead>
+              <TableHead>Título</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>

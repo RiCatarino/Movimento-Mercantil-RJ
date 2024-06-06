@@ -29,7 +29,7 @@ async function saveFile(fileName: any, workbook: any) {
 function setHeaders(worksheet: any) {
   worksheet.getCell('A1').value = 'ID';
   setHeaderStyle(worksheet.getCell('A1'));
-  worksheet.getCell('B1').value = 'Título de Nobreza';
+  worksheet.getCell('B1').value = 'Título';
   setHeaderStyle(worksheet.getCell('B1'));
   worksheet.autoFilter = 'A1:B1';
 }

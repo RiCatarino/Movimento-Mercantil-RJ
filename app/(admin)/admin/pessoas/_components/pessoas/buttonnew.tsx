@@ -138,7 +138,7 @@ export default function NewPerson(props: { mutate: () => void }) {
               name='titulo_nobreza'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Título de Nobreza</FormLabel>
+                  <FormLabel>Título</FormLabel>
                   <Popover open={selectNobreza} onOpenChange={setSelectNobreza}>
                     <PopoverTrigger asChild>
                       <FormControl>

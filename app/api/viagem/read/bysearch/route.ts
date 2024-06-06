@@ -16,6 +16,9 @@ export async function GET(req: Request) {
   const search = searchParams.get('search');
   const ano = searchParams.get('ano');
   const tipo = searchParams.get('tipo');
+  const page = searchParams.get('page');
+
+  console.log(search, ano, tipo, page);
   const result = await prisma.viagem.findMany({
     where: {
       AND: [
@@ -45,6 +48,8 @@ export async function GET(req: Request) {
       ],
     },
 
+    take: 10,
+    skip: page ? 10 * (+page - 1) : 0,
     select: {
       id: true,
       id_embarcacao: true,
@@ -124,8 +129,6 @@ export async function GET(req: Request) {
         },
       },
     },
-
-    take: 100,
 
     orderBy: {
       id: 'asc',

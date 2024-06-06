@@ -2,6 +2,7 @@
 
 import {
   AnchorIcon,
+  BookOpenIcon,
   FlagIcon,
   GitCompareArrows,
   LayoutDashboard,
@@ -261,6 +262,20 @@ export default function NavBar() {
                   <Users className='text-blue-500' />
                   <span className='flex-1 ms-3 whitespace-nowrap'>
                     Usuários
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={() => {
+                    setSideBar(false);
+                  }}
+                  href='/docs'
+                  className='flex items-center p-2 text-gray-900 rounded-2xl dark:text-white hover:bg-blue-100 dark:hover:bg-gray-700 group'
+                >
+                  <BookOpenIcon className='text-blue-500' />
+                  <span className='flex-1 ms-3 whitespace-nowrap'>
+                    Documentação
                   </span>
                 </Link>
               </li>
