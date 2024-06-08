@@ -1,6 +1,5 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
-import { start } from "repl";
 
 export async function GET(req: Request) {
   const { user } = await validateRequest();
@@ -10,34 +9,38 @@ export async function GET(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const tipo = searchParams.get("tipo");
+  const nome = searchParams.get("nome");
   const page = searchParams.get("page");
 
-  const tipos = await prisma.tipo_embarcacao.findMany({
+  const porto = await prisma.porto.findMany({
     where: {
-      tipo: { startsWith: tipo?.toString(), mode: "insensitive" },
+      nome: {
+        startsWith: nome?.toString(),
+        mode: "insensitive",
+      },
     },
     select: {
       id: true,
-      tipo: true,
-      texto_descritivo: true,
+      nome: true,
+      pais: true,
     },
     orderBy: {
-      tipo: "asc",
+      nome: "asc",
     },
     take: 10,
     skip: page ? 10 * (+page - 1) : 0,
   });
 
-  const total = await prisma.tipo_embarcacao.count({
+  const total = await prisma.porto.count({
     where: {
-      tipo: { startsWith: tipo?.toString(), mode: "insensitive" },
+      nome: { startsWith: nome?.toString(), mode: "insensitive" },
     },
   });
 
   const result = {
-    tipos,
+    porto,
     total,
   };
+
   return Response.json(result);
 }
