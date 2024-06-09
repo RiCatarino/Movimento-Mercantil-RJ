@@ -2,6 +2,9 @@
   "name": "movimentomercantil",
   "version": "0.1.54",
   "private": true,
+  "engines": {
+    "node": "20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
