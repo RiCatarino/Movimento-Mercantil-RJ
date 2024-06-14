@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Table,
@@ -7,13 +7,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import VesselDetails from "./vesseldetails";
-import { useState } from "react";
-import Loader from "@/components/loader";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import NewVessel from "./buttonnew";
+} from '@/components/ui/table';
+import VesselDetails from './vesseldetails';
+import { useState } from 'react';
+import Loader from '@/components/loader';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import NewVessel from './buttonnew';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,106 +24,111 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { EditIcon, XIcon } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { EditIcon, XIcon } from 'lucide-react';
+import { toast } from '@/components/ui/use-toast';
 
-import { Input } from "@/components/ui/input";
-import Paginacao from "@/components/sharedpagination";
-import chunk from "@/lib/chunk";
-import DialogEditarEmbarcacao from "./dialogedit";
-import BotaoExportarParaExcel from "./buttonexport";
-import { useSearchParams } from "next/navigation";
+import { Input } from '@/components/ui/input';
+import PaginacaoByTotal from '@/components/sharedpaginationbytotal';
+import DialogEditarEmbarcacao from './dialogedit';
+import BotaoExportarParaExcel from './buttonexport';
+import { useSearchParams } from 'next/navigation';
+
+type EmbarcacoesAndTotal = {
+  embarcacoes: Embarcacao[];
+  total: number;
+};
 
 export default function TableEmbarcacoes() {
   const searchParams = useSearchParams();
-  const name = searchParams.get("nome");
+  const name = searchParams.get('nome');
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [embarcacao, setEmbarcacao] = useState<Embarcacao>();
   const [deleting, setDeleting] = useState(false);
   const [activePage, setPage] = useState(1);
-  const [searchText, setSearchText] = useState(name ?? "");
+  const [searchText, setSearchText] = useState(name ?? '');
 
   const {
-    data: embarcacoesdata,
+    data: data,
     isLoading,
     mutate,
-  } = useSWR<Embarcacao[]>(
-    searchText
-      ? "/api/embarcacao/read/byname?nome=" + searchText
-      : "/api/embarcacao/read",
-    fetcher,
+  } = useSWR<EmbarcacoesAndTotal>(
+    '/api/embarcacao/read/bynamepagination?nome=' +
+      searchText +
+      '&page=' +
+      activePage,
+    fetcher
   );
 
-  const chunked = chunk(embarcacoesdata ?? [], 10);
-  const embarcacoes = chunked[activePage - 1];
+  // const chunked = chunk(embarcacoesdata ?? [], 10);
+  // const embarcacoes = chunked[activePage - 1];
 
   async function handleDeleteEmbarcacao(id: number) {
     setDeleting(true);
     await fetch(`/api/embarcacao/delete`, {
-      method: "DELETE",
+      method: 'DELETE',
       body: JSON.stringify({ id }),
     });
     mutate();
     toast({
-      className: "bg-green-200",
-      title: "Sucesso",
+      className: 'bg-green-200',
+      title: 'Sucesso',
       duration: 5000,
-      description: "Embarcação removida com sucesso",
+      description: 'Embarcação removida com sucesso',
     });
     setDeleting(false);
   }
 
   return (
-    <div className="flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl">
-      <div className="flex flex-col-reverse justify-between md:flex-row gap-4 ">
+    <div className='flex flex-col p-2 mt-2 border-2 border-gray-300 dark:border-slate-900 border-solid shadow-lg  gap-2 rounded-3xl'>
+      <div className='flex flex-col-reverse justify-between md:flex-row gap-4 '>
         <Input
-          id="search"
+          id='search'
           value={searchText}
-          className="rounded-xl"
-          placeholder="Pesquisar por nome..."
+          className='rounded-xl'
+          placeholder='Pesquisar por nome...'
           onChange={(e) => setSearchText(e.target.value)}
         />
         <NewVessel mutate={mutate} />
-        <BotaoExportarParaExcel embarcacoes={embarcacoesdata} />
+        <BotaoExportarParaExcel embarcacoes={data?.embarcacoes} />
       </div>
       {isLoading ? (
-        <div className="flex flex-row justify-center p-4">
-          <Loader classProp="w-24 h-24 self-center flex" />
+        <div className='flex flex-row justify-center p-4'>
+          <Loader classProp='w-24 h-24 self-center flex' />
         </div>
       ) : (
         <Table>
-          <TableHeader className="p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950">
+          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
             <TableRow>
-              <TableHead className="w-4 hidden md:table-cell">ID</TableHead>
-              <TableHead className="md:w-96">Nome</TableHead>
+              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
+              <TableHead className='md:w-96'>Nome</TableHead>
               <TableHead>Tipo</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {embarcacoes?.map((embarcacao) => (
+            {data?.embarcacoes?.map((embarcacao) => (
               <TableRow
-                className="cursor-pointer hover:bg-blue-100"
+                className='cursor-pointer hover:bg-blue-100'
                 key={embarcacao.id}
                 onClick={(e) => {
                   setEmbarcacao(embarcacao);
                   setOpen(true);
                 }}
               >
-                <TableCell className="font-medium hidden md:table-cell">
+                <TableCell className='font-medium hidden md:table-cell'>
                   {embarcacao.id}
                 </TableCell>
-                <TableCell className="font-medium">{embarcacao.nome}</TableCell>
-                <TableCell className="font-medium">
+                <TableCell className='font-medium'>{embarcacao.nome}</TableCell>
+                <TableCell className='font-medium'>
                   {embarcacao.tipo_embarcacao?.tipo}
                 </TableCell>
-                <TableCell className="w-4">
-                  <div className="flex gap-2">
+                <TableCell className='w-4'>
+                  <div className='flex gap-2'>
                     <Button
-                      className="text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl"
+                      className='text-blue-500 bg-transparent hover:bg-blue-500 hover:text-white rounded-xl'
                       onClick={(e) => {
                         e.stopPropagation();
                         setEmbarcacao(embarcacao);
@@ -135,14 +140,14 @@ export default function TableEmbarcacoes() {
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
-                          size="icon"
-                          variant="link"
-                          className="text-xs text-blue-500"
+                          size='icon'
+                          variant='link'
+                          className='text-xs text-blue-500'
                           onClick={(e) => {
                             e.stopPropagation();
                           }}
                         >
-                          <XIcon className="w-4 text-red-700" />
+                          <XIcon className='w-4 text-red-700' />
                         </Button>
                       </AlertDialogTrigger>
                       <AlertDialogContent
@@ -151,7 +156,7 @@ export default function TableEmbarcacoes() {
                         }}
                       >
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="text-red-500">
+                          <AlertDialogTitle className='text-red-500'>
                             Tem a certeza?
                           </AlertDialogTitle>
                           <AlertDialogDescription>
@@ -163,12 +168,12 @@ export default function TableEmbarcacoes() {
                           <AlertDialogCancel>Cancelar</AlertDialogCancel>
                           <AlertDialogAction
                             disabled={deleting}
-                            className="bg-red-500 hover:bg-red-600"
+                            className='bg-red-500 hover:bg-red-600'
                             onClick={(e) => {
                               handleDeleteEmbarcacao(embarcacao.id);
                             }}
                           >
-                            {deleting && <Loader classProp="w-4 h-4" />} Remover
+                            {deleting && <Loader classProp='w-4 h-4' />} Remover
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>
@@ -180,7 +185,13 @@ export default function TableEmbarcacoes() {
           </TableBody>
         </Table>
       )}
-      <Paginacao chunked={chunked} activePage={activePage} setPage={setPage} />
+      {!isLoading && (
+        <PaginacaoByTotal
+          total={data?.total ? Math.ceil(data.total / 10) : 1}
+          activePage={activePage}
+          setPage={setPage}
+        />
+      )}{' '}
       <VesselDetails
         open={open}
         setOpen={setOpen}

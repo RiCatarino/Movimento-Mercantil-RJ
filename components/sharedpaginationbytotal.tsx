@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from '@/components/ui/pagination';
 
 export default function PaginacaoByTotal(props: {
   total: number | undefined;
@@ -23,8 +23,8 @@ export default function PaginacaoByTotal(props: {
       <PaginationLink
         className={
           activePage === start + index
-            ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
-            : "cursor-pointer"
+            ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
+            : 'cursor-pointer'
         }
         key={start + index}
         onClick={() => setPage(start + index)}
@@ -35,9 +35,9 @@ export default function PaginacaoByTotal(props: {
   };
 
   const renderEllipsis = (key: string) => (
-    <PaginationItem key={key}>
+    <div key={key} className='pagination-ellipsis'>
       <PaginationEllipsis />
-    </PaginationItem>
+    </div>
   );
 
   return (
@@ -45,7 +45,7 @@ export default function PaginacaoByTotal(props: {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className="text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
             onClick={() => {
               if (activePage > 1) {
                 setPage(activePage - 1);
@@ -53,19 +53,19 @@ export default function PaginacaoByTotal(props: {
             }}
           />
         </PaginationItem>
-        <PaginationItem className="hidden md:gap-2 md:flex">
+        <PaginationItem className='hidden md:gap-2 md:flex'>
           <PaginationLink
             className={
               activePage === 1
-                ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
-                : "cursor-pointer"
+                ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
+                : 'cursor-pointer'
             }
             key={1}
             onClick={() => setPage(1)}
           >
             1
           </PaginationLink>
-          {activePage > 4 && renderEllipsis("ellipsis-start")}
+          {activePage > 4 && renderEllipsis('ellipsis-start')}
           {total <= 8
             ? renderPaginationLinks(2, total - 1)
             : activePage <= 4
@@ -73,12 +73,12 @@ export default function PaginacaoByTotal(props: {
               : activePage > 4 && activePage < total - 3
                 ? renderPaginationLinks(activePage - 1, activePage + 1)
                 : renderPaginationLinks(total - 4, total - 1)}
-          {activePage < total - 3 && renderEllipsis("ellipsis-end")}
+          {activePage < total - 3 && renderEllipsis('ellipsis-end')}
           <PaginationLink
             className={
               activePage === total
-                ? "cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
-                : "cursor-pointer"
+                ? 'cursor-pointer text-white bg-blue-400 rounded-xl hover:bg-blue-500 hover:text-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
+                : 'cursor-pointer'
             }
             key={total}
             onClick={() => setPage(total)}
@@ -88,7 +88,7 @@ export default function PaginacaoByTotal(props: {
         </PaginationItem>
         <PaginationItem>
           <PaginationNext
-            className="text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400"
+            className='text-white bg-blue-400 cursor-pointer rounded-xl md:text-blue-500 md:bg-white dark:text-white dark:bg-slate-900 dark:hover:text-blue-400'
             onClick={() => {
               if (activePage < total) {
                 setPage(activePage + 1);
