@@ -1,23 +1,21 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const nome = searchParams.get("nome");
+  const nome = searchParams.get('nome');
   const { user } = await validateRequest();
-
-  const tipo = searchParams.get("tipo");
-  const page = searchParams.get("page");
+  const page = searchParams.get('page');
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
-  const embarcacao = await prisma.embarcacao.findMany({
+  const embarcacoes = await prisma.embarcacao.findMany({
     where: {
       nome: {
         startsWith: nome?.toString(),
-        mode: "insensitive",
+        mode: 'insensitive',
       },
     },
     select: {
@@ -38,20 +36,23 @@ export async function GET(req: Request) {
       },
     },
     orderBy: {
-      nome: "asc",
+      nome: 'asc',
     },
     take: 10,
     skip: page ? 10 * (+page - 1) : 0,
   });
 
-  const total = await prisma.tipo_embarcacao.count({
+  const total = await prisma.embarcacao.count({
     where: {
-      tipo: { startsWith: tipo?.toString(), mode: "insensitive" },
+      nome: {
+        startsWith: nome?.toString(),
+        mode: 'insensitive',
+      },
     },
   });
 
   const result = {
-    embarcacao,
+    embarcacoes,
     total,
   };
 

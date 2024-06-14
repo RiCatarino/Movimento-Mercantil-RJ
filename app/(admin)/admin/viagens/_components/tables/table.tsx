@@ -16,8 +16,6 @@ import useSWR from 'swr';
 import TripDetails from '../tripdetails';
 import { useEffect, useState } from 'react';
 import Loader from '@/components/loader';
-import Paginacao from '@/components/sharedpagination';
-import chunk from '@/lib/chunk';
 import BotaoNovaViagem from '../buttons/botaonovaviagem';
 import { Input } from '@/components/ui/input';
 import {
