@@ -118,7 +118,7 @@ export default function NavBar() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant='ghost'>
-            <div className='flex flex-row items-center justify-center text-blue-400'>
+            <div className='flex flex-row items-center justify-center text-blue-500'>
               <UserCheck />
               <span className='hidden ms-3 md:flex'>{user?.nome}</span>
             </div>
