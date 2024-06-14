@@ -22,7 +22,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTriggerFilter,
+  SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
@@ -73,10 +73,14 @@ export default function TripsTable() {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <div className='flex flex-col md:flex-row gap-4 '>
-          <Select name='ano' onValueChange={(e) => setSelectedYear(e)}>
-            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
+          <Select onValueChange={(e) => setSelectedYear(e)}>
+            <SelectTrigger
+              aria-label='Ano'
+              name='ano'
+              className='rounded-xl w-full md:w-1/2 lg:w-[180px]'
+            >
               <SelectValue placeholder='Ano' />
-            </SelectTriggerFilter>
+            </SelectTrigger>
             <SelectContent>
               <SelectItem key='empty' value='none'>
                 {'Sem filtro'}
@@ -90,10 +94,13 @@ export default function TripsTable() {
             </SelectContent>
           </Select>
 
-          <Select name='tipo' onValueChange={(e) => setSelectedType(e)}>
-            <SelectTriggerFilter className='rounded-xl w-full md:w-1/2 lg:w-[180px]'>
+          <Select onValueChange={(e) => setSelectedType(e)}>
+            <SelectTrigger
+              aria-label='Tipo'
+              className='rounded-xl w-full md:w-1/2 lg:w-[180px]'
+            >
               <SelectValue placeholder='Tipo' />
-            </SelectTriggerFilter>
+            </SelectTrigger>
 
             <SelectContent>
               <SelectItem key='empty' value='none'>
