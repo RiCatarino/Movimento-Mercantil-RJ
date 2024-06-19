@@ -51,6 +51,7 @@ model pessoa {
   nome                            String                          @db.VarChar(100)
   id_pais                         Int?                            @db.SmallInt
   id_titulo_nobreza               Int?                            @db.SmallInt
+  id_pessoa                       Int?                            @db.SmallInt
   relacao_pessoa_cargo            relac_pessoa_cargo[]
   pais                            pais?                           @relation(fields: [id_pais], references: [id])
   titulo_nobreza                  titulo_nobreza?                 @relation(fields: [id_titulo_nobreza], references: [id])
@@ -59,6 +60,8 @@ model pessoa {
   capitao                         viagem[]                        @relation("capitao")
   comandante                      viagem[]                        @relation("comandante")
   armador                         viagem[]                        @relation("armador")
+  consignatario                   viagem[]                        @relation("consignatario")
+  minibiografia                   minibiografia[]
   relac_mercadoria_viagem         relac_mercadoria_viagem[]
   relac_mercadoria_escala         relac_mercadoria_escala[]
 }
@@ -132,6 +135,7 @@ model viagem {
   id                          Int                           @id @default(autoincrement())
   id_embarcacao               Int?
   id_porto_origem             Int?                          @db.SmallInt
+
   id_porto_destino            Int?                          @db.SmallInt
   data_viagem                 DateTime?                     @db.Date()
   dias_porto_destino          Int?                          @db.SmallInt
@@ -144,6 +148,7 @@ model viagem {
   dias_viagem                 Int?
   data_chegada                DateTime?                     @db.Date()
   data_rio                    DateTime?                     @db.Date()
+  id_consignatario            Int?                          @db.SmallInt
   armador_id                  Int?
   tripulacao                  Int?                          @db.SmallInt
   total_passageiros           Int?                          @db.SmallInt
@@ -151,6 +156,7 @@ model viagem {
   noticia                     noticia[]
   relac_mercadoria_viagem     relac_mercadoria_viagem[]
   escala                      escala[]
+  consignatario                pessoa?                       @relation("consignatario", fields: [id_consignatario], references: [id])  
   embarcacao                  embarcacao?                   @relation(fields: [id_embarcacao], references: [id])
   porto_origem                porto?                        @relation("porto_origem", fields: [id_porto_origem], references: [id])
   porto_destino               porto?                        @relation("porto_destino", fields: [id_porto_destino], references: [id])
@@ -169,6 +175,8 @@ model escala {
   dias_porto              Int?                      @db.SmallInt
   entrada_de_passageiros  Int?                      @db.SmallInt
   saida_de_passageiros    Int?                      @db.SmallInt
+  observacoes             String?                   @db.VarChar()
+  arriba                   arriba[]
   porto                   porto?                    @relation(fields: [id_porto], references: [id])
   viagem                  viagem?                   @relation(fields: [id_viagem], references: [id])
   relac_mercadoria_escala relac_mercadoria_escala[]
@@ -237,6 +245,33 @@ model relac_mercadoria_viagem {
   mercadoria        mercadoria?        @relation(fields: [id_mercadoria], references: [id])
   unidade_de_medida unidade_de_medida? @relation(fields: [id_unidade_medida], references: [id])
   cosignatario      pessoa?            @relation(fields: [id_cosignatario], references: [id])
+}
+
+model minibiografia {
+  id                   Int @id @default(autoincrement())
+	id_pessoa            Int? 
+	biografia            String?       @db.VarChar()
+  pessoa               pessoa?       @relation(fields: [id_pessoa], references: [id], onDelete: Cascade)
+}
+
+model tipo_passageiro {
+  id          Int          @id @default(autoincrement())
+  tipo        String       @db.VarChar()
+}
+
+model passageiro {
+  id              Int              @id @default(autoincrement())
+  id_tipo_passageiro Int?          @db.SmallInt
+  id_pessoa         Int?          @db.SmallInt
+  total            Int?          @db.SmallInt
+  observacoes      String?       @db.VarChar()
+}
+
+model arriba {
+  id          Int          @id @default(autoincrement())
+  id_escala   Int?          @db.SmallInt
+  observacoes String?       @db.VarChar()
+  escala      escala?       @relation(fields: [id_escala], references: [id], onDelete: Cascade)
 }
 
 enum Role {
