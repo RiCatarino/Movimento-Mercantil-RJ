@@ -2,7 +2,7 @@ interface User {
   id: string;
   nome: string;
   email: string;
-  role: "EDITOR" | "ADMIN";
+  role: 'EDITOR' | 'ADMIN';
   habilitado: boolean;
 }
 
@@ -35,6 +35,8 @@ interface Pessoa {
   capitao: Viagem[];
   comandante: Viagem[];
   armador: Viagem[];
+  consignatario: Viagem[];
+  minibiografia: minibiografia[];
   relac_mercadoria_viagem: RelacMercadoriaViagem[];
 }
 
@@ -118,6 +120,7 @@ interface Viagem {
   dias_viagem: number;
   data_chegada: Date;
   data_rio: Date;
+  id_consignatario: number;
   armador_id: number;
   tripulacao: number;
   total_passageiros: number;
@@ -125,6 +128,7 @@ interface Viagem {
   noticia: Noticia[];
   relac_mercadoria_viagem: RelacMercadoriaViagem[];
   escala: Escala[];
+  consignatario: Pessoa;
   embarcacao: Embarcacao;
   porto_origem: Porto;
   porto_destino: Porto;
@@ -143,6 +147,8 @@ interface Escala {
   dias_porto: number;
   entrada_de_passageiros: number;
   saida_de_passageiros: number;
+  observacoes: string;
+  arriba: arriba[];
   porto: Porto;
   viagem: Viagem;
   relac_mercadoria_escala: RelacMercadoriaEscala[];
@@ -210,4 +216,31 @@ interface RelacMercadoriaViagem {
   mercadoria: Mercadoria;
   unidade_de_medida: UnidadeDeMedida;
   pessoa: Pessoa;
+}
+
+interface minibiografia {
+  id: number;
+  id_pessoa: number;
+  biografia: string;
+  pessoa: Pessoa;
+}
+
+interface tipo_passageiro {
+  id: number;
+  tipo: string;
+}
+
+interface passageiro {
+  id: number;
+  id_tipo_passageiro: number;
+  id_pessoa: number;
+  total: number;
+  observacoes: string;
+}
+
+interface arriba {
+  id: number;
+  id_escala: number;
+  observacoes: string;
+  escala: Escala;
 }
