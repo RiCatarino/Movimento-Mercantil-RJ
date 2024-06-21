@@ -104,6 +104,15 @@ export default function PersonDetails(props: {
               </div>
             </div>
 
+            <div className='flex flex-col border gap-1 rounded-xl grow'>
+              <div className='p-2 text-sm bg-blue-200 dark:bg-slate-900 rounded-ss-xl rounded-se-xl'>
+                Mini biografia
+              </div>
+              <div className='p-2 text-xs'>
+                {pessoa?.minibiografia?.biografia}
+              </div>
+            </div>
+
             <div className='flex flex-col mt-4'>
               <div className='flex gap-1 p-2 bg-blue-200 dark:bg-slate-900 justify-center mx-auto w-[50%] rounded-ss-xl rounded-se-xl text-sm'>
                 Cargos

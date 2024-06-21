@@ -1,31 +1,20 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
-  const {
-    cosignatario,
-    mercadoria,
-    unidade_de_medida,
-    quantidade,
-    valor_frete,
-    viagem_id,
-  } = await req.json();
+  const { mercadoria, unidade_de_medida, quantidade, valor_frete, viagem_id } =
+    await req.json();
   const result = await prisma.relac_mercadoria_viagem.create({
     data: {
       viagem: {
         connect: {
           id: Number(viagem_id),
-        },
-      },
-      cosignatario: {
-        connect: {
-          id: Number(cosignatario),
         },
       },
       mercadoria: {

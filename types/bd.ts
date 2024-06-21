@@ -36,7 +36,7 @@ interface Pessoa {
   comandante: Viagem[];
   armador: Viagem[];
   consignatario: Viagem[];
-  minibiografia: minibiografia[];
+  minibiografia: minibiografia;
   relac_mercadoria_viagem: RelacMercadoriaViagem[];
 }
 
@@ -122,8 +122,6 @@ interface Viagem {
   data_rio: Date;
   id_consignatario: number;
   armador_id: number;
-  tripulacao: number;
-  total_passageiros: number;
   relac_viagem_referencia_doc: RelacViagemReferenciaDoc[];
   noticia: Noticia[];
   relac_mercadoria_viagem: RelacMercadoriaViagem[];
@@ -136,6 +134,8 @@ interface Viagem {
   capitao: Pessoa;
   comandante: Pessoa;
   armador: Pessoa;
+  arriba: Arriba[];
+  passageiro: Passageiro[];
 }
 
 interface Escala {
@@ -148,7 +148,6 @@ interface Escala {
   entrada_de_passageiros: number;
   saida_de_passageiros: number;
   observacoes: string;
-  arriba: arriba[];
   porto: Porto;
   viagem: Viagem;
   relac_mercadoria_escala: RelacMercadoriaEscala[];
@@ -225,22 +224,25 @@ interface minibiografia {
   pessoa: Pessoa;
 }
 
-interface tipo_passageiro {
+interface TipoPassageiro {
   id: number;
   tipo: string;
+  passageiro: Passageiro[];
 }
 
-interface passageiro {
+interface Passageiro {
   id: number;
   id_tipo_passageiro: number;
-  id_pessoa: number;
+  id_viagem: number;
   total: number;
   observacoes: string;
+  viagem: Viagem;
+  tipo_passageiro: TipoPassageiro;
 }
 
-interface arriba {
+interface Arriba {
   id: number;
-  id_escala: number;
+  id_viagem: number;
   observacoes: string;
-  escala: Escala;
+  viagem: Viagem;
 }
