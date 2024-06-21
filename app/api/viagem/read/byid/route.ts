@@ -1,15 +1,15 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
 
 export async function GET(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
   const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
+  const id = searchParams.get('id');
   const result = await prisma.viagem.findUnique({
     where: {
       id: Number(id),
@@ -40,6 +40,7 @@ export async function GET(req: Request) {
       capitao: true,
       comandante: true,
       armador: true,
+      consignatario: true,
       escala: {
         select: {
           id: true,
@@ -56,11 +57,23 @@ export async function GET(req: Request) {
         },
       },
 
+      passageiro: {
+        select: {
+          id: true,
+          tipo_passageiro: {
+            select: {
+              tipo: true,
+            },
+          },
+          total: true,
+          observacoes: true,
+        },
+      },
+
       relac_mercadoria_viagem: {
         include: {
           mercadoria: true,
           unidade_de_medida: true,
-          cosignatario: true,
         },
       },
       relac_viagem_referencia_doc: {
@@ -79,6 +92,12 @@ export async function GET(req: Request) {
         select: {
           id: true,
           assunto: true,
+        },
+      },
+      arriba: {
+        select: {
+          id: true,
+          observacoes: true,
         },
       },
     },

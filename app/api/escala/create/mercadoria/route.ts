@@ -1,15 +1,14 @@
-import { validateRequest } from "@/auth";
-import prisma from "@/lib/prisma";
+import { validateRequest } from '@/auth';
+import prisma from '@/lib/prisma';
 
 export async function POST(req: Request) {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response("Unauthorized", { status: 401 });
+    return new Response('Unauthorized', { status: 401 });
   }
 
   const {
-    cosignatario,
     mercadoria,
     unidade_de_medida,
     quantidade,
@@ -20,16 +19,15 @@ export async function POST(req: Request) {
 
   //if there are no fields, return an error
   if (
-    !cosignatario &&
     !mercadoria &&
     !unidade_de_medida &&
     !quantidade &&
     !valor_frete &&
     !movimento
   ) {
-    return new Response("Preencha pelo menos um dos campos", {
+    return new Response('Preencha pelo menos um dos campos', {
       status: 400,
-      statusText: "Preencha pelo menos um dos campos",
+      statusText: 'Preencha pelo menos um dos campos',
     });
   }
 
@@ -40,13 +38,6 @@ export async function POST(req: Request) {
           id: Number(escala_id),
         },
       },
-      cosignatario: cosignatario
-        ? {
-            connect: {
-              id: Number(cosignatario),
-            },
-          }
-        : undefined,
       mercadoria: mercadoria
         ? {
             connect: {
