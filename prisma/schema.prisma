@@ -135,7 +135,6 @@ model viagem {
   id              Int  @id @default(autoincrement())
   id_embarcacao   Int?
   id_porto_origem Int? @db.SmallInt
-
   id_porto_destino            Int?                          @db.SmallInt
   data_viagem                 DateTime?                     @db.Date()
   dias_porto_destino          Int?                          @db.SmallInt
@@ -156,6 +155,7 @@ model viagem {
   noticia                     noticia[]
   relac_mercadoria_viagem     relac_mercadoria_viagem[]
   escala                      escala[]
+  arriba                      arriba[]
   consignatario               pessoa?                       @relation("consignatario", fields: [id_consignatario], references: [id])
   embarcacao                  embarcacao?                   @relation(fields: [id_embarcacao], references: [id])
   porto_origem                porto?                        @relation("porto_origem", fields: [id_porto_origem], references: [id])
@@ -176,7 +176,6 @@ model escala {
   entrada_de_passageiros  Int?                      @db.SmallInt
   saida_de_passageiros    Int?                      @db.SmallInt
   observacoes             String?                   @db.VarChar()
-  arriba                  arriba[]
   porto                   porto?                    @relation(fields: [id_porto], references: [id])
   viagem                  viagem?                   @relation(fields: [id_viagem], references: [id])
   relac_mercadoria_escala relac_mercadoria_escala[]
@@ -269,9 +268,9 @@ model passageiro {
 
 model arriba {
   id          Int     @id @default(autoincrement())
-  id_escala   Int?    @db.SmallInt
+  id_viagem   Int?    @db.SmallInt
   observacoes String? @db.VarChar()
-  escala      escala? @relation(fields: [id_escala], references: [id], onDelete: Cascade)
+  viagem      viagem? @relation(fields: [id_viagem], references: [id], onDelete: Cascade)
 }
 
 enum Role {
