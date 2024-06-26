@@ -77,7 +77,6 @@ interface StatsProps {
 
 export default function Stats() {
   const { data: stats, isLoading } = useSWR<StatsProps>("/api/stats", fetcher);
-  console.log(stats);
   const router = useRouter();
   return (
     <>
