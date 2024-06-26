@@ -269,24 +269,26 @@ export async function GET() {
     take: 1,
   });
 
-  const idporto = queryPortoWithMostEscalas[0].id_porto;
-  const queryPorto = await prisma.porto.findUnique({
-    where: {
-      id: idporto || undefined,
-    },
-    select: {
-      nome: true,
-      pais: {
-        select: {
-          pais: true,
+  const idporto = queryPortoWithMostEscalas[0]?.id_porto;
+  console.log(idporto);
+  if (idporto) {
+    const queryPorto = await prisma.porto.findUnique({
+      where: {
+        id: idporto,
+      },
+      select: {
+        nome: true,
+        pais: {
+          select: {
+            pais: true,
+          },
         },
       },
-    },
-  });
-  portoWithMostEscalas.count = queryPortoWithMostEscalas[0]._count._all;
-  portoWithMostEscalas.name = queryPorto?.nome;
-  portoWithMostEscalas.pais = queryPorto?.pais?.pais;
-
+    });
+    portoWithMostEscalas.count = queryPortoWithMostEscalas[0]._count._all;
+    portoWithMostEscalas.name = queryPorto?.nome;
+    portoWithMostEscalas.pais = queryPorto?.pais?.pais;
+  }
   //viagem com mais total de passageiros
   let viagemWithMostPassageiros: {
     count: number;
