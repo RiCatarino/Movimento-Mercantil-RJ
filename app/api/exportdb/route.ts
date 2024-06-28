@@ -58,8 +58,10 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
     archive.pipe(passThrough);
 
     const tablesResult = await client.query(
-      "SELECT tablename FROM pg_tables WHERE schemaname='public'"
+      "SELECT tablename FROM pg_tables WHERE schemaname='bd_embarcacoes'"
     );
+
+    console.log('Tables:', tablesResult.rows);
     const tables = tablesResult.rows.map((row) => row.tablename);
 
     for (const tableName of tables) {
