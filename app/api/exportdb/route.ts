@@ -102,7 +102,7 @@ export async function GET(req: NextRequest, res: NextApiResponse) {
                   if (typeof value === 'string') {
                     return `'${value.replace(/'/g, "''")}'`;
                   } else if (value instanceof Date) {
-                    return dayjs(value).format('DD-MM-YYYY');
+                    return "'" + dayjs(value).format('DD-MM-YYYY') + "'";
                   } else if (value === null) {
                     return 'NULL';
                   } else {
