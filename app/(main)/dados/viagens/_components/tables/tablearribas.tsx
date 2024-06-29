@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Table,
   TableBody,
@@ -6,17 +8,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
+} from '@/components/ui/table';
+import { useState } from 'react';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
 
 export default function TableArribas(props: {
   arribas: Arriba[] | undefined;
-  mutate: () => void;
   viagem_id: number | undefined;
 }) {
-  const { arribas, mutate, viagem_id } = props;
+  const { arribas } = props;
   const [activePage, setPage] = useState(1);
 
   const chunked = chunk(arribas ?? [], 5);
@@ -24,9 +25,9 @@ export default function TableArribas(props: {
 
   return (
     <>
-      <Table className="border-b">
-        <TableHeader className="p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 ">
-          <TableRow className="rounded-ss-xl">
+      <Table className='border-b'>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
+          <TableRow className='rounded-ss-xl'>
             <TableHead>Observações</TableHead>
             <TableHead></TableHead>
           </TableRow>
@@ -34,10 +35,10 @@ export default function TableArribas(props: {
         <TableBody>
           {arribasdata?.map((arriba) => (
             <TableRow
-              className="cursor-pointer hover:bg-blue-100"
+              className='cursor-pointer hover:bg-blue-100'
               key={arriba.id}
             >
-              <TableCell className="text-xs font-medium">
+              <TableCell className='text-xs font-medium'>
                 {arriba.observacoes}
               </TableCell>
             </TableRow>

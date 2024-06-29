@@ -2,8 +2,7 @@ import { Inter as FontSans } from 'next/font/google';
 import '../globals.css';
 import { cn } from '@/lib/utils';
 // import { usePathname } from 'next/navigation';
-import { CircleHelp, HomeIcon } from 'lucide-react';
-import Image from 'next/image';
+import { CircleHelp, LogInIcon } from 'lucide-react';
 import Loader from '@/components/loader';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -48,6 +47,14 @@ export default async function MainLayout({
                 className='bg-blue-400 rounded-xl hover:bg-blue-500'
               >
                 <CircleHelp size={16} className='mr-2' /> Sobre
+              </Button>
+            </Link>
+            <Link href='/auth/signin'>
+              <Button
+                size='sm'
+                className='bg-blue-400 rounded-xl hover:bg-blue-500'
+              >
+                <LogInIcon size={16} className='mr-2' /> Entrar
               </Button>
             </Link>
           </div>
