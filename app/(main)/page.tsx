@@ -516,15 +516,15 @@ export default function Home() {
           className='lg:max-w-[50%] w-full relative  h-full my-auto lg:h-[40rem] z-40 p-3  '
         >
           <div className='z-10 w-full transition-all duration-300 ease-in-out cursor-pointer h-fit lg:absolute -bottom-5 h-72 lg:h-full drop-shadow-xl hover:scale-105 '>
-            <h1 className='justify-center w-full p-2 mx-auto text-xl font-extrabold text-center text-red-500 bg-white lg:text-4xl lg:w-1/2 rounded-xl'>
+            {/* <h1 className='justify-center w-full p-2 mx-auto text-xl font-extrabold text-center text-red-500 bg-white lg:text-4xl lg:w-1/2 rounded-xl'>
               Este site encontra-se em <br /> desenvolvimento.
               <p className='text-xs text-blue-800'>
                 {' '}
                 Report de bugs e sugestões para: 30008236@students.ual.pt{' '}
               </p>
-            </h1>
+            </h1> */}
             <h2 className='text-xl font-bold text-center text-black lg:text-4xl dark:text-white'>
-              Viagens pelo globo, a partir do Rio.
+              Viagens pelo globo, de, e para, o Rio de Janeiro
             </h2>
             <p className='max-w-md mx-auto mt-2 text-base font-normal text-center lg:text-lg text-neutral-700 dark:text-neutral-200'>
               Universidade Autónoma de Lisboa
@@ -542,7 +542,7 @@ export default function Home() {
                 asChild
                 className='self-end w-full text-lg transition-all duration-500 shadow-2xl h-14 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl lg:w-fit hover:scale-105 hover:bg-gradient-to-l hover:from-blue-400 hover:to-blue-600'
               >
-                <Link href={'/auth/signin'}>Visitar BackOffice</Link>
+                <Link href={'/dados'}>Explore os nossos dados</Link>
               </Button>
             </div>
           </div>

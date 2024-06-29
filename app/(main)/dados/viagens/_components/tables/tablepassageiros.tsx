@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Table,
   TableBody,
@@ -7,26 +9,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useState } from "react";
-import chunk from "@/lib/chunk";
-import Paginacao from "@/components/sharedpagination";
+} from '@/components/ui/table';
+import { useState } from 'react';
+import chunk from '@/lib/chunk';
+import Paginacao from '@/components/sharedpagination';
 
 export default function TablePassageiros(props: {
   passageiros: Passageiro[] | undefined;
-  mutate: () => void;
   viagem_id: number | undefined;
 }) {
-  const { passageiros, mutate, viagem_id } = props;
+  const { passageiros, viagem_id } = props;
   const [activePage, setPage] = useState(1);
   const chunked = chunk(passageiros ?? [], 5);
   const passageirosdata = chunked[activePage - 1];
 
   return (
     <>
-      <Table className="border-b">
-        <TableHeader className="p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 ">
-          <TableRow className="rounded-ss-xl">
+      <Table className='border-b'>
+        <TableHeader className='p-2 text-xs bg-blue-200 border-t-0 dark:bg-slate-900 '>
+          <TableRow className='rounded-ss-xl'>
             <TableHead>Tipo</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>Observações</TableHead>
@@ -35,14 +36,14 @@ export default function TablePassageiros(props: {
         <TableBody>
           {passageirosdata?.map((passageiro) => (
             <TableRow
-              className="cursor-pointer hover:bg-blue-100"
+              className='cursor-pointer hover:bg-blue-100'
               key={passageiro.id}
             >
-              <TableCell className="text-xs font-medium">
+              <TableCell className='text-xs font-medium'>
                 {passageiro.tipo_passageiro.tipo}
               </TableCell>
-              <TableCell className="text-xs">{passageiro.total}</TableCell>
-              <TableCell className="text-xs">
+              <TableCell className='text-xs'>{passageiro.total}</TableCell>
+              <TableCell className='text-xs'>
                 {passageiro.observacoes}
               </TableCell>
             </TableRow>
@@ -52,8 +53,8 @@ export default function TablePassageiros(props: {
         <TableFooter>
           <TableRow>
             <TableCell></TableCell>
-            <TableCell colSpan={3} className="text-xs font-bold">
-              Total:{" "}
+            <TableCell colSpan={3} className='text-xs font-bold'>
+              Total:{' '}
               {passageiros?.reduce(
                 (acc, passageiro) => acc + (passageiro.total || 0),
                 0
