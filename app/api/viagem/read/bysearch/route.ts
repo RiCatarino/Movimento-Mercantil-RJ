@@ -1,4 +1,3 @@
-import { validateRequest } from '@/auth';
 import prisma from '@/lib/prisma';
 import dayjs from 'dayjs';
 
@@ -7,11 +6,6 @@ dayjs.extend(customParseFormat);
 
 export const dynamic = 'force-dynamic';
 export async function GET(req: Request) {
-  const { user } = await validateRequest();
-
-  if (!user) {
-    return new Response('Unauthorized', { status: 401 });
-  }
   const { searchParams } = new URL(req.url);
   const search = searchParams.get('search');
   const ano = searchParams.get('ano');

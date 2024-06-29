@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import StatsCard from "./statscard";
+import StatsCard from './statscard';
 import {
   AnchorIcon,
   CrownIcon,
@@ -9,12 +9,12 @@ import {
   Ship,
   TagIcon,
   WeightIcon,
-} from "lucide-react";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import Loader from "@/components/loader";
-import Link from "next/link";
-import { BarChart, Bar, ResponsiveContainer, Tooltip, YAxis } from "recharts";
+} from 'lucide-react';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import Loader from '@/components/loader';
+import Link from 'next/link';
+import { BarChart, Bar, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 // import { useRouter } from 'next/navigation';
 import {
   Card,
@@ -22,8 +22,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 interface AggregateCount {
   _count: {
@@ -76,39 +76,39 @@ interface StatsProps {
 }
 
 export default function Stats() {
-  const { data: stats, isLoading } = useSWR<StatsProps>("/api/stats", fetcher);
+  const { data: stats, isLoading } = useSWR<StatsProps>('/api/stats', fetcher);
   const router = useRouter();
   return (
     <>
       {isLoading ? (
-        <div className="z-10 flex items-center justify-center text-center  w-full h-screen bg-opacity-70 align-middle">
-          <div className="flex flex-col gap-4 items-center justify-center">
-            <Loader classProp="w-48 h-48" />
-            <h1 className="text-2xl font-bold">A carregar os dados ...</h1>
+        <div className='z-10 flex items-center justify-center text-center  w-full h-screen bg-opacity-70 align-middle'>
+          <div className='flex flex-col gap-4 items-center justify-center'>
+            <Loader classProp='w-48 h-48' />
+            <h1 className='text-2xl font-bold'>A carregar os dados ...</h1>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col lg:flex-row gap-2">
-            <Card className="w-full shadow-xl">
+        <div className='flex flex-col gap-4'>
+          <div className='flex flex-col lg:flex-row gap-2'>
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500 TEXT">
+                <CardTitle className='text-blue-500 TEXT'>
                   Embarcações
                 </CardTitle>
                 <CardDescription>Estatísticas das embarcações</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col gap-2">
-                  <Link href="/admin/embarcacoes">
+                <div className='flex flex-col gap-2'>
+                  <Link href='/admin/embarcacoes'>
                     <StatsCard
-                      title="Embarcações"
+                      title='Embarcações'
                       value={stats?.embarcacoes?._count.id || 0}
                       icon={<Ship />}
                     />
                   </Link>
-                  <Link href="/admin/embarcacoes?tipo=tipos">
+                  <Link href='/admin/embarcacoes?tipo=tipos'>
                     <StatsCard
-                      title="Tipos de Embarcações"
+                      title='Tipos de Embarcações'
                       value={stats?.tipo_embarcacao?._count.id || 0}
                       icon={<Ship />}
                     />
@@ -129,16 +129,16 @@ export default function Stats() {
               </CardContent>
             </Card>
 
-            <Card className="w-full shadow-xl">
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500">Pessoas</CardTitle>
+                <CardTitle className='text-blue-500'>Pessoas</CardTitle>
                 <CardDescription>Estatísticas das pessoas</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col  gap-2">
-                  <Link href="/admin/pessoas">
+                <div className='flex flex-col  gap-2'>
+                  <Link href='/admin/pessoas'>
                     <StatsCard
-                      title="Total de Pessoas"
+                      title='Total de Pessoas'
                       value={stats?.pessoas?._count.id || 0}
                       icon={<PersonStanding />}
                     />
@@ -146,49 +146,49 @@ export default function Stats() {
 
                   <Link
                     href={
-                      "/admin/pessoas?nome=" +
+                      '/admin/pessoas?nome=' +
                       stats?.mestreWithMostViagens?.name
                     }
                   >
                     <StatsCard
-                      title="Mestre com mais viagens"
-                      value={stats?.mestreWithMostViagens?.name || "N/A"}
+                      title='Mestre com mais viagens'
+                      value={stats?.mestreWithMostViagens?.name || 'N/A'}
                       icon={<PersonStanding />}
                     />
                   </Link>
                   <Link
                     href={
-                      "/admin/pessoas?nome=" +
+                      '/admin/pessoas?nome=' +
                       stats?.armadorWithMostViagens?.name
                     }
                   >
                     <StatsCard
-                      title="Armador com mais viagens"
-                      value={stats?.armadorWithMostViagens?.name || "N/A"}
+                      title='Armador com mais viagens'
+                      value={stats?.armadorWithMostViagens?.name || 'N/A'}
                       icon={<PersonStanding />}
                     />
                   </Link>
                   <Link
                     href={
-                      "/admin/pessoas?nome=" +
+                      '/admin/pessoas?nome=' +
                       stats?.comandanteWithMostViagens?.name
                     }
                   >
                     <StatsCard
-                      title="Comandante com mais viagens"
-                      value={stats?.comandanteWithMostViagens?.name || "N/A"}
+                      title='Comandante com mais viagens'
+                      value={stats?.comandanteWithMostViagens?.name || 'N/A'}
                       icon={<PersonStanding />}
                     />
                   </Link>
                   <Link
                     href={
-                      "/admin/pessoas?nome=" +
+                      '/admin/pessoas?nome=' +
                       stats?.capitaoWithMostViagens?.name
                     }
                   >
                     <StatsCard
-                      title="Capitão com mais viagens"
-                      value={stats?.capitaoWithMostViagens?.name || "N/A"}
+                      title='Capitão com mais viagens'
+                      value={stats?.capitaoWithMostViagens?.name || 'N/A'}
                       icon={<PersonStanding />}
                     />
                   </Link>
@@ -196,30 +196,34 @@ export default function Stats() {
               </CardContent>
             </Card>
 
-            <Card className="w-full shadow-xl">
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500">Viagens</CardTitle>
+                <CardTitle className='text-blue-500'>Viagens</CardTitle>
                 <CardDescription>Estatísticas das viagens</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col  gap-2">
-                  <Link href="/admin/viagens">
+                <div className='flex flex-col  gap-2'>
+                  <Link href='/admin/viagens'>
                     <StatsCard
-                      title="Viagens"
+                      title='Viagens'
                       value={stats?.viagens?._count.id || 0}
                       icon={<GitCompareArrows />}
                     />
                   </Link>
-                  <Link href="/admin/viagens">
+                  <Link href='/admin/viagens'>
                     <StatsCard
-                      title="Viagem com mais passageiros"
+                      title='Viagem com mais passageiros'
                       value={
                         (stats?.viagemWithMostPassageiros?.count +
-                          " | ID: " +
+                          ' | ID: ' +
                           stats?.viagemWithMostPassageiros?.id !=
-                          "undefined" &&
-                          stats?.viagemWithMostPassageiros?.id) ||
-                        "N/A"
+                          'undefined' &&
+                          'ID: ' +
+                            stats?.viagemWithMostPassageiros?.id +
+                            ' | ' +
+                            stats?.viagemWithMostPassageiros?.count +
+                            ' passageiros') ||
+                        'N/A'
                       }
                       icon={<GitCompareArrows />}
                     />
@@ -228,24 +232,24 @@ export default function Stats() {
               </CardContent>
             </Card>
 
-            <Card className="w-full shadow-xl">
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500">Portos</CardTitle>
+                <CardTitle className='text-blue-500'>Portos</CardTitle>
                 <CardDescription>Estatísticas dos portos</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col  gap-2">
+                <div className='flex flex-col  gap-2'>
                   <Link
                     href={
-                      "/admin/portos?nome=" + stats?.portoWithMostEscalas?.name
+                      '/admin/portos?nome=' + stats?.portoWithMostEscalas?.name
                     }
                   >
                     <StatsCard
-                      title="Porto com mais escalas"
+                      title='Porto com mais escalas'
                       value={
                         stats?.portoWithMostEscalas?.name +
-                          " | " +
-                          stats?.portoWithMostEscalas?.pais || "N/A"
+                          ' | ' +
+                          stats?.portoWithMostEscalas?.pais || 'N/A'
                       }
                       icon={<AnchorIcon />}
                     />
@@ -254,30 +258,30 @@ export default function Stats() {
               </CardContent>
             </Card>
 
-            <Card className="w-full shadow-xl">
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500">Outros</CardTitle>
+                <CardTitle className='text-blue-500'>Outros</CardTitle>
                 <CardDescription>Outras estatísticas</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col  gap-2">
-                  <Link href="/admin/unidades_de_medida">
+                <div className='flex flex-col  gap-2'>
+                  <Link href='/admin/unidades_de_medida'>
                     <StatsCard
-                      title="Unidades de Medida"
+                      title='Unidades de Medida'
                       value={stats?.unidades_de_medida?._count.id || 0}
                       icon={<WeightIcon />}
                     />
                   </Link>
-                  <Link href="/admin/pessoas?tipo=titulos">
+                  <Link href='/admin/pessoas?tipo=titulos'>
                     <StatsCard
-                      title="Títulos de Nobreza"
+                      title='Títulos de Nobreza'
                       value={stats?.titulo_nobreza?._count.id || 0}
                       icon={<CrownIcon />}
                     />
                   </Link>
-                  <Link href="/admin/pessoas?tipo=cargos">
+                  <Link href='/admin/pessoas?tipo=cargos'>
                     <StatsCard
-                      title="Cargos"
+                      title='Cargos'
                       value={stats?.cargos?._count.id || 0}
                       icon={<TagIcon />}
                     />
@@ -304,25 +308,25 @@ export default function Stats() {
             </CardContent>
           </Card> */}
           </div>
-          <div className="flex flex-wrap">
-            <Card className="w-full shadow-xl">
+          <div className='flex flex-wrap'>
+            <Card className='w-full shadow-xl'>
               <CardHeader>
-                <CardTitle className="text-blue-500">Top 5</CardTitle>
+                <CardTitle className='text-blue-500'>Top 5</CardTitle>
                 {/* <CardDescription></CardDescription> */}
               </CardHeader>
               <CardContent>
-                <div className="col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <Card className="w-full shadow-xl">
+                <div className='col-span-1 lg:col-span-3 grid grid-cols-1 lg:grid-cols-3 gap-4'>
+                  <Card className='w-full shadow-xl'>
                     <CardHeader>
-                      <CardTitle className="text-sm font-medium">
+                      <CardTitle className='text-sm font-medium'>
                         Top 5 Embarcações com mais viagens
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer
-                        width="100%"
+                        width='100%'
                         minHeight={200}
-                        height="95%"
+                        height='95%'
                       >
                         <BarChart
                           width={500}
@@ -337,46 +341,46 @@ export default function Stats() {
                           }}
                         >
                           <Tooltip
-                            cursor={{ fill: "transparent" }}
+                            cursor={{ fill: 'transparent' }}
                             wrapperStyle={{
-                              color: "#fff",
-                              backgroundColor: "#000",
-                              padding: "5px",
-                              borderRadius: "5px",
+                              color: '#fff',
+                              backgroundColor: '#000',
+                              padding: '5px',
+                              borderRadius: '5px',
                             }}
                             content={(prop) =>
                               prop?.payload
                                 ? prop?.payload[0]?.payload?.name
-                                : "N/A"
+                                : 'N/A'
                             }
                           />
                           {/* <YAxis dataKey='viagens' /> */}
                           <Bar
-                            label={{ position: "top", fontSize: 10 }}
-                            cursor="pointer"
+                            label={{ position: 'top', fontSize: 10 }}
+                            cursor='pointer'
                             // cursor='pointer'
                             onClick={(e) => {
-                              router.push("/admin/embarcacoes?nome=" + e?.name);
+                              router.push('/admin/embarcacoes?nome=' + e?.name);
                             }}
-                            className=" fill-blue-500 hover:fill-slate-400 transition-all duration-500"
+                            className=' fill-blue-500 hover:fill-slate-400 transition-all duration-500'
                             radius={[10, 10, 0, 0]}
-                            dataKey="viagens"
+                            dataKey='viagens'
                           />
                         </BarChart>
                       </ResponsiveContainer>
                     </CardContent>
                   </Card>
-                  <Card className="w-full shadow-xl">
+                  <Card className='w-full shadow-xl'>
                     <CardHeader>
-                      <CardTitle className="text-sm font-medium">
+                      <CardTitle className='text-sm font-medium'>
                         Top 5 Países com mais portos
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer
-                        width="100%"
+                        width='100%'
                         minHeight={200}
-                        height="95%"
+                        height='95%'
                       >
                         <BarChart
                           width={500}
@@ -391,30 +395,30 @@ export default function Stats() {
                           }}
                         >
                           <Tooltip
-                            cursor={{ fill: "transparent" }}
+                            cursor={{ fill: 'transparent' }}
                             wrapperStyle={{
-                              color: "#fff",
-                              backgroundColor: "#000",
-                              padding: "5px",
-                              borderRadius: "5px",
+                              color: '#fff',
+                              backgroundColor: '#000',
+                              padding: '5px',
+                              borderRadius: '5px',
                             }}
                             content={(prop) =>
                               prop?.payload
                                 ? prop?.payload[0]?.payload?.name
-                                : "N/A"
+                                : 'N/A'
                             }
                           />
                           {/* <YAxis dataKey='viagens' /> */}
                           <Bar
-                            label={{ position: "top", fontSize: 10 }}
-                            cursor="pointer"
+                            label={{ position: 'top', fontSize: 10 }}
+                            cursor='pointer'
                             // cursor='pointer'
                             onClick={(e) => {
-                              router.push("/admin/embarcacoes?nome=" + e?.name);
+                              router.push('/admin/embarcacoes?nome=' + e?.name);
                             }}
-                            className=" fill-blue-500 hover:fill-slate-400 transition-all duration-500"
+                            className=' fill-blue-500 hover:fill-slate-400 transition-all duration-500'
                             radius={[10, 10, 0, 0]}
-                            dataKey="portos"
+                            dataKey='portos'
                           />
                         </BarChart>
                       </ResponsiveContainer>
@@ -422,17 +426,17 @@ export default function Stats() {
                   </Card>
 
                   {/* TOP 5 TIPOS DE EMBARCACAO */}
-                  <Card className="w-full shadow-xl">
+                  <Card className='w-full shadow-xl'>
                     <CardHeader>
-                      <CardTitle className="text-sm font-medium">
+                      <CardTitle className='text-sm font-medium'>
                         Top 5 Tipos de embarcações mais comuns
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer
-                        width="100%"
+                        width='100%'
                         minHeight={200}
-                        height="95%"
+                        height='95%'
                       >
                         <BarChart
                           width={500}
@@ -447,30 +451,30 @@ export default function Stats() {
                           }}
                         >
                           <Tooltip
-                            cursor={{ fill: "transparent" }}
+                            cursor={{ fill: 'transparent' }}
                             wrapperStyle={{
-                              color: "#fff",
-                              backgroundColor: "#000",
-                              padding: "5px",
-                              borderRadius: "5px",
+                              color: '#fff',
+                              backgroundColor: '#000',
+                              padding: '5px',
+                              borderRadius: '5px',
                             }}
                             content={(prop) =>
                               prop?.payload
                                 ? prop?.payload[0]?.payload?.name
-                                : "N/A"
+                                : 'N/A'
                             }
                           />
                           {/* <YAxis dataKey='viagens' /> */}
                           <Bar
-                            label={{ position: "top", fontSize: 10 }}
-                            cursor="pointer"
+                            label={{ position: 'top', fontSize: 10 }}
+                            cursor='pointer'
                             // cursor='pointer'
                             onClick={(e) => {
-                              router.push("/admin/embarcacoes?nome=" + e?.name);
+                              router.push('/admin/embarcacoes?nome=' + e?.name);
                             }}
-                            className=" fill-blue-500 hover:fill-slate-400 transition-all duration-500"
+                            className=' fill-blue-500 hover:fill-slate-400 transition-all duration-500'
                             radius={[10, 10, 0, 0]}
-                            dataKey="embarcacoes"
+                            dataKey='embarcacoes'
                           />
                         </BarChart>
                       </ResponsiveContainer>

@@ -270,7 +270,6 @@ export async function GET() {
   });
 
   const idporto = queryPortoWithMostEscalas[0]?.id_porto;
-  console.log(idporto);
   if (idporto) {
     const queryPorto = await prisma.porto.findUnique({
       where: {
@@ -289,7 +288,9 @@ export async function GET() {
     portoWithMostEscalas.name = queryPorto?.nome;
     portoWithMostEscalas.pais = queryPorto?.pais?.pais;
   }
+
   //viagem com mais total de passageiros
+
   let viagemWithMostPassageiros: {
     count: number;
     id: number | null | undefined;
@@ -298,10 +299,10 @@ export async function GET() {
     id: 0,
   };
 
-  const queryViagemWithMostPassageiros = await prisma.passageiro.groupBy({
+  const queryViagensWithMostPassageiros = await prisma.passageiro.groupBy({
     by: ['id_viagem'],
-    _count: {
-      _all: true,
+    _sum: {
+      total: true,
     },
     orderBy: {
       _count: {
@@ -311,9 +312,9 @@ export async function GET() {
     take: 1,
   });
 
-  viagemWithMostPassageiros.id = queryViagemWithMostPassageiros[0]?.id_viagem;
   viagemWithMostPassageiros.count =
-    queryViagemWithMostPassageiros[0]._count._all;
+    queryViagensWithMostPassageiros[0]._sum.total || 0;
+  viagemWithMostPassageiros.id = queryViagensWithMostPassageiros[0].id_viagem;
 
   //Top 5 embarcacoes com mais viagens
   const topEmbarcacoesWithMostViagens = await prisma.viagem.groupBy({
