@@ -2,10 +2,10 @@
   "title": "Pessoas",
   "pages": [
     "adicionar-cargo",
+    "novo-tipo",
     "adicionar-pessoa",
     "editar-cargo",
     "editar-pessoa",
-    "editar-titulo",
     "novo-cargo",
     "novo-titulo",
     "apagar"
