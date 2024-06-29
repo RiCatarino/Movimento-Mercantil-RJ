@@ -1,5 +1,4 @@
 {
   "title": "Países",
-  "pages": ["novo-pais", "editar-pais", "apagar"],
-  "defaultOpen": false
+  "pages": ["novo-pais", "editar-pais", "apagar"]
 }
