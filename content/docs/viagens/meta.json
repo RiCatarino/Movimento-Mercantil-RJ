@@ -5,7 +5,11 @@
     "editar-viagem",
     "adicionar-escala",
     "adicionar-mercadoria",
-    "adicionar-noticia"
+    "adicionar-noticia",
+    "adicionar-passageiro",
+    "adicionar-arriba",
+    "adicionar-refdoc",
+    "remover"
   ],
   "defaultOpen": false
 }

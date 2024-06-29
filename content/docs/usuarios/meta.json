@@ -6,7 +6,8 @@
     "resetar-senha",
     "bloquear-usuarios",
     "desbloquear-usuarios",
-    "apagar"
+    "apagar",
+    "exportar-bd"
   ],
   "defaultOpen": false
 }
