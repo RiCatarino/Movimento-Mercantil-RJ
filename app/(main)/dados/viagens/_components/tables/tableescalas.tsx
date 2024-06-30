@@ -15,6 +15,11 @@ import { useState } from 'react';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
 import MercadoriaEscalasDrawer from '../mercadoriaescaladrawer';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 
 dayjs.extend(utc);
 dayjs.extend(tz);
@@ -46,34 +51,41 @@ export default function TableEscalas(props: { escalas: Escala[] | undefined }) {
         </TableHeader>
         <TableBody>
           {escalasdata?.map((escala) => (
-            <TableRow
-              className='cursor-pointer hover:bg-blue-100'
-              key={escala.id}
-              onClick={(e) => {
-                setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
-                setEscalaId(escala.id);
-                setOpen(true);
-              }}
-            >
-              <TableCell className='text-xs font-medium'>
-                {dayjs.tz(escala.data_escala, 'UTC').format('DD/MM/YYYY')}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {escala.ano}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {escala.dias_porto}
-              </TableCell>
-              <TableCell className='text-xs font-medium '>
-                {escala.porto.nome}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {escala.entrada_de_passageiros}
-              </TableCell>
-              <TableCell className='text-xs font-medium'>
-                {escala.saida_de_passageiros}
-              </TableCell>
-            </TableRow>
+            <HoverCard key={escala.id}>
+              <HoverCardTrigger asChild>
+                <TableRow
+                  className='cursor-pointer hover:bg-blue-100'
+                  key={escala.id}
+                  onClick={(e) => {
+                    setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
+                    setEscalaId(escala.id);
+                    setOpen(true);
+                  }}
+                >
+                  <TableCell className='text-xs font-medium'>
+                    {dayjs.tz(escala.data_escala, 'UTC').format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.ano}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.dias_porto}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium '>
+                    {escala.porto?.nome}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.entrada_de_passageiros}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.saida_de_passageiros}
+                  </TableCell>
+                </TableRow>
+              </HoverCardTrigger>
+              <HoverCardContent>
+                <p>{escala.observacoes || 'Nenhuma Observação'}</p>
+              </HoverCardContent>
+            </HoverCard>
           ))}
         </TableBody>
       </Table>
