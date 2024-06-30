@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -24,7 +23,6 @@ import { toast } from 'sonner';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import tz from 'dayjs/plugin/timezone';
-
 import {
   Accordion,
   AccordionContent,
