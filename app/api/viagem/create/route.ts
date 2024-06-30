@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     id_mestre,
     id_capitao,
     id_comandante,
+    observacoes,
     id_armador,
     entrada_sahida,
     dias_viagem,
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
       id_embarcacao: Number(id_embarcacao) || undefined,
       id_porto_origem: Number(porto_origem) || undefined,
       id_porto_destino: Number(porto_destino) || undefined,
+      observacoes: observacoes || undefined,
     },
   });
   return Response.json(result);

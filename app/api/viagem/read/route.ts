@@ -1,12 +1,12 @@
-import { validateRequest } from '@/auth';
-import prisma from '@/lib/prisma';
+import { validateRequest } from "@/auth";
+import prisma from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export async function GET() {
   const { user } = await validateRequest();
 
   if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response("Unauthorized", { status: 401 });
   }
 
   const result = await prisma.viagem.findMany({
@@ -24,6 +24,7 @@ export async function GET() {
       entrada_sahida: true,
       dias_viagem: true,
       data_chegada: true,
+      observacoes: true,
       data_rio: true,
       armador_id: true,
       tripulacao: true,
@@ -79,7 +80,7 @@ export async function GET() {
     take: 100,
 
     orderBy: {
-      data_rio: 'asc',
+      data_rio: "asc",
     },
   });
   return Response.json(result);
