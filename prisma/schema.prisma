@@ -51,7 +51,6 @@ model pessoa {
   nome                            String                          @db.VarChar(100)
   id_pais                         Int?                            @db.SmallInt
   id_titulo_nobreza               Int?                            @db.SmallInt
-  id_pessoa                       Int?                            @db.SmallInt
   relacao_pessoa_cargo            relac_pessoa_cargo[]
   pais                            pais?                           @relation(fields: [id_pais], references: [id])
   titulo_nobreza                  titulo_nobreza?                 @relation(fields: [id_titulo_nobreza], references: [id])
