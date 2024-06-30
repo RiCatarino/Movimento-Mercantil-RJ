@@ -263,9 +263,9 @@ model passageiro {
 
 model arriba {
   id          Int     @id @default(autoincrement())
-  id_viagem   Int?    @db.SmallInt
+  id_viagem   Int     @db.SmallInt
   observacoes String? @db.VarChar()
-  viagem      viagem? @relation(fields: [id_viagem], references: [id], onDelete: Cascade)
+  viagem      viagem  @relation(fields: [id_viagem], references: [id], onDelete: Cascade)
 }
 
 enum Role {
