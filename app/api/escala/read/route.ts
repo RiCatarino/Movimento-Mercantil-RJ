@@ -15,6 +15,7 @@ export async function GET() {
       ano: true,
       dias_porto: true,
       entrada_de_passageiros: true,
+      observacoes: true,
       saida_de_passageiros: true,
     },
   });
