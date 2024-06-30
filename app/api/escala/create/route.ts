@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     ano,
     dias_porto,
     entrada_de_passageiros,
+    observacoes,
     saida_de_passageiros,
     observacoes,
   } = await req.json();
