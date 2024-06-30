@@ -115,7 +115,7 @@ export default function TripsTable() {
         <Table className='bg-white'>
           <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
             <TableRow className='rounded-ss-xl'>
-              <TableHead className='w-4 hidden md:table-cell'>ID</TableHead>
+              {/* <TableHead className='w-4 hidden md:table-cell'>ID</TableHead> */}
               <TableHead className='w-96'>Data Rio</TableHead>
               <TableHead className='w-96'>Tipo</TableHead>
               <TableHead>Embarcação</TableHead>
@@ -130,9 +130,9 @@ export default function TripsTable() {
                   router.push(`/dados/viagens/${viagem.id}`);
                 }}
               >
-                <TableCell className='font-medium hidden md:table-cell'>
+                {/* <TableCell className='font-medium hidden md:table-cell'>
                   {viagem.id}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className='font-medium'>
                   {viagem.data_rio
                     ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
