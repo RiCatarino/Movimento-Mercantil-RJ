@@ -16,12 +16,12 @@ import { Button } from '@/components/ui/button';
 import Loader from '@/components/loader';
 import Paginacao from '@/components/sharedpagination';
 import chunk from '@/lib/chunk';
+
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 
 dayjs.extend(utc);
 dayjs.extend(tz);
@@ -72,56 +72,53 @@ export default function TableEscalas(props: {
         </TableHeader>
         <TableBody>
           {escalasdata?.map((escala) => (
-            <TableRow
-              className='cursor-pointer hover:bg-blue-100'
-              key={escala.id}
-              onClick={(e) => {
-                setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
-                setEscalaId(escala.id);
-                setOpen(true);
-              }}
-            >
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <TableCell className='text-xs font-medium'>
-                      {dayjs.tz(escala.data_escala, 'UTC').format('DD/MM/YYYY')}
-                    </TableCell>
-                    <TableCell className='text-xs font-medium'>
-                      {escala.ano}
-                    </TableCell>
-                    <TableCell className='text-xs font-medium'>
-                      {escala.dias_porto}
-                    </TableCell>
-                    <TableCell className='text-xs font-medium '>
-                      {escala.porto.nome}
-                    </TableCell>
-                    <TableCell className='text-xs font-medium'>
-                      {escala.entrada_de_passageiros}
-                    </TableCell>
-                    <TableCell className='text-xs font-medium'>
-                      {escala.saida_de_passageiros}
-                    </TableCell>
-                    <TableCell className='w-4'>
-                      <Button
-                        variant='link'
-                        size='icon'
-                        className='rounded-full'
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteEscala(escala.id);
-                        }}
-                      >
-                        <XIcon className='w-4 text-red-600' />
-                      </Button>
-                    </TableCell>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{escala.observacoes}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </TableRow>
+            <HoverCard key={escala.id}>
+              <HoverCardTrigger asChild>
+                <TableRow
+                  className='cursor-pointer hover:bg-blue-100'
+                  onClick={(e) => {
+                    setRelacMercadoriaEscala(escala.relac_mercadoria_escala);
+                    setEscalaId(escala.id);
+                    setOpen(true);
+                  }}
+                >
+                  <TableCell className='text-xs font-medium'>
+                    {dayjs.tz(escala.data_escala, 'UTC').format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.ano}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.dias_porto}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium '>
+                    {escala.porto.nome}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.entrada_de_passageiros}
+                  </TableCell>
+                  <TableCell className='text-xs font-medium'>
+                    {escala.saida_de_passageiros}
+                  </TableCell>
+                  <TableCell className='w-4'>
+                    <Button
+                      variant='link'
+                      size='icon'
+                      className='rounded-full'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteEscala(escala.id);
+                      }}
+                    >
+                      <XIcon className='w-4 text-red-600' />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              </HoverCardTrigger>
+              <HoverCardContent>
+                <p>{escala.observacoes || 'Nenhuma Observação'}</p>
+              </HoverCardContent>
+            </HoverCard>
           ))}
         </TableBody>
       </Table>

@@ -20,7 +20,6 @@ export async function POST(req: Request) {
     entrada_de_passageiros,
     observacoes,
     saida_de_passageiros,
-    observacoes,
   } = await req.json();
   const result = await prisma.escala.create({
     data: {
