@@ -44,6 +44,8 @@ export async function GET(req: Request) {
       escala: {
         select: {
           id: true,
+          ano: true,
+          observacoes: true,
           data_escala: true,
           dias_porto: true,
           porto: {
