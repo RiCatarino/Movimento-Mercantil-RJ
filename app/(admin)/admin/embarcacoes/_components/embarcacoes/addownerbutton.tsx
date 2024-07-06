@@ -1,32 +1,32 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import useSWR from "swr";
-import fetcher from "@/lib/fetch";
-import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui/dialog';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetch';
+import { useState } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { ChevronsUpDown, LucideCalendar } from "lucide-react";
+} from '@/components/ui/popover';
+import { ChevronsUpDown, LucideCalendar } from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -34,23 +34,23 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import dayjs from "dayjs";
-import Loader from "@/components/loader";
-import { useToast } from "@/components/ui/use-toast";
-import { ptBR } from "date-fns/locale";
+} from '@/components/ui/command';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Calendar } from '@/components/ui/calendar';
+import dayjs from 'dayjs';
+import Loader from '@/components/loader';
+import { useToast } from '@/components/ui/use-toast';
+import { ptBR } from 'date-fns/locale';
 
-var customParseFormat = require("dayjs/plugin/customParseFormat");
+var customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
 const formSchema = z.object({
-  pessoa: z.string().min(1, { message: "Selecione uma pessoa" }),
-  data_inicio: z.string({ required_error: "Selecione uma data de início" }),
-  data_fim: z.string({ required_error: "Selecione uma data de fim" }),
-  pais: z.string().min(1, { message: "Selecione um país" }),
+  pessoa: z.string().min(1, { message: 'Selecione uma pessoa' }),
+  data_inicio: z.string({ required_error: 'Selecione uma data de início' }),
+  data_fim: z.string({ required_error: 'Selecione uma data de fim' }),
+  pais: z.string().min(1, { message: 'Selecione um país' }),
 });
 
 type AddOwnerProps = {
@@ -66,25 +66,25 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   const [selectPessoa, setSelectPessoa] = useState(false);
   const [selectPais, setSelectPais] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [searchName, setSearchName] = useState("");
+  const [searchName, setSearchName] = useState('');
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      pessoa: "",
-      data_inicio: "",
-      data_fim: "",
-      pais: "",
+      pessoa: '',
+      data_inicio: '',
+      data_fim: '',
+      pais: '',
     },
   });
 
   const { data: pessoas, isLoading } = useSWR<Pessoa[]>(
-    "/api/pessoa/read/byname?nome=" + searchName,
-    fetcher,
+    '/api/pessoa/read/byname?nome=' + searchName,
+    fetcher
   );
 
   const { data: pais, isLoading: isLoadingPais } = useSWR<Pais[]>(
-    "/api/pais/read",
-    fetcher,
+    '/api/pais/read',
+    fetcher
   );
 
   async function handleSubmit(values: z.infer<typeof formSchema>) {
@@ -95,8 +95,8 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
       ...values,
     };
 
-    const result = await fetch("/api/embarcacao/create/addowner", {
-      method: "POST",
+    const result = await fetch('/api/embarcacao/create/addowner', {
+      method: 'POST',
       body: JSON.stringify(data),
     });
 
@@ -105,17 +105,17 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
       form.reset();
       mutate();
       toast({
-        className: "bg-green-200",
-        title: "Sucesso",
+        className: 'bg-green-200',
+        title: 'Sucesso',
         duration: 5000,
-        description: "Proprietário adicionado com sucesso",
+        description: 'Proprietário adicionado com sucesso',
       });
     } else {
       toast({
-        variant: "destructive",
-        title: "Erro",
+        variant: 'destructive',
+        title: 'Erro',
         duration: 5000,
-        description: "Erro ao adicionar proprietário",
+        description: 'Erro ao adicionar proprietário',
       });
     }
     setSubmitting(false);
@@ -124,26 +124,26 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-500 rounded-xl">
+        <Button className='bg-blue-500 rounded-xl'>
           Adicionar Proprietário
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-blue-500">
+          <DialogTitle className='text-blue-500'>
             Adicionar Proprietário
           </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex flex-col gap-2"
+            className='flex flex-col gap-2'
           >
             <FormField
               control={form.control}
-              name="pessoa"
+              name='pessoa'
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className='flex flex-col'>
                   <FormLabel>Pessoa</FormLabel>
                   <Popover
                     modal
@@ -153,30 +153,29 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant="outline"
-                          role="combobox"
+                          variant='outline'
+                          role='combobox'
                           className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground",
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
                           )}
                         >
                           {field.value
                             ? pessoas?.find(
-                                (pessoa) =>
-                                  pessoa.id.toString() === field.value,
+                                (pessoa) => pessoa.id.toString() === field.value
                               )?.nome
-                            : "Seleccionar Pessoa"}
-                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                            : 'Seleccionar Pessoa'}
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
                       <Command>
                         <CommandInput
                           onValueChange={(value) => {
                             setSearchName(value);
                           }}
-                          placeholder="Procurar pessoa..."
+                          placeholder='Procurar pessoa...'
                         />
                         <CommandEmpty>Pessoa não encontrada</CommandEmpty>
                         <CommandGroup>
@@ -186,7 +185,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                                 value={pessoa.nome}
                                 key={pessoa.id}
                                 onSelect={() => {
-                                  form.setValue("pessoa", pessoa.id.toString());
+                                  form.setValue('pessoa', pessoa.id.toString());
                                   setSelectPessoa(false);
                                 }}
                               >
@@ -203,13 +202,13 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
             />
             <FormField
               control={form.control}
-              name="data_inicio"
+              name='data_inicio'
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className='flex flex-col'>
                   <FormLabel>Data Início</FormLabel>
-                  <div className="flex w-full gap-2">
+                  <div className='flex w-full gap-2'>
                     <Input
-                      placeholder="DD-MM-YYYY"
+                      placeholder='DD-MM-YYYY'
                       value={field.value}
                       onChange={(e) => {
                         field.onChange(e.target.value);
@@ -218,32 +217,34 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
-                          size="icon"
-                          className="bg-blue-500 hover:bg-blue-600"
+                          size='icon'
+                          className='bg-blue-500 hover:bg-blue-600'
                         >
-                          <LucideCalendar className="w-4 h-4" />
+                          <LucideCalendar className='w-4 h-4' />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          fromDate={new Date('01-01-1808')}
+                          toDate={new Date('12-31-1830')}
                           locale={ptBR}
                           defaultMonth={
-                            dayjs(field.value, "DD-MM-YYYY").isValid()
-                              ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
                               : undefined
                           }
                           selected={
-                            dayjs(field.value, "DD-MM-YYYY").isValid()
-                              ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
                               : undefined
                           }
                           onSelect={(date) => {
                             form.setValue(
-                              "data_inicio",
-                              dayjs(date).format("DD-MM-YYYY"),
+                              'data_inicio',
+                              dayjs(date).format('DD-MM-YYYY')
                             );
                           }}
-                          mode="single"
+                          mode='single'
                           initialFocus
                         />
                       </PopoverContent>
@@ -254,29 +255,29 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
             />
             <FormField
               control={form.control}
-              name="data_fim"
+              name='data_fim'
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className='flex flex-col'>
                   <FormLabel>Data Fim</FormLabel>
-                  <div className="flex w-full gap-2">
+                  <div className='flex w-full gap-2'>
                     <Input
-                      disabled={!form.getValues("data_inicio")}
-                      placeholder="DD-MM-YYYY"
+                      disabled={!form.getValues('data_inicio')}
+                      placeholder='DD-MM-YYYY'
                       value={field.value}
                       onChange={(e) => {
                         //if date is after data_inicio
                         if (
-                          dayjs(e.target.value, "DD-MM-YYYY").isBefore(
-                            dayjs(form.getValues("data_inicio"), "DD-MM-YYYY"),
+                          dayjs(e.target.value, 'DD-MM-YYYY').isBefore(
+                            dayjs(form.getValues('data_inicio'), 'DD-MM-YYYY')
                           )
                         ) {
-                          form.setValue("data_fim", e.target.value);
+                          form.setValue('data_fim', e.target.value);
                         } else {
                           toast({
-                            variant: "destructive",
-                            title: "Erro",
+                            variant: 'destructive',
+                            title: 'Erro',
                             description:
-                              "Data de fim deve ser após a data de início",
+                              'Data de fim deve ser após a data de início',
                           });
                         }
                         field.onChange(e.target.value);
@@ -285,46 +286,48 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
-                          size="icon"
-                          className="bg-blue-500 hover:bg-blue-600"
-                          disabled={!form.watch("data_inicio")}
+                          size='icon'
+                          className='bg-blue-500 hover:bg-blue-600'
+                          disabled={!form.watch('data_inicio')}
                         >
-                          <LucideCalendar className="w-4 h-4 " />
+                          <LucideCalendar className='w-4 h-4 ' />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
                         <Calendar
+                          fromDate={new Date('01-01-1808')}
+                          toDate={new Date('12-31-1830')}
                           locale={ptBR}
                           defaultMonth={
-                            dayjs(field.value, "DD-MM-YYYY").isValid()
-                              ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
                               : undefined
                           }
                           selected={
-                            dayjs(field.value, "DD-MM-YYYY").isValid()
-                              ? dayjs(field.value, "DD-MM-YYYY").toDate()
+                            dayjs(field.value, 'DD-MM-YYYY').isValid()
+                              ? dayjs(field.value, 'DD-MM-YYYY').toDate()
                               : undefined
                           }
                           onSelect={(date) => {
                             if (
                               dayjs(date).isAfter(
-                                dayjs(form.watch("data_inicio"), "DD-MM-YYYY"),
+                                dayjs(form.watch('data_inicio'), 'DD-MM-YYYY')
                               )
                             ) {
                               form.setValue(
-                                "data_fim",
-                                dayjs(date).format("DD-MM-YYYY"),
+                                'data_fim',
+                                dayjs(date).format('DD-MM-YYYY')
                               );
                             } else {
                               toast({
-                                variant: "destructive",
-                                title: "Erro",
+                                variant: 'destructive',
+                                title: 'Erro',
                                 description:
-                                  "Data de fim deve ser após a data de início",
+                                  'Data de fim deve ser após a data de início',
                               });
                             }
                           }}
-                          mode="single"
+                          mode='single'
                           initialFocus
                         />
                       </PopoverContent>
@@ -336,33 +339,33 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
             {/* Selecionar País */}
             <FormField
               control={form.control}
-              name="pais"
+              name='pais'
               render={({ field }) => (
-                <FormItem className="flex flex-col basis-full md:basis-1/2">
+                <FormItem className='flex flex-col basis-full md:basis-1/2'>
                   <FormLabel>País</FormLabel>
                   <Popover modal open={selectPais} onOpenChange={setSelectPais}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
-                          variant="outline"
-                          role="combobox"
+                          variant='outline'
+                          role='combobox'
                           className={cn(
-                            "w-full justify-between",
-                            !field.value && "text-muted-foreground",
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
                           )}
                         >
                           {field.value
                             ? pais?.find(
-                                (pais) => pais.id.toString() === field.value,
+                                (pais) => pais.id.toString() === field.value
                               )?.pais
-                            : "Seleccionar País"}
-                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
+                            : 'Seleccionar País'}
+                          <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+                    <PopoverContent className='w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]'>
                       <Command>
-                        <CommandInput placeholder="Procurar país..." />
+                        <CommandInput placeholder='Procurar país...' />
                         <CommandEmpty>País não encontrado</CommandEmpty>
                         <CommandGroup>
                           <CommandList>
@@ -371,7 +374,7 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
                                 value={pais.pais}
                                 key={pais.id}
                                 onSelect={() => {
-                                  form.setValue("pais", pais.id.toString());
+                                  form.setValue('pais', pais.id.toString());
                                   setSelectPais(false);
                                 }}
                               >
@@ -388,12 +391,12 @@ export default function AddOwner({ mutate, embarcacaoId }: AddOwnerProps) {
             />
 
             <Button
-              type="submit"
-              className="self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit"
+              type='submit'
+              className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
-              Adicionar Proprietário{" "}
-              {submitting && <Loader classProp="ml-2 w-6 h-6" />}
+              Adicionar Proprietário{' '}
+              {submitting && <Loader classProp='ml-2 w-6 h-6' />}
             </Button>
           </form>
         </Form>

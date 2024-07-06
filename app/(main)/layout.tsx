@@ -44,17 +44,19 @@ export default async function MainLayout({
             <Link href='/sobre'>
               <Button
                 size='sm'
-                className='bg-blue-400 rounded-xl hover:bg-blue-500'
+                className='bg-blue-400 md:rounded-xl hover:bg-blue-500'
               >
-                <CircleHelp size={16} className='mr-2' /> Sobre
+                <CircleHelp size={16} className='md:mr-2' />
+                <span className='hidden md:block '>Sobre</span>
               </Button>
             </Link>
             <Link href='/auth/signin'>
               <Button
                 size='sm'
-                className='bg-blue-400 rounded-xl hover:bg-blue-500'
+                className='bg-blue-400 md:rounded-xl hover:bg-blue-500'
               >
-                <LogInIcon size={16} className='mr-2' /> Entrar
+                <LogInIcon size={16} className='md:mr-2' />
+                <span className='hidden md:block '>Entrar</span>
               </Button>
             </Link>
           </div>

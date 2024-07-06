@@ -188,7 +188,7 @@ export default function DialogEditarEmbarcacao(props: {
               className='self-end mt-2 bg-blue-500 rounded-2xl hover:bg-blue-600 w-fit'
               disabled={submitting}
             >
-              Criar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
+              Guardar {submitting && <Loader classProp='ml-2 w-6 h-6' />}
             </Button>
           </form>
         </Form>

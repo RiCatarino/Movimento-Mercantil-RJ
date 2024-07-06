@@ -226,6 +226,8 @@ export default function BotaoNovaViagem() {
                         </PopoverTrigger>
                         <PopoverContent>
                           <Calendar
+                            fromDate={new Date('01-01-1808')}
+                            toDate={new Date('12-31-1830')}
                             locale={ptBR}
                             defaultMonth={
                               dayjs(field.value, 'DD-MM-YYYY').isValid()
@@ -301,6 +303,8 @@ export default function BotaoNovaViagem() {
                         </PopoverTrigger>
                         <PopoverContent>
                           <Calendar
+                            fromDate={new Date('01-01-1808')}
+                            toDate={new Date('12-31-1830')}
                             locale={ptBR}
                             defaultMonth={
                               dayjs(field.value, 'DD-MM-YYYY').isValid()
@@ -378,6 +382,8 @@ export default function BotaoNovaViagem() {
                         </PopoverTrigger>
                         <PopoverContent>
                           <Calendar
+                            fromDate={new Date('01-01-1808')}
+                            toDate={new Date('12-31-1830')}
                             locale={ptBR}
                             defaultMonth={
                               dayjs(field.value, 'DD-MM-YYYY').isValid()
