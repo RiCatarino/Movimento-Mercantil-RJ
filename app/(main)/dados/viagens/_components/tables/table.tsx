@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Table,
   TableBody,
@@ -6,27 +6,27 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import tz from 'dayjs/plugin/timezone';
+} from "@/components/ui/table";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
 // import utc from 'dayjs/plugin/utc';
-import fetcher from '@/lib/fetch';
-import useSWR from 'swr';
-import { useEffect, useState } from 'react';
-import Loader from '@/components/loader';
-import { useRouter } from 'next/navigation';
+import fetcher from "@/lib/fetch";
+import useSWR from "swr";
+import { useEffect, useState } from "react";
+import Loader from "@/components/loader";
+import { useRouter } from "next/navigation";
 
-import { Input } from '@/components/ui/input';
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import PaginacaoByTotal from '@/components/sharedpaginationbytotal';
+import PaginacaoByTotal from "@/components/sharedpaginationbytotal";
 
 //extend dayjs with utc plugin
 dayjs.extend(utc);
@@ -39,9 +39,9 @@ type ViagensAndTotal = {
 
 export default function TripsTable() {
   const [activePage, setPage] = useState(1);
-  const [searchText, setSearchText] = useState('');
-  const [selectedYear, setSelectedYear] = useState('none');
-  const [selectedType, setSelectedType] = useState('none');
+  const [searchText, setSearchText] = useState("");
+  const [selectedYear, setSelectedYear] = useState("none");
+  const [selectedType, setSelectedType] = useState("none");
 
   const router = useRouter();
   const {
@@ -60,25 +60,25 @@ export default function TripsTable() {
 
   return (
     <>
-      <div className='flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4 mb-4'>
+      <div className="flex flex-col-reverse justify-between lg:flex-row md:flex-nowrap gap-4 mb-4">
         <Input
-          name='search'
-          className='rounded-xl '
-          placeholder='Pesquisar por nome de embarcação...'
+          name="search"
+          className="rounded-xl "
+          placeholder="Pesquisar por nome de embarcação..."
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <div className='flex flex-col md:flex-row gap-4 '>
+        <div className="flex flex-col md:flex-row gap-4 ">
           <Select onValueChange={(e) => setSelectedYear(e)}>
             <SelectTrigger
-              aria-label='Ano'
-              name='ano'
-              className='rounded-xl w-full md:w-1/2 lg:w-[180px]'
+              aria-label="Ano"
+              name="ano"
+              className="rounded-xl w-full md:w-1/2 lg:w-[180px]"
             >
-              <SelectValue placeholder='Ano' />
+              <SelectValue placeholder="Ano" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem key='empty' value='none'>
-                {'Sem filtro'}
+              <SelectItem key="empty" value="none">
+                {"Sem filtro"}
               </SelectItem>
 
               {Array.from({ length: 23 }, (_, i) => 1808 + i).map((year) => (
@@ -91,40 +91,40 @@ export default function TripsTable() {
 
           <Select onValueChange={(e) => setSelectedType(e)}>
             <SelectTrigger
-              aria-label='Tipo'
-              className='rounded-xl w-full md:w-1/2 lg:w-[180px]'
+              aria-label="Tipo"
+              className="rounded-xl w-full md:w-1/2 lg:w-[180px]"
             >
-              <SelectValue placeholder='Tipo' />
+              <SelectValue placeholder="Tipo" />
             </SelectTrigger>
 
             <SelectContent>
-              <SelectItem key='empty' value='none'>
-                {'Sem filtro'}
+              <SelectItem key="empty" value="none">
+                {"Sem filtro"}
               </SelectItem>
-              <SelectItem value='Sahida'>Sahida</SelectItem>
-              <SelectItem value='Entrada'>Entrada</SelectItem>
+              <SelectItem value="Sahida">Sahida</SelectItem>
+              <SelectItem value="Entrada">Entrada</SelectItem>
             </SelectContent>
           </Select>
         </div>
       </div>
       {isLoading ? (
-        <div className='flex flex-row justify-center p-4'>
-          <Loader classProp='w-24 h-24 self-center flex' />
+        <div className="flex flex-row justify-center p-4">
+          <Loader classProp="w-24 h-24 self-center flex" />
         </div>
       ) : (
-        <Table className='bg-white'>
-          <TableHeader className='p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950'>
-            <TableRow className='rounded-ss-xl'>
+        <Table className="bg-white dark:bg-slate-700">
+          <TableHeader className="p-2 border-t-0 bg-gradient-to-r from-blue-200 to-blue-400 dark:from-slate-700 dark:to-slate-950">
+            <TableRow className="rounded-ss-xl">
               {/* <TableHead className='w-4 hidden md:table-cell'>ID</TableHead> */}
-              <TableHead className='w-96'>Data Rio</TableHead>
-              <TableHead className='w-96'>Tipo</TableHead>
+              <TableHead className="w-96">Data Rio</TableHead>
+              <TableHead className="w-96">Tipo</TableHead>
               <TableHead>Embarcação</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {viagensdata?.viagens?.map((viagem) => (
               <TableRow
-                className='cursor-pointer hover:bg-blue-100'
+                className="cursor-pointer hover:bg-blue-100"
                 key={viagem.id}
                 onClick={(e) => {
                   router.push(`/dados/viagens/${viagem.id}`);
@@ -133,15 +133,15 @@ export default function TripsTable() {
                 {/* <TableCell className='font-medium hidden md:table-cell'>
                   {viagem.id}
                 </TableCell> */}
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.data_rio
-                    ? dayjs.tz(viagem.data_rio, 'UTC').format('DD/MM/YYYY')
-                    : 'N/A'}
+                    ? dayjs.tz(viagem.data_rio, "UTC").format("DD/MM/YYYY")
+                    : "N/A"}
                 </TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.entrada_sahida}
                 </TableCell>
-                <TableCell className='font-medium'>
+                <TableCell className="font-medium">
                   {viagem.embarcacao.nome}
                 </TableCell>
               </TableRow>
