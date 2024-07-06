@@ -40,7 +40,7 @@ export default function TablePassageiros(props: {
               key={passageiro.id}
             >
               <TableCell className='text-xs font-medium'>
-                {passageiro.tipo_passageiro.tipo}
+                {passageiro?.tipo_passageiro?.tipo}
               </TableCell>
               <TableCell className='text-xs'>{passageiro.total}</TableCell>
               <TableCell className='text-xs'>
